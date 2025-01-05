@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.3542201424191584,
+        "y": 5.569024212825211
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.3542201424191584,
+        "y": 5.569024212825211
+      },
+      "isLocked": false,
+      "linkedName": "HoloTest1_Start"
+    },
+    {
+      "anchor": {
+        "x": 2.9368221808626718,
+        "y": 5.916973695743167
+      },
+      "prevControl": {
+        "x": 1.9118769780704805,
+        "y": 5.921641238560395
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "HoloTest1_End"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.2,
+    "maxAcceleration": 3.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 460.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "reversed": false,
+  "folder": "HoloTest",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 180.0
+  },
+  "useDefaultConstraints": true
+}

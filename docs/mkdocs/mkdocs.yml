@@ -1,0 +1,61 @@
+site_name: Team 5152 Robot Documentation
+site_url: https://5152alotobots.github.io/5152_Template/
+theme:
+  name: material
+  palette:
+    scheme: slate
+    primary: red
+    accent: grey
+nav:
+  - Home: index.md
+  - Style Guide: styleguide.md
+  - Game: []
+  - Library:
+      - Commands:
+          - Swerve:
+              - Default Drive: library/commands/swerve/defaultdrive.md
+              - Drive Facing Angle: library/commands/swerve/drivefacingangle.md
+              - Drive Facing Pose: library/commands/swerve/drivefacingpose.md
+              - Characterization: library/commands/swerve/characterization.md
+          - Bling:
+              - Set To Alliance Color: library/commands/bling/settoalliancecolor.md
+              - No Alliance Waiting: library/commands/bling/noalliancewaiting.md
+          - Vision:
+              - Object Detection:
+                  - Drive Facing Best Object: library/commands/vision/objectdetection/drivefacingbestobject.md
+                  - Pathfind to Best Object: library/commands/vision/objectdetection/pathfindtobestobject.md
+              - Oculus QuestNav:
+                  - Ping: library/commands/vision/oculus/ping.md
+                  - Reset Pose: library/commands/vision/oculus/resetpose.md
+                  - Zero Heading: library/commands/vision/oculus/zeroheading.md
+      - Subsystems:
+          - Swerve: library/subsystems/swerve.md
+          - Bling: library/subsystems/bling.md
+          - Vision:
+              - Object Detection: library/subsystems/vision/objectdetection.md
+              - AprilTag: library/subsystems/vision/apriltag.md
+              - Oculus: library/subsystems/vision/oculus.md
+  - Core:
+      - Controller Bindings: core/bindings.md
+      - Auto Named Commands: core/autonamedcommands.md
+      - Robot: core/robot.md
+      - Robot Container: core/robotcontainer.md
+      - Constants: core/constants.md
+      - Main: core/main.md
+      - OI: core/oi.md
+  - Quickstart: quickstart.md
+  - API Documentation: javadoc/index.html # Point directly to index.html
+
+repo_url: https://github.com/5152alotobots/5152_Template
+repo_name: 5152Alotobots/5152_Template
+
+# Optional but recommended additions:
+markdown_extensions:
+  - tables
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - attr_list
+
+plugins:
+  - search

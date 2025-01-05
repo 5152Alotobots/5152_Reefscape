@@ -1,0 +1,49 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RotationTest1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RotationTest2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HoloTest1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HoloTest2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "StraightTest1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "StraightTest2"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": false,
+  "folder": "Tests",
+  "choreoAuto": false
+}
