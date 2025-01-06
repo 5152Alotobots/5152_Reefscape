@@ -4,3 +4,7 @@
 *.bash text eol=lf
 *.zsh text eol=lf
 gradlew text eol=lf
+
+# Prevent Git from tracking mode changes for shell scripts
+*.sh -text -exec
+gradlew -text -exec
