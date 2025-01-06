@@ -1,1 +1,5 @@
 .photonvision/**/* filter=lfs diff=lfs merge=lfs -text
+.ctrswerve/**/* filter=lfs diff=lfs merge=lfs -text
+*.sh text eol=lf
+*.bash text eol=lf
+*.zsh text eol=lf
