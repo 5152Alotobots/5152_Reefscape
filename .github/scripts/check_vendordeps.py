@@ -7,23 +7,20 @@ from packaging import version
 
 class VendorDepChecker:
     def __init__(self):
-         self.github_sources = {
-             'PathplannerLib': 'https://api.github.com/repos/mjansen4857/pathplanner/releases',
-             'AdvantageKit': 'https://api.github.com/repos/Mechanical-Advantage/AdvantageKit/releases',
-             'photonlib': 'https://api.github.com/repos/PhotonVision/PhotonVision/releases',
-             'WPILib': 'https://api.github.com/repos/wpilibsuite/allwpilib/releases'
-         }
-         self.phoenix_urls = {
-             'version': 'https://maven.ctr-electronics.com/release/com/ctre/phoenix6/latest',
-             'json': 'https://maven.ctr-electronics.com/release/com/ctre/phoenix6/latest/Phoenix6-frc2025-beta-latest.json'
-         }
+        self.github_sources = {
+            'PathplannerLib': 'https://api.github.com/repos/mjansen4857/pathplanner/releases',
+            'AdvantageKit': 'https://api.github.com/repos/Mechanical-Advantage/AdvantageKit/releases',
+            'photonlib': 'https://api.github.com/repos/PhotonVision/PhotonVision/releases',
+            'WPILib': 'https://api.github.com/repos/wpilibsuite/allwpilib/releases',
+            'Phoenix6': 'https://api.github.com/repos/CrossTheRoadElec/Phoenix-Releases/releases'
+        }
 
-         self.github_token = os.getenv('GITHUB_TOKEN')
-         self.headers = {
-             'Accept': 'application/vnd.github.v3+json'
-         }
-         if self.github_token:
-             self.headers['Authorization'] = f'token {self.github_token}'
+        self.github_token = os.getenv('GITHUB_TOKEN')
+        self.headers = {
+            'Accept': 'application/vnd.github.v3+json'
+        }
+        if self.github_token:
+            self.headers['Authorization'] = f'token {self.github_token}'
 
     def parse_version(self, ver_str: str) -> version.Version:
         """Convert version string to comparable version object."""
@@ -89,39 +86,6 @@ class VendorDepChecker:
             print(f"Error fetching from GitHub: {e}")
             return None
 
-        except Exception as e:
-            print(f"Error fetching from GitHub: {e}")
-            return None
-
-    def get_phoenix_latest(self) -> Dict:
-        """Get latest Phoenix version info from JSON."""
-        try:
-            json_data = requests.get(self.phoenix_urls['json']).json()
-            return {
-                'version': json_data.get('version'),  # Get version directly from JSON
-                'data': json_data,
-                'is_beta': 'beta' in json_data.get('version', '').lower()
-            }
-        except Exception as e:
-            print(f"Error fetching Phoenix version: {e}")
-            return None
-
-    def get_current_version(self, file_path: Path) -> Dict:
-        """Get current version from vendordep file."""
-        try:
-            with open(file_path) as f:
-                data = json.load(f)
-                current_ver = data.get('version')
-                if current_ver:
-                    return {
-                        'version': current_ver,
-                        'is_beta': 'beta' in current_ver.lower()
-                    }
-                return None
-        except Exception as e:
-            print(f"Error reading {file_path}: {e}")
-            return None
-
     def get_current_version(self, file_path: Path) -> Dict:
         """Get current version from vendordep file."""
         try:
@@ -145,10 +109,8 @@ class VendorDepChecker:
 
             with open(gradle_props_path) as f:
                 content = f.read()
-                # Look for GradleRIO version in plugins block
                 for line in content.split('\n'):
                     if 'id "edu.wpi.first.GradleRIO"' in line and 'version' in line:
-                        # Extract version from line like: id "edu.wpi.first.GradleRIO" version "2025.1.1-beta-2"
                         version_str = line.split('version')[1].strip().strip('"').strip("'")
                         return {
                             'version': version_str,
@@ -175,7 +137,7 @@ class VendorDepChecker:
         updates = []
         vendordeps_dir = Path('vendordeps')
 
-        # Check GitHub-based vendordeps
+        # Check all GitHub-based vendordeps (including Phoenix6)
         for name, url in self.github_sources.items():
             if name == 'WPILib':
                 current = self.get_wpilib_current_version()
@@ -199,52 +161,4 @@ class VendorDepChecker:
                     'notes': latest.get('notes') if name == 'WPILib' else None
                 })
 
-        # Check Phoenix
-        phoenix_file = next(vendordeps_dir.glob("Phoenix6*.json"), None)
-        if phoenix_file:
-            current = self.get_current_version(phoenix_file)
-            latest = self.get_phoenix_latest()
-
-            if current and latest and self.is_newer_version(current, latest):
-                updates.append({
-                    'name': 'Phoenix6',
-                    'current': current['version'],
-                    'current_is_beta': current['is_beta'],
-                    'latest': latest['version'],
-                    'latest_is_beta': latest['is_beta'],
-                    'source': 'CTRE Maven'
-                })
-
         return updates
-
-def main():
-    checker = VendorDepChecker()
-    updates = checker.check_all_updates()
-
-    if updates:
-        print("\n=== Updates Available ===")
-        for update in updates:
-            print(f"\n{update['name']}:")
-            print(f"  Current: {update['current']} ({'beta' if update['current_is_beta'] else 'stable'})")
-            print(f"  Latest:  {update['latest']} ({'beta' if update['latest_is_beta'] else 'stable'})")
-            print(f"  Source:  {update['source']}")
-            if 'url' in update and update['url']:
-                print(f"  URL:     {update['url']}")
-            if update.get('notes'):
-                print(f"  Release Notes Preview: {update['notes'][:200]}...")
-
-        # Set GitHub Actions output if running in GHA
-        if os.getenv('GITHUB_OUTPUT'):
-            with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
-                f.write(f"has_updates=true\n")
-                # Properly escape the JSON string for GitHub Actions
-                updates_json = json.dumps(updates).replace('%', '%25').replace('\n', '%0A').replace('\r', '%0D')
-                f.write(f"updates={updates_json}\n")
-    else:
-        print("\nAll dependencies are up to date!")
-        if os.getenv('GITHUB_OUTPUT'):
-            with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
-                f.write("has_updates=false\n")
-                f.write("updates=[]\n")
-if __name__ == "__main__":
-    main()
