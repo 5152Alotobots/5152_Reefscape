@@ -1,7 +1,7 @@
 /*
 * ALOTOBOTS - FRC Team 5152
   https://github.com/5152Alotobots
-* Copyright (C) 2024 ALOTOBOTS
+* Copyright (C) 2025 ALOTOBOTS
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
