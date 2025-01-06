@@ -15,7 +15,7 @@ class VendorDepChecker:
          }
          self.phoenix_urls = {
              'version': 'https://maven.ctr-electronics.com/release/com/ctre/phoenix6/latest',
-             'json': 'https://maven.ctr-electronics.com/release/com/ctre/phoenix6/latest/Phoenix6-frc2025-beta-latest.json'
+             'json': 'https://maven.ctr-electronics.com/release/com/ctre/phoenix6/latest/Phoenix6-frc2025-latest.json'
          }
 
          self.github_token = os.getenv('GITHUB_TOKEN')
