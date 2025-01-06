@@ -1,15 +1,15 @@
 /*
- * ALOTOBOTS - FRC Team 5152
- * https://github.com/5152Alotobots
- * Copyright (C) 2024 ALOTOBOTS
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * Source code must be publicly available on GitHub or an alternative web accessible site
- */
+* ALOTOBOTS - FRC Team 5152
+  https://github.com/5152Alotobots
+* Copyright (C) 2024 ALOTOBOTS
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* Source code must be publicly available on GitHub or an alternative web accessible site
+*/
 package frc.alotobots.library.subsystems.swervedrive.constants;
 
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
@@ -26,38 +26,46 @@ import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.LinearVelocity;
 
 /**
- * Interface defining constants and configuration values for swerve drive tuning.
- * This interface provides access to module-specific configurations, drivetrain constants,
- * and various control parameters needed for swerve drive operation.
+ * Interface defining constants and configuration values for swerve drive tuning. This interface
+ * provides access to module-specific configurations, drivetrain constants, and various control
+ * parameters needed for swerve drive operation.
  */
 public interface TunerConstants {
   /**
    * Gets the configuration constants for the front left swerve module.
    *
-   * @return SwerveModuleConstants containing TalonFX and CANcoder configurations for the front left module
+   * @return SwerveModuleConstants containing TalonFX and CANcoder configurations for the front left
+   *     module
    */
-  SwerveModuleConstants<TalonFXConfiguration, TalonFXConfiguration, CANcoderConfiguration> getFrontLeft();
+  SwerveModuleConstants<TalonFXConfiguration, TalonFXConfiguration, CANcoderConfiguration>
+      getFrontLeft();
 
   /**
    * Gets the configuration constants for the front right swerve module.
    *
-   * @return SwerveModuleConstants containing TalonFX and CANcoder configurations for the front right module
+   * @return SwerveModuleConstants containing TalonFX and CANcoder configurations for the front
+   *     right module
    */
-  SwerveModuleConstants<TalonFXConfiguration, TalonFXConfiguration, CANcoderConfiguration> getFrontRight();
+  SwerveModuleConstants<TalonFXConfiguration, TalonFXConfiguration, CANcoderConfiguration>
+      getFrontRight();
 
   /**
    * Gets the configuration constants for the back left swerve module.
    *
-   * @return SwerveModuleConstants containing TalonFX and CANcoder configurations for the back left module
+   * @return SwerveModuleConstants containing TalonFX and CANcoder configurations for the back left
+   *     module
    */
-  SwerveModuleConstants<TalonFXConfiguration, TalonFXConfiguration, CANcoderConfiguration> getBackLeft();
+  SwerveModuleConstants<TalonFXConfiguration, TalonFXConfiguration, CANcoderConfiguration>
+      getBackLeft();
 
   /**
    * Gets the configuration constants for the back right swerve module.
    *
-   * @return SwerveModuleConstants containing TalonFX and CANcoder configurations for the back right module
+   * @return SwerveModuleConstants containing TalonFX and CANcoder configurations for the back right
+   *     module
    */
-  SwerveModuleConstants<TalonFXConfiguration, TalonFXConfiguration, CANcoderConfiguration> getBackRight();
+  SwerveModuleConstants<TalonFXConfiguration, TalonFXConfiguration, CANcoderConfiguration>
+      getBackRight();
 
   /**
    * Gets the general drivetrain constants for the swerve drive.
