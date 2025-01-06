@@ -12,7 +12,9 @@
 */
 package frc.alotobots.library.subsystems.swervedrive.constants;
 
+import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.Slot0Configs;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.swerve.SwerveDrivetrainConstants;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.pathplanner.lib.config.RobotConfig;
@@ -25,13 +27,13 @@ import edu.wpi.first.units.measure.LinearVelocity;
 
 public interface TunerConstants {
   // Module Constants
-  SwerveModuleConstants getFrontLeft();
+  SwerveModuleConstants<TalonFXConfiguration, TalonFXConfiguration, CANcoderConfiguration> getFrontLeft();
 
-  SwerveModuleConstants getFrontRight();
+  SwerveModuleConstants<TalonFXConfiguration, TalonFXConfiguration, CANcoderConfiguration> getFrontRight();
 
-  SwerveModuleConstants getBackLeft();
+  SwerveModuleConstants<TalonFXConfiguration, TalonFXConfiguration, CANcoderConfiguration> getBackLeft();
 
-  SwerveModuleConstants getBackRight();
+  SwerveModuleConstants<TalonFXConfiguration, TalonFXConfiguration, CANcoderConfiguration> getBackRight();
 
   // Drivetrain Constants
   SwerveDrivetrainConstants getDrivetrainConstants();

@@ -287,22 +287,22 @@ public class TunerConstants2023 implements TunerConstants {
   }
 
   @Override
-  public SwerveModuleConstants getFrontLeft() {
+  public SwerveModuleConstants<TalonFXConfiguration, TalonFXConfiguration, CANcoderConfiguration> getFrontLeft() {
     return GeneratedConstants.FrontLeft;
   }
 
   @Override
-  public SwerveModuleConstants getFrontRight() {
+  public SwerveModuleConstants<TalonFXConfiguration, TalonFXConfiguration, CANcoderConfiguration> getFrontRight() {
     return GeneratedConstants.FrontRight;
   }
 
   @Override
-  public SwerveModuleConstants getBackLeft() {
+  public SwerveModuleConstants<TalonFXConfiguration, TalonFXConfiguration, CANcoderConfiguration> getBackLeft() {
     return GeneratedConstants.BackLeft;
   }
 
   @Override
-  public SwerveModuleConstants getBackRight() {
+  public SwerveModuleConstants<TalonFXConfiguration, TalonFXConfiguration, CANcoderConfiguration> getBackRight() {
     return GeneratedConstants.BackRight;
   }
 
