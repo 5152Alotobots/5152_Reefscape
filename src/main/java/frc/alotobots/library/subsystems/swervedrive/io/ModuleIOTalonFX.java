@@ -44,7 +44,9 @@ import frc.alotobots.library.subsystems.swervedrive.PhoenixOdometryThread;
 import java.util.Queue;
 
 public class ModuleIOTalonFX implements ModuleIO {
-  private final SwerveModuleConstants<TalonFXConfiguration, TalonFXConfiguration, CANcoderConfiguration> constants;
+  private final SwerveModuleConstants<
+          TalonFXConfiguration, TalonFXConfiguration, CANcoderConfiguration>
+      constants;
 
   // Hardware objects
   private final TalonFX driveTalon;

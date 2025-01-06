@@ -112,11 +112,12 @@ public class DriveCalculator {
         DriverStation.getAlliance().isPresent()
             && DriverStation.getAlliance().get() == DriverStation.Alliance.Red;
 
-    ChassisSpeeds robotRelativeSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
+    ChassisSpeeds robotRelativeSpeeds =
+        ChassisSpeeds.fromFieldRelativeSpeeds(
             speeds,
-        isFlipped
-            ? swerveDriveSubsystem.getRotation().plus(new Rotation2d(Math.PI))
-            : swerveDriveSubsystem.getRotation());
+            isFlipped
+                ? swerveDriveSubsystem.getRotation().plus(new Rotation2d(Math.PI))
+                : swerveDriveSubsystem.getRotation());
     return robotRelativeSpeeds;
   }
 

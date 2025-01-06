@@ -55,14 +55,15 @@ public class ModuleIOSim implements ModuleIO {
 
   public ModuleIOSim(int moduleIndex) {
     // Get module constants based on index
-    SwerveModuleConstants<TalonFXConfiguration, TalonFXConfiguration, CANcoderConfiguration> constants =
-        switch (moduleIndex) {
-          case 0 -> Constants.tunerConstants.getFrontLeft();
-          case 1 -> Constants.tunerConstants.getFrontRight();
-          case 2 -> Constants.tunerConstants.getBackLeft();
-          case 3 -> Constants.tunerConstants.getBackRight();
-          default -> throw new IllegalArgumentException("Invalid module index: " + moduleIndex);
-        };
+    SwerveModuleConstants<TalonFXConfiguration, TalonFXConfiguration, CANcoderConfiguration>
+        constants =
+            switch (moduleIndex) {
+              case 0 -> Constants.tunerConstants.getFrontLeft();
+              case 1 -> Constants.tunerConstants.getFrontRight();
+              case 2 -> Constants.tunerConstants.getBackLeft();
+              case 3 -> Constants.tunerConstants.getBackRight();
+              default -> throw new IllegalArgumentException("Invalid module index: " + moduleIndex);
+            };
 
     // Create drive and turn sim models
     driveSim =
