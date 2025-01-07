@@ -1,7 +1,7 @@
-# 5152 Alotobots
+# 5152 Alotobots 2025 Reefscape
 
-The template for our robot code.
+Ready for Reefscape!
 
-See documentation at: https://5152alotobots.github.io/5152_Template/
+See documentation at: https://5152alotobots.github.io/5152_Reefscape/
 
-Javadoc reference: https://5152alotobots.github.io/5152_Template/javadoc/
+Javadoc reference: https://5152alotobots.github.io/5152_Reefscape/javadoc/
