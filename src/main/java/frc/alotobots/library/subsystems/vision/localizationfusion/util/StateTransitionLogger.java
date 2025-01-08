@@ -10,7 +10,7 @@
 *
 * Source code must be publicly available on GitHub or an alternative web accessible site
 */
-package frc.alotobots.library.subsystems.vision.localizationfusion;
+package frc.alotobots.library.subsystems.vision.localizationfusion.util;
 
 /**
  * Interface for logging state transitions in the localization system.

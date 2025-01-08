@@ -22,7 +22,7 @@ import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.alotobots.library.subsystems.vision.localizationfusion.PoseSource;
+import frc.alotobots.library.subsystems.vision.localizationfusion.util.PoseSource;
 import frc.alotobots.library.subsystems.vision.oculus.io.OculusIO;
 import frc.alotobots.library.subsystems.vision.oculus.io.OculusIOInputsAutoLogged;
 import lombok.Getter;
