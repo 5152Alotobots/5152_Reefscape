@@ -1,0 +1,101 @@
+name: Vision System Issue
+description: Report an issue or request a feature for vision and targeting systems
+title: "[VISION]: "
+labels: ["apriltag-detection", "reef-targeting", "processor-targeting"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this issue for the vision system!
+
+  - type: dropdown
+    id: system-type
+    attributes:
+      label: System Type
+      options:
+        - AprilTag Detection
+        - REEF Targeting
+        - PROCESSOR Targeting
+        - CAGE Targeting
+        - Pose Estimation
+    validations:
+      required: true
+
+  - type: dropdown
+    id: issue-type
+    attributes:
+      label: Issue Type
+      options:
+        - Bug/Problem
+        - Enhancement
+        - Performance Issue
+        - Testing Required
+        - Documentation Update
+    validations:
+      required: true
+
+  - type: textarea
+    id: current-behavior
+    attributes:
+      label: Current Behavior
+      description: What's currently happening with the system?
+      placeholder: "Example: High latency in AprilTag detection at competition distances"
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected Behavior
+      description: What should be happening?
+      placeholder: "Example: Detection should run at 30FPS with <50ms latency"
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction-steps
+    attributes:
+      label: Steps to Reproduce
+      description: How can we reproduce this issue?
+      placeholder: |
+        1. Position robot at X distance
+        2. Run vision pipeline
+        3. Measure detection rate
+        4. Check CPU/GPU usage
+
+  - type: dropdown
+    id: test-environment
+    attributes:
+      label: Test Environment
+      options:
+        - Practice Bot
+        - Competition Bot
+        - Development PC
+        - Simulation
+    validations:
+      required: true
+
+  - type: input
+    id: testing-date
+    attributes:
+      label: Testing Date
+      description: When was this last tested?
+      placeholder: "MM/DD/YYYY"
+
+  - type: textarea
+    id: system-metrics
+    attributes:
+      label: System Metrics
+      description: Include relevant performance metrics
+      placeholder: |
+        - FPS:
+        - Latency:
+        - CPU Usage:
+        - Detection Rate:
+        - Distance Range:
+
+  - type: textarea
+    id: additional-info
+    attributes:
+      label: Additional Information
+      description: Any other context, logs, images, or videos?
