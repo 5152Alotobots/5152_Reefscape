@@ -1,0 +1,89 @@
+name: ALGAE Mechanism Issue
+description: Report an issue or request a feature for ALGAE intake/scoring systems
+title: "[ALGAE]: "
+labels: ["algae-intake", "algae-scoring"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this issue for the ALGAE mechanism!
+
+  - type: dropdown
+    id: mechanism-type
+    attributes:
+      label: Mechanism Type
+      options:
+        - Ground Intake
+        - PROCESSOR Scorer
+        - NET Scorer
+        - Storage System
+        - Transfer System
+    validations:
+      required: true
+
+  - type: dropdown
+    id: issue-type
+    attributes:
+      label: Issue Type
+      options:
+        - Bug/Problem
+        - Enhancement
+        - Design Review
+        - Testing Required
+        - Documentation Update
+    validations:
+      required: true
+
+  - type: textarea
+    id: current-behavior
+    attributes:
+      label: Current Behavior
+      description: What's currently happening with the mechanism?
+      placeholder: "Example: ALGAE compression is too high causing ball deformation"
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected Behavior
+      description: What should be happening?
+      placeholder: "Example: ALGAE should maintain shape while being handled"
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction-steps
+    attributes:
+      label: Steps to Reproduce
+      description: How can we reproduce this issue?
+      placeholder: |
+        1. Load ALGAE into intake
+        2. Run compression system
+        3. Observe ball condition
+        4. Attempt scoring
+
+  - type: dropdown
+    id: test-environment
+    attributes:
+      label: Test Environment
+      options:
+        - Practice Bot
+        - Competition Bot
+        - CAD/Design
+        - Simulation
+    validations:
+      required: true
+
+  - type: input
+    id: testing-date
+    attributes:
+      label: Testing Date
+      description: When was this last tested?
+      placeholder: "MM/DD/YYYY"
+
+  - type: textarea
+    id: additional-info
+    attributes:
+      label: Additional Information
+      description: Any other context, logs, images, or videos?

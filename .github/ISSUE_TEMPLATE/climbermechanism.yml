@@ -1,0 +1,88 @@
+name: Climber Mechanism Issue
+description: Report an issue or request a feature for CAGE climbing systems
+title: "[CLIMBER]: "
+labels: ["cage-climb", "endgame-targeting"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this issue for the climbing mechanism!
+
+  - type: dropdown
+    id: mechanism-type
+    attributes:
+      label: Mechanism Type
+      options:
+        - Deep CAGE (2ft 5⅜in)
+        - Shallow CAGE (3½in)
+        - Release System
+        - Targeting System
+    validations:
+      required: true
+
+  - type: dropdown
+    id: issue-type
+    attributes:
+      label: Issue Type
+      options:
+        - Bug/Problem
+        - Enhancement
+        - Design Review
+        - Testing Required
+        - Documentation Update
+    validations:
+      required: true
+
+  - type: textarea
+    id: current-behavior
+    attributes:
+      label: Current Behavior
+      description: What's currently happening with the mechanism?
+      placeholder: "Example: Robot swings after engaging with CAGE"
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected Behavior
+      description: What should be happening?
+      placeholder: "Example: Robot should maintain stable position after climb"
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction-steps
+    attributes:
+      label: Steps to Reproduce
+      description: How can we reproduce this issue?
+      placeholder: |
+        1. Position robot at CAGE
+        2. Initiate climb sequence
+        3. Observe stability
+        4. Test weight distribution
+
+  - type: dropdown
+    id: test-environment
+    attributes:
+      label: Test Environment
+      options:
+        - Practice Bot
+        - Competition Bot
+        - CAD/Design
+        - Simulation
+    validations:
+      required: true
+
+  - type: input
+    id: testing-date
+    attributes:
+      label: Testing Date
+      description: When was this last tested?
+      placeholder: "MM/DD/YYYY"
+
+  - type: textarea
+    id: additional-info
+    attributes:
+      label: Additional Information
+      description: Any other context, logs, images, or videos?
