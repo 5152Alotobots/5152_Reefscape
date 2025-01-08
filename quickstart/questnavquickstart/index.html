@@ -8,28 +8,28 @@
       
       
       
-        <link rel="canonical" href="https://5152alotobots.github.io/5152_Reefscape/library/subsystems/vision/apriltag/">
+        <link rel="canonical" href="https://5152alotobots.github.io/5152_Reefscape/quickstart/questnavquickstart/">
       
       
-        <link rel="prev" href="../localizationfusion/">
+        <link rel="prev" href="../objectdetectionquickstart/">
       
       
-        <link rel="next" href="../oculus/">
+        <link rel="next" href="../../javadoc/">
       
       
-      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.49">
     
     
       
-        <title>AprilTag - Team 5152 Robot Documentation | Reefscape</title>
+        <title>QuestNav - Team 5152 Robot Documentation | Reefscape</title>
       
     
     
-      <link rel="stylesheet" href="../../../../assets/stylesheets/main.6f8fc17f.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.6f8fc17f.min.css">
       
         
-        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -48,7 +48,7 @@
       
     
     
-    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -72,7 +72,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#apriltag-subsystem" class="md-skip">
+        <a href="#4-questnav-localizationfusion-quickstart-guide" class="md-skip">
           Skip to content
         </a>
       
@@ -88,7 +88,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../../.." title="Team 5152 Robot Documentation | Reefscape" class="md-header__button md-logo" aria-label="Team 5152 Robot Documentation | Reefscape" data-md-component="logo">
+    <a href="../.." title="Team 5152 Robot Documentation | Reefscape" class="md-header__button md-logo" aria-label="Team 5152 Robot Documentation | Reefscape" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -108,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              AprilTag
+              QuestNav
             
           </span>
         </div>
@@ -195,7 +195,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../../.." title="Team 5152 Robot Documentation | Reefscape" class="md-nav__button md-logo" aria-label="Team 5152 Robot Documentation | Reefscape" data-md-component="logo">
+    <a href="../.." title="Team 5152 Robot Documentation | Reefscape" class="md-nav__button md-logo" aria-label="Team 5152 Robot Documentation | Reefscape" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -225,7 +225,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../.." class="md-nav__link">
+      <a href="../.." class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -245,7 +245,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../styleguide/" class="md-nav__link">
+      <a href="../../styleguide/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -265,7 +265,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../.." class="md-nav__link">
+      <a href="../.." class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -282,19 +282,17 @@
       
   
   
-    
   
   
-  
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
         
           
           <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
@@ -308,7 +306,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             Library
@@ -392,7 +390,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../commands/swerve/defaultdrive/" class="md-nav__link">
+      <a href="../../library/commands/swerve/defaultdrive/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -413,7 +411,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../commands/swerve/drivefacingangle/" class="md-nav__link">
+      <a href="../../library/commands/swerve/drivefacingangle/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -434,7 +432,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../commands/swerve/drivefacingpose/" class="md-nav__link">
+      <a href="../../library/commands/swerve/drivefacingpose/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -455,7 +453,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../commands/swerve/characterization/" class="md-nav__link">
+      <a href="../../library/commands/swerve/characterization/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -519,7 +517,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../commands/bling/settoalliancecolor/" class="md-nav__link">
+      <a href="../../library/commands/bling/settoalliancecolor/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -540,7 +538,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../commands/bling/noalliancewaiting/" class="md-nav__link">
+      <a href="../../library/commands/bling/noalliancewaiting/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -639,7 +637,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../commands/vision/objectdetection/drivefacingbestobject/" class="md-nav__link">
+      <a href="../../library/commands/vision/objectdetection/drivefacingbestobject/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -660,7 +658,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../commands/vision/objectdetection/pathfindtobestobject/" class="md-nav__link">
+      <a href="../../library/commands/vision/objectdetection/pathfindtobestobject/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -724,7 +722,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../commands/vision/localizationfusion/requestpositionresetviatags/" class="md-nav__link">
+      <a href="../../library/commands/vision/localizationfusion/requestpositionresetviatags/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -788,7 +786,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../commands/vision/oculus/ping/" class="md-nav__link">
+      <a href="../../library/commands/vision/oculus/ping/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -809,7 +807,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../commands/vision/oculus/resetpose/" class="md-nav__link">
+      <a href="../../library/commands/vision/oculus/resetpose/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -830,7 +828,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../commands/vision/oculus/zeroheading/" class="md-nav__link">
+      <a href="../../library/commands/vision/oculus/zeroheading/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -872,19 +870,17 @@
                 
   
   
-    
   
   
-  
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
         
           
           <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
@@ -898,7 +894,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4_2">
             <span class="md-nav__icon md-icon"></span>
             Subsystems
@@ -912,7 +908,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../swerve/" class="md-nav__link">
+      <a href="../../library/subsystems/swerve/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -933,7 +929,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../bling/" class="md-nav__link">
+      <a href="../../library/subsystems/bling/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -951,19 +947,17 @@
                 
   
   
-    
   
   
-  
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2_3" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2_3" >
         
           
           <label class="md-nav__link" for="__nav_4_2_3" id="__nav_4_2_3_label" tabindex="0">
@@ -977,7 +971,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_2_3_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_2_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4_2_3">
             <span class="md-nav__icon md-icon"></span>
             Vision
@@ -991,7 +985,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../objectdetection/" class="md-nav__link">
+      <a href="../../library/subsystems/vision/objectdetection/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1012,7 +1006,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../localizationfusion/" class="md-nav__link">
+      <a href="../../library/subsystems/vision/localizationfusion/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1030,30 +1024,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    AprilTag
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../library/subsystems/vision/apriltag/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1062,89 +1036,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
-    <span class="md-ellipsis">
-      Overview
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#features" class="md-nav__link">
-    <span class="md-ellipsis">
-      Features
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#constructor-parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      Constructor Parameters
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#commands-that-use-this-subsystem" class="md-nav__link">
-    <span class="md-ellipsis">
-      Commands That Use This Subsystem
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#required-configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      Required Configuration
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#additional-information" class="md-nav__link">
-    <span class="md-ellipsis">
-      Additional Information
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#related-links" class="md-nav__link">
-    <span class="md-ellipsis">
-      Related Links
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1157,7 +1048,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../oculus/" class="md-nav__link">
+      <a href="../../library/subsystems/vision/oculus/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1236,7 +1127,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../core/bindings/" class="md-nav__link">
+      <a href="../../core/bindings/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1257,7 +1148,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../core/autonamedcommands/" class="md-nav__link">
+      <a href="../../core/autonamedcommands/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1278,7 +1169,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../core/robot/" class="md-nav__link">
+      <a href="../../core/robot/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1299,7 +1190,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../core/robotcontainer/" class="md-nav__link">
+      <a href="../../core/robotcontainer/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1320,7 +1211,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../core/constants/" class="md-nav__link">
+      <a href="../../core/constants/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1341,7 +1232,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../core/main/" class="md-nav__link">
+      <a href="../../core/main/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1362,7 +1253,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../core/oi/" class="md-nav__link">
+      <a href="../../core/oi/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1387,17 +1278,19 @@
       
   
   
+    
   
   
+  
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
         
           
           <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
@@ -1411,7 +1304,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             Quickstart
@@ -1425,7 +1318,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../quickstart/swervequickstart/" class="md-nav__link">
+      <a href="../swervequickstart/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1443,17 +1336,19 @@
                 
   
   
+    
   
   
+  
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2" checked>
         
           
           <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
@@ -1467,7 +1362,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_6_2">
             <span class="md-nav__icon md-icon"></span>
             Vision
@@ -1481,7 +1376,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../quickstart/apriltagquickstart/" class="md-nav__link">
+      <a href="../apriltagquickstart/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1502,7 +1397,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../quickstart/objectdetectionquickstart/" class="md-nav__link">
+      <a href="../objectdetectionquickstart/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1520,10 +1415,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../../../quickstart/questnavquickstart/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    QuestNav
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -1532,6 +1447,137 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#41-hardware-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1 Hardware Requirements
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#42-software-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2 Software Setup
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.2 Software Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#421-install-questnav-app" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2.1 Install QuestNav App
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#422-configure-localizationfusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2.2 Configure LocalizationFusion
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#43-operation" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3 Operation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.3 Operation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#431-pre-match-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3.1 Pre-Match Setup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#432-during-match" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3.2 During Match
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#433-troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3.3 Troubleshooting
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#44-best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.4 Best Practices
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#45-documentation-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.5 Documentation &amp; Configuration
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#46-additional-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.6 Additional Resources
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1706,7 +1752,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../javadoc/" class="md-nav__link">
+      <a href="../../javadoc/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1746,63 +1792,111 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
+  <a href="#41-hardware-requirements" class="md-nav__link">
     <span class="md-ellipsis">
-      Overview
+      4.1 Hardware Requirements
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#features" class="md-nav__link">
+  <a href="#42-software-setup" class="md-nav__link">
     <span class="md-ellipsis">
-      Features
+      4.2 Software Setup
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.2 Software Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#421-install-questnav-app" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2.1 Install QuestNav App
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#422-configure-localizationfusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2.2 Configure LocalizationFusion
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#43-operation" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3 Operation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.3 Operation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#431-pre-match-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3.1 Pre-Match Setup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#432-during-match" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3.2 During Match
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#433-troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3.3 Troubleshooting
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#44-best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.4 Best Practices
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#constructor-parameters" class="md-nav__link">
+  <a href="#45-documentation-configuration" class="md-nav__link">
     <span class="md-ellipsis">
-      Constructor Parameters
+      4.5 Documentation &amp; Configuration
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#commands-that-use-this-subsystem" class="md-nav__link">
+  <a href="#46-additional-resources" class="md-nav__link">
     <span class="md-ellipsis">
-      Commands That Use This Subsystem
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#required-configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      Required Configuration
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#additional-information" class="md-nav__link">
-    <span class="md-ellipsis">
-      Additional Information
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#related-links" class="md-nav__link">
-    <span class="md-ellipsis">
-      Related Links
+      4.6 Additional Resources
     </span>
   </a>
   
@@ -1826,76 +1920,146 @@
   
 
 
-<h1 id="apriltag-subsystem">AprilTag Subsystem</h1>
-<h2 id="overview">Overview</h2>
-<p>The AprilTag subsystem is responsible for detecting and processing AprilTag fiducial markers using PhotonVision cameras. It provides robust pose estimation with statistical confidence measures by processing data from multiple cameras simultaneously.</p>
-<h2 id="features">Features</h2>
-<ul>
-<li>Multi-camera AprilTag detection and processing</li>
-<li>Statistical confidence calculations for pose estimates</li>
-<li>Automatic rejection of unreliable measurements</li>
-<li>Comprehensive logging of accepted and rejected poses</li>
-<li>Camera connection monitoring with alerts</li>
-</ul>
-<h2 id="constructor-parameters">Constructor Parameters</h2>
-<p>The AprilTag subsystem requires two main parameters:</p>
+<h1 id="4-questnav-localizationfusion-quickstart-guide">4. QuestNav + LocalizationFusion Quickstart Guide</h1>
+<h2 id="41-hardware-requirements">4.1 Hardware Requirements</h2>
 <ol>
-<li>
-<p><code>AprilTagConsumer consumer</code>: A functional interface that receives processed AprilTag data, including:</p>
-<ul>
-<li>Robot pose in field coordinates</li>
-<li>Timestamp of the measurement</li>
-<li>Statistical confidence measures (standard deviations)</li>
-</ul>
-</li>
-<li>
-<p><code>AprilTagIO... io</code>: Variable number of AprilTagIO interfaces, one for each camera</p>
-</li>
-</ol>
-<h2 id="commands-that-use-this-subsystem">Commands That Use This Subsystem</h2>
-<p>Currently there are no direct commands using this subsystem. The subsystem primarily acts as a data provider for other systems through its consumer interface.</p>
-<h2 id="required-configuration">Required Configuration</h2>
-<ol>
-<li>
-<p>Camera Configuration:</p>
-<ul>
-<li><code>CAMERA_CONFIGS</code> array must be defined in AprilTagConstants</li>
-<li>Each camera must have proper configuration settings</li>
-</ul>
-</li>
-<li>
-<p>Statistical Parameters:</p>
-<ul>
-<li><code>CAMERA_STD_DEV_FACTORS</code>: Must be &gt;= 1.0 for each camera</li>
-<li><code>LINEAR_STD_DEV_BASE</code>: Base value for linear measurement standard deviation</li>
-<li><code>ANGULAR_STD_DEV_BASE</code>: Base value for angular measurement standard deviation</li>
-</ul>
-</li>
-<li>
-<p>Field Layout:</p>
-<ul>
-<li><code>APRIL_TAG_LAYOUT</code>: Must contain the field's AprilTag layout configuration</li>
-<li>Field dimensions must be properly configured</li>
-</ul>
-</li>
-<li>
-<p>Processing Parameters:</p>
-<ul>
-<li><code>MAX_AMBIGUITY</code>: Maximum allowed pose ambiguity for single-tag detections</li>
-<li><code>MAX_Z_ERROR</code>: Maximum allowed Z-coordinate error</li>
+<li>Meta Quest 3S headset (recommended)</li>
+<li>USB-C to Ethernet adapter with power passthrough</li>
+<li>3D printed mount for the headset</li>
+<li>Stable 5V power source (one of):<ul>
+<li>RoboRIO USB port (easiest)</li>
+<li>5V USB battery bank</li>
+<li>5V voltage regulator (e.g., Redux Robotics Zinc-V)</li>
 </ul>
 </li>
 </ol>
-<h2 id="additional-information">Additional Information</h2>
-<p>The subsystem includes several safeguards for reliable operation:
-- Automatic rejection of poses outside field boundaries
-- Filtering of high-ambiguity single-tag detections
-- Distance-based confidence scaling
-- Camera disconnect detection and alerts</p>
-<h2 id="related-links">Related Links</h2>
+<h2 id="42-software-setup">4.2 Software Setup</h2>
+<h3 id="421-install-questnav-app">4.2.1 Install QuestNav App</h3>
+<ol>
+<li>
+<p>Enable developer mode on your Quest headset:</p>
 <ul>
-<li><a href="/5152_Template/javadoc/frc/alotobots/library/subsystems/vision/photonvision/apriltag/package-summary.html">JavaDoc Reference</a></li>
-<li><a href="https://docs.photonvision.org/en/latest/">PhotonVision Documentation</a></li>
+<li>Create/login to Meta developer account</li>
+<li>Enable developer mode in Meta Quest app</li>
+<li>Download Meta Quest Developer Hub (MQDH)</li>
+</ul>
+</li>
+<li>
+<p>Configure Quest headset settings:</p>
+<ul>
+<li>Enable travel mode</li>
+<li>Set display timeout to 4 hours</li>
+<li>Enable battery saver mode</li>
+<li>Disable WiFi completely</li>
+<li>Disable Bluetooth</li>
+<li>Disable guardian system<ul>
+<li>Settings &gt; Developer &gt; Experimental Settings &gt; Enable Custom Settings</li>
+<li>Turn OFF: Physical Space Features, MTP Notification, Link Auto Connect</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Install QuestNav:</p>
+<ul>
+<li>Download the latest APK from <a href="https://github.com/5152Alotobots/QuestNav">5152Alotobots/QuestNav</a></li>
+<li>Connect headset to computer via USB</li>
+<li>Install using MQDH or ADB: <code>adb install QuestNav.apk</code></li>
+</ul>
+</li>
+</ol>
+<h3 id="422-configure-localizationfusion">4.2.2 Configure LocalizationFusion</h3>
+<ol>
+<li>
+<p>Create necessary subsystem instances:
+<div class="language-java highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">RobotContainer</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="c1">// IO interfaces</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">OculusIO</span><span class="w"> </span><span class="n">oculusIO</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">OculusIO</span><span class="p">();</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">AprilTagIO</span><span class="w"> </span><span class="n">aprilTagIO</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AprilTagIO</span><span class="p">();</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="c1">// Vision subsystems</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">OculusSubsystem</span><span class="w"> </span><span class="n">oculusSubsystem</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">OculusSubsystem</span><span class="p">(</span><span class="n">oculusIO</span><span class="p">);</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">AprilTagSubsystem</span><span class="w"> </span><span class="n">aprilTagSubsystem</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AprilTagSubsystem</span><span class="p">(</span><span class="n">aprilTagIO</span><span class="p">);</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">    </span><span class="c1">// Create pose sources</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">OculusPoseSource</span><span class="w"> </span><span class="n">oculusPoseSource</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">OculusPoseSource</span><span class="p">(</span><span class="n">oculusSubsystem</span><span class="p">);</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">AprilTagPoseSource</span><span class="w"> </span><span class="n">aprilTagPoseSource</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AprilTagPoseSource</span><span class="p">(</span><span class="n">aprilTagSubsystem</span><span class="p">);</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">    </span><span class="c1">// Auto chooser</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">LoggedDashboardChooser</span><span class="o">&lt;</span><span class="n">Command</span><span class="o">&gt;</span><span class="w"> </span><span class="n">autoChooser</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">LoggedDashboardChooser</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="s">&quot;Auto&quot;</span><span class="p">);</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">    </span><span class="c1">// Localization fusion</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">LocalizationFusion</span><span class="w"> </span><span class="n">localization</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">LocalizationFusion</span><span class="p">(</span>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w">        </span><span class="n">poseConsumer</span><span class="p">,</span><span class="w">    </span><span class="c1">// Your pose consumer implementation</span>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w">        </span><span class="n">oculusPoseSource</span><span class="p">,</span>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">        </span><span class="n">aprilTagPoseSource</span><span class="p">,</span>
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="w">        </span><span class="n">autoChooser</span>
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="w">    </span><span class="p">);</span>
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="p">}</span>
+</span></code></pre></div></p>
+</li>
+<li>
+<p>Configure physical setup in <code>OculusConstants.java</code>:
+<div class="language-java highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Transform2d</span><span class="w"> </span><span class="n">ROBOT_TO_OCULUS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Transform2d</span><span class="p">(</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="mf">0.075</span><span class="p">,</span><span class="w">              </span><span class="c1">// X offset (meters, forward)</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="mf">0.0</span><span class="p">,</span><span class="w">                </span><span class="c1">// Y offset (meters, left)</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">Rotation2d</span><span class="p">()</span><span class="w">    </span><span class="c1">// Rotation (radians, CCW)</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="p">);</span>
+</span></code></pre></div></p>
+</li>
+</ol>
+<h2 id="43-operation">4.3 Operation</h2>
+<h3 id="431-pre-match-setup">4.3.1 Pre-Match Setup</h3>
+<ol>
+<li>Power on Quest headset</li>
+<li>Connect USB-Ethernet adapter</li>
+<li>Launch QuestNav app</li>
+<li>Verify in AdvantageScope:<ul>
+<li>Quest Ready indicator is green</li>
+<li>Tags Ready indicator is green</li>
+<li>System Ready indicator is green</li>
+</ul>
+</li>
+</ol>
+<h3 id="432-during-match">4.3.2 During Match</h3>
+<ul>
+<li>LocalizationFusion will automatically:<ul>
+<li>Use Quest as primary pose source</li>
+<li>Fall back to AprilTags if Quest disconnects</li>
+<li>Auto-realign using AprilTags when stationary</li>
+<li>Handle pose resets and initialization</li>
+</ul>
+</li>
+</ul>
+<h3 id="433-troubleshooting">4.3.3 Troubleshooting</h3>
+<ul>
+<li>If headset loses tracking:<ol>
+<li>Ensure clear view of surroundings</li>
+<li>Check USB connection</li>
+<li>Verify power supply</li>
+<li>Use manual pose reset if needed:
+<div class="language-java highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">localization</span><span class="p">.</span><span class="na">requestResetOculusPoseViaAprilTags</span><span class="p">();</span>
+</span></code></pre></div></li>
+</ol>
+</li>
+</ul>
+<h2 id="44-best-practices">4.4 Best Practices</h2>
+<ol>
+<li>Mount headset securely with clear field view</li>
+<li>Use stable 5V power source</li>
+<li>Keep headset powered between matches</li>
+<li>Monitor battery level</li>
+<li>Monitor pose validation in AdvantageScope logging</li>
+</ol>
+<h2 id="45-documentation-configuration">4.5 Documentation &amp; Configuration</h2>
+<p>For detailed documentation and configuration options, refer to:
+- <a href="/5152_Template/library/subsystems/vision/localizationfusion">LocalizationFusion Documentation</a>
+- <a href="/5152_Template/library/subsystems/vision/oculus">OculusSubsystem Documentation</a></p>
+<h2 id="46-additional-resources">4.6 Additional Resources</h2>
+<ul>
+<li><a href="https://github.com/5152Alotobots/QuestNav">QuestNav Repository</a></li>
+<li><a href="https://developer.oculus.com/downloads/package/oculus-developer-hub-win/">Meta Quest Developer Hub</a></li>
+<li><a href="https://www.chiefdelphi.com/t/questnav-the-best-robot-pose-tracking-system-in-frc/476083">Chief Delphi Support Thread</a></li>
 </ul>
 
 
@@ -1943,10 +2107,10 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../../../..", "features": [], "search": "../../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../../../assets/javascripts/bundle.88dd0f4e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.88dd0f4e.min.js"></script>
       
     
   </body>

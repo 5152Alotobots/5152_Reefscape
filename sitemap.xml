@@ -5,10 +5,6 @@
          <lastmod>2025-01-08</lastmod>
     </url>
     <url>
-         <loc>https://5152alotobots.github.io/5152_Reefscape/quickstart/</loc>
-         <lastmod>2025-01-08</lastmod>
-    </url>
-    <url>
          <loc>https://5152alotobots.github.io/5152_Reefscape/styleguide/</loc>
          <lastmod>2025-01-08</lastmod>
     </url>
@@ -118,6 +114,22 @@
     </url>
     <url>
          <loc>https://5152alotobots.github.io/5152_Reefscape/library/subsystems/vision/oculus/</loc>
+         <lastmod>2025-01-08</lastmod>
+    </url>
+    <url>
+         <loc>https://5152alotobots.github.io/5152_Reefscape/quickstart/apriltagquickstart/</loc>
+         <lastmod>2025-01-08</lastmod>
+    </url>
+    <url>
+         <loc>https://5152alotobots.github.io/5152_Reefscape/quickstart/objectdetectionquickstart/</loc>
+         <lastmod>2025-01-08</lastmod>
+    </url>
+    <url>
+         <loc>https://5152alotobots.github.io/5152_Reefscape/quickstart/questnavquickstart/</loc>
+         <lastmod>2025-01-08</lastmod>
+    </url>
+    <url>
+         <loc>https://5152alotobots.github.io/5152_Reefscape/quickstart/swervequickstart/</loc>
          <lastmod>2025-01-08</lastmod>
     </url>
 </urlset>
