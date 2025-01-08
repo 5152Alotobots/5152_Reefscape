@@ -1,7 +1,7 @@
 /*
 * ALOTOBOTS - FRC Team 5152
   https://github.com/5152Alotobots
-* Copyright (C) 2024 ALOTOBOTS
+* Copyright (C) 2025 ALOTOBOTS
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -112,12 +112,13 @@ public class DriveCalculator {
         DriverStation.getAlliance().isPresent()
             && DriverStation.getAlliance().get() == DriverStation.Alliance.Red;
 
-    speeds.toRobotRelativeSpeeds(
-        isFlipped
-            ? swerveDriveSubsystem.getRotation().plus(new Rotation2d(Math.PI))
-            : swerveDriveSubsystem.getRotation());
-
-    return speeds;
+    ChassisSpeeds robotRelativeSpeeds =
+        ChassisSpeeds.fromFieldRelativeSpeeds(
+            speeds,
+            isFlipped
+                ? swerveDriveSubsystem.getRotation().plus(new Rotation2d(Math.PI))
+                : swerveDriveSubsystem.getRotation());
+    return robotRelativeSpeeds;
   }
 
   /**

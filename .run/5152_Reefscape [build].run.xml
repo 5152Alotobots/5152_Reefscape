@@ -1,11 +1,8 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="ReplayWatch" type="GradleRunConfiguration" factoryName="Gradle" editBeforeRun="true">
+  <configuration default="false"
+    name="5152_Reefscape [build]" type="GradleRunConfiguration"
+    factoryName="Gradle">
     <ExternalSystemSettings>
-      <option name="env">
-        <map>
-          <entry key="AKIT_LOG_PATH" value="/run/media/sernstes/E419-3D6A/logs/akit_24-12-13_15-13-21.wpilog" />
-        </map>
-      </option>
       <option name="executionName" />
       <option name="externalProjectPath" value="$PROJECT_DIR$" />
       <option name="externalSystemIdString" value="GRADLE" />
@@ -15,7 +12,7 @@
       </option>
       <option name="taskNames">
         <list>
-          <option value="replayWatch" />
+          <option value="build" />
         </list>
       </option>
       <option name="vmOptions" />

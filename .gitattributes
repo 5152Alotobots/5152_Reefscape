@@ -1,1 +1,10 @@
 .photonvision/**/* filter=lfs diff=lfs merge=lfs -text
+.ctrswerve/**/* filter=lfs diff=lfs merge=lfs -text
+*.sh text eol=lf
+*.bash text eol=lf
+*.zsh text eol=lf
+gradlew text eol=lf
+
+# Prevent Git from tracking mode changes for shell scripts
+*.sh -text -exec
+gradlew -text -exec

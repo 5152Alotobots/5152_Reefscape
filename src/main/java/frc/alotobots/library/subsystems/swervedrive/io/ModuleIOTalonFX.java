@@ -1,7 +1,7 @@
 /*
 * ALOTOBOTS - FRC Team 5152
   https://github.com/5152Alotobots
-* Copyright (C) 2024 ALOTOBOTS
+* Copyright (C) 2025 ALOTOBOTS
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -44,7 +44,9 @@ import frc.alotobots.library.subsystems.swervedrive.PhoenixOdometryThread;
 import java.util.Queue;
 
 public class ModuleIOTalonFX implements ModuleIO {
-  private final SwerveModuleConstants constants;
+  private final SwerveModuleConstants<
+          TalonFXConfiguration, TalonFXConfiguration, CANcoderConfiguration>
+      constants;
 
   // Hardware objects
   private final TalonFX driveTalon;
@@ -104,7 +106,7 @@ public class ModuleIOTalonFX implements ModuleIO {
             constants.SteerMotorId, Constants.tunerConstants.getDrivetrainConstants().CANBusName);
     cancoder =
         new CANcoder(
-            constants.CANcoderId, Constants.tunerConstants.getDrivetrainConstants().CANBusName);
+            constants.EncoderId, Constants.tunerConstants.getDrivetrainConstants().CANBusName);
 
     // Configure drive motor
     var driveConfig = constants.DriveMotorInitialConfigs;
@@ -126,7 +128,7 @@ public class ModuleIOTalonFX implements ModuleIO {
     var turnConfig = new TalonFXConfiguration();
     turnConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
     turnConfig.Slot0 = constants.SteerMotorGains;
-    turnConfig.Feedback.FeedbackRemoteSensorID = constants.CANcoderId;
+    turnConfig.Feedback.FeedbackRemoteSensorID = constants.EncoderId;
     turnConfig.Feedback.FeedbackSensorSource =
         switch (constants.FeedbackSource) {
           case RemoteCANcoder -> FeedbackSensorSourceValue.RemoteCANcoder;
@@ -147,10 +149,10 @@ public class ModuleIOTalonFX implements ModuleIO {
     tryUntilOk(5, () -> turnTalon.getConfigurator().apply(turnConfig, 0.25));
 
     // Configure CANCoder
-    CANcoderConfiguration cancoderConfig = constants.CANcoderInitialConfigs;
-    cancoderConfig.MagnetSensor.MagnetOffset = constants.CANcoderOffset;
+    CANcoderConfiguration cancoderConfig = constants.EncoderInitialConfigs;
+    cancoderConfig.MagnetSensor.MagnetOffset = constants.EncoderOffset;
     cancoderConfig.MagnetSensor.SensorDirection =
-        constants.CANcoderInverted
+        constants.EncoderInverted
             ? SensorDirectionValue.Clockwise_Positive
             : SensorDirectionValue.CounterClockwise_Positive;
     cancoder.getConfigurator().apply(cancoderConfig);

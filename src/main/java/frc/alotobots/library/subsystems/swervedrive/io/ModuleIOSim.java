@@ -1,7 +1,7 @@
 /*
 * ALOTOBOTS - FRC Team 5152
   https://github.com/5152Alotobots
-* Copyright (C) 2024 ALOTOBOTS
+* Copyright (C) 2025 ALOTOBOTS
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -12,6 +12,8 @@
 */
 package frc.alotobots.library.subsystems.swervedrive.io;
 
+import com.ctre.phoenix6.configs.CANcoderConfiguration;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
@@ -53,14 +55,15 @@ public class ModuleIOSim implements ModuleIO {
 
   public ModuleIOSim(int moduleIndex) {
     // Get module constants based on index
-    SwerveModuleConstants constants =
-        switch (moduleIndex) {
-          case 0 -> Constants.tunerConstants.getFrontLeft();
-          case 1 -> Constants.tunerConstants.getFrontRight();
-          case 2 -> Constants.tunerConstants.getBackLeft();
-          case 3 -> Constants.tunerConstants.getBackRight();
-          default -> throw new IllegalArgumentException("Invalid module index: " + moduleIndex);
-        };
+    SwerveModuleConstants<TalonFXConfiguration, TalonFXConfiguration, CANcoderConfiguration>
+        constants =
+            switch (moduleIndex) {
+              case 0 -> Constants.tunerConstants.getFrontLeft();
+              case 1 -> Constants.tunerConstants.getFrontRight();
+              case 2 -> Constants.tunerConstants.getBackLeft();
+              case 3 -> Constants.tunerConstants.getBackRight();
+              default -> throw new IllegalArgumentException("Invalid module index: " + moduleIndex);
+            };
 
     // Create drive and turn sim models
     driveSim =

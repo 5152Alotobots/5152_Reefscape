@@ -1,7 +1,7 @@
 /*
 * ALOTOBOTS - FRC Team 5152
   https://github.com/5152Alotobots
-* Copyright (C) 2024 ALOTOBOTS
+* Copyright (C) 2025 ALOTOBOTS
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -54,45 +54,6 @@ public final class Constants {
 
     /** Pneumatic Control Module CAN ID */
     public static final int PCM_CAN_ID = 2;
-
-    /** Pigeon 2 IMU CAN ID */
-    public static final int PIGEON_2_ID = 3;
-
-    /** Front left drive motor CAN ID */
-    public static final int FRONT_LEFT_DRIVE_MTR_CAN_ID = 10;
-
-    /** Front left steering motor CAN ID */
-    public static final int FRONT_LEFT_STEER_MTR_CAN_ID = 11;
-
-    /** Front left steering encoder CAN ID */
-    public static final int FRONT_LEFT_STEER_CAN_CODER_CAN_ID = 12;
-
-    /** Front right drive motor CAN ID */
-    public static final int FRONT_RIGHT_DRIVE_MTR_CAN_ID = 13;
-
-    /** Front right steering motor CAN ID */
-    public static final int FRONT_RIGHT_STEER_MTR_CAN_ID = 14;
-
-    /** Front right steering encoder CAN ID */
-    public static final int FRONT_RIGHT_STEER_CAN_CODER_CAN_ID = 15;
-
-    /** Back left drive motor CAN ID */
-    public static final int BACK_LEFT_DRIVE_MTR_CAN_ID = 16;
-
-    /** Back left steering motor CAN ID */
-    public static final int BACK_LEFT_STEER_MTR_CAN_ID = 17;
-
-    /** Back left steering encoder CAN ID */
-    public static final int BACK_LEFT_STEER_CAN_CODER_CAN_ID = 18;
-
-    /** Back right drive motor CAN ID */
-    public static final int BACK_RIGHT_DRIVE_MTR_CAN_ID = 19;
-
-    /** Back right steering motor CAN ID */
-    public static final int BACK_RIGHT_STEER_MTR_CAN_ID = 20;
-
-    /** Back right steering encoder CAN ID */
-    public static final int BACK_RIGHT_STEER_CAN_CODER_CAN_ID = 21;
 
     /** CANdle LED controller CAN ID */
     public static final int CANDLE_CAN_ID = 40;
