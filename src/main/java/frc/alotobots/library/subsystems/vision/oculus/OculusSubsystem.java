@@ -13,6 +13,7 @@
 package frc.alotobots.library.subsystems.vision.oculus;
 
 import static frc.alotobots.library.subsystems.vision.oculus.constants.OculusConstants.*;
+import static frc.alotobots.library.subsystems.vision.oculus.util.OculusStatus.*;
 
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -22,7 +23,7 @@ import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.alotobots.library.subsystems.vision.localizationfusion.PoseSource;
+import frc.alotobots.library.subsystems.vision.localizationfusion.util.PoseSource;
 import frc.alotobots.library.subsystems.vision.oculus.io.OculusIO;
 import frc.alotobots.library.subsystems.vision.oculus.io.OculusIOInputsAutoLogged;
 import lombok.Getter;
@@ -34,7 +35,7 @@ import org.littletonrobotics.junction.Logger;
  * <p>This subsystem leverages the Quest's inside-out SLAM tracking system to provide high-frequency
  * (120Hz) robot pose estimation. Key features:
  *
- * <p>- Global SLAM-based localization - Field mapping and persistence - Sub-millimeter tracking
+ * <p>- Global SLAM-based localization - Field mapping and persistence - Sub-centimeter tracking
  * precision - High update rate (120Hz) - Drift-free position tracking - Fast relocalization
  *
  * <p>The system operates in phases: 1. Pre-match mapping to capture field features 2. Initial pose
@@ -42,21 +43,6 @@ import org.littletonrobotics.junction.Logger;
  * tracking is lost
  */
 public class OculusSubsystem extends SubsystemBase implements PoseSource {
-  /** Status indicating system is ready for commands */
-  private static final int STATUS_READY = 0;
-
-  /** Status indicating heading reset completion */
-  private static final int STATUS_HEADING_RESET_COMPLETE = 99;
-
-  /** Status indicating pose reset completion */
-  private static final int STATUS_POSE_RESET_COMPLETE = 98;
-
-  /** Status indicating ping response receipt */
-  private static final int STATUS_PING_RESPONSE = 97;
-
-  /** Connection timeout threshold (seconds) */
-  private static final double CONNECTION_TIMEOUT = 1;
-
   /** Hardware communication interface */
   private final OculusIO io;
 

@@ -18,12 +18,15 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
+import lombok.experimental.UtilityClass;
 
 /**
  * Constants used by the Oculus Quest navigation subsystem. Contains configuration values for
  * physical setup and operation parameters.
  */
+@UtilityClass
 public class OculusConstants {
+
   /**
    * Transform from the robot center to the headset. Coordinate system: - X: Positive is forwards -
    * Y: Positive is left - Rotation: Positive is counter-clockwise
@@ -43,7 +46,7 @@ public class OculusConstants {
   public static final int MAX_RESET_ATTEMPTS = 3;
 
   /** Timeout threshold for considering Quest disconnected (seconds) */
-  public static final double CONNECTION_TIMEOUT = 0.1;
+  public static final double CONNECTION_TIMEOUT = 0.4;
 
   /**
    * Standard deviations representing how much we "trust" the position from the Oculus. By default,

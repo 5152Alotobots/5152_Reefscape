@@ -12,9 +12,9 @@
 */
 package frc.alotobots.library.subsystems.vision.localizationfusion;
 
-import static frc.alotobots.library.subsystems.vision.localizationfusion.LocalizationFusionConstants.InitializationRequirements.*;
-import static frc.alotobots.library.subsystems.vision.localizationfusion.LocalizationFusionConstants.Timing.*;
-import static frc.alotobots.library.subsystems.vision.localizationfusion.LocalizationFusionConstants.ValidationThresholds.*;
+import static frc.alotobots.library.subsystems.vision.localizationfusion.constants.LocalizationFusionConstants.InitializationRequirements.*;
+import static frc.alotobots.library.subsystems.vision.localizationfusion.constants.LocalizationFusionConstants.Timing.*;
+import static frc.alotobots.library.subsystems.vision.localizationfusion.constants.LocalizationFusionConstants.ValidationThresholds.*;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.PathPlannerAuto;
@@ -26,6 +26,10 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.alotobots.library.subsystems.vision.localizationfusion.constants.LocalizationFusionConstants;
+import frc.alotobots.library.subsystems.vision.localizationfusion.util.LocalizationState;
+import frc.alotobots.library.subsystems.vision.localizationfusion.util.PoseVisionConsumer;
+import frc.alotobots.library.subsystems.vision.localizationfusion.util.StateTransitionLogger;
 import frc.alotobots.library.subsystems.vision.oculus.util.OculusPoseSource;
 import frc.alotobots.library.subsystems.vision.photonvision.apriltag.util.AprilTagPoseSource;
 import frc.alotobots.util.Elastic;

@@ -24,6 +24,8 @@ nav:
               - Object Detection:
                   - Drive Facing Best Object: library/commands/vision/objectdetection/drivefacingbestobject.md
                   - Pathfind to Best Object: library/commands/vision/objectdetection/pathfindtobestobject.md
+              - Localization Fusion:
+                  - Request Position Reset Via Tags: library/commands/vision/localizationfusion/requestpositionresetviatags.md
               - Oculus QuestNav:
                   - Ping: library/commands/vision/oculus/ping.md
                   - Reset Pose: library/commands/vision/oculus/resetpose.md
@@ -33,6 +35,7 @@ nav:
           - Bling: library/subsystems/bling.md
           - Vision:
               - Object Detection: library/subsystems/vision/objectdetection.md
+              - Localization Fusion: library/subsystems/vision/localizationfusion.md
               - AprilTag: library/subsystems/vision/apriltag.md
               - Oculus: library/subsystems/vision/oculus.md
   - Core:
