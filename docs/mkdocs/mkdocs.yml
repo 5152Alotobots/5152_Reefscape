@@ -49,8 +49,8 @@ nav:
   - Quickstart: quickstart.md
   - API Documentation: javadoc/index.html # Point directly to index.html
 
-repo_url: https://github.com/5152alotobots/5152_Template
-repo_name: 5152Alotobots/5152_Template
+repo_url: https://github.com/5152alotobots/5152_Reefscape
+repo_name: 5152Alotobots/5152_Reefscape
 
 # Optional but recommended additions:
 markdown_extensions:
