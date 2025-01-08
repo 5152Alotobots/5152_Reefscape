@@ -76,12 +76,12 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code><a href="../../localizationfusion/PoseSource.html" title="interface in frc.alotobots.library.subsystems.vision.localizationfusion">PoseSource</a></code></dd>
+<dd><code><a href="../../localizationfusion/util/PoseSource.html" title="interface in frc.alotobots.library.subsystems.vision.localizationfusion.util">PoseSource</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">OculusPoseSource</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
-implements <a href="../../localizationfusion/PoseSource.html" title="interface in frc.alotobots.library.subsystems.vision.localizationfusion">PoseSource</a></span></div>
+implements <a href="../../localizationfusion/util/PoseSource.html" title="interface in frc.alotobots.library.subsystems.vision.localizationfusion.util">PoseSource</a></span></div>
 <div class="block">Adapts the Meta Quest SLAM system to the standardized PoseSource interface.
 
  <p>This class wraps the OculusSubsystem to provide high-frequency pose estimation through the
@@ -220,7 +220,7 @@ implements <a href="../../localizationfusion/PoseSource.html" title="interface i
  quality - Update frequency - Environment mapping status</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../../localizationfusion/PoseSource.html#isConnected()">isConnected</a></code>&nbsp;in interface&nbsp;<code><a href="../../localizationfusion/PoseSource.html" title="interface in frc.alotobots.library.subsystems.vision.localizationfusion">PoseSource</a></code></dd>
+<dd><code><a href="../../localizationfusion/util/PoseSource.html#isConnected()">isConnected</a></code>&nbsp;in interface&nbsp;<code><a href="../../localizationfusion/util/PoseSource.html" title="interface in frc.alotobots.library.subsystems.vision.localizationfusion.util">PoseSource</a></code></dd>
 <dt>Returns:</dt>
 <dd>true if the source is connected and providing valid data</dd>
 </dl>
@@ -242,7 +242,7 @@ implements <a href="../../localizationfusion/PoseSource.html" title="interface i
  Environment-referenced - Transform-corrected to field frame</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../../localizationfusion/PoseSource.html#getCurrentPose()">getCurrentPose</a></code>&nbsp;in interface&nbsp;<code><a href="../../localizationfusion/PoseSource.html" title="interface in frc.alotobots.library.subsystems.vision.localizationfusion">PoseSource</a></code></dd>
+<dd><code><a href="../../localizationfusion/util/PoseSource.html#getCurrentPose()">getCurrentPose</a></code>&nbsp;in interface&nbsp;<code><a href="../../localizationfusion/util/PoseSource.html" title="interface in frc.alotobots.library.subsystems.vision.localizationfusion.util">PoseSource</a></code></dd>
 <dt>Returns:</dt>
 <dd>The current robot pose estimate, or null if unavailable</dd>
 </dl>
@@ -264,7 +264,7 @@ implements <a href="../../localizationfusion/PoseSource.html" title="interface i
  Environment-dependent SLAM quality - Constant across operating range</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../../localizationfusion/PoseSource.html#getStdDevs()">getStdDevs</a></code>&nbsp;in interface&nbsp;<code><a href="../../localizationfusion/PoseSource.html" title="interface in frc.alotobots.library.subsystems.vision.localizationfusion">PoseSource</a></code></dd>
+<dd><code><a href="../../localizationfusion/util/PoseSource.html#getStdDevs()">getStdDevs</a></code>&nbsp;in interface&nbsp;<code><a href="../../localizationfusion/util/PoseSource.html" title="interface in frc.alotobots.library.subsystems.vision.localizationfusion.util">PoseSource</a></code></dd>
 <dt>Returns:</dt>
 <dd>3x1 matrix of standard deviations [x, y, theta]</dd>
 </dl>
@@ -279,7 +279,7 @@ implements <a href="../../localizationfusion/PoseSource.html" title="interface i
  <p>Used for: - Logging - Debugging - User interfaces - Status reporting</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../../localizationfusion/PoseSource.html#getSourceName()">getSourceName</a></code>&nbsp;in interface&nbsp;<code><a href="../../localizationfusion/PoseSource.html" title="interface in frc.alotobots.library.subsystems.vision.localizationfusion">PoseSource</a></code></dd>
+<dd><code><a href="../../localizationfusion/util/PoseSource.html#getSourceName()">getSourceName</a></code>&nbsp;in interface&nbsp;<code><a href="../../localizationfusion/util/PoseSource.html" title="interface in frc.alotobots.library.subsystems.vision.localizationfusion.util">PoseSource</a></code></dd>
 <dt>Returns:</dt>
 <dd>String identifier for this pose source</dd>
 </dl>

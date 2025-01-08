@@ -8,28 +8,28 @@
       
       
       
-        <link rel="canonical" href="https://5152alotobots.github.io/5152_Template/core/main/">
+        <link rel="canonical" href="https://5152alotobots.github.io/5152_Template/library/commands/vision/localizationfusion/requestpositionresetviatags/">
       
       
-        <link rel="prev" href="../constants/">
+        <link rel="prev" href="../../objectdetection/pathfindtobestobject/">
       
       
-        <link rel="next" href="../oi/">
+        <link rel="next" href="../../oculus/ping/">
       
       
-      <link rel="icon" href="../../assets/images/favicon.png">
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.49">
     
     
       
-        <title>Main - Team 5152 Robot Documentation</title>
+        <title>Request Position Reset Via Tags - Team 5152 Robot Documentation</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.6f8fc17f.min.css">
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.6f8fc17f.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -48,7 +48,7 @@
       
     
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -72,7 +72,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#main-class" class="md-skip">
+        <a href="#requestpositionresetviatags-command" class="md-skip">
           Skip to content
         </a>
       
@@ -88,7 +88,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="Team 5152 Robot Documentation" class="md-header__button md-logo" aria-label="Team 5152 Robot Documentation" data-md-component="logo">
+    <a href="../../../../.." title="Team 5152 Robot Documentation" class="md-header__button md-logo" aria-label="Team 5152 Robot Documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -108,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Main
+              Request Position Reset Via Tags
             
           </span>
         </div>
@@ -195,7 +195,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="Team 5152 Robot Documentation" class="md-nav__button md-logo" aria-label="Team 5152 Robot Documentation" data-md-component="logo">
+    <a href="../../../../.." title="Team 5152 Robot Documentation" class="md-nav__button md-logo" aria-label="Team 5152 Robot Documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -225,7 +225,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href="../../../../.." class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -245,7 +245,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../styleguide/" class="md-nav__link">
+      <a href="../../../../../styleguide/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -265,7 +265,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href="../../../../.." class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -282,17 +282,19 @@
       
   
   
+    
   
   
+  
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
         
           
           <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
@@ -306,7 +308,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             Library
@@ -317,17 +319,19 @@
                 
   
   
+    
   
   
+  
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1" checked>
         
           
           <label class="md-nav__link" for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
@@ -341,7 +345,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4_1">
             <span class="md-nav__icon md-icon"></span>
             Commands
@@ -390,7 +394,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../library/commands/swerve/defaultdrive/" class="md-nav__link">
+      <a href="../../../swerve/defaultdrive/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -411,7 +415,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../library/commands/swerve/drivefacingangle/" class="md-nav__link">
+      <a href="../../../swerve/drivefacingangle/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -432,7 +436,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../library/commands/swerve/drivefacingpose/" class="md-nav__link">
+      <a href="../../../swerve/drivefacingpose/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -453,7 +457,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../library/commands/swerve/characterization/" class="md-nav__link">
+      <a href="../../../swerve/characterization/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -517,7 +521,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../library/commands/bling/settoalliancecolor/" class="md-nav__link">
+      <a href="../../../bling/settoalliancecolor/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -538,7 +542,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../library/commands/bling/noalliancewaiting/" class="md-nav__link">
+      <a href="../../../bling/noalliancewaiting/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -564,17 +568,19 @@
                 
   
   
+    
   
   
+  
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1_3" checked>
         
           
           <label class="md-nav__link" for="__nav_4_1_3" id="__nav_4_1_3_label" tabindex="0">
@@ -588,7 +594,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_1_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_1_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4_1_3">
             <span class="md-nav__icon md-icon"></span>
             Vision
@@ -637,7 +643,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../library/commands/vision/objectdetection/drivefacingbestobject/" class="md-nav__link">
+      <a href="../../objectdetection/drivefacingbestobject/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -658,7 +664,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../library/commands/vision/objectdetection/pathfindtobestobject/" class="md-nav__link">
+      <a href="../../objectdetection/pathfindtobestobject/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -684,17 +690,19 @@
                 
   
   
+    
   
   
+  
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1_3_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1_3_2" checked>
         
           
           <label class="md-nav__link" for="__nav_4_1_3_2" id="__nav_4_1_3_2_label" tabindex="0">
@@ -708,7 +716,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_4_1_3_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_4_1_3_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4_1_3_2">
             <span class="md-nav__icon md-icon"></span>
             Localization Fusion
@@ -719,10 +727,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../library/commands/vision/localizationfusion/requestpositionresetviatags/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Request Position Reset Via Tags
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -731,6 +759,62 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#required-subsystems" class="md-nav__link">
+    <span class="md-ellipsis">
+      Required Subsystems
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#constructor-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Constructor Parameters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#javadoc-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      JavaDoc Reference
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -786,7 +870,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../library/commands/vision/oculus/ping/" class="md-nav__link">
+      <a href="../../oculus/ping/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -807,7 +891,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../library/commands/vision/oculus/resetpose/" class="md-nav__link">
+      <a href="../../oculus/resetpose/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -828,7 +912,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../library/commands/vision/oculus/zeroheading/" class="md-nav__link">
+      <a href="../../oculus/zeroheading/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -908,7 +992,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../library/subsystems/swerve/" class="md-nav__link">
+      <a href="../../../../subsystems/swerve/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -929,7 +1013,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../library/subsystems/bling/" class="md-nav__link">
+      <a href="../../../../subsystems/bling/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -985,7 +1069,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../library/subsystems/vision/objectdetection/" class="md-nav__link">
+      <a href="../../../../subsystems/vision/objectdetection/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1006,7 +1090,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../library/subsystems/vision/localizationfusion/" class="md-nav__link">
+      <a href="../../../../subsystems/vision/localizationfusion/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1027,7 +1111,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../library/subsystems/vision/apriltag/" class="md-nav__link">
+      <a href="../../../../subsystems/vision/apriltag/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1048,7 +1132,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../library/subsystems/vision/oculus/" class="md-nav__link">
+      <a href="../../../../subsystems/vision/oculus/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1089,19 +1173,17 @@
       
   
   
-    
   
   
-  
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
         
           
           <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
@@ -1115,7 +1197,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             Core
@@ -1129,7 +1211,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../bindings/" class="md-nav__link">
+      <a href="../../../../../core/bindings/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1150,7 +1232,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../autonamedcommands/" class="md-nav__link">
+      <a href="../../../../../core/autonamedcommands/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1171,7 +1253,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../robot/" class="md-nav__link">
+      <a href="../../../../../core/robot/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1192,7 +1274,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../robotcontainer/" class="md-nav__link">
+      <a href="../../../../../core/robotcontainer/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1213,7 +1295,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../constants/" class="md-nav__link">
+      <a href="../../../../../core/constants/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1231,30 +1313,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Main
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../../../../core/main/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1263,62 +1325,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#purpose" class="md-nav__link">
-    <span class="md-ellipsis">
-      Purpose
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#configuration-required" class="md-nav__link">
-    <span class="md-ellipsis">
-      Configuration Required
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#dependencies" class="md-nav__link">
-    <span class="md-ellipsis">
-      Dependencies
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#javadoc-reference" class="md-nav__link">
-    <span class="md-ellipsis">
-      JavaDoc Reference
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1331,7 +1337,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../oi/" class="md-nav__link">
+      <a href="../../../../../core/oi/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1359,7 +1365,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../quickstart/" class="md-nav__link">
+      <a href="../../../../../quickstart/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1379,7 +1385,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../javadoc/" class="md-nav__link">
+      <a href="../../../../../javadoc/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1419,27 +1425,27 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#purpose" class="md-nav__link">
+  <a href="#required-subsystems" class="md-nav__link">
     <span class="md-ellipsis">
-      Purpose
+      Required Subsystems
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#configuration-required" class="md-nav__link">
+  <a href="#constructor-parameters" class="md-nav__link">
     <span class="md-ellipsis">
-      Configuration Required
+      Constructor Parameters
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#dependencies" class="md-nav__link">
+  <a href="#configuration" class="md-nav__link">
     <span class="md-ellipsis">
-      Dependencies
+      Configuration
     </span>
   </a>
   
@@ -1472,21 +1478,27 @@
   
 
 
-<h1 id="main-class">Main Class</h1>
-<p>The entry point class for the robot program. This class contains the main method that starts the robot code execution.</p>
-<h2 id="purpose">Purpose</h2>
-<p>The Main class serves as the program entry point and:
-- Starts the robot code execution
-- Configures the robot base class
-- Prevents any premature initialization</p>
-<h2 id="configuration-required">Configuration Required</h2>
-<p>No configuration is required. This class should not be modified except to change the robot class type in the startRobot call if necessary.</p>
-<h2 id="dependencies">Dependencies</h2>
+<h1 id="requestpositionresetviatags-command">RequestPositionResetViaTags Command</h1>
+<p>A command that initiates a position reset of the robot's pose estimation using AprilTag detection. This command attempts to align the Oculus Quest SLAM tracking with the observed AprilTag positions.</p>
+<h2 id="required-subsystems">Required Subsystems</h2>
 <ul>
-<li><a href="/5152_Template/core/robot">Robot</a> - The main robot class that is started by Main</li>
+<li><a href="/5152_Template/library/subsystems/vision/localizationfusion">LocalizationFusion</a>: The localization subsystem that manages pose estimation</li>
 </ul>
+<h2 id="constructor-parameters">Constructor Parameters</h2>
+<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="nf">RequestPositionResetViaTags</span><span class="p">(</span><span class="n">LocalizationFusion</span><span class="w"> </span><span class="n">localizationFusion</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li><code>localizationFusion</code>: The LocalizationFusion subsystem instance that will perform the reset</li>
+</ul>
+<h2 id="configuration">Configuration</h2>
+<p>This command uses the validation thresholds configured in the LocalizationFusion subsystem:</p>
+<ul>
+<li><code>APRILTAG_VALIDATION_THRESHOLD</code>: Maximum allowed difference between AprilTag and Quest poses</li>
+<li><code>RESET_TIMEOUT</code>: Maximum time allowed for reset sequence completion</li>
+</ul>
+<p>No additional configuration is required for this command.</p>
 <h2 id="javadoc-reference">JavaDoc Reference</h2>
-<p>Complete documentation can be found <a href="PROJECT_ROOT/javadoc/frc/alotobots/package-summary.html">here</a></p>
+<p><a href="/5152_Template/library/subsystems/vision/localizationfusion/commands/package-summary.html">Package Documentation</a></p>
 
 
 
@@ -1533,10 +1545,10 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../../../../..", "features": [], "search": "../../../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.88dd0f4e.min.js"></script>
+      <script src="../../../../../assets/javascripts/bundle.88dd0f4e.min.js"></script>
       
     
   </body>

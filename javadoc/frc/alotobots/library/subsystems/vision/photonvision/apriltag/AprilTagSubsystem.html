@@ -78,12 +78,12 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code><a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/util/sendable/Sendable.html" title="class or interface in edu.wpi.first.util.sendable" class="external-link">Sendable</a></code>, <code><a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/Subsystem.html" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">Subsystem</a></code>, <code><a href="../../localizationfusion/PoseSource.html" title="interface in frc.alotobots.library.subsystems.vision.localizationfusion">PoseSource</a></code></dd>
+<dd><code><a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/util/sendable/Sendable.html" title="class or interface in edu.wpi.first.util.sendable" class="external-link">Sendable</a></code>, <code><a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/Subsystem.html" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">Subsystem</a></code>, <code><a href="../../localizationfusion/util/PoseSource.html" title="interface in frc.alotobots.library.subsystems.vision.localizationfusion.util">PoseSource</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">AprilTagSubsystem</span>
 <span class="extends-implements">extends <a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/SubsystemBase.html" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">SubsystemBase</a>
-implements <a href="../../localizationfusion/PoseSource.html" title="interface in frc.alotobots.library.subsystems.vision.localizationfusion">PoseSource</a></span></div>
+implements <a href="../../localizationfusion/util/PoseSource.html" title="interface in frc.alotobots.library.subsystems.vision.localizationfusion.util">PoseSource</a></span></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -175,14 +175,14 @@ implements <a href="../../localizationfusion/PoseSource.html" title="interface i
 <section class="detail" id="isConnected()">
 <h3>isConnected</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isConnected</span>()</div>
-<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="../../localizationfusion/PoseSource.html#isConnected()">PoseSource</a></code></span></div>
+<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="../../localizationfusion/util/PoseSource.html#isConnected()">PoseSource</a></code></span></div>
 <div class="block">Checks if the pose source is currently connected and providing valid data.
 
  <p>This method should: - Verify hardware connectivity (if applicable) - Check data freshness -
  Validate sensor readings - Monitor update frequency</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../../localizationfusion/PoseSource.html#isConnected()">isConnected</a></code>&nbsp;in interface&nbsp;<code><a href="../../localizationfusion/PoseSource.html" title="interface in frc.alotobots.library.subsystems.vision.localizationfusion">PoseSource</a></code></dd>
+<dd><code><a href="../../localizationfusion/util/PoseSource.html#isConnected()">isConnected</a></code>&nbsp;in interface&nbsp;<code><a href="../../localizationfusion/util/PoseSource.html" title="interface in frc.alotobots.library.subsystems.vision.localizationfusion.util">PoseSource</a></code></dd>
 <dt>Returns:</dt>
 <dd>true if the source is connected and providing valid data</dd>
 </dl>
@@ -192,7 +192,7 @@ implements <a href="../../localizationfusion/PoseSource.html" title="interface i
 <section class="detail" id="getCurrentPose()">
 <h3>getCurrentPose</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/math/geometry/Pose2d.html" title="class or interface in edu.wpi.first.math.geometry" class="external-link">Pose2d</a></span>&nbsp;<span class="element-name">getCurrentPose</span>()</div>
-<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="../../localizationfusion/PoseSource.html#getCurrentPose()">PoseSource</a></code></span></div>
+<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="../../localizationfusion/util/PoseSource.html#getCurrentPose()">PoseSource</a></code></span></div>
 <div class="block">Gets the most recent pose estimate from this source.
 
  <p>The returned pose should be: - In field-relative coordinates - Using the standard FRC
@@ -202,7 +202,7 @@ implements <a href="../../localizationfusion/PoseSource.html" title="interface i
  <p>If no valid pose is available, returns null.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../../localizationfusion/PoseSource.html#getCurrentPose()">getCurrentPose</a></code>&nbsp;in interface&nbsp;<code><a href="../../localizationfusion/PoseSource.html" title="interface in frc.alotobots.library.subsystems.vision.localizationfusion">PoseSource</a></code></dd>
+<dd><code><a href="../../localizationfusion/util/PoseSource.html#getCurrentPose()">getCurrentPose</a></code>&nbsp;in interface&nbsp;<code><a href="../../localizationfusion/util/PoseSource.html" title="interface in frc.alotobots.library.subsystems.vision.localizationfusion.util">PoseSource</a></code></dd>
 <dt>Returns:</dt>
 <dd>The current robot pose estimate, or null if unavailable</dd>
 </dl>
@@ -212,7 +212,7 @@ implements <a href="../../localizationfusion/PoseSource.html" title="interface i
 <section class="detail" id="getStdDevs()">
 <h3>getStdDevs</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/math/Matrix.html" title="class or interface in edu.wpi.first.math" class="external-link">Matrix</a>&lt;<a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/math/numbers/N3.html" title="class or interface in edu.wpi.first.math.numbers" class="external-link">N3</a>,<wbr><a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/math/numbers/N1.html" title="class or interface in edu.wpi.first.math.numbers" class="external-link">N1</a>&gt;</span>&nbsp;<span class="element-name">getStdDevs</span>()</div>
-<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="../../localizationfusion/PoseSource.html#getStdDevs()">PoseSource</a></code></span></div>
+<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="../../localizationfusion/util/PoseSource.html#getStdDevs()">PoseSource</a></code></span></div>
 <div class="block">Gets the standard deviations of measurement uncertainty for this pose source.
 
  <p>Returns a 3x1 matrix containing standard deviations for: - X position (meters) - Y position
@@ -222,7 +222,7 @@ implements <a href="../../localizationfusion/PoseSource.html" title="interface i
  - Account for systematic errors - Consider environmental factors</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../../localizationfusion/PoseSource.html#getStdDevs()">getStdDevs</a></code>&nbsp;in interface&nbsp;<code><a href="../../localizationfusion/PoseSource.html" title="interface in frc.alotobots.library.subsystems.vision.localizationfusion">PoseSource</a></code></dd>
+<dd><code><a href="../../localizationfusion/util/PoseSource.html#getStdDevs()">getStdDevs</a></code>&nbsp;in interface&nbsp;<code><a href="../../localizationfusion/util/PoseSource.html" title="interface in frc.alotobots.library.subsystems.vision.localizationfusion.util">PoseSource</a></code></dd>
 <dt>Returns:</dt>
 <dd>3x1 matrix of standard deviations [x, y, theta]</dd>
 </dl>
@@ -232,13 +232,13 @@ implements <a href="../../localizationfusion/PoseSource.html" title="interface i
 <section class="detail" id="getSourceName()">
 <h3>getSourceName</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getSourceName</span>()</div>
-<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="../../localizationfusion/PoseSource.html#getSourceName()">PoseSource</a></code></span></div>
+<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="../../localizationfusion/util/PoseSource.html#getSourceName()">PoseSource</a></code></span></div>
 <div class="block">Gets a human-readable identifier for this pose source.
 
  <p>Used for: - Logging - Debugging - User interfaces - Status reporting</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../../localizationfusion/PoseSource.html#getSourceName()">getSourceName</a></code>&nbsp;in interface&nbsp;<code><a href="../../localizationfusion/PoseSource.html" title="interface in frc.alotobots.library.subsystems.vision.localizationfusion">PoseSource</a></code></dd>
+<dd><code><a href="../../localizationfusion/util/PoseSource.html#getSourceName()">getSourceName</a></code>&nbsp;in interface&nbsp;<code><a href="../../localizationfusion/util/PoseSource.html" title="interface in frc.alotobots.library.subsystems.vision.localizationfusion.util">PoseSource</a></code></dd>
 <dt>Returns:</dt>
 <dd>String identifier for this pose source</dd>
 </dl>

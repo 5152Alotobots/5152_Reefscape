@@ -78,18 +78,18 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code><a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/util/sendable/Sendable.html" title="class or interface in edu.wpi.first.util.sendable" class="external-link">Sendable</a></code>, <code><a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/Subsystem.html" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">Subsystem</a></code>, <code><a href="../localizationfusion/PoseSource.html" title="interface in frc.alotobots.library.subsystems.vision.localizationfusion">PoseSource</a></code></dd>
+<dd><code><a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/util/sendable/Sendable.html" title="class or interface in edu.wpi.first.util.sendable" class="external-link">Sendable</a></code>, <code><a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/Subsystem.html" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">Subsystem</a></code>, <code><a href="../localizationfusion/util/PoseSource.html" title="interface in frc.alotobots.library.subsystems.vision.localizationfusion.util">PoseSource</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">OculusSubsystem</span>
 <span class="extends-implements">extends <a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/SubsystemBase.html" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">SubsystemBase</a>
-implements <a href="../localizationfusion/PoseSource.html" title="interface in frc.alotobots.library.subsystems.vision.localizationfusion">PoseSource</a></span></div>
+implements <a href="../localizationfusion/util/PoseSource.html" title="interface in frc.alotobots.library.subsystems.vision.localizationfusion.util">PoseSource</a></span></div>
 <div class="block">Manages communication and pose estimation with a Meta Quest VR headset.
 
  <p>This subsystem leverages the Quest's inside-out SLAM tracking system to provide high-frequency
  (120Hz) robot pose estimation. Key features:
 
- <p>- Global SLAM-based localization - Field mapping and persistence - Sub-millimeter tracking
+ <p>- Global SLAM-based localization - Field mapping and persistence - Sub-centimeter tracking
  precision - High update rate (120Hz) - Drift-free position tracking - Fast relocalization
 
  <p>The system operates in phases: 1. Pre-match mapping to capture field features 2. Initial pose
@@ -279,7 +279,7 @@ implements <a href="../localizationfusion/PoseSource.html" title="interface in f
  disconnect on significant delays.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../localizationfusion/PoseSource.html#isConnected()">isConnected</a></code>&nbsp;in interface&nbsp;<code><a href="../localizationfusion/PoseSource.html" title="interface in frc.alotobots.library.subsystems.vision.localizationfusion">PoseSource</a></code></dd>
+<dd><code><a href="../localizationfusion/util/PoseSource.html#isConnected()">isConnected</a></code>&nbsp;in interface&nbsp;<code><a href="../localizationfusion/util/PoseSource.html" title="interface in frc.alotobots.library.subsystems.vision.localizationfusion.util">PoseSource</a></code></dd>
 <dt>Returns:</dt>
 <dd>true if the source is connected and providing valid data</dd>
 </dl>
@@ -300,7 +300,7 @@ implements <a href="../localizationfusion/PoseSource.html" title="interface in f
  <p>Returns field-relative robot pose from Quest SLAM.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../localizationfusion/PoseSource.html#getCurrentPose()">getCurrentPose</a></code>&nbsp;in interface&nbsp;<code><a href="../localizationfusion/PoseSource.html" title="interface in frc.alotobots.library.subsystems.vision.localizationfusion">PoseSource</a></code></dd>
+<dd><code><a href="../localizationfusion/util/PoseSource.html#getCurrentPose()">getCurrentPose</a></code>&nbsp;in interface&nbsp;<code><a href="../localizationfusion/util/PoseSource.html" title="interface in frc.alotobots.library.subsystems.vision.localizationfusion.util">PoseSource</a></code></dd>
 <dt>Returns:</dt>
 <dd>The current robot pose estimate, or null if unavailable</dd>
 </dl>
@@ -321,7 +321,7 @@ implements <a href="../localizationfusion/PoseSource.html" title="interface in f
  <p>Returns constant measurement uncertainty for Quest tracking.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../localizationfusion/PoseSource.html#getStdDevs()">getStdDevs</a></code>&nbsp;in interface&nbsp;<code><a href="../localizationfusion/PoseSource.html" title="interface in frc.alotobots.library.subsystems.vision.localizationfusion">PoseSource</a></code></dd>
+<dd><code><a href="../localizationfusion/util/PoseSource.html#getStdDevs()">getStdDevs</a></code>&nbsp;in interface&nbsp;<code><a href="../localizationfusion/util/PoseSource.html" title="interface in frc.alotobots.library.subsystems.vision.localizationfusion.util">PoseSource</a></code></dd>
 <dt>Returns:</dt>
 <dd>3x1 matrix of standard deviations [x, y, theta]</dd>
 </dl>
@@ -336,7 +336,7 @@ implements <a href="../localizationfusion/PoseSource.html" title="interface in f
  <p>Used for: - Logging - Debugging - User interfaces - Status reporting</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../localizationfusion/PoseSource.html#getSourceName()">getSourceName</a></code>&nbsp;in interface&nbsp;<code><a href="../localizationfusion/PoseSource.html" title="interface in frc.alotobots.library.subsystems.vision.localizationfusion">PoseSource</a></code></dd>
+<dd><code><a href="../localizationfusion/util/PoseSource.html#getSourceName()">getSourceName</a></code>&nbsp;in interface&nbsp;<code><a href="../localizationfusion/util/PoseSource.html" title="interface in frc.alotobots.library.subsystems.vision.localizationfusion.util">PoseSource</a></code></dd>
 <dt>Returns:</dt>
 <dd>String identifier for this pose source</dd>
 </dl>

@@ -83,6 +83,9 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">RequestPositionResetViaTags</span>
 <span class="extends-implements">extends <a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/Command.html" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">Command</a></span></div>
+<div class="block">A command that requests a position reset using AprilTag detection. This command attempts to reset
+ the robot's position estimation using detected AprilTags through the LocalizationFusion
+ subsystem.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -104,7 +107,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(frc.alotobots.library.subsystems.vision.localizationfusion.LocalizationFusion)" class="member-name-link">RequestPositionResetViaTags</a><wbr>(<a href="../LocalizationFusion.html" title="class in frc.alotobots.library.subsystems.vision.localizationfusion">LocalizationFusion</a>&nbsp;localizationFusion)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Creates a new RequestPositionResetViaTags command.</div>
+</div>
 </div>
 </section>
 </li>
@@ -121,16 +126,24 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#execute()" class="member-name-link">execute</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Executes the position reset request.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#initialize()" class="member-name-link">initialize</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Initializes the command by resetting the completion flag.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isFinished()" class="member-name-link">isFinished</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Determines if the command has finished.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#runsWhenDisabled()" class="member-name-link">runsWhenDisabled</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Specifies that this command can run when the robot is disabled.</div>
+</div>
 </div>
 </div>
 </div>
@@ -155,6 +168,11 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="&lt;init&gt;(frc.alotobots.library.subsystems.vision.localizationfusion.LocalizationFusion)">
 <h3>RequestPositionResetViaTags</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">RequestPositionResetViaTags</span><wbr><span class="parameters">(<a href="../LocalizationFusion.html" title="class in frc.alotobots.library.subsystems.vision.localizationfusion">LocalizationFusion</a>&nbsp;localizationFusion)</span></div>
+<div class="block">Creates a new RequestPositionResetViaTags command.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>localizationFusion</code> - The LocalizationFusion subsystem used for position reset</dd>
+</dl>
 </section>
 </li>
 </ul>
@@ -169,6 +187,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="initialize()">
 <h3>initialize</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">initialize</span>()</div>
+<div class="block">Initializes the command by resetting the completion flag.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/Command.html#initialize()" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">initialize</a></code>&nbsp;in class&nbsp;<code><a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/Command.html" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">Command</a></code></dd>
@@ -179,6 +198,8 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="execute()">
 <h3>execute</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">execute</span>()</div>
+<div class="block">Executes the position reset request. Attempts to reset the Oculus pose estimation using
+ AprilTag detection.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/Command.html#execute()" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">execute</a></code>&nbsp;in class&nbsp;<code><a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/Command.html" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">Command</a></code></dd>
@@ -189,9 +210,12 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="isFinished()">
 <h3>isFinished</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isFinished</span>()</div>
+<div class="block">Determines if the command has finished.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/Command.html#isFinished()" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">isFinished</a></code>&nbsp;in class&nbsp;<code><a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/Command.html" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">Command</a></code></dd>
+<dt>Returns:</dt>
+<dd>true if the position reset has been completed, false otherwise</dd>
 </dl>
 </section>
 </li>
@@ -199,9 +223,12 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="runsWhenDisabled()">
 <h3>runsWhenDisabled</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">runsWhenDisabled</span>()</div>
+<div class="block">Specifies that this command can run when the robot is disabled.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/Command.html#runsWhenDisabled()" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">runsWhenDisabled</a></code>&nbsp;in class&nbsp;<code><a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/Command.html" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">Command</a></code></dd>
+<dt>Returns:</dt>
+<dd>true, indicating the command can run while disabled</dd>
 </dl>
 </section>
 </li>

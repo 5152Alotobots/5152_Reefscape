@@ -15,11 +15,7 @@
 <script type="text/javascript" src="../../../../../../script-dir/jquery-ui.min.js"></script>
 </head>
 <body class="package-declaration-page">
-<script type="text/javascript">var evenRowColor = "even-row-color";
-var oddRowColor = "odd-row-color";
-var tableTab = "table-tab";
-var activeTableTab = "active-table-tab";
-var pathtoroot = "../../../../../../";
+<script type="text/javascript">var pathtoroot = "../../../../../../";
 loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
@@ -73,13 +69,16 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><a href="commands/package-summary.html">frc.alotobots.library.subsystems.vision.localizationfusion.commands</a></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><a href="constants/package-summary.html">frc.alotobots.library.subsystems.vision.localizationfusion.constants</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="util/package-summary.html">frc.alotobots.library.subsystems.vision.localizationfusion.util</a></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </div>
 </li>
 <li>
 <div id="class-summary">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="class-summary-tab0" role="tab" aria-selected="true" aria-controls="class-summary.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary', 2)" class="active-table-tab">All Classes and Interfaces</button><button id="class-summary-tab1" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab1', 2)" class="table-tab">Interfaces</button><button id="class-summary-tab2" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab2', 2)" class="table-tab">Classes</button><button id="class-summary-tab3" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab3', 2)" class="table-tab">Enum Classes</button></div>
-<div id="class-summary.tabpanel" role="tabpanel" aria-labelledby="class-summary-tab0">
+<div class="caption"><span>Classes</span></div>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Class</div>
 <div class="table-header col-last">Description</div>
@@ -87,43 +86,6 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">The LocalizationFusion subsystem manages robot pose estimation by fusing data from multiple
  sources.</div>
-</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="LocalizationFusionConstants.html" title="class in frc.alotobots.library.subsystems.vision.localizationfusion">LocalizationFusionConstants</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">Constants used by the LocalizationFusion subsystem for robot pose estimation and tracking.</div>
-</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="LocalizationFusionConstants.InitializationRequirements.html" title="class in frc.alotobots.library.subsystems.vision.localizationfusion">LocalizationFusionConstants.InitializationRequirements</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">Constants related to initialization requirements and validation counts.</div>
-</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="LocalizationFusionConstants.Timing.html" title="class in frc.alotobots.library.subsystems.vision.localizationfusion">LocalizationFusionConstants.Timing</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">Constants related to timing and update intervals.</div>
-</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="LocalizationFusionConstants.ValidationThresholds.html" title="class in frc.alotobots.library.subsystems.vision.localizationfusion">LocalizationFusionConstants.ValidationThresholds</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">Constants related to pose validation and thresholds.</div>
-</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="LocalizationState.html" title="class in frc.alotobots.library.subsystems.vision.localizationfusion">LocalizationState</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">Manages the state machine for the robot localization system.</div>
-</div>
-<div class="col-first even-row-color class-summary class-summary-tab3"><a href="LocalizationState.State.html" title="enum class in frc.alotobots.library.subsystems.vision.localizationfusion">LocalizationState.State</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab3">
-<div class="block">Represents the possible states of the localization system.</div>
-</div>
-<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="PoseSource.html" title="interface in frc.alotobots.library.subsystems.vision.localizationfusion">PoseSource</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab1">
-<div class="block">Standardized interface for pose estimation sources in the robot localization system.</div>
-</div>
-<div class="col-first even-row-color class-summary class-summary-tab1"><a href="PoseVisionConsumer.html" title="interface in frc.alotobots.library.subsystems.vision.localizationfusion">PoseVisionConsumer</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab1">
-<div class="block">Functional interface for consuming pose updates from the fusion system.</div>
-</div>
-<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="StateTransitionLogger.html" title="interface in frc.alotobots.library.subsystems.vision.localizationfusion">StateTransitionLogger</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab1">
-<div class="block">Interface for logging state transitions in the localization system.</div>
-</div>
 </div>
 </div>
 </div>
