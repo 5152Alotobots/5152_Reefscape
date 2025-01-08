@@ -46,19 +46,36 @@ nav:
       - Constants: core/constants.md
       - Main: core/main.md
       - OI: core/oi.md
-  - Quickstart: quickstart.md
-  - API Documentation: javadoc/index.html # Point directly to index.html
+  - Quickstart:
+      - Swerve Drive: quickstart/swervequickstart.md
+      - Vision:
+          - AprilTag: quickstart/apriltagquickstart.md
+          - Object Detection: quickstart/objectdetectionquickstart.md
+          - QuestNav: quickstart/questnavquickstart.md
+  - API Documentation: javadoc/index.html
 
 repo_url: https://github.com/5152alotobots/5152_Reefscape
 repo_name: 5152Alotobots/5152_Reefscape
 
-# Optional but recommended additions:
 markdown_extensions:
   - tables
   - admonition
   - pymdownx.details
   - pymdownx.superfences
   - attr_list
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
 
 plugins:
   - search
