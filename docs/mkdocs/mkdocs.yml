@@ -52,6 +52,12 @@ nav:
           - AprilTag: quickstart/apriltagquickstart.md
           - Object Detection: quickstart/objectdetectionquickstart.md
           - QuestNav: quickstart/questnavquickstart.md
+  - External Documentation:
+      - AdvantageKit: https://docs.advantagekit.org/
+      - AdvantageScope: https://docs.advantagescope.org/
+      - CTRE Phoenix 6: https://v6.docs.ctr-electronics.com/en/stable/
+      - PhotonVision: https://docs.photonvision.org/en/latest/
+      - WPILib: https://docs.wpilib.org/en/stable/
   - API Documentation: javadoc/index.html
 
 repo_url: https://github.com/5152alotobots/5152_Reefscape
