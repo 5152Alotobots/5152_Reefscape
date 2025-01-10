@@ -2,134 +2,134 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://5152alotobots.github.io/5152_Reefscape/</loc>
-         <lastmod>2025-01-08</lastmod>
+         <lastmod>2025-01-10</lastmod>
     </url>
     <url>
          <loc>https://5152alotobots.github.io/5152_Reefscape/styleguide/</loc>
-         <lastmod>2025-01-08</lastmod>
+         <lastmod>2025-01-10</lastmod>
     </url>
     <url>
          <loc>https://5152alotobots.github.io/5152_Reefscape/core/autonamedcommands/</loc>
-         <lastmod>2025-01-08</lastmod>
+         <lastmod>2025-01-10</lastmod>
     </url>
     <url>
          <loc>https://5152alotobots.github.io/5152_Reefscape/core/bindings/</loc>
-         <lastmod>2025-01-08</lastmod>
+         <lastmod>2025-01-10</lastmod>
     </url>
     <url>
          <loc>https://5152alotobots.github.io/5152_Reefscape/core/constants/</loc>
-         <lastmod>2025-01-08</lastmod>
+         <lastmod>2025-01-10</lastmod>
     </url>
     <url>
          <loc>https://5152alotobots.github.io/5152_Reefscape/core/main/</loc>
-         <lastmod>2025-01-08</lastmod>
+         <lastmod>2025-01-10</lastmod>
     </url>
     <url>
          <loc>https://5152alotobots.github.io/5152_Reefscape/core/oi/</loc>
-         <lastmod>2025-01-08</lastmod>
+         <lastmod>2025-01-10</lastmod>
     </url>
     <url>
          <loc>https://5152alotobots.github.io/5152_Reefscape/core/robot/</loc>
-         <lastmod>2025-01-08</lastmod>
+         <lastmod>2025-01-10</lastmod>
     </url>
     <url>
          <loc>https://5152alotobots.github.io/5152_Reefscape/core/robotcontainer/</loc>
-         <lastmod>2025-01-08</lastmod>
+         <lastmod>2025-01-10</lastmod>
     </url>
     <url>
          <loc>https://5152alotobots.github.io/5152_Reefscape/javadoc/legal/jquery/</loc>
-         <lastmod>2025-01-08</lastmod>
+         <lastmod>2025-01-10</lastmod>
     </url>
     <url>
          <loc>https://5152alotobots.github.io/5152_Reefscape/javadoc/legal/jqueryUI/</loc>
-         <lastmod>2025-01-08</lastmod>
+         <lastmod>2025-01-10</lastmod>
     </url>
     <url>
          <loc>https://5152alotobots.github.io/5152_Reefscape/library/commands/bling/noalliancewaiting/</loc>
-         <lastmod>2025-01-08</lastmod>
+         <lastmod>2025-01-10</lastmod>
     </url>
     <url>
          <loc>https://5152alotobots.github.io/5152_Reefscape/library/commands/bling/settoalliancecolor/</loc>
-         <lastmod>2025-01-08</lastmod>
+         <lastmod>2025-01-10</lastmod>
     </url>
     <url>
          <loc>https://5152alotobots.github.io/5152_Reefscape/library/commands/swerve/characterization/</loc>
-         <lastmod>2025-01-08</lastmod>
+         <lastmod>2025-01-10</lastmod>
     </url>
     <url>
          <loc>https://5152alotobots.github.io/5152_Reefscape/library/commands/swerve/defaultdrive/</loc>
-         <lastmod>2025-01-08</lastmod>
+         <lastmod>2025-01-10</lastmod>
     </url>
     <url>
          <loc>https://5152alotobots.github.io/5152_Reefscape/library/commands/swerve/drivefacingangle/</loc>
-         <lastmod>2025-01-08</lastmod>
+         <lastmod>2025-01-10</lastmod>
     </url>
     <url>
          <loc>https://5152alotobots.github.io/5152_Reefscape/library/commands/swerve/drivefacingpose/</loc>
-         <lastmod>2025-01-08</lastmod>
+         <lastmod>2025-01-10</lastmod>
     </url>
     <url>
          <loc>https://5152alotobots.github.io/5152_Reefscape/library/commands/vision/localizationfusion/requestpositionresetviatags/</loc>
-         <lastmod>2025-01-08</lastmod>
+         <lastmod>2025-01-10</lastmod>
     </url>
     <url>
          <loc>https://5152alotobots.github.io/5152_Reefscape/library/commands/vision/objectdetection/drivefacingbestobject/</loc>
-         <lastmod>2025-01-08</lastmod>
+         <lastmod>2025-01-10</lastmod>
     </url>
     <url>
          <loc>https://5152alotobots.github.io/5152_Reefscape/library/commands/vision/objectdetection/pathfindtobestobject/</loc>
-         <lastmod>2025-01-08</lastmod>
+         <lastmod>2025-01-10</lastmod>
     </url>
     <url>
          <loc>https://5152alotobots.github.io/5152_Reefscape/library/commands/vision/oculus/ping/</loc>
-         <lastmod>2025-01-08</lastmod>
+         <lastmod>2025-01-10</lastmod>
     </url>
     <url>
          <loc>https://5152alotobots.github.io/5152_Reefscape/library/commands/vision/oculus/resetpose/</loc>
-         <lastmod>2025-01-08</lastmod>
+         <lastmod>2025-01-10</lastmod>
     </url>
     <url>
          <loc>https://5152alotobots.github.io/5152_Reefscape/library/commands/vision/oculus/zeroheading/</loc>
-         <lastmod>2025-01-08</lastmod>
+         <lastmod>2025-01-10</lastmod>
     </url>
     <url>
          <loc>https://5152alotobots.github.io/5152_Reefscape/library/subsystems/bling/</loc>
-         <lastmod>2025-01-08</lastmod>
+         <lastmod>2025-01-10</lastmod>
     </url>
     <url>
          <loc>https://5152alotobots.github.io/5152_Reefscape/library/subsystems/swerve/</loc>
-         <lastmod>2025-01-08</lastmod>
+         <lastmod>2025-01-10</lastmod>
     </url>
     <url>
          <loc>https://5152alotobots.github.io/5152_Reefscape/library/subsystems/vision/apriltag/</loc>
-         <lastmod>2025-01-08</lastmod>
+         <lastmod>2025-01-10</lastmod>
     </url>
     <url>
          <loc>https://5152alotobots.github.io/5152_Reefscape/library/subsystems/vision/localizationfusion/</loc>
-         <lastmod>2025-01-08</lastmod>
+         <lastmod>2025-01-10</lastmod>
     </url>
     <url>
          <loc>https://5152alotobots.github.io/5152_Reefscape/library/subsystems/vision/objectdetection/</loc>
-         <lastmod>2025-01-08</lastmod>
+         <lastmod>2025-01-10</lastmod>
     </url>
     <url>
          <loc>https://5152alotobots.github.io/5152_Reefscape/library/subsystems/vision/oculus/</loc>
-         <lastmod>2025-01-08</lastmod>
+         <lastmod>2025-01-10</lastmod>
     </url>
     <url>
          <loc>https://5152alotobots.github.io/5152_Reefscape/quickstart/apriltagquickstart/</loc>
-         <lastmod>2025-01-08</lastmod>
+         <lastmod>2025-01-10</lastmod>
     </url>
     <url>
          <loc>https://5152alotobots.github.io/5152_Reefscape/quickstart/objectdetectionquickstart/</loc>
-         <lastmod>2025-01-08</lastmod>
+         <lastmod>2025-01-10</lastmod>
     </url>
     <url>
          <loc>https://5152alotobots.github.io/5152_Reefscape/quickstart/questnavquickstart/</loc>
-         <lastmod>2025-01-08</lastmod>
+         <lastmod>2025-01-10</lastmod>
     </url>
     <url>
          <loc>https://5152alotobots.github.io/5152_Reefscape/quickstart/swervequickstart/</loc>
-         <lastmod>2025-01-08</lastmod>
+         <lastmod>2025-01-10</lastmod>
     </url>
 </urlset>
