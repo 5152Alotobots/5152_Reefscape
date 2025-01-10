@@ -1,5 +1,5 @@
 name: Feature Request
-description: Suggest a new feature or improvement
+description: Suggest a new feature or improvement (only use this template if your feature request doesn't fit into any mechanism-specific templates)
 title: "[FEATURE]: "
 labels: ["enhancement"]
 body:
@@ -7,16 +7,15 @@ body:
     attributes:
       value: |
         Thanks for taking the time to suggest a new feature!
+        
+        NOTE: Please only use this template if your feature request doesn't fit into any of the mechanism-specific templates (CORAL, ALGAE, Climber, Vision). For mechanism-specific features, use the appropriate mechanism template instead.
 
   - type: dropdown
     id: subsystem
     attributes:
       label: Subsystem
       options:
-        - CORAL Mechanisms
-        - ALGAE Mechanisms
-        - Climber
-        - Vision
+
         - Drive Train
         - Controls
         - Dashboard
@@ -25,31 +24,77 @@ body:
       required: true
 
   - type: textarea
-    id: problem
+    id: objective-issue
     attributes:
-      label: Related Problem
-      description: Is your feature request related to a problem? Please describe.
-      placeholder: "I'm always frustrated when..."
+      label: Objective/Issue
+      description: Clear, single-sentence description of the problem or needed feature
+      placeholder: "Example: Need automated calibration system for vision targeting"
     validations:
       required: true
 
   - type: textarea
-    id: solution
+    id: proposed-solution
     attributes:
       label: Proposed Solution
-      description: Describe the solution you'd like
-      placeholder: "It would be great if..."
+      description: Describe your proposed approach to solve this issue
+      placeholder: |
+        - Technical approach
+        - Design considerations
+        - Implementation steps
+        - Required resources
     validations:
       required: true
 
   - type: textarea
-    id: alternatives
+    id: required-kpis
     attributes:
-      label: Alternatives Considered
-      description: Describe any alternative solutions you've considered
+      label: Required KPIs
+      description: List measurable requirements for success
+      placeholder: |
+        - Performance metrics
+        - Resource requirements
+        - Time constraints
+    validations:
+      required: true
 
   - type: textarea
-    id: additional-context
+    id: prerequisites
     attributes:
-      label: Additional Context
-      description: Add any other context or screenshots about the feature request here
+      label: Prerequisites
+      description: List required systems and setup needed
+      placeholder: |
+        - Required systems
+        - Dependencies
+        - Resource needs
+    validations:
+      required: true
+
+  - type: textarea
+    id: success-metrics
+    attributes:
+      label: Success Metrics
+      description: Specific measurable outcomes to determine completion
+      placeholder: |
+        - Specific performance targets
+        - Quality metrics
+        - Completion criteria
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority Level
+      options:
+        - P0-Critical
+        - P1-High
+        - P2-Medium
+        - P3-Low
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional-info
+    attributes:
+      label: Additional Information
+      description: Any other context, logs, images, or videos?

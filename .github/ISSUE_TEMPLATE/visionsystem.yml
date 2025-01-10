@@ -21,78 +21,75 @@ body:
     validations:
       required: true
 
-  - type: dropdown
-    id: issue-type
-    attributes:
-      label: Issue Type
-      options:
-        - Bug/Problem
-        - Enhancement
-        - Performance Issue
-        - Testing Required
-        - Documentation Update
-    validations:
-      required: true
-
   - type: textarea
-    id: current-behavior
+    id: objective-issue
     attributes:
-      label: Current Behavior
-      description: What's currently happening with the system?
+      label: Objective/Issue
+      description: Clear, single-sentence description of the problem or needed feature
       placeholder: "Example: High latency in AprilTag detection at competition distances"
     validations:
       required: true
 
   - type: textarea
-    id: expected-behavior
+    id: proposed-solution
     attributes:
-      label: Expected Behavior
-      description: What should be happening?
-      placeholder: "Example: Detection should run at 30FPS with <50ms latency"
+      label: Proposed Solution
+      description: Describe your proposed approach to solve this issue
+      placeholder: |
+        - Technical approach
+        - Algorithm improvements
+        - Implementation steps
+        - Required resources
     validations:
       required: true
 
   - type: textarea
-    id: reproduction-steps
+    id: required-kpis
     attributes:
-      label: Steps to Reproduce
-      description: How can we reproduce this issue?
+      label: Required KPIs
+      description: List measurable requirements for success
       placeholder: |
-        1. Position robot at X distance
-        2. Run vision pipeline
-        3. Measure detection rate
-        4. Check CPU/GPU usage
+        - Detection rate > X FPS
+        - Latency < Y ms
+        - Accuracy > Z%
+    validations:
+      required: true
+
+  - type: textarea
+    id: prerequisites
+    attributes:
+      label: Prerequisites
+      description: List required systems and setup needed
+      placeholder: |
+        - Camera system
+        - Processing hardware
+        - Network requirements
+    validations:
+      required: true
+
+  - type: textarea
+    id: success-metrics
+    attributes:
+      label: Success Metrics
+      description: Specific measurable outcomes to determine completion
+      placeholder: |
+        - Maintains X FPS at competition distances
+        - Achieves < Y ms latency
+        - Z% detection accuracy
+    validations:
+      required: true
 
   - type: dropdown
-    id: test-environment
+    id: priority
     attributes:
-      label: Test Environment
+      label: Priority Level
       options:
-        - Practice Bot
-        - Competition Bot
-        - Development PC
-        - Simulation
+        - P0-Critical
+        - P1-High
+        - P2-Medium
+        - P3-Low
     validations:
       required: true
-
-  - type: input
-    id: testing-date
-    attributes:
-      label: Testing Date
-      description: When was this last tested?
-      placeholder: "MM/DD/YYYY"
-
-  - type: textarea
-    id: system-metrics
-    attributes:
-      label: System Metrics
-      description: Include relevant performance metrics
-      placeholder: |
-        - FPS:
-        - Latency:
-        - CPU Usage:
-        - Detection Rate:
-        - Distance Range:
 
   - type: textarea
     id: additional-info
