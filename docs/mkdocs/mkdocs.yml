@@ -9,7 +9,8 @@ theme:
 nav:
   - Home: index.md
   - Style Guide: styleguide.md
-  - Game: []
+  - Game:
+      - Field Constants: reefscape/fieldconstants.md
   - Library:
       - Commands:
           - Swerve:
