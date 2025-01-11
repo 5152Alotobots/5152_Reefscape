@@ -575,20 +575,4 @@ public class FieldConstants {
   private void addFloorPose(GamePieceFloorPosition position, Pose3d bluePose) {
     floorPoses.put(position, new FieldPose(bluePose));
   }
-
-  /**
-   * Main method for testing pose calculations.
-   *
-   * @param args Command line arguments (not used)
-   */
-  public static void main(String[] args) {
-    System.out.printf("A Blue %s\n", getBranchBlue(ReefBranch.C, Level.L2));
-    System.out.printf(
-        "A Blue ROT %s\n",
-        Units.radiansToDegrees(getBranchBlue(ReefBranch.C, Level.L2).getRotation().getZ()));
-    System.out.printf("A Red %s\n", getBranchRed(ReefBranch.C, Level.L2));
-    System.out.printf(
-        "A Red ROT %s",
-        Units.radiansToDegrees(getBranchRed(ReefBranch.C, Level.L2).getRotation().getZ()));
-  }
 }
