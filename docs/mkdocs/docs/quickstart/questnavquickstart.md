@@ -41,18 +41,18 @@ public class RobotContainer {
     // IO interfaces
     private final OculusIO oculusIO = new OculusIO();
     private final AprilTagIO aprilTagIO = new AprilTagIO();
-    
+
     // Vision subsystems
     private final OculusSubsystem oculusSubsystem = new OculusSubsystem(oculusIO);
     private final AprilTagSubsystem aprilTagSubsystem = new AprilTagSubsystem(aprilTagIO);
-    
+
     // Create pose sources
     private final OculusPoseSource oculusPoseSource = new OculusPoseSource(oculusSubsystem);
     private final AprilTagPoseSource aprilTagPoseSource = new AprilTagPoseSource(aprilTagSubsystem);
-    
+
     // Auto chooser
     private final LoggedDashboardChooser<Command> autoChooser = new LoggedDashboardChooser<>("Auto");
-    
+
     // Localization fusion
     private final LocalizationFusion localization = new LocalizationFusion(
         poseConsumer,    // Your pose consumer implementation

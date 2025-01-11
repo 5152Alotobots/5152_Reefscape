@@ -13,6 +13,7 @@
 package frc.alotobots.library.subsystems.swervedrive.util;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.pathfinding.Pathfinding;
 import com.pathplanner.lib.util.PathPlannerLogging;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -23,6 +24,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.alotobots.AutoNamedCommands;
 import frc.alotobots.Constants;
 import frc.alotobots.library.subsystems.swervedrive.SwerveDriveSubsystem;
+import frc.alotobots.reefscape.FieldConstants;
 import frc.alotobots.util.LocalADStarAK;
 import org.littletonrobotics.junction.Logger;
 
@@ -90,6 +92,39 @@ public class PathPlannerManager {
   public Command getPathFinderCommand(Pose2d target, LinearVelocity velocity) {
     return AutoBuilder.pathfindToPose(
         target, Constants.tunerConstants.getPathfindingConstraints(), velocity);
+  }
+
+  /**
+   * Gets the path name for approaching a specific reef branch at a given level.
+   *
+   * @param branch Target branch
+   * @param level Target level
+   * @return Path name for the approach
+   */
+  private String getReefPathName(FieldConstants.ReefBranch branch, FieldConstants.Level level) {
+    // Convention: "BranchApproach_[Branch]_[Level]"
+    return String.format("BranchApproach_%s_%s", branch, level);
+  }
+
+  /**
+   * Creates a command that will pathfind to and then follow a pre-made path to the target branch.
+   *
+   * @param branch Target branch
+   * @param level Target level
+   * @return Combined pathfind and follow command, or null if path loading fails
+   */
+  public Command getReefBranchCommand(
+      FieldConstants.ReefBranch branch, FieldConstants.Level level) {
+    String pathName = getReefPathName(branch, level);
+    try {
+      PathPlannerPath path = PathPlannerPath.fromPathFile(pathName);
+      return AutoBuilder.pathfindThenFollowPath(
+          path, Constants.tunerConstants.getPathfindingConstraints());
+    } catch (Exception e) {
+      // Log the error
+      System.err.println("Failed to load path: " + pathName);
+      return null;
+    }
   }
 
   /**
