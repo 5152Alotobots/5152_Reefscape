@@ -43,7 +43,7 @@ loadScripts(document, 'script');</script>
 <div>
 <ul class="sub-nav-list">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested-class-summary">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor-summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-summary">Method</a></li>
@@ -82,6 +82,23 @@ loadScripts(document, 'script');</script>
 </section>
 <section class="summary">
 <ul class="summary-list">
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+<li>
+<section class="nested-class-summary" id="nested-class-summary">
+<h2>Nested Class Summary</h2>
+<div class="caption"><span>Nested Classes</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Class</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static enum&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="PathPlannerManager.HPStation.html" class="type-name-link" title="enum class in frc.alotobots.library.subsystems.swervedrive.util">PathPlannerManager.HPStation</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Enum representing which human player station we're approaching from</div>
+</div>
+</div>
+</section>
+</li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <li>
 <section class="constructor-summary" id="constructor-summary">
@@ -108,21 +125,17 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>double</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMaxAngularSpeedRadPerSec()" class="member-name-link">getMaxAngularSpeedRadPerSec</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Gets maximum angular speed capability.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>double</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMaxLinearSpeedMetersPerSec()" class="member-name-link">getMaxLinearSpeedMetersPerSec</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Gets maximum linear speed capability.</div>
-</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/Command.html" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">Command</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPathFinderCommand(edu.wpi.first.math.geometry.Pose2d,edu.wpi.first.units.measure.LinearVelocity)" class="member-name-link">getPathFinderCommand</a><wbr>(<a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/math/geometry/Pose2d.html" title="class or interface in edu.wpi.first.math.geometry" class="external-link">Pose2d</a>&nbsp;target,
  edu.wpi.first.units.measure.LinearVelocity&nbsp;velocity)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Creates a pathfinding command to the specified pose.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/Command.html" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">Command</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPathfindToReefBranchCommand(frc.alotobots.reefscape.FieldConstants.ReefBranch,frc.alotobots.reefscape.FieldConstants.Level)" class="member-name-link">getPathfindToReefBranchCommand</a><wbr>(<a href="../../../../reefscape/FieldConstants.ReefBranch.html" title="enum class in frc.alotobots.reefscape">FieldConstants.ReefBranch</a>&nbsp;branch,
+ <a href="../../../../reefscape/FieldConstants.Level.html" title="enum class in frc.alotobots.reefscape">FieldConstants.Level</a>&nbsp;level)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Creates a command that will pathfind to and then follow a pre-made path to the target branch.</div>
 </div>
 </div>
 </div>
@@ -176,24 +189,17 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="getMaxLinearSpeedMetersPerSec()">
-<h3>getMaxLinearSpeedMetersPerSec</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">getMaxLinearSpeedMetersPerSec</span>()</div>
-<div class="block">Gets maximum linear speed capability.</div>
+<section class="detail" id="getPathfindToReefBranchCommand(frc.alotobots.reefscape.FieldConstants.ReefBranch,frc.alotobots.reefscape.FieldConstants.Level)">
+<h3>getPathfindToReefBranchCommand</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/Command.html" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">Command</a></span>&nbsp;<span class="element-name">getPathfindToReefBranchCommand</span><wbr><span class="parameters">(<a href="../../../../reefscape/FieldConstants.ReefBranch.html" title="enum class in frc.alotobots.reefscape">FieldConstants.ReefBranch</a>&nbsp;branch,
+ <a href="../../../../reefscape/FieldConstants.Level.html" title="enum class in frc.alotobots.reefscape">FieldConstants.Level</a>&nbsp;level)</span></div>
+<div class="block">Creates a command that will pathfind to and then follow a pre-made path to the target branch.</div>
 <dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>branch</code> - Target branch</dd>
+<dd><code>level</code> - Target level</dd>
 <dt>Returns:</dt>
-<dd>Maximum speed in meters per second</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="getMaxAngularSpeedRadPerSec()">
-<h3>getMaxAngularSpeedRadPerSec</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">getMaxAngularSpeedRadPerSec</span>()</div>
-<div class="block">Gets maximum angular speed capability.</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>Maximum angular speed in radians per second</dd>
+<dd>Combined pathfind and follow command, or null if path loading fails</dd>
 </dl>
 </section>
 </li>
