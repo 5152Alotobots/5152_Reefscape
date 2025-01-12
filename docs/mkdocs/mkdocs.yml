@@ -11,6 +11,11 @@ nav:
   - Style Guide: styleguide.md
   - Game:
       - Field Constants: reefscape/fieldconstants.md
+      - Commands:
+          - Scoring:
+              - Reef:
+                  - Alignment:
+                      - Align to Reef Branch: reefscape/aligntoreefbranch.md
   - Library:
       - Commands:
           - Swerve:

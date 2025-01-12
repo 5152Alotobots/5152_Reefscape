@@ -29,4 +29,4 @@ The following need to be configured correctly:
 
 ## Reference Documentation
 
-For detailed technical documentation, see the [JavaDoc Reference](/5152_Template/javadoc/frc/alotobots/reefscape/package-summary.html)
+For detailed technical documentation, see the [JavaDoc Reference](/5152_Reefscape/javadoc/frc/alotobots/reefscape/package-summary.html)
