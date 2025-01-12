@@ -3,7 +3,7 @@
 A command that resets the Oculus headset's position tracking to align with a specified pose on the field.
 
 ## Required Subsystems
-- [Oculus Navigation Subsystem](/5152_Template/library/subsystems/vision/questnav)
+- [Oculus Navigation Subsystem](/5152_Reefscape/library/subsystems/vision/questnav)
 
 ## Constructor Parameters
 ```java
@@ -17,4 +17,4 @@ The target pose should be specified in field coordinates.
 
 ## Reference Documentation
 
-[JavaDoc Reference](/5152_Template/javadoc/frc/alotobots/library/subsystems/vision/questnav/commands/ResetPoseCommand.html)
+[JavaDoc Reference](/5152_Reefscape/javadoc/frc/alotobots/library/subsystems/vision/questnav/commands/ResetPoseCommand.html)

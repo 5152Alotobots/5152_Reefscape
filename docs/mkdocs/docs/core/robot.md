@@ -23,9 +23,9 @@ The Robot constructor initializes several key components:
 3. Valid RobotContainer implementation
 
 ### Dependencies
-- [RobotContainer](/5152_Template/core/robotcontainer)
-- [Constants](/5152_Template/core/constants)
+- [RobotContainer](/5152_Reefscape/core/robotcontainer)
+- [Constants](/5152_Reefscape/core/constants)
 - AdvantageKit logging framework
 
 ## JavaDoc Reference
-Complete documentation can be found [here](PROJECT_ROOT/javadoc/frc/alotobots/package-summary.html)
+Complete documentation can be found [here](5152_Reefscape/javadoc/frc/alotobots/package-summary.html)

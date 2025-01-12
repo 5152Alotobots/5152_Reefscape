@@ -4,10 +4,10 @@
 The SwerveDrive subsystem is a sophisticated drive system that enables omnidirectional movement of the robot. It manages four swerve modules (each containing drive and turn motors), handles odometry calculations, and provides autonomous path-following capabilities.
 
 ## Commands that use the subsystem
-- [DefaultDrive Command](/5152_Template/library/commands/swerve/defaultdrive): Provides standard teleoperated control
-- [DriveFacingAngle Command](/5152_Template/library/commands/swerve/drivefacingangle): Maintains a specific robot heading while driving
-- [DriveFacingPose Command](/5152_Template/library/commands/swerve/drivefacingpose): Orients the robot to face a target position while driving
-- [Characterization Commands](/5152_Template/library/commands/swerve/characterization): Used for system identification and calibration
+- [DefaultDrive Command](/5152_Reefscape/library/commands/swerve/defaultdrive): Provides standard teleoperated control
+- [DriveFacingAngle Command](/5152_Reefscape/library/commands/swerve/drivefacingangle): Maintains a specific robot heading while driving
+- [DriveFacingPose Command](/5152_Reefscape/library/commands/swerve/drivefacingpose): Orients the robot to face a target position while driving
+- [Characterization Commands](/5152_Reefscape/library/commands/swerve/characterization): Used for system identification and calibration
 
 ## Configuration Requirements
 
@@ -29,7 +29,7 @@ All configuration is handled through TunerConstants, including:
 - Wheel radius parameters
 - Absolute encoder offsets
 
-See the [JavaDoc Reference](/5152_Template/javadoc/frc/alotobots/library/subsystems/swervedrive/package-summary.html) for detailed configuration options.
+See the [JavaDoc Reference](/5152_Reefscape/javadoc/frc/alotobots/library/subsystems/swervedrive/package-summary.html) for detailed configuration options.
 
 ### Additional Notes
 - Odometry updates run on a separate high-frequency thread

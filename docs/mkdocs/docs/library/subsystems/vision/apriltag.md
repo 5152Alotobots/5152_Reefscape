@@ -51,5 +51,5 @@ The subsystem includes several safeguards for reliable operation:
 - Camera disconnect detection and alerts
 
 ## Related Links
-- [JavaDoc Reference](/5152_Template/javadoc/frc/alotobots/library/subsystems/vision/photonvision/apriltag/package-summary.html)
+- [JavaDoc Reference](/5152_Reefscape/javadoc/frc/alotobots/library/subsystems/vision/photonvision/apriltag/package-summary.html)
 - [PhotonVision Documentation](https://docs.photonvision.org/en/latest/)

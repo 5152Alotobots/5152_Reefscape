@@ -15,9 +15,9 @@ The Constants class provides:
 3. Update tuner constants for drive system configuration
 
 ## Dependencies
-- Robot mode affects initialization in [RobotContainer](/5152_Template/core/robotcontainer)
+- Robot mode affects initialization in [RobotContainer](/5152_Reefscape/core/robotcontainer)
 - CAN IDs must match physical hardware configuration
 - Tuner constants must match drive system hardware
 
 ## JavaDoc Reference
-Complete documentation can be found [here](PROJECT_ROOT/javadoc/frc/alotobots/package-summary.html)
+Complete documentation can be found [here](5152_Reefscape/javadoc/frc/alotobots/package-summary.html)

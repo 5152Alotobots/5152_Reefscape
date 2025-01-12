@@ -16,8 +16,8 @@ The RobotContainer manages all robot subsystems, handling their initialization, 
 ## Configuration Required
 1. Constants.currentMode must be set appropriately for target environment (REAL/SIM/REPLAY)
 2. PathPlanner autonomous routines must be properly configured
-3. Hardware devices must be configured with correct CAN IDs (see [Constants](/5152_Template/core/constants))
+3. Hardware devices must be configured with correct CAN IDs (see [Constants](/5152_Reefscape/core/constants))
 4. Camera configurations must be set in vision constants
 
 ## JavaDoc Reference
-Complete documentation can be found [here](PROJECT_ROOT/javadoc/frc/alotobots/package-summary.html)
+Complete documentation can be found [here](5152_Reefscape/javadoc/frc/alotobots/package-summary.html)

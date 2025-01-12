@@ -41,18 +41,18 @@ public class RobotContainer {
     // IO interfaces
     private final OculusIO oculusIO = new OculusIO();
     private final AprilTagIO aprilTagIO = new AprilTagIO();
-    
+
     // Vision subsystems
     private final OculusSubsystem oculusSubsystem = new OculusSubsystem(oculusIO);
     private final AprilTagSubsystem aprilTagSubsystem = new AprilTagSubsystem(aprilTagIO);
-    
+
     // Create pose sources
     private final OculusPoseSource oculusPoseSource = new OculusPoseSource(oculusSubsystem);
     private final AprilTagPoseSource aprilTagPoseSource = new AprilTagPoseSource(aprilTagSubsystem);
-    
+
     // Auto chooser
     private final LoggedDashboardChooser<Command> autoChooser = new LoggedDashboardChooser<>("Auto");
-    
+
     // Localization fusion
     private final LocalizationFusion localization = new LocalizationFusion(
         poseConsumer,    // Your pose consumer implementation
@@ -109,8 +109,8 @@ localization.requestResetOculusPoseViaAprilTags();
 
 ## 4.5 Documentation & Configuration
 For detailed documentation and configuration options, refer to:
-- [LocalizationFusion Documentation](/5152_Template/library/subsystems/vision/localizationfusion)
-- [OculusSubsystem Documentation](/5152_Template/library/subsystems/vision/oculus)
+- [LocalizationFusion Documentation](/5152_Reefscape/library/subsystems/vision/localizationfusion)
+- [OculusSubsystem Documentation](/5152_Reefscape/library/subsystems/vision/oculus)
 
 ## 4.6 Additional Resources
 - [QuestNav Repository](https://github.com/5152Alotobots/QuestNav)

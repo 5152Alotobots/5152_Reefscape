@@ -15,8 +15,8 @@ Parameters:
 ## Related Commands
 
 The following commands utilize this subsystem:
-- [DriveFacingBestObject](/5152_Template/library/commands/vision/drivefacingbestobject) - Automatically rotates the robot to face detected objects while driving
-- [PathfindToBestObject](/5152_Template/library/commands/vision/pathfindtobestobject) - Autonomously navigates the robot to approach detected objects
+- [DriveFacingBestObject](/5152_Reefscape/library/commands/vision/drivefacingbestobject) - Automatically rotates the robot to face detected objects while driving
+- [PathfindToBestObject](/5152_Reefscape/library/commands/vision/pathfindtobestobject) - Autonomously navigates the robot to approach detected objects
 
 ## Configuration Requirements
 
@@ -44,4 +44,4 @@ The subsystem requires several constants to be configured in the ObjectDetection
 - At least one compatible camera connected and configured
 - WPILib 2024 or newer
 
-For detailed method documentation, refer to the [JavaDoc reference](PROJECT_ROOT/javadoc/frc/alotobots/library/subsystems/vision/photonvision/objectdetection/package-summary.html).
+For detailed method documentation, refer to the [JavaDoc reference](5152_Reefscape/javadoc/frc/alotobots/library/subsystems/vision/photonvision/objectdetection/package-summary.html).
