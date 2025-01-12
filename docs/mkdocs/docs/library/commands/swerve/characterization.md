@@ -4,7 +4,7 @@
 The characterization commands provide system identification capabilities for the swerve drive subsystem. These commands enable precise measurement and calculation of critical system parameters.
 
 ## Required Subsystems
-- [SwerveDriveSubsystem](/5152_Template/library/subsystems/swerve/)
+- [SwerveDriveSubsystem](/5152_Reefscape/library/subsystems/swerve/)
 
 ## Commands
 
@@ -39,4 +39,4 @@ Provides:
 - Robot must start in a known orientation
 
 ## API Reference
-For detailed API documentation, see the [Characterization Commands Javadoc](/5152_Template/javadoc/frc/alotobots/library/commands/swervedrive/characterization/)
+For detailed API documentation, see the [Characterization Commands Javadoc](/5152_Reefscape/javadoc/frc/alotobots/library/commands/swervedrive/characterization/)

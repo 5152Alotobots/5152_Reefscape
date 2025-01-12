@@ -12,8 +12,8 @@ public BlingSubsystem(BlingIO io)
 
 ## Commands Using This Subsystem
 
-- [No Alliance Waiting Command](/5152_Template/library/commands/bling/noalliancewaiting)
-- [Set To Alliance Color Command](/5152_Template/library/commands/bling/settoalliancecolor)
+- [No Alliance Waiting Command](/5152_Reefscape/library/commands/bling/noalliancewaiting)
+- [Set To Alliance Color Command](/5152_Reefscape/library/commands/bling/settoalliancecolor)
 
 ## Configuration Requirements
 
@@ -26,4 +26,4 @@ public BlingSubsystem(BlingIO io)
     - Status LED state (DISABLE_STATUS_LED)
 
 ## Reference Documentation
-[Bling Subsystem Javadoc](/5152_Template/javadoc/frc/alotobots/library/subsystems/bling/package-summary.html)
+[Bling Subsystem Javadoc](/5152_Reefscape/javadoc/frc/alotobots/library/subsystems/bling/package-summary.html)

@@ -18,9 +18,9 @@ The io parameter can be either:
 
 The following commands interact with the Oculus subsystem:
 
-- [Ping Command](/5152_Template/library/commands/questnav/pingcommand) - Tests communication with the headset
-- [Reset Pose Command](/5152_Template/library/commands/questnav/resetposecommand) - Resets the headset's position tracking
-- [Zero Heading Command](/5152_Template/library/commands/questnav/zeroheadingcommand) - Zeros the headset's rotation tracking
+- [Ping Command](/5152_Reefscape/library/commands/questnav/pingcommand) - Tests communication with the headset
+- [Reset Pose Command](/5152_Reefscape/library/commands/questnav/resetposecommand) - Resets the headset's position tracking
+- [Zero Heading Command](/5152_Reefscape/library/commands/questnav/zeroheadingcommand) - Zeros the headset's rotation tracking
 
 ## Required Configuration
 
@@ -33,4 +33,4 @@ The following commands interact with the Oculus subsystem:
 
 ## Reference Documentation
 
-Full JavaDoc reference: [Package Documentation](/5152_Template/javadoc/frc/alotobots/library/subsystems/vision/questnav/package-summary.html)
+Full JavaDoc reference: [Package Documentation](/5152_Reefscape/javadoc/frc/alotobots/library/subsystems/vision/questnav/package-summary.html)

@@ -17,7 +17,7 @@ The OI class handles:
 
 ## Dependencies
 - WPILib CommandXboxController for input handling
-- Command bindings referenced in [RobotContainer](/5152_Template/core/robotcontainer)
+- Command bindings referenced in [RobotContainer](/5152_Reefscape/core/robotcontainer)
 
 ## JavaDoc Reference
-Complete documentation can be found [here](PROJECT_ROOT/javadoc/frc/alotobots/package-summary.html)
+Complete documentation can be found [here](5152_Reefscape/javadoc/frc/alotobots/package-summary.html)

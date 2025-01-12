@@ -29,5 +29,5 @@ Xbox Controller mapping for primary robot control.
 - Raw controller access available through OI class methods
 
 ## Related Documentation
-- [Operator Interface](/5152_Template/core/oi)
-- [Controls Constants](/5152_Template/core/constants)
+- [Operator Interface](/5152_Reefscape/core/oi)
+- [Controls Constants](/5152_Reefscape/core/constants)

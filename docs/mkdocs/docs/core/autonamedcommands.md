@@ -22,4 +22,4 @@ put("COMMAND_NAME", new YourCommand());
 Any command that needs to be referenced by name in a PathPlanner path must be registered through this utility.
 
 ## JavaDoc Reference
-Complete documentation can be found [here](PROJECT_ROOT/javadoc/frc/alotobots/package-summary.html)
+Complete documentation can be found [here](5152_Reefscape/javadoc/frc/alotobots/package-summary.html)

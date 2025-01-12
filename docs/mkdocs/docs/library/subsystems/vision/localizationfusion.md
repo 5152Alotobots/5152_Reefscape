@@ -23,11 +23,11 @@ public LocalizationFusion(
 
 The following commands interact with the LocalizationFusion subsystem:
 
-- [RequestPositionResetViaTags](/5152_Template/library/commands/vision/localizationfusion/requestpositionresetviatags): Requests a position reset using AprilTag detection
+- [RequestPositionResetViaTags](/5152_Reefscape/library/commands/vision/localizationfusion/requestpositionresetviatags): Requests a position reset using AprilTag detection
 
 ## Configuration
 
-The subsystem behavior can be tuned through several constant groups in [LocalizationFusionConstants](/5152_Template/library/subsystems/vision/localizationfusion/LocalizationFusionConstants.java):
+The subsystem behavior can be tuned through several constant groups in [LocalizationFusionConstants](/5152_Reefscape/library/subsystems/vision/localizationfusion/LocalizationFusionConstants.java):
 
 ### Validation Thresholds
 - `APRILTAG_VALIDATION_THRESHOLD`: Maximum allowed difference between AprilTag and Quest poses during normal operation. Used to detect when the Quest tracking might be drifting and needs correction.
@@ -56,4 +56,4 @@ The subsystem behavior can be tuned through several constant groups in [Localiza
 - `QUEST_INIT_GRACE_MULTIPLIER`: Factor that extends the initialization timeout if needed. Provides flexibility in initialization timing for challenging conditions.
 
 ## JavaDoc Reference
-[Package Documentation](/5152_Template/library/subsystems/vision/localizationfusion/package-summary.html)
+[Package Documentation](/5152_Reefscape/library/subsystems/vision/localizationfusion/package-summary.html)

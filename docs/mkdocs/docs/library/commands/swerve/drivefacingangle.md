@@ -4,7 +4,7 @@
 The DriveFacingAngle command implements sophisticated angle-controlled driving capabilities, allowing the robot to maintain a specific heading while moving. This command utilizes a ProfiledPIDController for precise angle management.
 
 ## Required Subsystems
-- [SwerveDriveSubsystem](/5152_Template/library/subsystems/swerve/)
+- [SwerveDriveSubsystem](/5152_Reefscape/library/subsystems/swerve/)
 
 ## Constructor Parameters
 - `swerveDriveSubsystem`: The SwerveDrive subsystem instance this command will control
@@ -17,4 +17,4 @@ The following must be configured in TunerConstants:
 - Profile constraints for smooth angle transitions
 
 ## API Reference
-For detailed API documentation, see the [DriveFacingAngle Javadoc](/5152_Template/javadoc/frc/alotobots/library/commands/swervedrive/DriveFacingAngle.html)
+For detailed API documentation, see the [DriveFacingAngle Javadoc](/5152_Reefscape/javadoc/frc/alotobots/library/commands/swervedrive/DriveFacingAngle.html)

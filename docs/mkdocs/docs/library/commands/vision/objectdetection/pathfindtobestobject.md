@@ -3,8 +3,8 @@
 A command that automatically navigates the robot to approach detected game objects. This command handles full autonomous navigation to game elements, calculating appropriate approach positions while accounting for robot dimensions.
 
 ## Required Subsystems
-- [Object Detection Subsystem](/5152_Template/library/subsystems/vision/objectdetection)
-- [Swerve Drive Subsystem](/5152_Template/library/subsystems/swerve)
+- [Object Detection Subsystem](/5152_Reefscape/library/subsystems/vision/objectdetection)
+- [Swerve Drive Subsystem](/5152_Reefscape/library/subsystems/swerve)
 
 ## Constructor Parameters
 
@@ -41,4 +41,4 @@ The command requires proper configuration of:
 - Generates and executes path to approach position
 - Command times out after 0.1 seconds but generated path continues executing
 
-For detailed method documentation, refer to the [JavaDoc reference](PROJECT_ROOT/javadoc/frc/alotobots/library/subsystems/vision/photonvision/objectdetection/commands/package-summary.html).
+For detailed method documentation, refer to the [JavaDoc reference](5152_Reefscape/javadoc/frc/alotobots/library/subsystems/vision/photonvision/objectdetection/commands/package-summary.html).
