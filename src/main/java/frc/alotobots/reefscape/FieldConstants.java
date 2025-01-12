@@ -75,9 +75,9 @@ public class FieldConstants {
 
   /** Enum representing the different height levels for branches. */
   public enum Level {
-    L2, // 2'7⅞" height, 35° angle
-    L3, // 3'11⅝" height, 35° angle
-    L4 // 6' height, vertical
+    L2,
+    L3,
+    L4
   }
 
   /** Internal class representing a field position that can be mirrored between alliances. */

@@ -10,11 +10,9 @@
 *
 * Source code must be publicly available on GitHub or an alternative web accessible site
 */
-package frc.alotobots.reefscape;
+package frc.alotobots.reefscape.commands.scoring.reef.alignment.constants;
 
-import edu.wpi.first.math.util.Units;
-
-public class RobotConstants {
-  public static final double ROBOT_WIDTH = Units.inchesToMeters(30);
-  public static final double ROBOT_LENGTH = Units.inchesToMeters(30);
+public class AlignToReefBranchConstants {
+  public static final double ALIGNMENT_RADIUS = 1.0; // 1 meter radius
+  public static final double POSITION_TOLERANCE = 0.05; // 5cm position tolerance
 }

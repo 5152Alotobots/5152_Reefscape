@@ -28,7 +28,7 @@ public class OI {
   public static final double DEADBAND = 0.1;
 
   /** The primary driver's controller. Used for main robot control functions. */
-  private static final CommandXboxController driverController = new CommandXboxController(0);
+  public static final CommandXboxController driverController = new CommandXboxController(0);
 
   /**
    * Gets the forward/backward translation input from the driver's controller.

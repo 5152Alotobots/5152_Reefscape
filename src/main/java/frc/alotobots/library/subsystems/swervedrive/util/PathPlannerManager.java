@@ -94,16 +94,38 @@ public class PathPlannerManager {
         target, Constants.tunerConstants.getPathfindingConstraints(), velocity);
   }
 
+  /** Enum representing which human player station we're approaching from */
+  public enum HPStation {
+    LEFT,
+    RIGHT
+  }
+
   /**
    * Gets the path name for approaching a specific reef branch at a given level.
    *
    * @param branch Target branch
    * @param level Target level
+   * @param station Which human player station we're approaching from
    * @return Path name for the approach
    */
-  private String getReefPathName(FieldConstants.ReefBranch branch, FieldConstants.Level level) {
-    // Convention: "BranchApproach_[Branch]_[Level]"
-    return String.format("BranchApproach_%s_%s", branch, level);
+  private String getReefPathName(
+      FieldConstants.ReefBranch branch, FieldConstants.Level level, HPStation station) {
+    return String.format(
+        "BranchApproach_%s_%s_%s",
+        branch,
+        level,
+        station.toString().charAt(0) + station.toString().substring(1).toLowerCase());
+  }
+
+  /**
+   * Determines which human player station to approach from based on current robot pose.
+   *
+   * @return The closest human player station
+   */
+  private HPStation determineClosestStation() {
+    // Get current pose from drive subsystem
+    Pose2d currentPose = driveSubsystem.getPose();
+    return (currentPose.getY() > 4.0) ? HPStation.LEFT : HPStation.RIGHT;
   }
 
   /**
@@ -113,9 +135,11 @@ public class PathPlannerManager {
    * @param level Target level
    * @return Combined pathfind and follow command, or null if path loading fails
    */
-  public Command getReefBranchCommand(
+  public Command getPathfindToReefBranchCommand(
       FieldConstants.ReefBranch branch, FieldConstants.Level level) {
-    String pathName = getReefPathName(branch, level);
+    HPStation station = determineClosestStation();
+    String pathName = getReefPathName(branch, level, station);
+
     try {
       PathPlannerPath path = PathPlannerPath.fromPathFile(pathName);
       return AutoBuilder.pathfindThenFollowPath(
@@ -125,23 +149,5 @@ public class PathPlannerManager {
       System.err.println("Failed to load path: " + pathName);
       return null;
     }
-  }
-
-  /**
-   * Gets maximum linear speed capability.
-   *
-   * @return Maximum speed in meters per second
-   */
-  public double getMaxLinearSpeedMetersPerSec() {
-    return driveSubsystem.getMaxLinearSpeedMetersPerSec();
-  }
-
-  /**
-   * Gets maximum angular speed capability.
-   *
-   * @return Maximum angular speed in radians per second
-   */
-  public double getMaxAngularSpeedRadPerSec() {
-    return driveSubsystem.getMaxAngularSpeedRadPerSec();
   }
 }
