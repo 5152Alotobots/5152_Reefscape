@@ -12,6 +12,8 @@
 */
 package frc.alotobots.library.subsystems.swervedrive.util;
 
+import static frc.alotobots.reefscape.FieldConstants.FIELD_WIDTH;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.pathfinding.Pathfinding;
@@ -126,7 +128,7 @@ public class PathPlannerManager {
   private HPStation determineClosestStation() {
     // Get current pose from drive subsystem
     Pose2d currentPose = driveSubsystem.getPose();
-    return (currentPose.getY() > 4.0) ? HPStation.LEFT : HPStation.RIGHT;
+    return (currentPose.getY() > (FIELD_WIDTH / 2.0)) ? HPStation.LEFT : HPStation.RIGHT;
   }
 
   /**

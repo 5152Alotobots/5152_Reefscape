@@ -28,6 +28,9 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class FieldConstants {
 
+  public static final double FIELD_LENGTH = 17.548; // Meters
+  public static final double FIELD_WIDTH = 8.052;
+
   /**
    * Enum representing the available reef branches on the field, labeled A through L in
    * counterclockwise order.
