@@ -12,7 +12,10 @@
 */
 package frc.alotobots.library.subsystems.swervedrive.util;
 
+import static frc.alotobots.reefscape.FieldConstants.FIELD_WIDTH;
+
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.pathfinding.Pathfinding;
 import com.pathplanner.lib.util.PathPlannerLogging;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -20,9 +23,11 @@ import edu.wpi.first.units.measure.LinearVelocity;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import frc.alotobots.AutoNamedCommands;
 import frc.alotobots.Constants;
 import frc.alotobots.library.subsystems.swervedrive.SwerveDriveSubsystem;
+import frc.alotobots.reefscape.FieldConstants;
 import frc.alotobots.util.LocalADStarAK;
 import org.littletonrobotics.junction.Logger;
 
@@ -92,21 +97,60 @@ public class PathPlannerManager {
         target, Constants.tunerConstants.getPathfindingConstraints(), velocity);
   }
 
-  /**
-   * Gets maximum linear speed capability.
-   *
-   * @return Maximum speed in meters per second
-   */
-  public double getMaxLinearSpeedMetersPerSec() {
-    return driveSubsystem.getMaxLinearSpeedMetersPerSec();
+  /** Enum representing which human player station we're approaching from */
+  public enum HPStation {
+    LEFT,
+    RIGHT
   }
 
   /**
-   * Gets maximum angular speed capability.
+   * Gets the path name for approaching a specific reef branch at a given level.
    *
-   * @return Maximum angular speed in radians per second
+   * @param branch Target branch
+   * @param level Target level
+   * @param station Which human player station we're approaching from
+   * @return Path name for the approach
    */
-  public double getMaxAngularSpeedRadPerSec() {
-    return driveSubsystem.getMaxAngularSpeedRadPerSec();
+  private String getReefPathName(
+      FieldConstants.ReefBranch branch, FieldConstants.Level level, HPStation station) {
+    return String.format(
+        "BranchApproach_%s_%s_%s",
+        branch,
+        level,
+        station.toString().charAt(0) + station.toString().substring(1).toLowerCase());
+  }
+
+  /**
+   * Determines which human player station to approach from based on current robot pose.
+   *
+   * @return The closest human player station
+   */
+  private HPStation determineClosestStation() {
+    // Get current pose from drive subsystem
+    Pose2d currentPose = driveSubsystem.getPose();
+    return (currentPose.getY() > (FIELD_WIDTH / 2.0)) ? HPStation.LEFT : HPStation.RIGHT;
+  }
+
+  /**
+   * Creates a command that will pathfind to and then follow a pre-made path to the target branch.
+   *
+   * @param branch Target branch
+   * @param level Target level
+   * @return Combined pathfind and follow command, or null if path loading fails
+   */
+  public Command getPathfindToReefBranchCommand(
+      FieldConstants.ReefBranch branch, FieldConstants.Level level) {
+    HPStation station = determineClosestStation();
+    String pathName = getReefPathName(branch, level, station);
+
+    try {
+      PathPlannerPath path = PathPlannerPath.fromPathFile(pathName);
+      return AutoBuilder.pathfindThenFollowPath(
+          path, Constants.tunerConstants.getPathfindingConstraints());
+    } catch (Exception e) {
+      // Log the error
+      System.err.println("Failed to load path: " + pathName);
+      return new PrintCommand("Failed to load Path! Not following path!");
+    }
   }
 }
