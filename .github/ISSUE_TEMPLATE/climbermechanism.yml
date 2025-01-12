@@ -20,66 +20,75 @@ body:
     validations:
       required: true
 
-  - type: dropdown
-    id: issue-type
+  - type: textarea
+    id: objective-issue
     attributes:
-      label: Issue Type
-      options:
-        - Bug/Problem
-        - Enhancement
-        - Design Review
-        - Testing Required
-        - Documentation Update
+      label: Objective/Issue
+      description: Clear, single-sentence description of the problem or needed feature
+      placeholder: "Example: Robot swings excessively after engaging with deep CAGE"
     validations:
       required: true
 
   - type: textarea
-    id: current-behavior
+    id: proposed-solution
     attributes:
-      label: Current Behavior
-      description: What's currently happening with the mechanism?
-      placeholder: "Example: Robot swings after engaging with CAGE"
-    validations:
-      required: true
-
-  - type: textarea
-    id: expected-behavior
-    attributes:
-      label: Expected Behavior
-      description: What should be happening?
-      placeholder: "Example: Robot should maintain stable position after climb"
-    validations:
-      required: true
-
-  - type: textarea
-    id: reproduction-steps
-    attributes:
-      label: Steps to Reproduce
-      description: How can we reproduce this issue?
+      label: Proposed Solution
+      description: Describe your proposed approach to solve this issue
       placeholder: |
-        1. Position robot at CAGE
-        2. Initiate climb sequence
-        3. Observe stability
-        4. Test weight distribution
-
-  - type: dropdown
-    id: test-environment
-    attributes:
-      label: Test Environment
-      options:
-        - Practice Bot
-        - Competition Bot
-        - CAD/Design
-        - Simulation
+        - Technical approach
+        - Design considerations
+        - Implementation steps
+        - Required resources
     validations:
       required: true
 
-  - type: input
-    id: testing-date
+  - type: textarea
+    id: required-kpis
     attributes:
-      label: Testing Date
-      description: When was this last tested?
-      placeholder: "MM/DD/YYYY"
+      label: Required KPIs
+      description: List measurable requirements for success
+      placeholder: |
+        - Swing angle < X degrees
+        - Climb time < Y seconds
+        - Stability margin > Z%
+    validations:
+      required: true
+
+  - type: textarea
+    id: prerequisites
+    attributes:
+      label: Prerequisites
+      description: List required systems and setup needed
+      placeholder: |
+        - Climb mechanism
+        - Stability systems
+        - Control requirements
+    validations:
+      required: true
+
+  - type: textarea
+    id: success-metrics
+    attributes:
+      label: Success Metrics
+      description: Specific measurable outcomes to determine completion
+      placeholder: |
+        - Maximum swing < X degrees
+        - Y% successful climbs
+        - Climb completed in < Z seconds
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority Level
+      options:
+        - P0-Critical
+        - P1-High
+        - P2-Medium
+        - P3-Low
+    validations:
+      required: true
 
   - type: textarea
     id: additional-info

@@ -1,5 +1,5 @@
 name: Bug Report
-description: File a bug report for any system
+description: File a bug report (only use this template if your bug report doesn't fit into any mechanism-specific templates)
 title: "[BUG]: "
 labels: ["bug"]
 body:
@@ -7,16 +7,14 @@ body:
     attributes:
       value: |
         Thanks for taking the time to fill out this bug report!
+        
+        NOTE: Please only use this template if your bug report doesn't fit into any of the mechanism-specific templates (CORAL, ALGAE, Climber, Vision). For mechanism-specific bugs, use the appropriate mechanism template instead.
 
   - type: dropdown
     id: subsystem
     attributes:
       label: Subsystem
       options:
-        - CORAL Mechanisms
-        - ALGAE Mechanisms
-        - Climber
-        - Vision
         - Drive Train
         - Controls
         - Dashboard
@@ -25,47 +23,77 @@ body:
       required: true
 
   - type: textarea
-    id: what-happened
+    id: objective-issue
     attributes:
-      label: What happened?
-      description: What actually happened versus what you expected to happen?
-      placeholder: "Describe the bug..."
+      label: Objective/Issue
+      description: Clear, single-sentence description of the bug
+      placeholder: "Example: Drive train loses encoder position during high-speed turns"
     validations:
       required: true
 
   - type: textarea
-    id: reproduction-steps
+    id: proposed-solution
     attributes:
-      label: Steps to Reproduce
-      description: How do we reproduce this issue?
+      label: Proposed Solution
+      description: Describe your proposed approach to fix this issue
       placeholder: |
-        1. Go to '...'
-        2. Click on '....'
-        3. See error
+        - Technical approach
+        - Fix methodology
+        - Implementation steps
+        - Required changes
+    validations:
+      required: true
+
+  - type: textarea
+    id: required-kpis
+    attributes:
+      label: Required KPIs
+      description: List measurable requirements for success
+      placeholder: |
+        - Error rate reduction
+        - Performance improvements
+        - Stability metrics
+    validations:
+      required: true
+
+  - type: textarea
+    id: prerequisites
+    attributes:
+      label: Prerequisites
+      description: List required systems and setup needed
+      placeholder: |
+        - Test environment
+        - Required hardware
+        - Software dependencies
+    validations:
+      required: true
+
+  - type: textarea
+    id: success-metrics
+    attributes:
+      label: Success Metrics
+      description: Specific measurable outcomes to determine completion
+      placeholder: |
+        - Bug reproduction rate
+        - Fix verification steps
+        - Performance restoration
     validations:
       required: true
 
   - type: dropdown
-    id: environment
+    id: priority
     attributes:
-      label: Environment
+      label: Priority Level
       options:
-        - Practice Bot
-        - Competition Bot
-        - Development
-        - Simulation
+        - P0-Critical
+        - P1-High
+        - P2-Medium
+        - P3-Low
     validations:
       required: true
-
-  - type: textarea
-    id: logs
-    attributes:
-      label: Relevant log output
-      description: Please copy and paste any relevant log output
-      render: shell
 
   - type: textarea
     id: additional-info
     attributes:
       label: Additional Information
-      description: Add any other context about the problem here
+      description: Any other context, logs, images, or videos?

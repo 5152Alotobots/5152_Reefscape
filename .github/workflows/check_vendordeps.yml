@@ -1,5 +1,4 @@
 name: Check Dependencies
-
 on:
   schedule:
     - cron: '0 12 */2 * *'  # Run at noon UTC every other day
@@ -21,19 +20,22 @@ jobs:
 
       - name: Check for updates
         id: check
-        run: python .github/scripts/check_vendordeps.py
+        run: |
+          # Run script and capture only the JSON output
+          UPDATES_OUTPUT=$(python .github/scripts/check_vendordeps.py 2> >(tee check_deps.log >&2))
+          echo "UPDATES_OUTPUT=$UPDATES_OUTPUT" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Handle Update Issues
-        if: steps.check.outputs.has_updates == 'true'
+        if: fromJSON(steps.check.outputs.UPDATES_OUTPUT).has_updates
         uses: actions/github-script@v6
         env:
-          UPDATES_JSON: ${{ steps.check.outputs.updates }}
+          UPDATES_JSON: ${{ steps.check.outputs.UPDATES_OUTPUT }}
         with:
           script: |
             try {
-              const updates = JSON.parse(process.env.UPDATES_JSON);
+              const updates = JSON.parse(process.env.UPDATES_JSON).updates;
             
               // Search for existing open issues
               const issues = await github.rest.issues.listForRepo({
@@ -58,16 +60,13 @@ jobs:
                 body += `- Source: ${update.source}\n`;
             
                 if (update.url) {
-                  body += `- [View Release](${update.url})\n`;
+                  // Sanitize URL just in case there are any fragments with @mentions
+                  const sanitizedUrl = update.url.replace(/@[\w-]+(?:\/[\w-]+)?/g, '[mentioned]');
+                  body += `- [View Release](${sanitizedUrl})\n`;
                 }
             
                 if (update.name === 'WPILib') {
                   body += '\n⚠️ **Note**: Please use WPILib VS Code tools for actual updates\n';
-                  if (update.notes) {
-                    body += '\n<details><summary>Release Notes</summary>\n\n';
-                    body += update.notes;
-                    body += '\n</details>\n';
-                  }
                 }
             
                 body += '\n';
