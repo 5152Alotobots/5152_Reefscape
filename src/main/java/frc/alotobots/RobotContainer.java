@@ -26,7 +26,6 @@ import frc.alotobots.library.subsystems.swervedrive.commands.*;
 import frc.alotobots.library.subsystems.swervedrive.io.*;
 import frc.alotobots.library.subsystems.swervedrive.util.PathPlannerManager;
 import frc.alotobots.library.subsystems.vision.localizationfusion.LocalizationFusion;
-import frc.alotobots.library.subsystems.vision.localizationfusion.commands.RequestPositionResetViaTags;
 import frc.alotobots.library.subsystems.vision.oculus.OculusSubsystem;
 import frc.alotobots.library.subsystems.vision.oculus.io.*;
 import frc.alotobots.library.subsystems.vision.oculus.util.OculusPoseSource;
@@ -38,6 +37,8 @@ import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.Obje
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.commands.*;
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.constants.ObjectDetectionConstants;
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.io.*;
+import frc.alotobots.reefscape.FieldConstants;
+import frc.alotobots.reefscape.commands.scoring.reef.alignment.AlignToReefBranch;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 public class RobotContainer {
@@ -170,7 +171,9 @@ public class RobotContainer {
     pathfindToBestObjectButton.onTrue(
         new PathfindToBestObject(
             objectDetectionSubsystem, swerveDriveSubsystem, pathPlannerManager, NOTE));
-    testButton.onTrue(new RequestPositionResetViaTags(localizationFusion).withTimeout(1));
+    testButton.toggleOnTrue(
+        new AlignToReefBranch(
+            swerveDriveSubsystem, FieldConstants.ReefBranch.A, FieldConstants.Level.L4));
   }
 
   private void configureAutoChooser() {
