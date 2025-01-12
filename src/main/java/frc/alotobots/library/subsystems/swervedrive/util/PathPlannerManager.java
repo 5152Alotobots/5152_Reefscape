@@ -21,6 +21,7 @@ import edu.wpi.first.units.measure.LinearVelocity;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import frc.alotobots.AutoNamedCommands;
 import frc.alotobots.Constants;
 import frc.alotobots.library.subsystems.swervedrive.SwerveDriveSubsystem;
@@ -147,7 +148,7 @@ public class PathPlannerManager {
     } catch (Exception e) {
       // Log the error
       System.err.println("Failed to load path: " + pathName);
-      return null;
+      return new PrintCommand("Failed to load Path! Not following path!");
     }
   }
 }
