@@ -39,6 +39,7 @@ import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.cons
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.io.*;
 import frc.alotobots.reefscape.FieldConstants;
 import frc.alotobots.reefscape.commands.scoring.reef.alignment.AlignToReefBranch;
+import frc.alotobots.reefscape.commands.scoring.reef.alignment.util.BranchSelectionSubsystem;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 public class RobotContainer {
@@ -46,9 +47,12 @@ public class RobotContainer {
   private final OculusSubsystem oculusSubsystem;
   private final AprilTagSubsystem aprilTagSubsystem;
   private final LocalizationFusion localizationFusion;
+  private final OculusPoseSource oculusPoseSource;
+  private final AprilTagPoseSource aprilTagPoseSource;
   private final ObjectDetectionSubsystem objectDetectionSubsystem;
   private final BlingSubsystem blingSubsystem;
   private final PathPlannerManager pathPlannerManager;
+  private final BranchSelectionSubsystem branchSelectionSubsystem;
   private LoggedDashboardChooser<Command> autoChooser;
 
   public RobotContainer() {
@@ -65,6 +69,7 @@ public class RobotContainer {
                 new ModuleIOTalonFX(ModulePosition.BACK_RIGHT.index));
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         configureAutoChooser();
+        branchSelectionSubsystem = new BranchSelectionSubsystem();
 
         oculusSubsystem = new OculusSubsystem(new OculusIOReal());
         aprilTagSubsystem =
@@ -73,8 +78,8 @@ public class RobotContainer {
                 new AprilTagIOPhotonVision(AprilTagConstants.CAMERA_CONFIGS[1]));
 
         // Create pose sources
-        OculusPoseSource oculusPoseSource = new OculusPoseSource(oculusSubsystem);
-        AprilTagPoseSource aprilTagPoseSource = new AprilTagPoseSource(aprilTagSubsystem);
+        oculusPoseSource = new OculusPoseSource(oculusSubsystem);
+        aprilTagPoseSource = new AprilTagPoseSource(aprilTagSubsystem);
 
         localizationFusion =
             new LocalizationFusion(
@@ -101,6 +106,8 @@ public class RobotContainer {
                 new ModuleIOSim(ModulePosition.BACK_RIGHT.index));
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         configureAutoChooser();
+
+        branchSelectionSubsystem = new BranchSelectionSubsystem();
 
         oculusSubsystem = new OculusSubsystem(new OculusIOSim());
         aprilTagSubsystem =
@@ -136,6 +143,8 @@ public class RobotContainer {
                 new ModuleIO() {});
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         configureAutoChooser();
+
+        branchSelectionSubsystem = new BranchSelectionSubsystem();
 
         oculusSubsystem = new OculusSubsystem(new OculusIO() {});
         aprilTagSubsystem = new AprilTagSubsystem(new AprilTagIO() {}, new AprilTagIO() {});
@@ -174,6 +183,15 @@ public class RobotContainer {
     testButton.toggleOnTrue(
         new AlignToReefBranch(
             swerveDriveSubsystem, FieldConstants.ReefBranch.A, FieldConstants.Level.L4));
+
+    // Auto Cycle Reef
+    cycleSelectedBranchRightButton.onTrue((branchSelectionSubsystem.nextBranch()));
+    cycleSelectedBranchLeftButton.onTrue((branchSelectionSubsystem.previousBranch()));
+    cycleLevelUpButton.onTrue((branchSelectionSubsystem.nextLevel()));
+    cycleLevelDownButton.onTrue(branchSelectionSubsystem.previousLevel());
+
+    // testButton2.onTrue(branchSelectionSubsystem.getPathfindingCommand());
+    testButton2.onTrue(branchSelectionSubsystem.getPathfindingCommand());
   }
 
   private void configureAutoChooser() {

@@ -121,6 +121,17 @@ public class PathPlannerManager {
   }
 
   /**
+   * Gets the path name for approaching a specific reef branch at a given level.
+   *
+   * @param branch Target branch
+   * @param level Target level
+   * @return Path name for the approach
+   */
+  private String getReefPathName(FieldConstants.ReefBranch branch, FieldConstants.Level level) {
+    return String.format("BranchApproach_%s_%s", branch, level);
+  }
+
+  /**
    * Determines which human player station to approach from based on current robot pose.
    *
    * @return The closest human player station
@@ -136,12 +147,19 @@ public class PathPlannerManager {
    *
    * @param branch Target branch
    * @param level Target level
+   * @param distinguishSide Whether to run a different path depending on what station you are coming
+   *     from
    * @return Combined pathfind and follow command, or null if path loading fails
    */
   public Command getPathfindToReefBranchCommand(
-      FieldConstants.ReefBranch branch, FieldConstants.Level level) {
-    HPStation station = determineClosestStation();
-    String pathName = getReefPathName(branch, level, station);
+      FieldConstants.ReefBranch branch, FieldConstants.Level level, boolean distinguishSide) {
+    String pathName;
+    if (distinguishSide) {
+      HPStation station = determineClosestStation();
+      pathName = getReefPathName(branch, level, station);
+    } else {
+      pathName = getReefPathName(branch, level);
+    }
 
     try {
       PathPlannerPath path = PathPlannerPath.fromPathFile(pathName);
@@ -150,7 +168,7 @@ public class PathPlannerManager {
     } catch (Exception e) {
       // Log the error
       System.err.println("Failed to load path: " + pathName);
-      return new PrintCommand("Failed to load Path! Not following path!");
+      return new PrintCommand("Failed to load Path! " + pathName + " Not following path!");
     }
   }
 }

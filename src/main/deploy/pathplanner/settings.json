@@ -4,6 +4,7 @@
   "holonomicMode": true,
   "pathFolders": [
     "HoloTest",
+    "BranchApproach",
     "RotationTest",
     "StraightTest"
   ],

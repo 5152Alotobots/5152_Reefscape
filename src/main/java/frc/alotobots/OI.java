@@ -86,4 +86,16 @@ public class OI {
 
   /** A temporary test button. */
   public static Trigger testButton2 = driverController.x();
+
+  /** Cycles the selected branch one to the left */
+  public static Trigger cycleSelectedBranchLeftButton = driverController.povLeft();
+
+  /** Cycles the selected branch one to the right */
+  public static Trigger cycleSelectedBranchRightButton = driverController.povRight();
+
+  /** Cycles the branch level up once */
+  public static Trigger cycleLevelUpButton = driverController.povUp();
+
+  /** Cycles the branch level down once */
+  public static Trigger cycleLevelDownButton = driverController.povDown();
 }
