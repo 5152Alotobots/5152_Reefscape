@@ -144,7 +144,7 @@ public class AlignToReefBranch extends Command {
       ChassisSpeeds speeds =
           controller.calculateRobotRelativeSpeeds(currentPose, targetTrajectoryState);
 
-      swerveDrive.runVelocity(speeds);
+      swerveDrive.runVelocityWithSetpointGen(speeds);
     } else {
       swerveDrive.stop();
       Logger.recordOutput("Commands/AlignToReefBranch/Status", "Outside Radius");
