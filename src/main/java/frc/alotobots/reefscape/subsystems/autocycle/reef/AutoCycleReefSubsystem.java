@@ -10,7 +10,7 @@
 *
 * Source code must be publicly available on GitHub or an alternative web accessible site
 */
-package frc.alotobots.reefscape.commands.scoring.reef.alignment.util;
+package frc.alotobots.reefscape.subsystems.autocycle.reef;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.PathPlannerPath;
@@ -20,13 +20,16 @@ import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.alotobots.Constants;
 import frc.alotobots.reefscape.FieldConstants;
+import lombok.Getter;
 import org.littletonrobotics.junction.Logger;
 
-public class BranchSelectionSubsystem extends SubsystemBase {
+public class AutoCycleReefSubsystem extends SubsystemBase {
+  @Getter
   private FieldConstants.ReefBranch selectedBranch;
+  @Getter
   private FieldConstants.Level selectedLevel;
 
-  public BranchSelectionSubsystem() {
+  public AutoCycleReefSubsystem() {
     selectedBranch = FieldConstants.ReefBranch.A; // Default to first branch
     selectedLevel = FieldConstants.Level.L2; // Default to lowest level
   }
@@ -36,14 +39,6 @@ public class BranchSelectionSubsystem extends SubsystemBase {
     Logger.recordOutput("BranchSelection/CurrentBranch", selectedBranch.name());
     Logger.recordOutput("BranchSelection/CurrentLevel", selectedLevel.name());
     Logger.recordOutput("BranchSelection/CurrentPath", getSelectedPathName());
-  }
-
-  public FieldConstants.ReefBranch getSelectedBranch() {
-    return selectedBranch;
-  }
-
-  public FieldConstants.Level getSelectedLevel() {
-    return selectedLevel;
   }
 
   public void cycleBranchForward() {
@@ -70,31 +65,19 @@ public class BranchSelectionSubsystem extends SubsystemBase {
     selectedLevel = FieldConstants.Level.values()[nextOrdinal];
   }
 
-  private String getSelectedPathName() {
-    // Get the current state
-    String pathName =
-        String.format("BranchApproach_%s_%s", selectedBranch.name(), selectedLevel.name());
-
-    Logger.recordOutput("BranchSelection/RequestedPath", pathName);
-    return pathName;
+  /**
+   * Gets the path name for approaching a specific reef branch at a given level.
+   *
+   * @param branch Target branch
+   * @param level Target level
+   * @return Path name for the approach
+   */
+  private String getReefPathName(FieldConstants.ReefBranch branch, FieldConstants.Level level) {
+    return String.format("BranchApproach_%s_%s", branch, level);
   }
 
-  public Command getPathfindingCommand() {
-    return new InstantCommand(
-        () -> {
-          String pathName = getSelectedPathName();
-          try {
-            PathPlannerPath path = PathPlannerPath.fromPathFile(pathName);
-            Command pathCommand =
-                AutoBuilder.pathfindThenFollowPath(
-                    path, Constants.tunerConstants.getPathfindingConstraints());
-            pathCommand.schedule(); // Schedule the pathfinding command immediately
-          } catch (Exception e) {
-            String errorMessage = "Failed to load path: " + pathName;
-            Logger.recordOutput("BranchSelection/Error", errorMessage);
-            new PrintCommand(errorMessage + " Not following path!").schedule();
-          }
-        });
+  public String getSelectedPathName() {
+    return getReefPathName(selectedBranch, selectedLevel);
   }
 
   // Commands for binding to controller

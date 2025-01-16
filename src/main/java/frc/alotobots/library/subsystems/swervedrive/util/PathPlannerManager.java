@@ -48,18 +48,20 @@ public class PathPlannerManager {
     configurePathPlanner();
   }
 
-  /** Configures PathPlanner with necessary callbacks and settings. */
+  /**
+   * Configures PathPlanner with necessary callbacks and settings.
+   */
   private void configurePathPlanner() {
     // Configure AutoBuilder for PathPlanner
     AutoBuilder.configure(
-        driveSubsystem::getPose,
-        driveSubsystem::setPose,
-        driveSubsystem::getChassisSpeeds,
-        driveSubsystem::runVelocity,
-        Constants.tunerConstants.getHolonomicDriveController(),
-        Constants.tunerConstants.getPathPlannerConfig(),
-        () -> DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red,
-        driveSubsystem);
+            driveSubsystem::getPose,
+            driveSubsystem::setPose,
+            driveSubsystem::getChassisSpeeds,
+            driveSubsystem::runVelocity,
+            Constants.tunerConstants.getHolonomicDriveController(),
+            Constants.tunerConstants.getPathPlannerConfig(),
+            () -> DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red,
+            driveSubsystem);
 
     // Setup named commands for autonomous routines
     AutoNamedCommands.setupNamedCommands();
@@ -71,104 +73,39 @@ public class PathPlannerManager {
     configureLogging();
   }
 
-  /** Configures PathPlanner logging callbacks. */
+  /**
+   * Configures PathPlanner logging callbacks.
+   */
   private void configureLogging() {
     PathPlannerLogging.setLogActivePathCallback(
-        (activePath) -> {
-          Logger.recordOutput(
-              "Odometry/Trajectory", activePath.toArray(new Pose2d[activePath.size()]));
-        });
+            (activePath) -> {
+              Logger.recordOutput(
+                      "Odometry/Trajectory", activePath.toArray(new Pose2d[activePath.size()]));
+            });
 
     PathPlannerLogging.setLogTargetPoseCallback(
-        (targetPose) -> {
-          Logger.recordOutput("Odometry/TrajectorySetpoint", targetPose);
-        });
+            (targetPose) -> {
+              Logger.recordOutput("Odometry/TrajectorySetpoint", targetPose);
+            });
   }
 
   /**
    * Creates a pathfinding command to the specified pose.
    *
-   * @param target Target pose
+   * @param target   Target pose
    * @param velocity Target velocity
    * @return Pathfinding command
    */
   public Command getPathFinderCommand(Pose2d target, LinearVelocity velocity) {
     return AutoBuilder.pathfindToPose(
-        target, Constants.tunerConstants.getPathfindingConstraints(), velocity);
+            target, Constants.tunerConstants.getPathfindingConstraints(), velocity);
   }
 
-  /** Enum representing which human player station we're approaching from */
+  /**
+   * Enum representing which human player station we're approaching from
+   */
   public enum HPStation {
     LEFT,
     RIGHT
-  }
-
-  /**
-   * Gets the path name for approaching a specific reef branch at a given level.
-   *
-   * @param branch Target branch
-   * @param level Target level
-   * @param station Which human player station we're approaching from
-   * @return Path name for the approach
-   */
-  private String getReefPathName(
-      FieldConstants.ReefBranch branch, FieldConstants.Level level, HPStation station) {
-    return String.format(
-        "BranchApproach_%s_%s_%s",
-        branch,
-        level,
-        station.toString().charAt(0) + station.toString().substring(1).toLowerCase());
-  }
-
-  /**
-   * Gets the path name for approaching a specific reef branch at a given level.
-   *
-   * @param branch Target branch
-   * @param level Target level
-   * @return Path name for the approach
-   */
-  private String getReefPathName(FieldConstants.ReefBranch branch, FieldConstants.Level level) {
-    return String.format("BranchApproach_%s_%s", branch, level);
-  }
-
-  /**
-   * Determines which human player station to approach from based on current robot pose.
-   *
-   * @return The closest human player station
-   */
-  private HPStation determineClosestStation() {
-    // Get current pose from drive subsystem
-    Pose2d currentPose = driveSubsystem.getPose();
-    return (currentPose.getY() > (FIELD_WIDTH / 2.0)) ? HPStation.LEFT : HPStation.RIGHT;
-  }
-
-  /**
-   * Creates a command that will pathfind to and then follow a pre-made path to the target branch.
-   *
-   * @param branch Target branch
-   * @param level Target level
-   * @param distinguishSide Whether to run a different path depending on what station you are coming
-   *     from
-   * @return Combined pathfind and follow command, or null if path loading fails
-   */
-  public Command getPathfindToReefBranchCommand(
-      FieldConstants.ReefBranch branch, FieldConstants.Level level, boolean distinguishSide) {
-    String pathName;
-    if (distinguishSide) {
-      HPStation station = determineClosestStation();
-      pathName = getReefPathName(branch, level, station);
-    } else {
-      pathName = getReefPathName(branch, level);
-    }
-
-    try {
-      PathPlannerPath path = PathPlannerPath.fromPathFile(pathName);
-      return AutoBuilder.pathfindThenFollowPath(
-          path, Constants.tunerConstants.getPathfindingConstraints());
-    } catch (Exception e) {
-      // Log the error
-      System.err.println("Failed to load path: " + pathName);
-      return new PrintCommand("Failed to load Path! " + pathName + " Not following path!");
-    }
   }
 }

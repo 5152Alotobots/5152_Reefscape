@@ -3,8 +3,9 @@
   "robotLength": 0.75,
   "holonomicMode": true,
   "pathFolders": [
-    "HoloTest",
     "BranchApproach",
+    "HoloTest",
+    "CoralStationApproach",
     "RotationTest",
     "StraightTest"
   ],

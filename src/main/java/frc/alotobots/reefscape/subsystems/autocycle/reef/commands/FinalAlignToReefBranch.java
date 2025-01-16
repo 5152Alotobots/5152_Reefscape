@@ -10,10 +10,10 @@
 *
 * Source code must be publicly available on GitHub or an alternative web accessible site
 */
-package frc.alotobots.reefscape.commands.scoring.reef.alignment;
+package frc.alotobots.reefscape.subsystems.autocycle.reef.commands;
 
-import static frc.alotobots.reefscape.commands.scoring.reef.alignment.constants.AlignToReefBranchConstants.ALIGNMENT_RADIUS;
-import static frc.alotobots.reefscape.commands.scoring.reef.alignment.constants.AlignToReefBranchConstants.POSITION_TOLERANCE;
+import static frc.alotobots.reefscape.subsystems.autocycle.reef.constants.AutoCycleReefConstants.ALIGNMENT_RADIUS;
+import static frc.alotobots.reefscape.subsystems.autocycle.reef.constants.AutoCycleReefConstants.POSITION_TOLERANCE;
 
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.pathplanner.lib.trajectory.PathPlannerTrajectoryState;
@@ -36,7 +36,7 @@ import org.littletonrobotics.junction.Logger;
  * branch, taking into account the alliance color and maintaining proper orientation throughout the
  * alignment process.
  */
-public class AlignToReefBranch extends Command {
+public class FinalAlignToReefBranch extends Command {
   /** The swerve drive subsystem used for robot movement */
   private final SwerveDriveSubsystem swerveDrive;
 
@@ -62,7 +62,7 @@ public class AlignToReefBranch extends Command {
    * @param targetBranch The reef branch to align with
    * @param targetLevel The vertical level of the target branch
    */
-  public AlignToReefBranch(
+  public FinalAlignToReefBranch(
       SwerveDriveSubsystem swerveDrive, ReefBranch targetBranch, Level targetLevel) {
     this.swerveDrive = swerveDrive;
     this.targetBranch = targetBranch;

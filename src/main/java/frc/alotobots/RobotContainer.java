@@ -38,8 +38,9 @@ import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.comm
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.constants.ObjectDetectionConstants;
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.io.*;
 import frc.alotobots.reefscape.FieldConstants;
-import frc.alotobots.reefscape.commands.scoring.reef.alignment.AlignToReefBranch;
-import frc.alotobots.reefscape.commands.scoring.reef.alignment.util.BranchSelectionSubsystem;
+import frc.alotobots.reefscape.subsystems.autocycle.reef.commands.FinalAlignToReefBranch;
+import frc.alotobots.reefscape.subsystems.autocycle.reef.AutoCycleReefSubsystem;
+import frc.alotobots.reefscape.subsystems.autocycle.reef.commands.PathfindToSelectedReefBranch;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 public class RobotContainer {
@@ -52,7 +53,7 @@ public class RobotContainer {
   private final ObjectDetectionSubsystem objectDetectionSubsystem;
   private final BlingSubsystem blingSubsystem;
   private final PathPlannerManager pathPlannerManager;
-  private final BranchSelectionSubsystem branchSelectionSubsystem;
+  private final AutoCycleReefSubsystem autoCycleReefSubsystem;
   private LoggedDashboardChooser<Command> autoChooser;
 
   public RobotContainer() {
@@ -69,7 +70,7 @@ public class RobotContainer {
                 new ModuleIOTalonFX(ModulePosition.BACK_RIGHT.index));
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         configureAutoChooser();
-        branchSelectionSubsystem = new BranchSelectionSubsystem();
+        autoCycleReefSubsystem = new AutoCycleReefSubsystem();
 
         oculusSubsystem = new OculusSubsystem(new OculusIOReal());
         aprilTagSubsystem =
@@ -107,7 +108,7 @@ public class RobotContainer {
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         configureAutoChooser();
 
-        branchSelectionSubsystem = new BranchSelectionSubsystem();
+        autoCycleReefSubsystem = new AutoCycleReefSubsystem();
 
         oculusSubsystem = new OculusSubsystem(new OculusIOSim());
         aprilTagSubsystem =
@@ -144,7 +145,7 @@ public class RobotContainer {
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         configureAutoChooser();
 
-        branchSelectionSubsystem = new BranchSelectionSubsystem();
+        autoCycleReefSubsystem = new AutoCycleReefSubsystem();
 
         oculusSubsystem = new OculusSubsystem(new OculusIO() {});
         aprilTagSubsystem = new AprilTagSubsystem(new AprilTagIO() {}, new AprilTagIO() {});
@@ -181,17 +182,15 @@ public class RobotContainer {
         new PathfindToBestObject(
             objectDetectionSubsystem, swerveDriveSubsystem, pathPlannerManager, NOTE));
     testButton.toggleOnTrue(
-        new AlignToReefBranch(
+        new FinalAlignToReefBranch(
             swerveDriveSubsystem, FieldConstants.ReefBranch.A, FieldConstants.Level.L4));
 
     // Auto Cycle Reef
-    cycleSelectedBranchRightButton.onTrue((branchSelectionSubsystem.nextBranch()));
-    cycleSelectedBranchLeftButton.onTrue((branchSelectionSubsystem.previousBranch()));
-    cycleLevelUpButton.onTrue((branchSelectionSubsystem.nextLevel()));
-    cycleLevelDownButton.onTrue(branchSelectionSubsystem.previousLevel());
-
-    // testButton2.onTrue(branchSelectionSubsystem.getPathfindingCommand());
-    testButton2.onTrue(branchSelectionSubsystem.getPathfindingCommand());
+    cycleSelectedBranchRightButton.onTrue((autoCycleReefSubsystem.nextBranch()));
+    cycleSelectedBranchLeftButton.onTrue((autoCycleReefSubsystem.previousBranch()));
+    cycleLevelUpButton.onTrue((autoCycleReefSubsystem.nextLevel()));
+    cycleLevelDownButton.onTrue(autoCycleReefSubsystem.previousLevel());
+    testButton2.onTrue(new PathfindToSelectedReefBranch(autoCycleReefSubsystem));
   }
 
   private void configureAutoChooser() {
