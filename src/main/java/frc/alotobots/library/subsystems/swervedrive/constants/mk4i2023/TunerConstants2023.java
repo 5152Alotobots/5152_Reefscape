@@ -271,6 +271,8 @@ public class TunerConstants2023 implements TunerConstants {
         new PathConstraints(5.02, 3.5, Units.degreesToRadians(540), Units.degreesToRadians(460));
     public static final PPHolonomicDriveController PP_HOLONOMIC_DRIVE_CONTROLLER =
         new PPHolonomicDriveController(translationPid, rotationPid);
+    public static final double precisionAlignTolerance = .03; // Meters
+    public static final double precisionAlignAllowRadius = .5; // Meters
     public static final ProfiledPIDController driveFacingAngleController =
         new ProfiledPIDController(
             rotationPid.kP,
@@ -445,5 +447,15 @@ public class TunerConstants2023 implements TunerConstants {
       new Translation2d(
           GeneratedConstants.BackRight.LocationX, GeneratedConstants.BackRight.LocationY)
     };
+  }
+
+  @Override
+  public double getPrecisionAlignTolerance() {
+    return CustomConstants.precisionAlignTolerance;
+  }
+
+  @Override
+  public double getPrecisionAlignAllowRadius() {
+    return CustomConstants.precisionAlignAllowRadius;
   }
 }

@@ -12,12 +12,20 @@
 */
 package frc.alotobots.reefscape.subsystems.autocycle.reef;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.alotobots.library.subsystems.swervedrive.SwerveDriveSubsystem;
+import frc.alotobots.library.subsystems.swervedrive.commands.DrivePrecisionAlign;
 import frc.alotobots.library.subsystems.swervedrive.util.PathPlannerManager;
 import frc.alotobots.reefscape.FieldConstants;
 import frc.alotobots.reefscape.subsystems.autocycle.reef.util.AutoCycleState;
+import java.util.Optional;
 import lombok.Getter;
+
+import static frc.alotobots.reefscape.subsystems.autocycle.reef.constants.AutoCycleReefConstants.*;
 
 /**
  * Subsystem that manages the automatic cycling of reef branches and levels for autonomous
@@ -31,14 +39,19 @@ public class AutoCycleReefSubsystem extends SubsystemBase {
   /** The pathplanner manager instance to use for pathfinding */
   private final PathPlannerManager pathPlannerManager;
 
+  /** The swerve drive instance to use */
+  private final SwerveDriveSubsystem swerveDriveSubsystem;
+
   /**
    * Creates a new AutoCycleReefSubsystem with default branch and level selections.
    *
    * @param pathPlannerManager The PathPlannerManager instance to use for navigation
    */
-  public AutoCycleReefSubsystem(PathPlannerManager pathPlannerManager) {
+  public AutoCycleReefSubsystem(
+      PathPlannerManager pathPlannerManager, SwerveDriveSubsystem swerveDriveSubsystem) {
     this.state = AutoCycleState.createDefault();
     this.pathPlannerManager = pathPlannerManager;
+    this.swerveDriveSubsystem = swerveDriveSubsystem;
   }
 
   @Override
@@ -279,26 +292,83 @@ public class AutoCycleReefSubsystem extends SubsystemBase {
    * @return A command that when executed will start pathfinding to the selected reef branch
    */
   public Command pathfindToSelectedReefBranchPathName() {
-    return this.runOnce(
-        () -> {
-          state.setPathfindingToReefBranch(true);
-          state.setPathfindingToCoralStation(false);
-          state.setActivePath(""); // Force path update on next periodic
-        });
+    // Uses Commands.either() which takes 3 parameters:
+    // 1. Command to run if condition is false (pathfinding needed)
+    // 2. Command to run if condition is true (precision alignment needed)
+    // 3. Condition to evaluate
+    return Commands.either(
+        // First command: Create precision alignment if we're near target
+        this.defer(
+            () -> {
+              // Try to get the end pose of the selected path
+              Optional<Pose2d> targetPose =
+                  pathPlannerManager.getPathEndPose(getState().getSelectedReefBranchPathName());
+              if (targetPose.isPresent()) {
+                // If we have a valid target pose, create precision alignment command
+                return new DrivePrecisionAlign(swerveDriveSubsystem).getCommand(targetPose.get());
+              }
+              // If no path is selected, just print a message
+              return new PrintCommand("No Selected Path! No Aligning!");
+            }),
+
+        // Second command: Initialize pathfinding state
+        this.runOnce(
+            () -> {
+              // Set flags to indicate we're pathfinding to reef branch
+              state.setPathfindingToReefBranch(true);
+              state.setPathfindingToCoralStation(false);
+              // Clear active path to trigger recalculation in periodic
+              state.setActivePath(""); // Force path update on next periodic
+            }),
+
+        // Condition: Check if we're near the end of the path
+        // Returns true if we're within tolerance of end pose
+        () ->
+            pathPlannerManager.nearEndOfPath(
+                getState().getSelectedReefBranchPathName(),
+                ALIGNMENT_TRANSLATION_TOLERANCE,
+                ALIGNMENT_ROTATION_TOLERANCE));
   }
 
   /**
    * Creates a command that initiates pathfinding to the currently selected coral station position.
+   * Functions identically to reef branch pathfinding but with coral station-specific state.
    *
    * @return A command that when executed will start pathfinding to the selected coral station
    */
   public Command pathfindToSelectedCoralStationPathName() {
-    return this.runOnce(
-        () -> {
-          state.setPathfindingToCoralStation(true);
-          state.setPathfindingToReefBranch(false);
-          state.setActivePath(""); // Force path update on next periodic
-        });
+    // Similar structure to reef branch pathfinding
+    return Commands.either(
+        // First command: Create precision alignment if we're near target
+        this.defer(
+            () -> {
+              // Try to get the end pose of the selected coral station path
+              Optional<Pose2d> targetPose =
+                  pathPlannerManager.getPathEndPose(getState().getSelectedCoralStationPathName());
+              if (targetPose.isPresent()) {
+                // If we have a valid target pose, create precision alignment command
+                return new DrivePrecisionAlign(swerveDriveSubsystem).getCommand(targetPose.get());
+              }
+              // If no path is selected, just print a message
+              return new PrintCommand("No Selected Path! No Aligning!");
+            }),
+        // Second command: Initialize pathfinding state for coral station
+        this.runOnce(
+            () -> {
+              // Set flags to indicate we're pathfinding to coral station
+              state.setPathfindingToCoralStation(true);
+              state.setPathfindingToReefBranch(false);
+              // Clear active path to trigger recalculation in periodic
+              state.setActivePath(""); // Force path update on next periodic
+            }),
+
+        // Condition: Check if we're near the end of the coral station path
+        // Returns true if we're within tolerance of end pose
+        () ->
+            pathPlannerManager.nearEndOfPath(
+                getState().getSelectedCoralStationPathName(),
+                ALIGNMENT_TRANSLATION_TOLERANCE,
+                ALIGNMENT_ROTATION_TOLERANCE));
   }
 
   /**

@@ -12,7 +12,11 @@
 */
 package frc.alotobots.reefscape.subsystems.autocycle.reef.constants;
 
+import edu.wpi.first.math.util.Units;
+
 public class AutoCycleReefConstants {
-  public static final double ALIGNMENT_RADIUS = 1.0; // 1 meter radius
-  public static final double POSITION_TOLERANCE = 0.05; // 5cm position tolerance
+  /** How far from the end of the path translation is considered "close" */
+  public static final double ALIGNMENT_TRANSLATION_TOLERANCE = 0.2;
+  /** How far from the end of the path rotation is considered "close" */
+  public static final double ALIGNMENT_ROTATION_TOLERANCE = Units.degreesToRadians(15);
 }

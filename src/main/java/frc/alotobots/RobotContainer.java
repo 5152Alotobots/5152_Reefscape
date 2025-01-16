@@ -67,7 +67,8 @@ public class RobotContainer {
                 new ModuleIOTalonFX(ModulePosition.BACK_RIGHT.index));
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         configureAutoChooser();
-        autoCycleReefSubsystem = new AutoCycleReefSubsystem(pathPlannerManager);
+        autoCycleReefSubsystem =
+            new AutoCycleReefSubsystem(pathPlannerManager, swerveDriveSubsystem);
 
         oculusSubsystem = new OculusSubsystem(new OculusIOReal());
         aprilTagSubsystem =
@@ -105,7 +106,8 @@ public class RobotContainer {
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         configureAutoChooser();
 
-        autoCycleReefSubsystem = new AutoCycleReefSubsystem(pathPlannerManager);
+        autoCycleReefSubsystem =
+            new AutoCycleReefSubsystem(pathPlannerManager, swerveDriveSubsystem);
 
         oculusSubsystem = new OculusSubsystem(new OculusIOSim());
         aprilTagSubsystem =
@@ -142,7 +144,8 @@ public class RobotContainer {
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         configureAutoChooser();
 
-        autoCycleReefSubsystem = new AutoCycleReefSubsystem(pathPlannerManager);
+        autoCycleReefSubsystem =
+            new AutoCycleReefSubsystem(pathPlannerManager, swerveDriveSubsystem);
 
         oculusSubsystem = new OculusSubsystem(new OculusIO() {});
         aprilTagSubsystem = new AprilTagSubsystem(new AprilTagIO() {}, new AprilTagIO() {});
@@ -183,7 +186,7 @@ public class RobotContainer {
     cycleSelectedBranchRightButton.onTrue((autoCycleReefSubsystem.runCycleReefBranchRight(true)));
     cycleSelectedBranchLeftButton.onTrue((autoCycleReefSubsystem.runCycleReefBranchLeft(true)));
     cycleLevelUpButton.onTrue((autoCycleReefSubsystem.runCycleReefLevelUp(false)));
-    cycleLevelDownButton.onTrue(autoCycleReefSubsystem.runCycleReefLevelUp(false));
+    cycleLevelDownButton.onTrue(autoCycleReefSubsystem.runCycleReefLevelDown(false));
     testButton.onTrue(autoCycleReefSubsystem.pathfindToSelectedCoralStationPathName());
     testButton2.onTrue(autoCycleReefSubsystem.pathfindToSelectedReefBranchPathName());
   }

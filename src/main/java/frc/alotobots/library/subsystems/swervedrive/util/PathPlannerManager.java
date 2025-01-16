@@ -15,6 +15,7 @@ package frc.alotobots.library.subsystems.swervedrive.util;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.pathfinding.Pathfinding;
+import com.pathplanner.lib.trajectory.PathPlannerTrajectory;
 import com.pathplanner.lib.util.PathPlannerLogging;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.units.measure.LinearVelocity;
@@ -26,6 +27,7 @@ import frc.alotobots.AutoNamedCommands;
 import frc.alotobots.Constants;
 import frc.alotobots.library.subsystems.swervedrive.SwerveDriveSubsystem;
 import frc.alotobots.util.LocalADStarAK;
+import java.util.Optional;
 import org.littletonrobotics.junction.Logger;
 
 /**
@@ -110,5 +112,105 @@ public class PathPlannerManager {
       Logger.recordOutput("BranchSelection/Error", errorMessage);
       return new PrintCommand(errorMessage + " Not following path!");
     }
+  }
+
+  /**
+   * Gets the starting pose from a PathPlanner path.
+   *
+   * @param pathName The name of the path to load
+   * @return Optional containing the starting pose, or empty if path cannot be loaded
+   */
+  public Optional<Pose2d> getPathStartPose(String pathName) {
+    try {
+      PathPlannerPath path = PathPlannerPath.fromPathFile(pathName);
+      Optional<PathPlannerTrajectory> expectedTrajectory =
+          path.getIdealTrajectory(Constants.tunerConstants.getPathPlannerConfig());
+      if (expectedTrajectory.isPresent()) {
+        PathPlannerTrajectory trajectory = expectedTrajectory.get();
+        return Optional.of(trajectory.getInitialState().pose);
+      }
+      return Optional.empty();
+    } catch (Exception e) {
+      System.err.println("Failed to load path end pose: " + pathName);
+      e.printStackTrace();
+      return Optional.empty();
+    }
+  }
+
+  /**
+   * Gets the final target pose from a PathPlanner path.
+   *
+   * @param pathName The name of the path to load
+   * @return Optional containing the final pose, or empty if path cannot be loaded
+   */
+  public Optional<Pose2d> getPathEndPose(String pathName) {
+    try {
+      PathPlannerPath path = PathPlannerPath.fromPathFile(pathName);
+      Optional<PathPlannerTrajectory> expectedTrajectory =
+          path.getIdealTrajectory(Constants.tunerConstants.getPathPlannerConfig());
+      if (expectedTrajectory.isPresent()) {
+        PathPlannerTrajectory trajectory = expectedTrajectory.get();
+        return Optional.of(trajectory.getEndState().pose);
+      }
+      return Optional.empty();
+    } catch (Exception e) {
+      System.err.println("Failed to load path end pose: " + pathName);
+      e.printStackTrace();
+      return Optional.empty();
+    }
+  }
+
+  /**
+   * Whether the current robot pose is near the end of a path
+   *
+   * @param pathName The path name to get the end pose from
+   * @param translationalTolerance The translational tolerance in meters
+   * @param rotationalTolerance The rotational tolerance in radians
+   * @return true if near the end of a path
+   */
+  public boolean nearEndOfPath(
+      String pathName, double translationalTolerance, double rotationalTolerance) {
+    if (getPathEndPose(pathName).isPresent()) {
+      Pose2d current = driveSubsystem.getPose();
+      Pose2d target = getPathEndPose(pathName).get();
+
+      // Check translational distance using hypot (handles X and Y together)
+      double translationalDiff = current.getTranslation().getDistance(target.getTranslation());
+
+      // Get absolute rotation difference and normalize to [-pi, pi]
+      double rotationalDiff = current.getRotation().minus(target.getRotation()).getRadians();
+
+      return translationalDiff <= translationalTolerance && rotationalDiff <= rotationalTolerance;
+    }
+    return false;
+  }
+
+  /**
+   * Whether the current robot pose is near the start of a path
+   *
+   * @param pathName The path name to get the end pose from
+   * @param translationalTolerance The translational tolerance in meters
+   * @param rotationalTolerance The rotational tolerance in radians
+   * @return true if near the start of a path
+   */
+  public boolean nearStartOfPath(
+      String pathName, double translationalTolerance, double rotationalTolerance) {
+    if (getPathStartPose(pathName).isPresent()) {
+      Pose2d current = driveSubsystem.getPose();
+      Pose2d target = getPathStartPose(pathName).get();
+
+      // Check translational distance using hypot (handles X and Y together)
+      double translationalDiff = current.getTranslation().getDistance(target.getTranslation());
+
+      // Get absolute rotation difference and normalize to [-pi, pi]
+      double rotationalDiff =
+          Math.abs(current.getRotation().minus(target.getRotation()).getRadians());
+      if (rotationalDiff > Math.PI) {
+        rotationalDiff = 2 * Math.PI - rotationalDiff;
+      }
+
+      return translationalDiff <= translationalTolerance && rotationalDiff <= rotationalTolerance;
+    }
+    return false;
   }
 }

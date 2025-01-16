@@ -185,4 +185,18 @@ public interface TunerConstants {
    * @return ProfiledPIDController for heading control
    */
   ProfiledPIDController getDriveFacingAnglePIDController();
+
+  /**
+   * Gets the precision align tolerance (when it stops trying to correct)
+   *
+   * @return double of tolerance
+   * */
+  double getPrecisionAlignTolerance();
+
+  /**
+   * Gets the radius in which precision align should function
+   *
+   * @return double of tolerance
+   * */
+  double getPrecisionAlignAllowRadius();
 }
