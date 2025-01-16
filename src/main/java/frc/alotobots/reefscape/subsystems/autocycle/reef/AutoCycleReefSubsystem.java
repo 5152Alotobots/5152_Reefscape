@@ -13,12 +13,11 @@
 package frc.alotobots.reefscape.subsystems.autocycle.reef;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.alotobots.library.subsystems.swervedrive.util.PathPlannerManager;
 import frc.alotobots.reefscape.FieldConstants;
+import frc.alotobots.reefscape.subsystems.autocycle.reef.util.AutoCycleState;
 import lombok.Getter;
-import org.littletonrobotics.junction.Logger;
 
 /**
  * Subsystem that manages the automatic cycling of reef branches and levels for autonomous
@@ -26,47 +25,50 @@ import org.littletonrobotics.junction.Logger;
  * of the reef, facilitating automated movement patterns during matches.
  */
 public class AutoCycleReefSubsystem extends SubsystemBase {
-  /** The currently selected reef branch for navigation. */
-  @Getter private FieldConstants.ReefBranch selectedReefBranch;
-
-  /** The currently selected level for reef interaction. */
-  @Getter private FieldConstants.Level selectedReefLevel;
-
-  /** The currently selected side for human player pickup */
-  @Getter private FieldConstants.CoralStationSide selectedCoralStationSide;
-
-  /** The currently selected position in human player pickup */
-  @Getter private FieldConstants.CoralStationPickupPosition selectedCoralStationPickupPosition;
+  /** The current state of the subsystem */
+  @Getter private final AutoCycleState state;
 
   /** The pathplanner manager instance to use for pathfinding */
-  private PathPlannerManager pathPlannerManager;
+  private final PathPlannerManager pathPlannerManager;
 
   /**
-   * Creates a new AutoCycleReefSubsystem with default branch and level selections. Initializes with
-   * Branch A, Level 2, Right HP station, and Position 1 as default values
+   * Creates a new AutoCycleReefSubsystem with default branch and level selections.
+   *
+   * @param pathPlannerManager The PathPlannerManager instance to use for navigation
    */
   public AutoCycleReefSubsystem(PathPlannerManager pathPlannerManager) {
-    selectedReefBranch = FieldConstants.ReefBranch.A; // Default to first branch
-    selectedReefLevel = FieldConstants.Level.L2; // Default to the lowest level
-    selectedCoralStationSide = FieldConstants.CoralStationSide.RIGHT;
-    selectedCoralStationPickupPosition = FieldConstants.CoralStationPickupPosition.P1;
-
+    this.state = AutoCycleState.createDefault();
     this.pathPlannerManager = pathPlannerManager;
   }
 
-  /**
-   * Periodic function that runs every robot loop. Logs the current branch, level, and path
-   * selections to the dashboard.
-   */
   @Override
   public void periodic() {
-    Logger.recordOutput("AutoCycleReef/Branch/Branch", selectedReefBranch.name());
-    Logger.recordOutput("AutoCycleReef/Branch/Level", selectedReefLevel.name());
-    Logger.recordOutput("AutoCycleReef/Branch/PathName", getSelectedReefBranchPathName());
-    Logger.recordOutput("AutoCycleReef/CoralStation/Side", selectedCoralStationSide.name());
-    Logger.recordOutput(
-        "AutoCycleReef/CoralStation/Position", selectedCoralStationPickupPosition.name());
-    Logger.recordOutput("AutoCycleReef/CoralStation/PathName", getSelectedCoralStationPathName());
+    // Log all state information as outputs
+    state.logState();
+
+    // Update the active path if needed
+    updateActivePath();
+  }
+
+  /**
+   * Updates the active pathfinding path if necessary. This method checks if the target position has
+   * changed while actively pathfinding and automatically updates the path to the new target.
+   */
+  private void updateActivePath() {
+    if (!state.isPathfindingToCoralStation() && !state.isPathfindingToReefBranch()) {
+      return; // No active pathfinding to update
+    }
+
+    String targetPath =
+        state.isPathfindingToCoralStation()
+            ? state.getSelectedCoralStationPathName()
+            : state.getSelectedReefBranchPathName();
+
+    // Update path if target has changed or this is initial scheduling
+    if (!targetPath.equals(state.getActivePath()) || state.getActivePath().isEmpty()) {
+      state.setActivePath(targetPath);
+      pathPlannerManager.getPathfindThenFollowPathCommand(targetPath).schedule();
+    }
   }
 
   /**
@@ -85,12 +87,12 @@ public class AutoCycleReefSubsystem extends SubsystemBase {
    * @return true if cycling was successful, false if at end and wrap not allowed
    */
   public boolean cycleReefBranchRight(boolean allowWrap) {
-    int nextOrdinal = selectedReefBranch.ordinal() + 1;
+    int nextOrdinal = state.getReefBranch().ordinal() + 1;
     if (nextOrdinal >= FieldConstants.ReefBranch.values().length) {
       if (!allowWrap) return false;
       nextOrdinal = 0;
     }
-    selectedReefBranch = FieldConstants.ReefBranch.values()[nextOrdinal];
+    state.setReefBranch(FieldConstants.ReefBranch.values()[nextOrdinal]);
     return true;
   }
 
@@ -110,12 +112,12 @@ public class AutoCycleReefSubsystem extends SubsystemBase {
    * @return true if cycling was successful, false if at start and wrap not allowed
    */
   public boolean cycleReefBranchLeft(boolean allowWrap) {
-    int nextOrdinal = selectedReefBranch.ordinal() - 1;
+    int nextOrdinal = state.getReefBranch().ordinal() - 1;
     if (nextOrdinal < 0) {
       if (!allowWrap) return false;
       nextOrdinal = FieldConstants.ReefBranch.values().length - 1;
     }
-    selectedReefBranch = FieldConstants.ReefBranch.values()[nextOrdinal];
+    state.setReefBranch(FieldConstants.ReefBranch.values()[nextOrdinal]);
     return true;
   }
 
@@ -135,12 +137,12 @@ public class AutoCycleReefSubsystem extends SubsystemBase {
    * @return true if cycling was successful, false if at highest and wrap not allowed
    */
   public boolean cycleReefLevelUp(boolean allowWrap) {
-    int nextOrdinal = selectedReefLevel.ordinal() + 1;
+    int nextOrdinal = state.getReefLevel().ordinal() + 1;
     if (nextOrdinal >= FieldConstants.Level.values().length) {
       if (!allowWrap) return false;
       nextOrdinal = 0;
     }
-    selectedReefLevel = FieldConstants.Level.values()[nextOrdinal];
+    state.setReefLevel(FieldConstants.Level.values()[nextOrdinal]);
     return true;
   }
 
@@ -160,12 +162,12 @@ public class AutoCycleReefSubsystem extends SubsystemBase {
    * @return true if cycling was successful, false if at lowest and wrap not allowed
    */
   public boolean cycleReefLevelDown(boolean allowWrap) {
-    int nextOrdinal = selectedReefLevel.ordinal() - 1;
+    int nextOrdinal = state.getReefLevel().ordinal() - 1;
     if (nextOrdinal < 0) {
       if (!allowWrap) return false;
       nextOrdinal = FieldConstants.Level.values().length - 1;
     }
-    selectedReefLevel = FieldConstants.Level.values()[nextOrdinal];
+    state.setReefLevel(FieldConstants.Level.values()[nextOrdinal]);
     return true;
   }
 
@@ -185,12 +187,12 @@ public class AutoCycleReefSubsystem extends SubsystemBase {
    * @return true if cycling was successful, false if at end and wrap not allowed
    */
   public boolean cycleCoralStationSideRight(boolean allowWrap) {
-    int nextOrdinal = selectedCoralStationSide.ordinal() + 1;
+    int nextOrdinal = state.getCoralStationSide().ordinal() + 1;
     if (nextOrdinal >= FieldConstants.CoralStationSide.values().length) {
       if (!allowWrap) return false;
       nextOrdinal = 0;
     }
-    selectedCoralStationSide = FieldConstants.CoralStationSide.values()[nextOrdinal];
+    state.setCoralStationSide(FieldConstants.CoralStationSide.values()[nextOrdinal]);
     return true;
   }
 
@@ -210,12 +212,12 @@ public class AutoCycleReefSubsystem extends SubsystemBase {
    * @return true if cycling was successful, false if at start and wrap not allowed
    */
   public boolean cycleCoralStationSideLeft(boolean allowWrap) {
-    int nextOrdinal = selectedCoralStationSide.ordinal() - 1;
+    int nextOrdinal = state.getCoralStationSide().ordinal() - 1;
     if (nextOrdinal < 0) {
       if (!allowWrap) return false;
       nextOrdinal = FieldConstants.CoralStationSide.values().length - 1;
     }
-    selectedCoralStationSide = FieldConstants.CoralStationSide.values()[nextOrdinal];
+    state.setCoralStationSide(FieldConstants.CoralStationSide.values()[nextOrdinal]);
     return true;
   }
 
@@ -235,13 +237,13 @@ public class AutoCycleReefSubsystem extends SubsystemBase {
    * @return true if cycling was successful, false if at end and wrap not allowed
    */
   public boolean cycleCoralStationPickupPositionRight(boolean allowWrap) {
-    int nextOrdinal = selectedCoralStationPickupPosition.ordinal() + 1;
+    int nextOrdinal = state.getCoralStationPickupPosition().ordinal() + 1;
     if (nextOrdinal >= FieldConstants.CoralStationPickupPosition.values().length) {
       if (!allowWrap) return false;
       nextOrdinal = 0;
     }
-    selectedCoralStationPickupPosition =
-        FieldConstants.CoralStationPickupPosition.values()[nextOrdinal];
+    state.setCoralStationPickupPosition(
+        FieldConstants.CoralStationPickupPosition.values()[nextOrdinal]);
     return true;
   }
 
@@ -261,86 +263,56 @@ public class AutoCycleReefSubsystem extends SubsystemBase {
    * @return true if cycling was successful, false if at end and wrap not allowed
    */
   public boolean cycleCoralStationPickupPositionLeft(boolean allowWrap) {
-    int nextOrdinal = selectedCoralStationPickupPosition.ordinal() - 1;
+    int nextOrdinal = state.getCoralStationPickupPosition().ordinal() - 1;
     if (nextOrdinal < 0) {
       if (!allowWrap) return false;
       nextOrdinal = FieldConstants.CoralStationPickupPosition.values().length - 1;
     }
-    selectedCoralStationPickupPosition =
-        FieldConstants.CoralStationPickupPosition.values()[nextOrdinal];
+    state.setCoralStationPickupPosition(
+        FieldConstants.CoralStationPickupPosition.values()[nextOrdinal]);
     return true;
   }
 
   /**
-   * Gets the path name for approaching a specific reef branch at a given level.
+   * Creates a command that initiates pathfinding to the currently selected reef branch position.
    *
-   * @param branch Target branch to approach
-   * @param level Target level to approach at
-   * @return Formatted string representing the path name
-   */
-  private String getReefBranchPathName(
-      FieldConstants.ReefBranch branch, FieldConstants.Level level) {
-    return String.format("BranchApproach_%s_%s", branch, level);
-  }
-
-  /**
-   * Gets the path name for approaching a specific coral station at a given pickup position.
-   *
-   * @param side Target side of the coral station to approach
-   * @param pickupPosition Target pickup position in the human player station (1-3, Left to Right)
-   * @return Formatted string representing the path name
-   */
-  private String getCoralStationPathName(
-      FieldConstants.CoralStationSide side,
-      FieldConstants.CoralStationPickupPosition pickupPosition) {
-    return String.format("CoralStationApproach_%s_%s", side, pickupPosition);
-  }
-
-  /**
-   * Gets the path name for the currently selected branch and level combination.
-   *
-   * @return Current path name based on selected branch and level
-   */
-  public String getSelectedReefBranchPathName() {
-    return getReefBranchPathName(selectedReefBranch, selectedReefLevel);
-  }
-
-  /**
-   * Gets the path name for the currently selected coral station side and position combination.
-   *
-   * @return Current path name based on selected side and position
-   */
-  public String getSelectedCoralStationPathName() {
-    return getCoralStationPathName(selectedCoralStationSide, selectedCoralStationPickupPosition);
-  }
-
-  /**
-   * Gets the pathfinder for the currently selected branch and level combination.
-   *
-   * @return Pathfinding command for selected branch and level
+   * @return A command that when executed will start pathfinding to the selected reef branch
    */
   public Command pathfindToSelectedReefBranchPathName() {
-    return new InstantCommand(
-        () ->
-            pathPlannerManager
-                .getPathfindThenFollowPathCommand(
-                    getReefBranchPathName(selectedReefBranch, selectedReefLevel))
-                .schedule());
+    return this.runOnce(
+        () -> {
+          state.setPathfindingToReefBranch(true);
+          state.setPathfindingToCoralStation(false);
+          state.setActivePath(""); // Force path update on next periodic
+        });
   }
 
   /**
-   * Gets the pathfinder for the currently selected coral station side and position combination.
+   * Creates a command that initiates pathfinding to the currently selected coral station position.
    *
-   * @return Pathfinding command for selected side and position
+   * @return A command that when executed will start pathfinding to the selected coral station
    */
   public Command pathfindToSelectedCoralStationPathName() {
-    return new InstantCommand(
-        () ->
-            pathPlannerManager
-                .getPathfindThenFollowPathCommand(
-                    getCoralStationPathName(
-                        selectedCoralStationSide, selectedCoralStationPickupPosition))
-                .schedule());
+    return this.runOnce(
+        () -> {
+          state.setPathfindingToCoralStation(true);
+          state.setPathfindingToReefBranch(false);
+          state.setActivePath(""); // Force path update on next periodic
+        });
+  }
+
+  /**
+   * Creates a command that stops any active pathfinding.
+   *
+   * @return A command that when executed will stop all active pathfinding
+   */
+  public Command stopPathfinding() {
+    return this.runOnce(
+        () -> {
+          state.setPathfindingToCoralStation(false);
+          state.setPathfindingToReefBranch(false);
+          state.setActivePath("");
+        });
   }
 
   /**
@@ -427,5 +399,46 @@ public class AutoCycleReefSubsystem extends SubsystemBase {
    */
   public Command runCycleCoralStationPickupPositionLeft(boolean allowWrap) {
     return this.runOnce(() -> cycleCoralStationPickupPositionLeft(allowWrap));
+  }
+
+  /**
+   * Creates a command that sets the reef branch to a specific value.
+   *
+   * @param branch The branch to set
+   * @return Command that will set the branch when executed
+   */
+  public Command runSetReefBranch(FieldConstants.ReefBranch branch) {
+    return this.runOnce(() -> state.setReefBranch(branch));
+  }
+
+  /**
+   * Creates a command that sets the reef level to a specific value.
+   *
+   * @param level The level to set
+   * @return Command that will set the level when executed
+   */
+  public Command runSetReefLevel(FieldConstants.Level level) {
+    return this.runOnce(() -> state.setReefLevel(level));
+  }
+
+  /**
+   * Creates a command that sets the coral station side to a specific value.
+   *
+   * @param side The side to set
+   * @return Command that will set the side when executed
+   */
+  public Command runSetCoralStationSide(FieldConstants.CoralStationSide side) {
+    return this.runOnce(() -> state.setCoralStationSide(side));
+  }
+
+  /**
+   * Creates a command that sets the coral station pickup position to a specific value.
+   *
+   * @param position The position to set
+   * @return Command that will set the position when executed
+   */
+  public Command runSetCoralStationPickupPosition(
+      FieldConstants.CoralStationPickupPosition position) {
+    return this.runOnce(() -> state.setCoralStationPickupPosition(position));
   }
 }
