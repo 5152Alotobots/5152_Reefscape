@@ -12,8 +12,6 @@
 */
 package frc.alotobots.library.subsystems.swervedrive.util;
 
-import static frc.alotobots.reefscape.FieldConstants.FIELD_WIDTH;
-
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.pathfinding.Pathfinding;
@@ -27,7 +25,6 @@ import edu.wpi.first.wpilibj2.command.PrintCommand;
 import frc.alotobots.AutoNamedCommands;
 import frc.alotobots.Constants;
 import frc.alotobots.library.subsystems.swervedrive.SwerveDriveSubsystem;
-import frc.alotobots.reefscape.FieldConstants;
 import frc.alotobots.util.LocalADStarAK;
 import org.littletonrobotics.junction.Logger;
 
@@ -48,20 +45,18 @@ public class PathPlannerManager {
     configurePathPlanner();
   }
 
-  /**
-   * Configures PathPlanner with necessary callbacks and settings.
-   */
+  /** Configures PathPlanner with necessary callbacks and settings. */
   private void configurePathPlanner() {
     // Configure AutoBuilder for PathPlanner
     AutoBuilder.configure(
-            driveSubsystem::getPose,
-            driveSubsystem::setPose,
-            driveSubsystem::getChassisSpeeds,
-            driveSubsystem::runVelocity,
-            Constants.tunerConstants.getHolonomicDriveController(),
-            Constants.tunerConstants.getPathPlannerConfig(),
-            () -> DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red,
-            driveSubsystem);
+        driveSubsystem::getPose,
+        driveSubsystem::setPose,
+        driveSubsystem::getChassisSpeeds,
+        driveSubsystem::runVelocity,
+        Constants.tunerConstants.getHolonomicDriveController(),
+        Constants.tunerConstants.getPathPlannerConfig(),
+        () -> DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red,
+        driveSubsystem);
 
     // Setup named commands for autonomous routines
     AutoNamedCommands.setupNamedCommands();
@@ -73,39 +68,47 @@ public class PathPlannerManager {
     configureLogging();
   }
 
-  /**
-   * Configures PathPlanner logging callbacks.
-   */
+  /** Configures PathPlanner logging callbacks. */
   private void configureLogging() {
     PathPlannerLogging.setLogActivePathCallback(
-            (activePath) -> {
-              Logger.recordOutput(
-                      "Odometry/Trajectory", activePath.toArray(new Pose2d[activePath.size()]));
-            });
+        (activePath) -> {
+          Logger.recordOutput(
+              "Odometry/Trajectory", activePath.toArray(new Pose2d[activePath.size()]));
+        });
 
     PathPlannerLogging.setLogTargetPoseCallback(
-            (targetPose) -> {
-              Logger.recordOutput("Odometry/TrajectorySetpoint", targetPose);
-            });
+        (targetPose) -> {
+          Logger.recordOutput("Odometry/TrajectorySetpoint", targetPose);
+        });
   }
 
   /**
    * Creates a pathfinding command to the specified pose.
    *
-   * @param target   Target pose
+   * @param target Target pose
    * @param velocity Target velocity
    * @return Pathfinding command
    */
   public Command getPathFinderCommand(Pose2d target, LinearVelocity velocity) {
     return AutoBuilder.pathfindToPose(
-            target, Constants.tunerConstants.getPathfindingConstraints(), velocity);
+        target, Constants.tunerConstants.getPathfindingConstraints(), velocity);
   }
 
   /**
-   * Enum representing which human player station we're approaching from
+   * @param pathName The path name to follow after pathfinding to it
+   * @return The command to be scheduled
    */
-  public enum HPStation {
-    LEFT,
-    RIGHT
+  public Command getPathfindThenFollowPathCommand(String pathName) {
+    try {
+      PathPlannerPath path = PathPlannerPath.fromPathFile(pathName);
+      Command pathCommand =
+          AutoBuilder.pathfindThenFollowPath(
+              path, Constants.tunerConstants.getPathfindingConstraints());
+      return pathCommand;
+    } catch (Exception e) {
+      String errorMessage = "Failed to load path: " + pathName;
+      Logger.recordOutput("BranchSelection/Error", errorMessage);
+      return new PrintCommand(errorMessage + " Not following path!");
+    }
   }
 }
