@@ -64,7 +64,10 @@ public class DrivePrecisionAlign {
    * @param swerveDriveSubsystem The drive subsystem
    */
   public DrivePrecisionAlign(SwerveDriveSubsystem swerveDriveSubsystem) {
-    this(swerveDriveSubsystem, Constants.tunerConstants.getPrecisionAlignAllowRadius(), Constants.tunerConstants.getPrecisionAlignTolerance());
+    this(
+        swerveDriveSubsystem,
+        Constants.tunerConstants.getPrecisionAlignAllowRadius(),
+        Constants.tunerConstants.getPrecisionAlignTolerance());
   }
 
   /** Called to initialize the request handler. */

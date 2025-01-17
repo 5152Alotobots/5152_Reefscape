@@ -12,6 +12,8 @@
 */
 package frc.alotobots.reefscape.subsystems.autocycle.reef;
 
+import static frc.alotobots.reefscape.subsystems.autocycle.reef.constants.AutoCycleReefConstants.*;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -22,10 +24,10 @@ import frc.alotobots.library.subsystems.swervedrive.commands.DrivePrecisionAlign
 import frc.alotobots.library.subsystems.swervedrive.util.PathPlannerManager;
 import frc.alotobots.reefscape.FieldConstants;
 import frc.alotobots.reefscape.subsystems.autocycle.reef.util.AutoCycleState;
+import java.util.List;
 import java.util.Optional;
 import lombok.Getter;
-
-import static frc.alotobots.reefscape.subsystems.autocycle.reef.constants.AutoCycleReefConstants.*;
+import org.littletonrobotics.junction.Logger;
 
 /**
  * Subsystem that manages the automatic cycling of reef branches and levels for autonomous
@@ -61,6 +63,39 @@ public class AutoCycleReefSubsystem extends SubsystemBase {
 
     // Update the active path if needed
     updateActivePath();
+    logTargetPoses();
+  }
+
+  private void logTargetPoses() {
+    // Log the selected poses
+    String selectedReefBranchPathName = state.getSelectedReefBranchPathName();
+    String selectedCoralStationPathName = state.getSelectedCoralStationPathName();
+
+    if (pathPlannerManager.getPathEndPose(selectedReefBranchPathName).isPresent()) {
+      Logger.recordOutput(
+          "AutoCycleReef/Reef/TargetPose",
+          pathPlannerManager.getPathEndPose(selectedReefBranchPathName).get());
+    }
+    if (pathPlannerManager.getPathEndPose(selectedCoralStationPathName).isPresent()) {
+      Logger.recordOutput(
+          "AutoCycleReef/CoralStation/TargetPose",
+          pathPlannerManager.getPathEndPose(selectedCoralStationPathName).get());
+    }
+  }
+
+  private void logPathData(String pathName) {
+    // Log target end pose if available
+    Optional<Pose2d> endPose = pathPlannerManager.getPathEndPose(pathName);
+    if (endPose.isPresent()) {
+      Logger.recordOutput("AutoCycleReef/Pathfinding/TargetPose", endPose.get());
+    }
+
+    // Log trajectory points if available
+    Optional<List<Pose2d>> trajectory = pathPlannerManager.getPathTrajectory(pathName);
+    trajectory.ifPresent(
+        pose2ds ->
+            Logger.recordOutput(
+                "AutoCycleReef/Pathfinding/Trajectory", pose2ds.toArray(new Pose2d[0])));
   }
 
   /**
@@ -81,6 +116,9 @@ public class AutoCycleReefSubsystem extends SubsystemBase {
     if (!targetPath.equals(state.getActivePath()) || state.getActivePath().isEmpty()) {
       state.setActivePath(targetPath);
       pathPlannerManager.getPathfindThenFollowPathCommand(targetPath).schedule();
+
+      // Log path data whenever we update the active path
+      logPathData(targetPath);
     }
   }
 

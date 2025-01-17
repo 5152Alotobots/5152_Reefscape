@@ -75,17 +75,23 @@ public class OI {
     return driverController.getRightTriggerAxis();
   }
 
-  /** Button for activating the drive facing best object command. */
-  public static Trigger driveFacingBestObjectButton = driverController.a();
+  /** Pathfind to the selected branch */
+  public static Trigger pathfindToSelectedReefBranchButton = driverController.y();
 
-  /** Button for activating the pathfind to best object command. */
-  public static Trigger pathfindToBestObjectButton = driverController.b();
+  /** Pathfind to the selected coral station */
+  public static Trigger pathfindToSelectedCoralStationButton = driverController.a();
 
-  /** A temporary test button. */
-  public static Trigger testButton = driverController.y();
+  /** Cycles the selected pickup position one to the left */
+  public static Trigger cycleCoralStationPickupPositionLeftButton = driverController.x();
 
-  /** A temporary test button. */
-  public static Trigger testButton2 = driverController.x();
+  /** Cycles the selected pickup position one to the right */
+  public static Trigger cycleCoralStationPickupPositionRightButton = driverController.b();
+
+  /** Cycles the selected coral station one to the left */
+  public static Trigger cycleCoralStationSideLeftButton = driverController.leftBumper();
+
+  /** Cycles the selected coral station one to the right */
+  public static Trigger cycleCoralStationSideRightButton = driverController.rightBumper();
 
   /** Cycles the selected branch one to the left */
   public static Trigger cycleSelectedBranchLeftButton = driverController.povLeft();

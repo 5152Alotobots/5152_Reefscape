@@ -17,6 +17,7 @@ import edu.wpi.first.math.util.Units;
 public class AutoCycleReefConstants {
   /** How far from the end of the path translation is considered "close" */
   public static final double ALIGNMENT_TRANSLATION_TOLERANCE = 0.2;
+
   /** How far from the end of the path rotation is considered "close" */
   public static final double ALIGNMENT_ROTATION_TOLERANCE = Units.degreesToRadians(15);
 }

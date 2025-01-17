@@ -13,7 +13,6 @@
 package frc.alotobots;
 
 import static frc.alotobots.OI.*;
-import static frc.alotobots.library.subsystems.vision.photonvision.objectdetection.constants.ObjectDetectionConstants.NOTE;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -176,19 +175,24 @@ public class RobotContainer {
   }
 
   private void configureLogicCommands() {
-    driveFacingBestObjectButton.toggleOnTrue(
-        new DriveFacingBestObject(objectDetectionSubsystem, swerveDriveSubsystem, NOTE));
-    pathfindToBestObjectButton.onTrue(
-        new PathfindToBestObject(
-            objectDetectionSubsystem, swerveDriveSubsystem, pathPlannerManager, NOTE));
-
     // Auto Cycle Reef
     cycleSelectedBranchRightButton.onTrue((autoCycleReefSubsystem.runCycleReefBranchRight(true)));
     cycleSelectedBranchLeftButton.onTrue((autoCycleReefSubsystem.runCycleReefBranchLeft(true)));
     cycleLevelUpButton.onTrue((autoCycleReefSubsystem.runCycleReefLevelUp(false)));
     cycleLevelDownButton.onTrue(autoCycleReefSubsystem.runCycleReefLevelDown(false));
-    testButton.onTrue(autoCycleReefSubsystem.pathfindToSelectedCoralStationPathName());
-    testButton2.onTrue(autoCycleReefSubsystem.pathfindToSelectedReefBranchPathName());
+    pathfindToSelectedReefBranchButton.onTrue(
+        autoCycleReefSubsystem.pathfindToSelectedReefBranchPathName());
+
+    cycleCoralStationSideLeftButton.onTrue(
+        autoCycleReefSubsystem.runCycleCoralStationSideLeft(false));
+    cycleCoralStationSideRightButton.onTrue(
+        autoCycleReefSubsystem.runCycleCoralStationSideRight(false));
+    cycleCoralStationPickupPositionLeftButton.onTrue(
+        autoCycleReefSubsystem.runCycleCoralStationPickupPositionLeft(false));
+    cycleCoralStationPickupPositionRightButton.onTrue(
+        autoCycleReefSubsystem.runCycleCoralStationPickupPositionRight(false));
+    pathfindToSelectedCoralStationButton.onTrue(
+        autoCycleReefSubsystem.pathfindToSelectedCoralStationPathName());
   }
 
   private void configureAutoChooser() {

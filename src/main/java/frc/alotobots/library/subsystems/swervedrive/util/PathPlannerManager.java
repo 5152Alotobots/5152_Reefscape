@@ -16,6 +16,7 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.pathfinding.Pathfinding;
 import com.pathplanner.lib.trajectory.PathPlannerTrajectory;
+import com.pathplanner.lib.util.FlippingUtil;
 import com.pathplanner.lib.util.PathPlannerLogging;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.units.measure.LinearVelocity;
@@ -27,6 +28,7 @@ import frc.alotobots.AutoNamedCommands;
 import frc.alotobots.Constants;
 import frc.alotobots.library.subsystems.swervedrive.SwerveDriveSubsystem;
 import frc.alotobots.util.LocalADStarAK;
+import java.util.List;
 import java.util.Optional;
 import org.littletonrobotics.junction.Logger;
 
@@ -75,12 +77,12 @@ public class PathPlannerManager {
     PathPlannerLogging.setLogActivePathCallback(
         (activePath) -> {
           Logger.recordOutput(
-              "Odometry/Trajectory", activePath.toArray(new Pose2d[activePath.size()]));
+              "Pathplanner/Trajectory", activePath.toArray(new Pose2d[activePath.size()]));
         });
 
     PathPlannerLogging.setLogTargetPoseCallback(
         (targetPose) -> {
-          Logger.recordOutput("Odometry/TrajectorySetpoint", targetPose);
+          Logger.recordOutput("Pathplanner/TrajectorySetpoint", targetPose);
         });
   }
 
@@ -127,6 +129,9 @@ public class PathPlannerManager {
           path.getIdealTrajectory(Constants.tunerConstants.getPathPlannerConfig());
       if (expectedTrajectory.isPresent()) {
         PathPlannerTrajectory trajectory = expectedTrajectory.get();
+        if (DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red) {
+          return Optional.of(FlippingUtil.flipFieldPose(trajectory.getInitialState().pose));
+        }
         return Optional.of(trajectory.getInitialState().pose);
       }
       return Optional.empty();
@@ -150,6 +155,9 @@ public class PathPlannerManager {
           path.getIdealTrajectory(Constants.tunerConstants.getPathPlannerConfig());
       if (expectedTrajectory.isPresent()) {
         PathPlannerTrajectory trajectory = expectedTrajectory.get();
+        if (DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red) {
+          return Optional.of(FlippingUtil.flipFieldPose(trajectory.getEndState().pose));
+        }
         return Optional.of(trajectory.getEndState().pose);
       }
       return Optional.empty();
@@ -212,5 +220,26 @@ public class PathPlannerManager {
       return translationalDiff <= translationalTolerance && rotationalDiff <= rotationalTolerance;
     }
     return false;
+  }
+
+  /**
+   * Gets the trajectory points for a given path name.
+   *
+   * @param pathName The name of the path to get the trajectory for
+   * @return Optional containing List of Pose2d points if path exists, empty Optional otherwise
+   */
+  public Optional<List<Pose2d>> getPathTrajectory(String pathName) {
+    try {
+      PathPlannerPath path = PathPlannerPath.fromPathFile(pathName);
+      if (path == null) {
+        return Optional.empty();
+      }
+
+      // Get the states at fixed intervals along the path
+      List<Pose2d> trajectoryPoses = path.getPathPoses();
+      return Optional.of(trajectoryPoses);
+    } catch (Exception e) {
+      return Optional.empty();
+    }
   }
 }
