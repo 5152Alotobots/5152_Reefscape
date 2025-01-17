@@ -9,13 +9,15 @@ theme:
 nav:
   - Home: index.md
   - Style Guide: styleguide.md
-  - Game:
+  - Reefscape:
       - Field Constants: reefscape/fieldconstants.md
+      - Subsystems:
+          - Auto Cycle: reefscape/subsystems/autocycle.md
       - Commands:
-          - Scoring:
-              - Reef:
-                  - Alignment:
-                      - Align to Reef Branch: reefscape/aligntoreefbranch.md
+          - Auto Cycle:
+            - Pathfind to Selected Coral Station: reefscape/commands/autocycle/pathfindtoselectedcoralstation.md
+            - Pathfind to Selected Reef Branch: reefscape/commands/autocycle/pathfindtoselectedcoralstation.md
+            - Stop Pathfinding: reefscape/commands/autocycle/stoppathfinding.md
   - Library:
       - Commands:
           - Swerve:
