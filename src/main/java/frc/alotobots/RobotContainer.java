@@ -33,10 +33,9 @@ import frc.alotobots.library.subsystems.vision.photonvision.apriltag.constants.A
 import frc.alotobots.library.subsystems.vision.photonvision.apriltag.io.*;
 import frc.alotobots.library.subsystems.vision.photonvision.apriltag.util.AprilTagPoseSource;
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.ObjectDetectionSubsystem;
-import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.commands.*;
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.constants.ObjectDetectionConstants;
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.io.*;
-import frc.alotobots.reefscape.subsystems.autocycle.reef.AutoCycleReefSubsystem;
+import frc.alotobots.reefscape.subsystems.autocycle.AutoCycleSubsystem;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 public class RobotContainer {
@@ -49,7 +48,7 @@ public class RobotContainer {
   private final ObjectDetectionSubsystem objectDetectionSubsystem;
   private final BlingSubsystem blingSubsystem;
   private final PathPlannerManager pathPlannerManager;
-  private final AutoCycleReefSubsystem autoCycleReefSubsystem;
+  private final AutoCycleSubsystem autoCycleSubsystem;
   private LoggedDashboardChooser<Command> autoChooser;
 
   public RobotContainer() {
@@ -66,8 +65,8 @@ public class RobotContainer {
                 new ModuleIOTalonFX(ModulePosition.BACK_RIGHT.index));
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         configureAutoChooser();
-        autoCycleReefSubsystem =
-            new AutoCycleReefSubsystem(pathPlannerManager, swerveDriveSubsystem);
+        autoCycleSubsystem =
+            new AutoCycleSubsystem(pathPlannerManager, swerveDriveSubsystem);
 
         oculusSubsystem = new OculusSubsystem(new OculusIOReal());
         aprilTagSubsystem =
@@ -105,8 +104,8 @@ public class RobotContainer {
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         configureAutoChooser();
 
-        autoCycleReefSubsystem =
-            new AutoCycleReefSubsystem(pathPlannerManager, swerveDriveSubsystem);
+        autoCycleSubsystem =
+            new AutoCycleSubsystem(pathPlannerManager, swerveDriveSubsystem);
 
         oculusSubsystem = new OculusSubsystem(new OculusIOSim());
         aprilTagSubsystem =
@@ -143,8 +142,8 @@ public class RobotContainer {
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         configureAutoChooser();
 
-        autoCycleReefSubsystem =
-            new AutoCycleReefSubsystem(pathPlannerManager, swerveDriveSubsystem);
+        autoCycleSubsystem =
+            new AutoCycleSubsystem(pathPlannerManager, swerveDriveSubsystem);
 
         oculusSubsystem = new OculusSubsystem(new OculusIO() {});
         aprilTagSubsystem = new AprilTagSubsystem(new AprilTagIO() {}, new AprilTagIO() {});
@@ -176,23 +175,23 @@ public class RobotContainer {
 
   private void configureLogicCommands() {
     // Auto Cycle Reef
-    cycleSelectedBranchRightButton.onTrue((autoCycleReefSubsystem.runCycleReefBranchRight(true)));
-    cycleSelectedBranchLeftButton.onTrue((autoCycleReefSubsystem.runCycleReefBranchLeft(true)));
-    cycleLevelUpButton.onTrue((autoCycleReefSubsystem.runCycleReefLevelUp(false)));
-    cycleLevelDownButton.onTrue(autoCycleReefSubsystem.runCycleReefLevelDown(false));
+    cycleSelectedBranchRightButton.onTrue((autoCycleSubsystem.runCycleReefBranchRight(true)));
+    cycleSelectedBranchLeftButton.onTrue((autoCycleSubsystem.runCycleReefBranchLeft(true)));
+    cycleLevelUpButton.onTrue((autoCycleSubsystem.runCycleReefLevelUp(false)));
+    cycleLevelDownButton.onTrue(autoCycleSubsystem.runCycleReefLevelDown(false));
     pathfindToSelectedReefBranchButton.onTrue(
-        autoCycleReefSubsystem.pathfindToSelectedReefBranchPathName());
+        autoCycleSubsystem.pathfindToSelectedReefBranchPathName());
 
     cycleCoralStationSideLeftButton.onTrue(
-        autoCycleReefSubsystem.runCycleCoralStationSideLeft(false));
+        autoCycleSubsystem.runCycleCoralStationSideLeft(false));
     cycleCoralStationSideRightButton.onTrue(
-        autoCycleReefSubsystem.runCycleCoralStationSideRight(false));
+        autoCycleSubsystem.runCycleCoralStationSideRight(false));
     cycleCoralStationPickupPositionLeftButton.onTrue(
-        autoCycleReefSubsystem.runCycleCoralStationPickupPositionLeft(false));
+        autoCycleSubsystem.runCycleCoralStationPickupPositionLeft(false));
     cycleCoralStationPickupPositionRightButton.onTrue(
-        autoCycleReefSubsystem.runCycleCoralStationPickupPositionRight(false));
+        autoCycleSubsystem.runCycleCoralStationPickupPositionRight(false));
     pathfindToSelectedCoralStationButton.onTrue(
-        autoCycleReefSubsystem.pathfindToSelectedCoralStationPathName());
+        autoCycleSubsystem.pathfindToSelectedCoralStationPathName());
   }
 
   private void configureAutoChooser() {
