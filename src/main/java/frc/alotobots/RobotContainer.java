@@ -99,10 +99,11 @@ public class RobotContainer {
         break;
 
       case SIM:
+        Pose2d simStartPose = new Pose2d(3, 3, new Rotation2d(0));
         driveSimulation =
             new SwerveDriveSimulation(
                 Constants.tunerConstants.getDriveTrainSimulationConfig(),
-                new Pose2d(3, 3, new Rotation2d()));
+                    simStartPose);
         SimulatedArena.getInstance().addDriveTrainSimulation(driveSimulation);
 
         // Simulation hardware initialization
@@ -121,6 +122,7 @@ public class RobotContainer {
                 new ModuleIOTalonFXSim(
                     ModulePosition.BACK_RIGHT.index,
                     driveSimulation.getModules()[ModulePosition.BACK_RIGHT.index]));
+        swerveDriveSubsystem.setPose(simStartPose);
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         configureAutoChooser();
 
