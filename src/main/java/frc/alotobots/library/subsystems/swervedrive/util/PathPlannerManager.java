@@ -56,7 +56,7 @@ public class PathPlannerManager {
         driveSubsystem::getPose,
         driveSubsystem::setPose,
         driveSubsystem::getChassisSpeeds,
-        driveSubsystem::runVelocity,
+        driveSubsystem::runVelocityWithSetpointGen,
         Constants.tunerConstants.getHolonomicDriveController(),
         Constants.tunerConstants.getPathPlannerConfig(),
         () -> DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red,
