@@ -111,7 +111,6 @@ public class PathPlannerManager {
       return pathCommand;
     } catch (Exception e) {
       String errorMessage = "Failed to load path: " + pathName;
-      Logger.recordOutput("BranchSelection/Error", errorMessage);
       return new PrintCommand(errorMessage + " Not following path!");
     }
   }
