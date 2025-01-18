@@ -13,165 +13,152 @@
 package frc.alotobots.reefscape.subsystems.autocycle.util;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.alotobots.reefscape.FieldConstants;
-import lombok.Builder;
+import java.util.Optional;
 import lombok.Getter;
 import lombok.Setter;
 import org.littletonrobotics.junction.Logger;
-import java.util.List;
-import java.util.Optional;
 
 /**
- * Encapsulates the state of the AutoCycle system, including reef branch, level, and coral station
- * selections. This class manages the current state of automated navigation and positioning
- * within the game field, as well as centralized logging of all state information.
+ * Manages state for the AutoCycle subsystem, including selection state and pathfinding control.
+ * This class consolidates all state management including reef/level selections, coral station
+ * selections, and pathfinding control state.
  */
-@Builder
 public class AutoCycleState {
-  /** Prefix for all AutoCycleReef logging keys */
-  private static final String LOG_PREFIX = "AutoCycleReef";
+  /** Logging key prefixes */
+  private static final String LOG_PREFIX = "AutoCycle";
 
-  /** Root key for reef-related logging */
   private static final String REEF_KEY = LOG_PREFIX + "/Reef";
-
-  /** Root key for coral station-related logging */
   private static final String CORAL_STATION_KEY = LOG_PREFIX + "/CoralStation";
-
-  /** Root key for pathfinding-related logging */
   private static final String PATHFINDING_KEY = LOG_PREFIX + "/Pathfinding";
 
   /**
-   * The currently selected reef branch for navigation.
-   * Determines which branch of the reef structure the robot will target.
+   * Represents which type of pathfinding was last activated. Used to determine when to auto-rerun
+   * pathfinding on selection changes.
    */
+  public enum ActivePathfindingType {
+    NONE,
+    REEF,
+    CORAL_STATION
+  }
+
+  // Selection state
   @Getter @Setter private FieldConstants.ReefBranch reefBranch;
-
-  /**
-   * The currently selected level for reef interaction.
-   * Determines the vertical height level the robot will target on the reef.
-   */
   @Getter @Setter private FieldConstants.Level reefLevel;
-
-  /**
-   * The currently selected side for human player pickup.
-   * Determines which side of the field the robot will approach for game piece collection.
-   */
   @Getter @Setter private FieldConstants.CoralStationSide coralStationSide;
-
-  /**
-   * The currently selected position in human player pickup.
-   * Specifies the exact position along the selected side for game piece collection.
-   */
   @Getter @Setter private FieldConstants.CoralStationPickupPosition coralStationPickupPosition;
 
-  /**
-   * Flag indicating if currently pathfinding to coral station.
-   * True when the robot is actively navigating to a coral station position.
-   */
-  @Getter @Setter private boolean isPathfindingToCoralStation;
+  // Pathfinding control state
+  /** Currently running pathfinding command */
+  @Getter private Command activePathfindingCommand;
 
-  /**
-   * Flag indicating if currently pathfinding to reef branch.
-   * True when the robot is actively navigating to a reef branch position.
-   */
-  @Getter @Setter private boolean isPathfindingToReefBranch;
-
-  /**
-   * The name of the currently active path being followed.
-   * Stores the identifier of the path currently being executed by the pathfinding system.
-   */
-  @Getter @Setter private String activePath;
+  @Getter private ActivePathfindingType lastActiveType = ActivePathfindingType.NONE;
+  @Getter private boolean isPaused = false;
 
   /**
    * Creates a new AutoCycleState with default values.
-   * Initializes the state with predefined default selections for reef branch,
-   * level, coral station side, and pickup position.
    *
-   * @return A new AutoCycleState instance initialized with default values
+   * @return A new AutoCycleState instance with default selections
    */
   public static AutoCycleState createDefault() {
-    return AutoCycleState.builder()
-            .reefBranch(FieldConstants.ReefBranch.A)
-            .reefLevel(FieldConstants.Level.L2)
-            .coralStationSide(FieldConstants.CoralStationSide.RIGHT)
-            .coralStationPickupPosition(FieldConstants.CoralStationPickupPosition.P1)
-            .isPathfindingToCoralStation(false)
-            .isPathfindingToReefBranch(false)
-            .activePath("")
-            .build();
+    AutoCycleState state = new AutoCycleState();
+    state.reefBranch = FieldConstants.ReefBranch.A;
+    state.reefLevel = FieldConstants.Level.L2;
+    state.coralStationSide = FieldConstants.CoralStationSide.RIGHT;
+    state.coralStationPickupPosition = FieldConstants.CoralStationPickupPosition.P1;
+    return state;
   }
 
   /**
-   * Gets the path name for the currently selected branch and level combination.
-   * Constructs a path identifier string based on the current reef branch and level selections.
+   * Sets which type of pathfinding is currently active.
    *
-   * @return Current path name formatted as "BranchApproach_[branch]_[level]"
+   * @param type The type of pathfinding to activate
+   */
+  public void setActivePathfinding(ActivePathfindingType type) {
+    this.lastActiveType = type;
+    Logger.recordOutput(PATHFINDING_KEY + "/ActiveType", type.toString());
+  }
+
+  /** Sets the active pathfinding command and logs the change */
+  public void setActivePathfindingCommand(Command command) {
+    this.activePathfindingCommand = command;
+    Logger.recordOutput(
+        PATHFINDING_KEY + "/ActiveCommandName", command != null ? command.getName() : "none");
+  }
+
+  /**
+   * Sets whether pathfinding is currently paused.
+   *
+   * @param paused True to pause pathfinding, false to resume
+   */
+  public void setPaused(boolean paused) {
+    this.isPaused = paused;
+    Logger.recordOutput(PATHFINDING_KEY + "/IsPaused", paused);
+  }
+
+  /**
+   * Gets the path name for the currently selected branch and level.
+   *
+   * @return Path name formatted as "BranchApproach_[branch]_[level]"
    */
   public String getSelectedReefBranchPathName() {
     return String.format("BranchApproach_%s_%s", reefBranch, reefLevel);
   }
 
   /**
-   * Gets the path name for the currently selected coral station side and position combination.
-   * Constructs a path identifier string based on the current coral station selections.
+   * Gets the path name for the currently selected coral station position.
    *
-   * @return Current path name formatted as "CoralStationApproach_[side]_[position]"
+   * @return Path name formatted as "CoralStationApproach_[side]_[position]"
    */
   public String getSelectedCoralStationPathName() {
     return String.format(
-            "CoralStationApproach_%s_%s", coralStationSide, coralStationPickupPosition);
+        "CoralStationApproach_%s_%s", coralStationSide, coralStationPickupPosition);
   }
 
   /**
-   * Logs all state information to AdvantageKit.
-   * Records current selections, pathfinding states, and target paths.
+   * Checks if a change in reef selections should trigger a pathfinding rerun.
+   *
+   * @return true if reef pathfinding was last active
    */
+  public boolean shouldRerunReefPathfinding() {
+    return lastActiveType == ActivePathfindingType.REEF && !isPaused;
+  }
+
+  /**
+   * Checks if a change in coral station selections should trigger a pathfinding rerun.
+   *
+   * @return true if coral station pathfinding was last active
+   */
+  public boolean shouldRerunCoralStationPathfinding() {
+    return lastActiveType == ActivePathfindingType.CORAL_STATION && !isPaused;
+  }
+
+  /** Logs all state information to AdvantageKit for debugging and monitoring. */
   public void logState() {
-    // Log reef branch and level selections
+    // Log selection state
     Logger.recordOutput(REEF_KEY + "/Branch", reefBranch.name());
     Logger.recordOutput(REEF_KEY + "/Level", reefLevel.name());
-
-    // Log coral station selections
     Logger.recordOutput(CORAL_STATION_KEY + "/Side", coralStationSide.name());
     Logger.recordOutput(CORAL_STATION_KEY + "/Position", coralStationPickupPosition.name());
 
-    // Log pathfinding status
-    Logger.recordOutput(PATHFINDING_KEY + "/ToCoralStation", isPathfindingToCoralStation);
-    Logger.recordOutput(PATHFINDING_KEY + "/ToReefBranch", isPathfindingToReefBranch);
-    Logger.recordOutput(PATHFINDING_KEY + "/ActivePath", activePath);
-    Logger.recordOutput(PATHFINDING_KEY + "/ReefBranchPath", getSelectedReefBranchPathName());
+    // Log pathfinding state
+    Logger.recordOutput(PATHFINDING_KEY + "/ActiveType", lastActiveType.toString());
+    Logger.recordOutput(PATHFINDING_KEY + "/IsPaused", isPaused);
+    Logger.recordOutput(PATHFINDING_KEY + "/ReefPath", getSelectedReefBranchPathName());
     Logger.recordOutput(PATHFINDING_KEY + "/CoralStationPath", getSelectedCoralStationPathName());
   }
 
   /**
-   * Logs path data for debugging and visualization.
-   * Records target poses and trajectory points for the current path.
+   * Logs target poses for debugging and visualization.
    *
-   * @param pathEndPose Optional end pose of the current path
-   * @param pathTrajectory Optional list of trajectory poses
-   */
-  public void logPathData(Optional<Pose2d> pathEndPose, Optional<List<Pose2d>> pathTrajectory) {
-    // Log target end pose if available
-    pathEndPose.ifPresent(pose ->
-            Logger.recordOutput(PATHFINDING_KEY + "/TargetPose", pose));
-
-    // Log trajectory points if available
-    pathTrajectory.ifPresent(poses ->
-            Logger.recordOutput(PATHFINDING_KEY + "/Trajectory", poses.toArray(new Pose2d[0])));
-  }
-
-  /**
-   * Logs target poses for both reef and coral station paths.
-   * Records the end poses of current paths for debugging and visualization.
-   *
-   * @param reefBranchPose Optional end pose for the reef branch path
-   * @param coralStationPose Optional end pose for the coral station path
+   * @param reefBranchPose Optional end pose for reef branch path
+   * @param coralStationPose Optional end pose for coral station path
    */
   public void logTargetPoses(Optional<Pose2d> reefBranchPose, Optional<Pose2d> coralStationPose) {
-    reefBranchPose.ifPresent(pose ->
-            Logger.recordOutput(REEF_KEY + "/TargetPose", pose));
+    reefBranchPose.ifPresent(pose -> Logger.recordOutput(REEF_KEY + "/TargetPose", pose));
 
-    coralStationPose.ifPresent(pose ->
-            Logger.recordOutput(CORAL_STATION_KEY + "/TargetPose", pose));
+    coralStationPose.ifPresent(
+        pose -> Logger.recordOutput(CORAL_STATION_KEY + "/TargetPose", pose));
   }
 }

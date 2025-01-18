@@ -15,19 +15,19 @@ package frc.alotobots.reefscape.subsystems.autocycle.constants;
 import edu.wpi.first.math.util.Units;
 
 /**
- * Constants used for the AutoCycle subsystem's path following and alignment functionality.
- * These values determine when the robot is considered "close enough" to its target position.
+ * Constants used for the AutoCycle subsystem's path following and alignment functionality. These
+ * values determine when the robot is considered "close enough" to its target position.
  */
 public class AutoCycleConstants {
   /**
-   * Translation tolerance in meters. Specifies how far from the end of the path translation
-   * is considered "close enough" for alignment purposes.
+   * Translation tolerance in meters. Specifies how far from the end of the path translation is
+   * considered "close enough" for alignment purposes.
    */
   public static final double ALIGNMENT_TRANSLATION_TOLERANCE = 0.2;
 
   /**
-   * Rotation tolerance in radians. Specifies how far from the end of the path rotation
-   * is considered "close enough" for alignment purposes.
+   * Rotation tolerance in radians. Specifies how far from the end of the path rotation is
+   * considered "close enough" for alignment purposes.
    */
   public static final double ALIGNMENT_ROTATION_TOLERANCE = Units.degreesToRadians(15);
 }

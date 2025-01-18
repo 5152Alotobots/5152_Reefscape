@@ -30,6 +30,14 @@ public class OI {
   /** The primary driver's controller. Used for main robot control functions. */
   private static final CommandXboxController driverController = new CommandXboxController(0);
 
+  /** Trigger for when the driver is using the controller sticks to control the chassis */
+  public static final Trigger hasDriverInput =
+      new Trigger(
+          () ->
+              Math.abs(driverController.getLeftX()) > DEADBAND
+                  || Math.abs(driverController.getLeftY()) > DEADBAND
+                  || Math.abs(driverController.getRightX()) > DEADBAND);
+
   /**
    * Gets the forward/backward translation input from the driver's controller.
    *

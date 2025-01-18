@@ -15,7 +15,7 @@ The subsystem maintains its state through the `AutoCycleState` class, which trac
 ### Constructor Parameters
 
 ```java
-public AutoCycleSubsystem(PathPlannerManager pathPlannerManager, 
+public AutoCycleSubsystem(PathPlannerManager pathPlannerManager,
                          SwerveDriveSubsystem swerveDriveSubsystem)
 ```
 
