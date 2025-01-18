@@ -102,8 +102,7 @@ public class RobotContainer {
         Pose2d simStartPose = new Pose2d(3, 3, new Rotation2d(0));
         driveSimulation =
             new SwerveDriveSimulation(
-                Constants.tunerConstants.getDriveTrainSimulationConfig(),
-                    simStartPose);
+                Constants.tunerConstants.getDriveTrainSimulationConfig(), simStartPose);
         SimulatedArena.getInstance().addDriveTrainSimulation(driveSimulation);
 
         // Simulation hardware initialization
@@ -128,7 +127,7 @@ public class RobotContainer {
 
         autoCycleSubsystem = new AutoCycleSubsystem(pathPlannerManager, swerveDriveSubsystem);
 
-        oculusSubsystem = new OculusSubsystem(new OculusIOSim());
+        oculusSubsystem = new OculusSubsystem(new OculusIOSim(driveSimulation));
         aprilTagSubsystem =
             new AprilTagSubsystem(
                 new AprilTagIOPhotonVisionSim(

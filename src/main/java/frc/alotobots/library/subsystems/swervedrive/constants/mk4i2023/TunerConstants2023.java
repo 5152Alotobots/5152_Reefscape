@@ -36,7 +36,6 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.units.MassUnit;
 import edu.wpi.first.units.measure.*;
 import frc.alotobots.library.subsystems.swervedrive.constants.TunerConstants;
 import org.ironmaple.simulation.drivesims.COTS;
@@ -309,7 +308,7 @@ public class TunerConstants2023 implements TunerConstants {
 
     public static final RobotConfig pathPlannerConfig =
         new RobotConfig(
-                ROBOT_MASS.magnitude(),
+            ROBOT_MASS.magnitude(),
             ROBOT_MOI,
             new ModuleConfig(
                 GeneratedConstants.FrontLeft.WheelRadius,
