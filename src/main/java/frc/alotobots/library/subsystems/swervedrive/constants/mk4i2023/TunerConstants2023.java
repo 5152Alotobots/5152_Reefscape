@@ -13,7 +13,6 @@
 package frc.alotobots.library.subsystems.swervedrive.constants.mk4i2023;
 
 import static edu.wpi.first.units.Units.*;
-import static frc.alotobots.library.subsystems.swervedrive.constants.mk4i2023.TunerConstants2023.GeneratedConstants.kCANBus;
 
 import com.ctre.phoenix6.CANBus;
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
@@ -37,8 +36,11 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.units.MassUnit;
 import edu.wpi.first.units.measure.*;
 import frc.alotobots.library.subsystems.swervedrive.constants.TunerConstants;
+import org.ironmaple.simulation.drivesims.COTS;
+import org.ironmaple.simulation.drivesims.configs.DriveTrainSimulationConfig;
 
 public class TunerConstants2023 implements TunerConstants {
   public static class GeneratedConstants {
@@ -281,20 +283,33 @@ public class TunerConstants2023 implements TunerConstants {
             new TrapezoidProfile.Constraints(
                 PATHFINDING_CONSTRAINTS.maxVelocityMPS(),
                 PATHFINDING_CONSTRAINTS.maxAccelerationMPSSq()));
-    public static final double ODOMETRY_FREQUENCY = kCANBus.isNetworkFD() ? 250.0 : 100.0;
+    public static final double ODOMETRY_FREQUENCY =
+        GeneratedConstants.kCANBus.isNetworkFD() ? 250.0 : 100.0;
     public static final Distance BUMPER_LENGTH = Distance.ofBaseUnits(.75, Meters);
     public static final Distance BUMPER_WIDTH = Distance.ofBaseUnits(.75, Meters);
     public static final LinearVelocity TURTLE_SPEED = MetersPerSecond.of(1.0);
     public static final LinearVelocity NOMINAL_SPEED = MetersPerSecond.of(3.0);
     public static final LinearVelocity TURBO_SPEED = MetersPerSecond.of(4.8);
     public static final double MAX_MODULAR_ROTATIONAL_RATE = Units.rotationsToRadians(12);
-    public static final double ROBOT_MASS_KG = 34;
+    public static final Mass ROBOT_MASS = Mass.ofBaseUnits(70, Pounds);
     public static final double ROBOT_MOI = 2.550;
     public static final double WHEEL_COF = 0.6;
 
+    public static final Translation2d[] moduleTranslations =
+        new Translation2d[] {
+          new Translation2d(
+              GeneratedConstants.FrontLeft.LocationX, GeneratedConstants.FrontLeft.LocationY),
+          new Translation2d(
+              GeneratedConstants.FrontRight.LocationX, GeneratedConstants.FrontRight.LocationY),
+          new Translation2d(
+              GeneratedConstants.BackLeft.LocationX, GeneratedConstants.BackLeft.LocationY),
+          new Translation2d(
+              GeneratedConstants.BackRight.LocationX, GeneratedConstants.BackRight.LocationY)
+        };
+
     public static final RobotConfig pathPlannerConfig =
         new RobotConfig(
-            ROBOT_MASS_KG,
+                ROBOT_MASS.magnitude(),
             ROBOT_MOI,
             new ModuleConfig(
                 GeneratedConstants.FrontLeft.WheelRadius,
@@ -304,16 +319,7 @@ public class TunerConstants2023 implements TunerConstants {
                     .withReduction(GeneratedConstants.FrontLeft.DriveMotorGearRatio),
                 GeneratedConstants.FrontLeft.SlipCurrent,
                 1),
-            new Translation2d[] {
-              new Translation2d(
-                  GeneratedConstants.FrontLeft.LocationX, GeneratedConstants.FrontLeft.LocationY),
-              new Translation2d(
-                  GeneratedConstants.FrontRight.LocationX, GeneratedConstants.FrontRight.LocationY),
-              new Translation2d(
-                  GeneratedConstants.BackLeft.LocationX, GeneratedConstants.BackLeft.LocationY),
-              new Translation2d(
-                  GeneratedConstants.BackRight.LocationX, GeneratedConstants.BackRight.LocationY)
-            });
+            moduleTranslations);
 
     public static final double DRIVE_BASE_RADIUS =
         Math.max(
@@ -329,6 +335,16 @@ public class TunerConstants2023 implements TunerConstants {
                 Math.hypot(
                     GeneratedConstants.BackRight.LocationX,
                     GeneratedConstants.BackRight.LocationY)));
+
+    public static final DriveTrainSimulationConfig mapleSimConfig =
+        DriveTrainSimulationConfig.Default()
+            .withRobotMass(ROBOT_MASS)
+            .withCustomModuleTranslations(moduleTranslations)
+            .withGyro(COTS.ofPigeon2())
+            .withBumperSize(BUMPER_LENGTH, BUMPER_WIDTH)
+            .withSwerveModule(
+                COTS.ofMark4i(
+                    DCMotor.getFalcon500Foc(1), DCMotor.getFalcon500Foc(1), WHEEL_COF, 2));
   }
 
   @Override
@@ -437,16 +453,7 @@ public class TunerConstants2023 implements TunerConstants {
 
   @Override
   public Translation2d[] getModuleTranslations() {
-    return new Translation2d[] {
-      new Translation2d(
-          GeneratedConstants.FrontLeft.LocationX, GeneratedConstants.FrontLeft.LocationY),
-      new Translation2d(
-          GeneratedConstants.FrontRight.LocationX, GeneratedConstants.FrontRight.LocationY),
-      new Translation2d(
-          GeneratedConstants.BackLeft.LocationX, GeneratedConstants.BackLeft.LocationY),
-      new Translation2d(
-          GeneratedConstants.BackRight.LocationX, GeneratedConstants.BackRight.LocationY)
-    };
+    return CustomConstants.moduleTranslations;
   }
 
   @Override
@@ -457,5 +464,10 @@ public class TunerConstants2023 implements TunerConstants {
   @Override
   public double getPrecisionAlignAllowRadius() {
     return CustomConstants.precisionAlignAllowRadius;
+  }
+
+  @Override
+  public DriveTrainSimulationConfig getDriveTrainSimulationConfig() {
+    return CustomConstants.mapleSimConfig;
   }
 }

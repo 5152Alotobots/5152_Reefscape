@@ -21,10 +21,6 @@
       "version": "5.0.2"
     }
   ],
-  "jniDependencies": [
-
-  ],
-  "cppDependencies": [
-
-  ]
+  "jniDependencies": [],
+  "cppDependencies": []
 }

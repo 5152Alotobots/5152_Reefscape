@@ -15,6 +15,8 @@ package frc.alotobots;
 import static frc.alotobots.OI.*;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.alotobots.library.subsystems.bling.BlingSubsystem;
@@ -37,6 +39,9 @@ import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.cons
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.io.*;
 import frc.alotobots.reefscape.subsystems.autocycle.AutoCycleSubsystem;
 import frc.alotobots.reefscape.subsystems.autocycle.commands.DriverInterruptCommand;
+import org.ironmaple.simulation.SimulatedArena;
+import org.ironmaple.simulation.drivesims.SwerveDriveSimulation;
+import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 public class RobotContainer {
@@ -51,6 +56,7 @@ public class RobotContainer {
   private final PathPlannerManager pathPlannerManager;
   private final AutoCycleSubsystem autoCycleSubsystem;
   private LoggedDashboardChooser<Command> autoChooser;
+  private SwerveDriveSimulation driveSimulation;
 
   public RobotContainer() {
 
@@ -60,10 +66,10 @@ public class RobotContainer {
         swerveDriveSubsystem =
             new SwerveDriveSubsystem(
                 new GyroIOPigeon2(),
-                new ModuleIOTalonFX(ModulePosition.FRONT_LEFT.index),
-                new ModuleIOTalonFX(ModulePosition.FRONT_RIGHT.index),
-                new ModuleIOTalonFX(ModulePosition.BACK_LEFT.index),
-                new ModuleIOTalonFX(ModulePosition.BACK_RIGHT.index));
+                new ModuleIOTalonFXReal(ModulePosition.FRONT_LEFT.index),
+                new ModuleIOTalonFXReal(ModulePosition.FRONT_RIGHT.index),
+                new ModuleIOTalonFXReal(ModulePosition.BACK_LEFT.index),
+                new ModuleIOTalonFXReal(ModulePosition.BACK_RIGHT.index));
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         configureAutoChooser();
         autoCycleSubsystem = new AutoCycleSubsystem(pathPlannerManager, swerveDriveSubsystem);
@@ -93,14 +99,28 @@ public class RobotContainer {
         break;
 
       case SIM:
+        driveSimulation =
+            new SwerveDriveSimulation(
+                Constants.tunerConstants.getDriveTrainSimulationConfig(),
+                new Pose2d(3, 3, new Rotation2d()));
+        SimulatedArena.getInstance().addDriveTrainSimulation(driveSimulation);
+
         // Simulation hardware initialization
         swerveDriveSubsystem =
             new SwerveDriveSubsystem(
                 new GyroIO() {},
-                new ModuleIOSim(ModulePosition.FRONT_LEFT.index),
-                new ModuleIOSim(ModulePosition.FRONT_RIGHT.index),
-                new ModuleIOSim(ModulePosition.BACK_LEFT.index),
-                new ModuleIOSim(ModulePosition.BACK_RIGHT.index));
+                new ModuleIOTalonFXSim(
+                    ModulePosition.FRONT_LEFT.index,
+                    driveSimulation.getModules()[ModulePosition.FRONT_LEFT.index]),
+                new ModuleIOTalonFXSim(
+                    ModulePosition.FRONT_RIGHT.index,
+                    driveSimulation.getModules()[ModulePosition.FRONT_RIGHT.index]),
+                new ModuleIOTalonFXSim(
+                    ModulePosition.BACK_LEFT.index,
+                    driveSimulation.getModules()[ModulePosition.BACK_LEFT.index]),
+                new ModuleIOTalonFXSim(
+                    ModulePosition.BACK_RIGHT.index,
+                    driveSimulation.getModules()[ModulePosition.BACK_RIGHT.index]));
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         configureAutoChooser();
 
@@ -217,5 +237,23 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     return autoChooser.get();
+  }
+
+  public void resetSimulationField() {
+    if (Constants.currentMode != Constants.Mode.SIM) return;
+
+    driveSimulation.setSimulationWorldPose(new Pose2d(3, 3, new Rotation2d()));
+    SimulatedArena.getInstance().resetFieldForAuto();
+  }
+
+  public void displaySimFieldToAdvantageScope() {
+    if (Constants.currentMode != Constants.Mode.SIM) return;
+
+    Logger.recordOutput(
+        "FieldSimulation/RobotPosition", driveSimulation.getSimulatedDriveTrainPose());
+    Logger.recordOutput(
+        "FieldSimulation/Coral", SimulatedArena.getInstance().getGamePiecesArrayByType("Coral"));
+    Logger.recordOutput(
+        "FieldSimulation/Algae", SimulatedArena.getInstance().getGamePiecesArrayByType("Algae"));
   }
 }
