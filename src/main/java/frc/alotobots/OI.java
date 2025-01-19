@@ -83,6 +83,9 @@ public class OI {
     return driverController.getRightTriggerAxis();
   }
 
+  /** Enable auto pathfinding */
+  public static Trigger enableAutomaticPathfindingButton = driverController.back();
+
   /** Pathfind to the selected branch */
   public static Trigger pathfindToSelectedReefBranchButton = driverController.y();
 

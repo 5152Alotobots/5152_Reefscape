@@ -53,6 +53,7 @@ public class AutoCycleState {
   /** Currently running pathfinding command */
   @Getter private Command activePathfindingCommand;
 
+  @Getter private boolean pathfindingEnabled = false;
   @Getter private ActivePathfindingType lastActiveType = ActivePathfindingType.NONE;
   @Getter private boolean isPaused = false;
 
@@ -68,6 +69,16 @@ public class AutoCycleState {
     state.coralStationSide = FieldConstants.CoralStationSide.RIGHT;
     state.coralStationPickupPosition = FieldConstants.CoralStationPickupPosition.P1;
     return state;
+  }
+
+  /**
+   * Sets whether pathfinding is enabled.
+   *
+   * @param enabled True to enable pathfinding, false to disable
+   */
+  public void setPathfindingEnabled(boolean enabled) {
+    this.pathfindingEnabled = enabled;
+    Logger.recordOutput(PATHFINDING_KEY + "/Enabled", enabled);
   }
 
   /**
@@ -143,6 +154,7 @@ public class AutoCycleState {
     Logger.recordOutput(CORAL_STATION_KEY + "/Position", coralStationPickupPosition.name());
 
     // Log pathfinding state
+    Logger.recordOutput(PATHFINDING_KEY + "/Enabled", pathfindingEnabled);
     Logger.recordOutput(PATHFINDING_KEY + "/ActiveType", lastActiveType.toString());
     Logger.recordOutput(PATHFINDING_KEY + "/IsPaused", isPaused);
     Logger.recordOutput(PATHFINDING_KEY + "/ReefPath", getSelectedReefBranchPathName());

@@ -55,7 +55,7 @@ public class OculusIOSim implements OculusIO {
     // Transform robot pose to headset pose
     // This simulates where the headset actually is relative to robot center
     // The subsystem will later apply the inverse of this transform to get back to robot pose
-    currentPose = offsetPose; //.transformBy(OculusConstants.ROBOT_TO_OCULUS.inverse());
+    currentPose = offsetPose; // .transformBy(OculusConstants.ROBOT_TO_OCULUS.inverse());
 
     // Add noise based on standard deviations
     double noiseX = random.nextGaussian() * OculusConstants.OCULUS_STD_DEVS.get(0, 0);

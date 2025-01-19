@@ -193,12 +193,14 @@ public class RobotContainer {
   }
 
   private void configureLogicCommands() {
+    // Enabled state
+    enableAutomaticPathfindingButton.toggleOnTrue(autoCycleSubsystem.togglePathfinding());
     // Auto Cycle Reef Branch Controls
     cycleSelectedBranchRightButton.onTrue(autoCycleSubsystem.cycleReefBranchRight());
     cycleSelectedBranchLeftButton.onTrue(autoCycleSubsystem.cycleReefBranchLeft());
     cycleLevelUpButton.onTrue(autoCycleSubsystem.cycleReefLevelUp());
     cycleLevelDownButton.onTrue(autoCycleSubsystem.cycleReefLevelDown());
-    pathfindToSelectedReefBranchButton.onTrue(autoCycleSubsystem.pathfindToReef());
+    pathfindToSelectedReefBranchButton.toggleOnTrue(autoCycleSubsystem.pathfindToReef());
 
     // Auto Cycle Coral Station Controls
     cycleCoralStationSideLeftButton.onTrue(autoCycleSubsystem.cycleCoralStationSideLeft());
@@ -207,7 +209,7 @@ public class RobotContainer {
         autoCycleSubsystem.cycleCoralStationPositionLeft());
     cycleCoralStationPickupPositionRightButton.onTrue(
         autoCycleSubsystem.cycleCoralStationPositionRight());
-    pathfindToSelectedCoralStationButton.onTrue(autoCycleSubsystem.pathfindToCoralStation());
+    pathfindToSelectedCoralStationButton.toggleOnTrue(autoCycleSubsystem.pathfindToCoralStation());
 
     hasDriverInput.whileTrue(new DriverInterruptCommand(autoCycleSubsystem));
   }
