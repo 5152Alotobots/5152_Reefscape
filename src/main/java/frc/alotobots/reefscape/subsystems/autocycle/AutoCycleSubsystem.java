@@ -48,12 +48,13 @@ public class AutoCycleSubsystem extends SubsystemBase {
   /** Command to toggle pathfinding enabled state */
   public Command togglePathfinding() {
     return runOnce(
-        () -> {
-          state.setPathfindingEnabled(!state.isPathfindingEnabled());
-          if (!state.isPathfindingEnabled()) {
-            cancelActivePathfinding();
-          }
-        });
+            () -> {
+              state.setPathfindingEnabled(!state.isPathfindingEnabled());
+              if (!state.isPathfindingEnabled()) {
+                cancelActivePathfinding();
+              }
+            })
+        .ignoringDisable(true);
   }
 
   /** Cancels the active pathfinding command if one exists */

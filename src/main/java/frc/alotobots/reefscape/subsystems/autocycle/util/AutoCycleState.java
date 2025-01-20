@@ -109,12 +109,12 @@ public class AutoCycleState {
   }
 
   /**
-   * Gets the path name for the currently selected branch and level.
+   * Gets the path name for the currently selected branch.
    *
-   * @return Path name formatted as "BranchApproach_[branch]_[level]"
+   * @return Path name formatted as "BranchApproach_[branch]"
    */
   public String getSelectedReefBranchPathName() {
-    return String.format("BranchApproach_%s_%s", reefBranch, reefLevel);
+    return String.format("BranchApproach_%s", reefBranch);
   }
 
   /**

@@ -20,6 +20,8 @@ import frc.alotobots.library.subsystems.vision.oculus.constants.OculusConstants;
 import java.util.Random;
 import org.ironmaple.simulation.drivesims.SwerveDriveSimulation;
 
+import static frc.alotobots.library.subsystems.vision.oculus.constants.OculusConstants.*;
+
 /** Simulation implementation of OculusIO that provides realistic noisy measurements. */
 public class OculusIOSim implements OculusIO {
   private final Random random = new Random();
@@ -58,9 +60,10 @@ public class OculusIOSim implements OculusIO {
     currentPose = offsetPose; // .transformBy(OculusConstants.ROBOT_TO_OCULUS.inverse());
 
     // Add noise based on standard deviations
-    double noiseX = random.nextGaussian() * OculusConstants.OCULUS_STD_DEVS.get(0, 0);
-    double noiseY = random.nextGaussian() * OculusConstants.OCULUS_STD_DEVS.get(1, 0);
-    double noiseRot = random.nextGaussian() * (OculusConstants.OCULUS_STD_DEVS.get(2, 0) / 3.0);
+    double noiseX = random.nextGaussian() * (OculusConstants.OCULUS_STD_DEVS.get(0, 0) / SIM_TRUST_TRANSLATION);
+    double noiseY = random.nextGaussian() * (OculusConstants.OCULUS_STD_DEVS.get(1, 0) / SIM_TRUST_TRANSLATION);
+    double noiseRot =
+        random.nextGaussian() * (OculusConstants.OCULUS_STD_DEVS.get(2, 0) / SIM_TRUST_ROTATION);
 
     currentPose =
         new Pose2d(
