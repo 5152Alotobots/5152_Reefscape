@@ -60,7 +60,7 @@ public class OculusIOSim implements OculusIO {
     // Add noise based on standard deviations
     double noiseX = random.nextGaussian() * OculusConstants.OCULUS_STD_DEVS.get(0, 0);
     double noiseY = random.nextGaussian() * OculusConstants.OCULUS_STD_DEVS.get(1, 0);
-    double noiseRot = random.nextGaussian() * OculusConstants.OCULUS_STD_DEVS.get(2, 0);
+    double noiseRot = random.nextGaussian() * (OculusConstants.OCULUS_STD_DEVS.get(2, 0) / 3.0);
 
     currentPose =
         new Pose2d(

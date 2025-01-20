@@ -292,7 +292,7 @@ public class TunerConstants2023 implements TunerConstants {
     public static final double MAX_MODULAR_ROTATIONAL_RATE = Units.rotationsToRadians(12);
     public static final Mass ROBOT_MASS = Mass.ofBaseUnits(70, Pounds);
     public static final double ROBOT_MOI = 2.550;
-    public static final double WHEEL_COF = 0.6;
+    public static final double WHEEL_COF = COTS.WHEELS.DEFAULT_NEOPRENE_TREAD.cof;
 
     public static final Translation2d[] moduleTranslations =
         new Translation2d[] {

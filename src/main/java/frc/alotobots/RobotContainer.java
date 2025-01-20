@@ -194,7 +194,8 @@ public class RobotContainer {
 
   private void configureLogicCommands() {
     // Enabled state
-    enableAutomaticPathfindingButton.toggleOnTrue(autoCycleSubsystem.togglePathfinding());
+    enableAutomaticPathfindingButton.onChange(autoCycleSubsystem.togglePathfinding());
+
     // Auto Cycle Reef Branch Controls
     cycleSelectedBranchRightButton.onTrue(autoCycleSubsystem.cycleReefBranchRight());
     cycleSelectedBranchLeftButton.onTrue(autoCycleSubsystem.cycleReefBranchLeft());
