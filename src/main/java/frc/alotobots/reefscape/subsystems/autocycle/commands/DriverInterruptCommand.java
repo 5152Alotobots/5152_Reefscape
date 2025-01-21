@@ -39,10 +39,10 @@ public class DriverInterruptCommand extends Command {
     // Resume pathfinding based on last active type
     switch (autoCycleSubsystem.getState().getLastActiveType()) {
       case REEF:
-        autoCycleSubsystem.pathfindToReef().schedule();
+        new PathfindToReef(autoCycleSubsystem).schedule();
         break;
       case CORAL_STATION:
-        autoCycleSubsystem.pathfindToCoralStation().schedule();
+        new PathfindToCoralStation(autoCycleSubsystem).schedule();
         break;
       default:
         break;

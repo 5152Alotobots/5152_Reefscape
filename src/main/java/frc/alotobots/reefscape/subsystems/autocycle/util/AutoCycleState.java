@@ -173,4 +173,64 @@ public class AutoCycleState {
     coralStationPose.ifPresent(
         pose -> Logger.recordOutput(CORAL_STATION_KEY + "/TargetPose", pose));
   }
+
+  public void cycleReefBranchRight() {
+    int nextOrdinal = reefBranch.ordinal() + 1;
+    if (nextOrdinal >= FieldConstants.ReefBranch.values().length) {
+      nextOrdinal = 0;
+    }
+    setReefBranch(FieldConstants.ReefBranch.values()[nextOrdinal]);
+  }
+
+  public void cycleReefBranchLeft() {
+    int nextOrdinal = reefBranch.ordinal() - 1;
+    if (nextOrdinal < 0) {
+      nextOrdinal = FieldConstants.ReefBranch.values().length - 1;
+    }
+    setReefBranch(FieldConstants.ReefBranch.values()[nextOrdinal]);
+  }
+
+  public void cycleReefLevelUp() {
+    int nextOrdinal = reefLevel.ordinal() + 1;
+    if (nextOrdinal < FieldConstants.Level.values().length) {
+      setReefLevel(FieldConstants.Level.values()[nextOrdinal]);
+    }
+  }
+
+  public void cycleReefLevelDown() {
+    int nextOrdinal = reefLevel.ordinal() - 1;
+    if (nextOrdinal >= 0) {
+      setReefLevel(FieldConstants.Level.values()[nextOrdinal]);
+    }
+  }
+
+  public void cycleCoralStationSideRight() {
+    int nextOrdinal = coralStationSide.ordinal() + 1;
+    if (nextOrdinal < FieldConstants.CoralStationSide.values().length) {
+      setCoralStationSide(FieldConstants.CoralStationSide.values()[nextOrdinal]);
+    }
+  }
+
+  public void cycleCoralStationSideLeft() {
+    int nextOrdinal = coralStationSide.ordinal() - 1;
+    if (nextOrdinal >= 0) {
+      setCoralStationSide(FieldConstants.CoralStationSide.values()[nextOrdinal]);
+    }
+  }
+
+  public void cycleCoralStationPositionRight() {
+    int nextOrdinal = coralStationPickupPosition.ordinal() + 1;
+    if (nextOrdinal < FieldConstants.CoralStationPickupPosition.values().length) {
+      setCoralStationPickupPosition(
+          FieldConstants.CoralStationPickupPosition.values()[nextOrdinal]);
+    }
+  }
+
+  public void cycleCoralStationPositionLeft() {
+    int nextOrdinal = coralStationPickupPosition.ordinal() - 1;
+    if (nextOrdinal >= 0) {
+      setCoralStationPickupPosition(
+          FieldConstants.CoralStationPickupPosition.values()[nextOrdinal]);
+    }
+  }
 }

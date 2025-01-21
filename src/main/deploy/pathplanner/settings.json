@@ -4,8 +4,9 @@
   "holonomicMode": true,
   "pathFolders": [
     "BranchApproach",
-    "HoloTest",
     "CoralStationApproach",
+    "HoloTest",
+    "BranchRetreat",
     "RotationTest",
     "StraightTest"
   ],

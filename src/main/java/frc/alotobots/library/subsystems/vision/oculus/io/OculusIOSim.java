@@ -12,6 +12,8 @@
 */
 package frc.alotobots.library.subsystems.vision.oculus.io;
 
+import static frc.alotobots.library.subsystems.vision.oculus.constants.OculusConstants.*;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Quaternion;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -19,8 +21,6 @@ import edu.wpi.first.math.geometry.Transform2d;
 import frc.alotobots.library.subsystems.vision.oculus.constants.OculusConstants;
 import java.util.Random;
 import org.ironmaple.simulation.drivesims.SwerveDriveSimulation;
-
-import static frc.alotobots.library.subsystems.vision.oculus.constants.OculusConstants.*;
 
 /** Simulation implementation of OculusIO that provides realistic noisy measurements. */
 public class OculusIOSim implements OculusIO {
@@ -60,8 +60,10 @@ public class OculusIOSim implements OculusIO {
     currentPose = offsetPose; // .transformBy(OculusConstants.ROBOT_TO_OCULUS.inverse());
 
     // Add noise based on standard deviations
-    double noiseX = random.nextGaussian() * (OculusConstants.OCULUS_STD_DEVS.get(0, 0) / SIM_TRUST_TRANSLATION);
-    double noiseY = random.nextGaussian() * (OculusConstants.OCULUS_STD_DEVS.get(1, 0) / SIM_TRUST_TRANSLATION);
+    double noiseX =
+        random.nextGaussian() * (OculusConstants.OCULUS_STD_DEVS.get(0, 0) / SIM_TRUST_TRANSLATION);
+    double noiseY =
+        random.nextGaussian() * (OculusConstants.OCULUS_STD_DEVS.get(1, 0) / SIM_TRUST_TRANSLATION);
     double noiseRot =
         random.nextGaussian() * (OculusConstants.OCULUS_STD_DEVS.get(2, 0) / SIM_TRUST_ROTATION);
 
