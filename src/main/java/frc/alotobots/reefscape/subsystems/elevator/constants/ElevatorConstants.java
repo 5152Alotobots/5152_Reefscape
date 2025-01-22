@@ -1,0 +1,81 @@
+/*
+* ALOTOBOTS - FRC Team 5152
+  https://github.com/5152Alotobots
+* Copyright (C) 2025 ALOTOBOTS
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* Source code must be publicly available on GitHub or an alternative web accessible site
+*/
+package frc.alotobots.reefscape.subsystems.elevator.constants;
+
+import static edu.wpi.first.units.Units.*;
+
+import edu.wpi.first.units.*;
+import edu.wpi.first.units.measure.*;
+
+/**
+ * Constants for the Elevator subsystem. Contains all configuration values, conversion factors, and
+ * physical limits. All values use WPILib's units library for type safety.
+ */
+public final class ElevatorConstants {
+  /** Prevent construction */
+  private ElevatorConstants() {}
+
+  /** Physical dimensions and mechanical configuration */
+  public static final class Mechanics {
+    /** Diameter of the elevator pulley */
+    public static final Distance PULLEY_DIAMETER = Inches.of(2.0);
+
+    /** Circumference of the elevator pulley */
+    public static final Distance PULLEY_CIRCUMFERENCE = PULLEY_DIAMETER.times(Math.PI);
+  }
+
+  /** Physical limits and safety thresholds */
+  public static final class Limits {
+    /** Maximum allowed height */
+    public static final Distance MAX_HEIGHT = Meters.of(2.0);
+
+    /** Minimum allowed height */
+    public static final Distance MIN_HEIGHT = Meters.of(0.0);
+
+    /** Maximum torque current for the motors */
+    public static final Current PEAK_TORQUE_CURRENT = Amps.of(100.0);
+
+    /** Maximum stator current for the motors */
+    public static final Current STATOR_CURRENT_LIMIT = Amps.of(120.0);
+
+    /** Maximum voltage that can be applied to the motors */
+    public static final Voltage MAX_VOLTAGE = Volts.of(12.0);
+  }
+
+  /** Position setpoints for different elevator states */
+  public static final class Setpoints {
+    /** Height when elevator is fully retracted/stowed */
+    public static final Distance STOWED = Meters.of(0.1);
+
+    /** Height for picking up from coral station */
+    public static final Distance CORAL_STATION = Meters.of(1.0);
+
+    /** Height for L4 placement */
+    public static final Distance L4_PLACE = Meters.of(1.8);
+
+    /** Height for L3 placement */
+    public static final Distance L3_PLACE = Meters.of(1.2);
+
+    /** Height for L2 placement */
+    public static final Distance L2_PLACE = Meters.of(0.5);
+
+    /** Height for L1 placement */
+    public static final Distance L1_PLACE = Meters.of(0.5);
+  }
+
+  public static final class PIDSlot {
+    public static final int NONE = 0;
+    public static final int CORAL = 1;
+    public static final int ALGAE = 2;
+  }
+}
