@@ -57,5 +57,8 @@ public final class Constants {
 
     /** CANdle LED controller CAN ID */
     public static final int CANDLE_CAN_ID = 40;
+
+    /** Wrist Motor CAN ID */
+    public static final int WRIST_CAN_ID = 42;
   }
 }
