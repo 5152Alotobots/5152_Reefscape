@@ -294,7 +294,7 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
         rightAppliedCurrent,
         topSoftLimit,
         bottomSoftLimit,
-            currentPidSlot);
+        currentPidSlot);
     ParentDevice.optimizeBusUtilizationForAll(leftTalon, rightTalon, canRange);
   }
 

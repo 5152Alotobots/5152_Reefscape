@@ -28,7 +28,7 @@ public interface ElevatorIO {
    */
   @AutoLog
   public static class ElevatorIOInputs {
-    /** Current PID slot*/
+    /** Current PID slot */
     public int currentPidSlot = 0;
 
     /** Connection status of the left elevator motor */

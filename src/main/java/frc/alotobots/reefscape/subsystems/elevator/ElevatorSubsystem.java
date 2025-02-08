@@ -12,6 +12,10 @@
 */
 package frc.alotobots.reefscape.subsystems.elevator;
 
+import static edu.wpi.first.units.Units.Meters;
+import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.Limits.MAX_HEIGHT;
+import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.Limits.MIN_HEIGHT;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -19,13 +23,8 @@ import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIO;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIOInputsAutoLogged;
 import frc.alotobots.reefscape.util.GameElement;
-import org.littletonrobotics.junction.Logger;
-
 import java.util.function.Supplier;
-
-import static edu.wpi.first.units.Units.Meters;
-import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.Limits.MAX_HEIGHT;
-import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.Limits.MIN_HEIGHT;
+import org.littletonrobotics.junction.Logger;
 
 public class ElevatorSubsystem extends SubsystemBase {
   ElevatorIO io;
@@ -45,7 +44,8 @@ public class ElevatorSubsystem extends SubsystemBase {
   }
 
   public void runToTargetPosition(Distance height) {
-    Distance adjustedHeight = Meters.of(MathUtil.clamp(height.in(Meters), MIN_HEIGHT.in(Meters), MAX_HEIGHT.in(Meters)));
+    Distance adjustedHeight =
+        Meters.of(MathUtil.clamp(height.in(Meters), MIN_HEIGHT.in(Meters), MAX_HEIGHT.in(Meters)));
     switch (elementInIntake.get()) {
       case NONE:
         io.setElevatorPosition(adjustedHeight, ElevatorConstants.PIDSlot.NONE);
@@ -67,5 +67,4 @@ public class ElevatorSubsystem extends SubsystemBase {
     io.stop();
     io.setElevatorBrakeMode(true);
   }
-
 }
