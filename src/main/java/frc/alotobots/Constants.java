@@ -59,12 +59,12 @@ public final class Constants {
     public static final int CANDLE_CAN_ID = 40;
 
     /** Left Elevator CAN ID */
-    public static final int LEFT_ELEVATOR_CAN_ID = 41;
+    public static final int LEFT_ELEVATOR_CAN_ID = 30;
 
     /** Right Elevator CAN ID */
-    public static final int RIGHT_ELEVATOR_CAN_ID = 42;
+    public static final int RIGHT_ELEVATOR_CAN_ID = 31;
 
     /** Elevator canCoder ID */
-    public static final int ELEVATOR_CANRANGE_ID = 43;
+    public static final int ELEVATOR_CANRANGE_ID = 32;
   }
 }

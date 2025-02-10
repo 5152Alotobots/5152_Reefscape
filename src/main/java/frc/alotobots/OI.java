@@ -118,4 +118,16 @@ public class OI {
 
   /** Cycles the branch level down once */
   public static Trigger cycleLevelDownButton = driverController.povDown();
+
+  /** The primary driver's controller. Used for main robot control functions. */
+  private static final CommandXboxController codriverController = new CommandXboxController(1);
+
+  /**
+   * Gets the open loop elevator input from the co-driver controller
+   *
+   * @return Value between -1.0 (down) and 1.0 (up)
+   */
+  public static double getElevatorAxis() {
+    return codriverController.getRightY();
+  }
 }

@@ -14,6 +14,8 @@ package frc.alotobots.reefscape.subsystems.elevator.io;
 
 import static edu.wpi.first.units.Units.*;
 import static frc.alotobots.Constants.CanId.*;
+import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.Limits.MAX_HEIGHT;
+import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.Limits.MIN_HEIGHT;
 import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.Mechanics.PULLEY_CIRCUMFERENCE;
 import static frc.alotobots.util.PhoenixUtil.tryUntilOk;
 
@@ -116,7 +118,7 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
    */
   private static final class HardwareConfig {
     /** Gear ratio between motor and pulley (motor rotations : pulley rotations) */
-    static final double GEAR_RATIO = 10.0;
+    static final double GEAR_RATIO = 7.0;
 
     /** Conversion factor from TalonFX rotations to meters of travel */
     static final double ROTATIONS_TO_METERS = PULLEY_CIRCUMFERENCE.in(Meters) / GEAR_RATIO;
@@ -230,8 +232,10 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
 
     leftConfig.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
     leftConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
-    leftConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 1000;
-    leftConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = -1000;
+    leftConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold =
+        heightToTalonFX(MAX_HEIGHT).in(Rotations);
+    leftConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold =
+        heightToTalonFX(MIN_HEIGHT).in(Rotations);
 
     leftConfig.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.RotorSensor;
     leftConfig.Feedback.SensorToMechanismRatio = 1.0;
@@ -245,7 +249,7 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
     leftConfig.OpenLoopRamps.TorqueOpenLoopRampPeriod = 0.0;
     leftConfig.ClosedLoopRamps.TorqueClosedLoopRampPeriod = 0.0;
 
-    leftConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+    leftConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
 
     // Apply config to left motor
     tryUntilOk(5, () -> leftTalon.getConfigurator().apply(leftConfig, 0.25));
@@ -349,7 +353,7 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
     inputs.rightCurrentAmps = rightAppliedCurrent.getValue();
 
     // Set CANRange height to TalonFX motor position (This is a terrible idea! Thanks, Rowan!)
-    leftTalon.setPosition(heightToTalonFX(canRangeDistance.getValue()));
+    // leftTalon.setPosition(heightToTalonFX(canRangeDistance.getValue()));
   }
 
   /**

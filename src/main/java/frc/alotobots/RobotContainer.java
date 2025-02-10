@@ -42,6 +42,12 @@ import frc.alotobots.reefscape.subsystems.autocycle.AutoCycleSubsystem;
 import frc.alotobots.reefscape.subsystems.autocycle.commands.DriverInterruptCommand;
 import frc.alotobots.reefscape.subsystems.autocycle.commands.PathfindToCoralStation;
 import frc.alotobots.reefscape.subsystems.autocycle.commands.PathfindToReef;
+import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
+import frc.alotobots.reefscape.subsystems.elevator.commands.DefaultElevatorOpenLoop;
+import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIO;
+import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIOTalonFXReal;
+import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIOTalonFXSim;
+import frc.alotobots.reefscape.util.GameElement;
 import org.ironmaple.simulation.SimulatedArena;
 import org.ironmaple.simulation.drivesims.SwerveDriveSimulation;
 import org.littletonrobotics.junction.Logger;
@@ -49,6 +55,7 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 public class RobotContainer {
   private final SwerveDriveSubsystem swerveDriveSubsystem;
+  private final ElevatorSubsystem elevatorSubsystem;
   private final OculusSubsystem oculusSubsystem;
   private final AprilTagSubsystem aprilTagSubsystem;
   private final LocalizationFusion localizationFusion;
@@ -73,6 +80,8 @@ public class RobotContainer {
                 new ModuleIOTalonFXReal(ModulePosition.FRONT_RIGHT.index),
                 new ModuleIOTalonFXReal(ModulePosition.BACK_LEFT.index),
                 new ModuleIOTalonFXReal(ModulePosition.BACK_RIGHT.index));
+        elevatorSubsystem =
+            new ElevatorSubsystem(new ElevatorIOTalonFXReal(), () -> GameElement.NONE);
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         configureAutoChooser();
         autoCycleSubsystem = new AutoCycleSubsystem(pathPlannerManager, swerveDriveSubsystem);
@@ -125,6 +134,8 @@ public class RobotContainer {
                     ModulePosition.BACK_RIGHT.index,
                     driveSimulation.getModules()[ModulePosition.BACK_RIGHT.index]));
         swerveDriveSubsystem.setPose(simStartPose);
+        elevatorSubsystem =
+            new ElevatorSubsystem(new ElevatorIOTalonFXSim(), () -> GameElement.NONE);
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         configureAutoChooser();
 
@@ -162,6 +173,7 @@ public class RobotContainer {
                 new ModuleIO() {},
                 new ModuleIO() {},
                 new ModuleIO() {});
+        elevatorSubsystem = new ElevatorSubsystem(new ElevatorIO() {}, () -> GameElement.NONE);
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         configureAutoChooser();
 
@@ -191,6 +203,8 @@ public class RobotContainer {
 
   private void configureDefaultCommands() {
     swerveDriveSubsystem.setDefaultCommand(new DefaultDrive(swerveDriveSubsystem).getCommand());
+    elevatorSubsystem.setDefaultCommand(
+        new DefaultElevatorOpenLoop(elevatorSubsystem, () -> -getElevatorAxis() * .25));
     blingSubsystem.setDefaultCommand(
         new NoAllianceWaiting(blingSubsystem).andThen(new SetToAllianceColor(blingSubsystem)));
   }

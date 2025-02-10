@@ -28,7 +28,7 @@ public final class ElevatorConstants {
   /** Physical dimensions and mechanical configuration */
   public static final class Mechanics {
     /** Diameter of the elevator pulley */
-    public static final Distance PULLEY_DIAMETER = Inches.of(2.0);
+    public static final Distance PULLEY_DIAMETER = Centimeters.of(3.2);
 
     /** Circumference of the elevator pulley */
     public static final Distance PULLEY_CIRCUMFERENCE = PULLEY_DIAMETER.times(Math.PI);
@@ -37,7 +37,7 @@ public final class ElevatorConstants {
   /** Physical limits and safety thresholds */
   public static final class Limits {
     /** Maximum allowed height */
-    public static final Distance MAX_HEIGHT = Meters.of(2.0);
+    public static final Distance MAX_HEIGHT = Meters.of(5.0);
 
     /** Minimum allowed height */
     public static final Distance MIN_HEIGHT = Meters.of(0.0);
