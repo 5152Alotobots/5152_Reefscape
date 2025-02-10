@@ -38,7 +38,6 @@ import frc.alotobots.library.subsystems.swervedrive.constants.TunerConstants;
 
 public class TunerConstants2025 implements TunerConstants {
   public static class GeneratedConstants {
-
     // Both sets of gains need to be tuned to your individual robot.
 
     // The steer motor uses any SwerveModule.SteerRequestType control request with the
@@ -55,7 +54,7 @@ public class TunerConstants2025 implements TunerConstants {
     // When using closed-loop control, the drive motor uses the control
     // output type specified by SwerveModuleConstants.DriveMotorClosedLoopOutput
     private static final Slot0Configs driveGains =
-        new Slot0Configs().withKP(0.1).withKI(0).withKD(0).withKS(0.16404).withKV(0.56345);
+        new Slot0Configs().withKP(0.1).withKI(0).withKD(0).withKS(0.16504).withKV(0.55969);
 
     // The closed-loop output type to use for the steer motors;
     // This affects the PID/FF gains for the steer motors
@@ -101,14 +100,14 @@ public class TunerConstants2025 implements TunerConstants {
 
     // Theoretical free speed (m/s) at 12 V applied output;
     // This needs to be tuned to your individual robot
-    public static final LinearVelocity kSpeedAt12Volts = MetersPerSecond.of(5.21);
+    public static final LinearVelocity kSpeedAt12Volts = MetersPerSecond.of(6.21);
 
     // Every 1 rotation of the azimuth results in kCoupleRatio drive motor turns;
     // This may need to be tuned to your individual robot
-    private static final double kCoupleRatio = 3.5714285714285716;
+    private static final double kCoupleRatio = 0;
 
     private static final double kDriveGearRatio = 5.14;
-    private static final double kSteerGearRatio = 21.428571428571427;
+    private static final double kSteerGearRatio = 21.428571;
     private static final Distance kWheelRadius = Inches.of(2);
 
     private static final boolean kInvertLeftSide = false;
@@ -159,9 +158,9 @@ public class TunerConstants2025 implements TunerConstants {
     private static final int kFrontLeftDriveMotorId = 10;
     private static final int kFrontLeftSteerMotorId = 11;
     private static final int kFrontLeftEncoderId = 12;
-    private static final Angle kFrontLeftEncoderOffset = Rotations.of(0.018798828125);
-    private static final boolean kFrontLeftSteerMotorInverted = false;
-    private static final boolean kFrontLeftEncoderInverted = true;
+    private static final Angle kFrontLeftEncoderOffset = Rotations.of(-0.015625);
+    private static final boolean kFrontLeftSteerMotorInverted = true;
+    private static final boolean kFrontLeftEncoderInverted = false;
 
     private static final Distance kFrontLeftXPos = Inches.of(11);
     private static final Distance kFrontLeftYPos = Inches.of(9.5);
@@ -170,9 +169,9 @@ public class TunerConstants2025 implements TunerConstants {
     private static final int kFrontRightDriveMotorId = 13;
     private static final int kFrontRightSteerMotorId = 14;
     private static final int kFrontRightEncoderId = 15;
-    private static final Angle kFrontRightEncoderOffset = Rotations.of(0.258056640625);
-    private static final boolean kFrontRightSteerMotorInverted = false;
-    private static final boolean kFrontRightEncoderInverted = true;
+    private static final Angle kFrontRightEncoderOffset = Rotations.of(-0.25537109375);
+    private static final boolean kFrontRightSteerMotorInverted = true;
+    private static final boolean kFrontRightEncoderInverted = false;
 
     private static final Distance kFrontRightXPos = Inches.of(11);
     private static final Distance kFrontRightYPos = Inches.of(-9.5);
@@ -181,9 +180,9 @@ public class TunerConstants2025 implements TunerConstants {
     private static final int kBackLeftDriveMotorId = 16;
     private static final int kBackLeftSteerMotorId = 17;
     private static final int kBackLeftEncoderId = 18;
-    private static final Angle kBackLeftEncoderOffset = Rotations.of(-0.3486328125);
-    private static final boolean kBackLeftSteerMotorInverted = false;
-    private static final boolean kBackLeftEncoderInverted = true;
+    private static final Angle kBackLeftEncoderOffset = Rotations.of(0.345703125);
+    private static final boolean kBackLeftSteerMotorInverted = true;
+    private static final boolean kBackLeftEncoderInverted = false;
 
     private static final Distance kBackLeftXPos = Inches.of(-11);
     private static final Distance kBackLeftYPos = Inches.of(9.5);
@@ -192,9 +191,9 @@ public class TunerConstants2025 implements TunerConstants {
     private static final int kBackRightDriveMotorId = 19;
     private static final int kBackRightSteerMotorId = 20;
     private static final int kBackRightEncoderId = 21;
-    private static final Angle kBackRightEncoderOffset = Rotations.of(-0.337158203125);
-    private static final boolean kBackRightSteerMotorInverted = false;
-    private static final boolean kBackRightEncoderInverted = true;
+    private static final Angle kBackRightEncoderOffset = Rotations.of(0.340087890625);
+    private static final boolean kBackRightSteerMotorInverted = true;
+    private static final boolean kBackRightEncoderInverted = false;
 
     private static final Distance kBackRightXPos = Inches.of(-11);
     private static final Distance kBackRightYPos = Inches.of(-9.5);
@@ -258,7 +257,7 @@ public class TunerConstants2025 implements TunerConstants {
     public static final PIDConstants translationPid = new PIDConstants(2.4, 0, 0.015);
     public static final PIDConstants rotationPid = new PIDConstants(7.8, 0, 0.015);
     public static final PathConstraints PATHFINDING_CONSTRAINTS =
-        new PathConstraints(5.02, 3.5, Units.degreesToRadians(540), Units.degreesToRadians(460));
+        new PathConstraints(6.2, 3.5, Units.degreesToRadians(540), Units.degreesToRadians(460));
     public static final PPHolonomicDriveController PP_HOLONOMIC_DRIVE_CONTROLLER =
         new PPHolonomicDriveController(translationPid, rotationPid);
     public static final ProfiledPIDController driveFacingAngleController =
@@ -273,8 +272,8 @@ public class TunerConstants2025 implements TunerConstants {
     public static final Distance BUMPER_LENGTH = Distance.ofBaseUnits(.75, Meters);
     public static final Distance BUMPER_WIDTH = Distance.ofBaseUnits(.75, Meters);
     public static final LinearVelocity TURTLE_SPEED = MetersPerSecond.of(1.0);
-    public static final LinearVelocity NOMINAL_SPEED = MetersPerSecond.of(3.0);
-    public static final LinearVelocity TURBO_SPEED = MetersPerSecond.of(4.8);
+    public static final LinearVelocity NOMINAL_SPEED = MetersPerSecond.of(4.8);
+    public static final LinearVelocity TURBO_SPEED = MetersPerSecond.of(6.00);
     public static final double MAX_MODULAR_ROTATIONAL_RATE = Units.rotationsToRadians(12);
     public static final double ROBOT_MASS_KG = 34;
     public static final double ROBOT_MOI = 2.550;
