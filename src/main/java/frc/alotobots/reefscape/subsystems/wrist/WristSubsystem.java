@@ -12,17 +12,16 @@
 */
 package frc.alotobots.reefscape.subsystems.wrist;
 
+import static edu.wpi.first.units.Units.Degrees;
+import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.MAX_ANGLE;
+import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.MIN_ANGLE;
+
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.units.Units;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.alotobots.reefscape.subsystems.wrist.io.WristIO;
 import frc.alotobots.reefscape.subsystems.wrist.io.WristIOInputsAutoLogged;
 import org.littletonrobotics.junction.Logger;
-
-import static edu.wpi.first.units.Units.Degrees;
-import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.MAX_ANGLE;
-import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.MIN_ANGLE;
 
 public class WristSubsystem extends SubsystemBase {
   private WristIOInputsAutoLogged inputs = new WristIOInputsAutoLogged();
@@ -38,8 +37,9 @@ public class WristSubsystem extends SubsystemBase {
   }
 
   public void runToTargetAngle(Angle angle) {
-    Angle adjustedAngle = Degrees.of(MathUtil.clamp(angle.in(Degrees), MIN_ANGLE.in(Degrees), MAX_ANGLE.in(Degrees)));
-  io.setWristPosition(adjustedAngle, 0);
+    Angle adjustedAngle =
+        Degrees.of(MathUtil.clamp(angle.in(Degrees), MIN_ANGLE.in(Degrees), MAX_ANGLE.in(Degrees)));
+    io.setWristPosition(adjustedAngle, 0);
   }
 
   public void runAtPercentOutput(double percentOutput) {
