@@ -25,9 +25,4 @@ public class WristConstants {
   public static final Angle MAX_ANGLE = Degrees.of(90);
   public static final Angle MIN_ANGLE = Degrees.of(0);
 
-  public static final int ROTOR_TO_SENSOR_RATIO = 189;
-  public static final InvertedValue MOTOR_INVERT = InvertedValue.Clockwise_Positive;
-
-  public static final double ENCODER_MAGNET_OFFSET = 0;
-  public static final SensorDirectionValue ENCODER_DIRCTION_VALUE = SensorDirectionValue.Clockwise_Positive;
 }

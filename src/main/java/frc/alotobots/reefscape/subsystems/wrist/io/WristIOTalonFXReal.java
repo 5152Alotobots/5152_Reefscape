@@ -14,9 +14,9 @@ package frc.alotobots.reefscape.subsystems.wrist.io;
 
 import static frc.alotobots.Constants.CanId.WRIST_ENCODER_CAN_ID;
 import static frc.alotobots.Constants.CanId.WRIST_MOTOR_CAN_ID;
-import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.ENCODER_MAGNET_OFFSET;
-import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.MOTOR_INVERT;
-import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.ROTOR_TO_SENSOR_RATIO;
+import static frc.alotobots.reefscape.subsystems.wrist.constants.WristIOTalonFXConstants.ENCODER_MAGNET_OFFSET;
+import static frc.alotobots.reefscape.subsystems.wrist.constants.WristIOTalonFXConstants.MOTOR_INVERT;
+import static frc.alotobots.reefscape.subsystems.wrist.constants.WristIOTalonFXConstants.ROTOR_TO_SENSOR_RATIO;
 import static frc.alotobots.util.PhoenixUtil.tryUntilOk;
 
 import com.ctre.phoenix6.BaseStatusSignal;
@@ -58,7 +58,7 @@ public class WristIOTalonFXReal implements WristIO {
 
   StatusSignal<Boolean> bottomSoftLimit;
 
-  private final Debouncer wristDebouncer = new Debouncer(0.5);
+  private final Debouncer wristConnectedDebouncer = new Debouncer(0.5);
 
   public WristIOTalonFXReal() {
     wristMotor = new TalonFX(WRIST_MOTOR_CAN_ID);
@@ -113,7 +113,7 @@ public class WristIOTalonFXReal implements WristIO {
             bottomSoftLimit);
 
     // Is connected
-    inputs.motorConnected = wristDebouncer.calculate(wristSignals.isOK());
+    inputs.motorConnected = wristConnectedDebouncer.calculate(wristSignals.isOK());
 
     // PID slot
     inputs.pidSlot = currentPidSlot.getValue();
