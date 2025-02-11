@@ -82,7 +82,7 @@ public class TunerConstants2023 implements TunerConstants {
         SwerveModuleConstants.SteerMotorArrangement.TalonFX_Integrated;
 
     // The remote sensor feedback type to use for the steer motors;
-    // When not Pro-licensed, FusedCANcoder/SyncCANcoder automatically fall back to RemoteCANcoder
+    // When not Pro-licensed, Fused*/Sync* automatically fall back to Remote*
     private static final SteerFeedbackType kSteerFeedbackType = SteerFeedbackType.FusedCANcoder;
 
     // The stator current at which the wheels start to slip;
@@ -170,7 +170,7 @@ public class TunerConstants2023 implements TunerConstants {
     private static final int kFrontLeftSteerMotorId = 11;
     private static final int kFrontLeftEncoderId = 12;
     private static final Angle kFrontLeftEncoderOffset = Rotations.of(0.491943359375);
-    private static final boolean kFrontLeftSteerMotorInverted = false;
+    private static final boolean kFrontLeftSteerMotorInverted = true;
     private static final boolean kFrontLeftEncoderInverted = false;
 
     private static final Distance kFrontLeftXPos = Inches.of(9.25);
@@ -181,7 +181,7 @@ public class TunerConstants2023 implements TunerConstants {
     private static final int kFrontRightSteerMotorId = 14;
     private static final int kFrontRightEncoderId = 15;
     private static final Angle kFrontRightEncoderOffset = Rotations.of(0.1962890625);
-    private static final boolean kFrontRightSteerMotorInverted = false;
+    private static final boolean kFrontRightSteerMotorInverted = true;
     private static final boolean kFrontRightEncoderInverted = false;
 
     private static final Distance kFrontRightXPos = Inches.of(9.25);
@@ -192,7 +192,7 @@ public class TunerConstants2023 implements TunerConstants {
     private static final int kBackLeftSteerMotorId = 17;
     private static final int kBackLeftEncoderId = 18;
     private static final Angle kBackLeftEncoderOffset = Rotations.of(-0.468017578125);
-    private static final boolean kBackLeftSteerMotorInverted = false;
+    private static final boolean kBackLeftSteerMotorInverted = true;
     private static final boolean kBackLeftEncoderInverted = false;
 
     private static final Distance kBackLeftXPos = Inches.of(-9.25);
@@ -203,7 +203,7 @@ public class TunerConstants2023 implements TunerConstants {
     private static final int kBackRightSteerMotorId = 20;
     private static final int kBackRightEncoderId = 21;
     private static final Angle kBackRightEncoderOffset = Rotations.of(-0.2978515625);
-    private static final boolean kBackRightSteerMotorInverted = false;
+    private static final boolean kBackRightSteerMotorInverted = true;
     private static final boolean kBackRightEncoderInverted = false;
 
     private static final Distance kBackRightXPos = Inches.of(-9.25);
