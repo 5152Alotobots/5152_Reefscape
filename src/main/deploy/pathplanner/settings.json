@@ -4,10 +4,12 @@
   "holonomicMode": true,
   "pathFolders": [
     "HoloTest",
+    "Test2025",
     "RotationTest",
     "StraightTest"
   ],
   "autoFolders": [
+    "2025Test",
     "Tests"
   ],
   "defaultMaxVel": 5.2,
