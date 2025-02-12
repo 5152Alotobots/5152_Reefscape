@@ -14,6 +14,9 @@ package frc.alotobots.reefscape.subsystems.wrist.io;
 
 import static frc.alotobots.Constants.CanId.WRIST_ENCODER_CAN_ID;
 import static frc.alotobots.Constants.CanId.WRIST_MOTOR_CAN_ID;
+import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.ENCODER_MAGNET_OFFSET;
+import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.MOTOR_INVERT;
+import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.ROTOR_TO_SENSOR_RATIO;
 import static frc.alotobots.util.PhoenixUtil.tryUntilOk;
 
 import com.ctre.phoenix6.BaseStatusSignal;
@@ -55,7 +58,7 @@ public class WristIOTalonFXReal implements WristIO {
 
   StatusSignal<Boolean> bottomSoftLimit;
 
-  private final Debouncer wristConnectedDebouncer = new Debouncer(0.5);
+  private final Debouncer wristDebouncer = new Debouncer(0.5);
 
   public WristIOTalonFXReal() {
     wristMotor = new TalonFX(WRIST_MOTOR_CAN_ID);
@@ -63,12 +66,13 @@ public class WristIOTalonFXReal implements WristIO {
 
     var wristMotorConfig = new TalonFXConfiguration();
 
+    wristMotorConfig.MotorOutput.Inverted = MOTOR_INVERT;
     wristMotorConfig.Feedback.FeedbackRemoteSensorID = WRIST_ENCODER_CAN_ID;
-    wristMotorConfig.Feedback.RotorToSensorRatio = 189;
+    wristMotorConfig.Feedback.RotorToSensorRatio = ROTOR_TO_SENSOR_RATIO;
 
     var wristEncoderConfig = new CANcoderConfiguration();
 
-    wristEncoderConfig.MagnetSensor.MagnetOffset = 0;
+    wristEncoderConfig.MagnetSensor.MagnetOffset = ENCODER_MAGNET_OFFSET;
     wristEncoderConfig.MagnetSensor.SensorDirection = SensorDirectionValue.Clockwise_Positive;
 
     // Apply config wrist
@@ -109,7 +113,7 @@ public class WristIOTalonFXReal implements WristIO {
             bottomSoftLimit);
 
     // Is connected
-    inputs.motorConnected = wristConnectedDebouncer.calculate(wristSignals.isOK());
+    inputs.motorConnected = wristDebouncer.calculate(wristSignals.isOK());
 
     // PID slot
     inputs.pidSlot = currentPidSlot.getValue();
