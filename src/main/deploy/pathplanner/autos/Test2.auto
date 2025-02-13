@@ -9,11 +9,17 @@
           "data": {
             "pathName": "Alans Basic"
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Alans basic 2"
+          }
         }
       ]
     }
   },
-  "resetOdom": false,
+  "resetOdom": true,
   "folder": "2025Test",
   "choreoAuto": false
 }
