@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.04325,
+        "y": 6.9792499999999995
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.52525,
+        "y": 6.443
+      },
+      "isLocked": false,
+      "linkedName": "Alan First Part 2"
+    },
+    {
+      "anchor": {
+        "x": 3.8220000000000005,
+        "y": 5.10725
+      },
+      "prevControl": {
+        "x": 2.871114011966718,
+        "y": 5.475624754856169
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 1.0,
+    "maxAcceleration": 1.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 460.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -59.99999999999999
+  },
+  "reversed": false,
+  "folder": "Test2025",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 125.00000000000001
+  },
+  "useDefaultConstraints": false
+}
