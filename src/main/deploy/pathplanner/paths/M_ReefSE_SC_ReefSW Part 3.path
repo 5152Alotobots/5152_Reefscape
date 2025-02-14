@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.15775,
-        "y": 5.117
+        "x": 1.0549180327868852,
+        "y": 1.022079918032788
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.459426229508197,
-        "y": 6.06890368852459
+        "x": 2.6013319672131145,
+        "y": 2.0170594262295083
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "South Station"
     },
     {
       "anchor": {
-        "x": 1.04325,
-        "y": 6.9792499999999995
+        "x": 3.8240778688524584,
+        "y": 2.9521004098360653
       },
       "prevControl": {
-        "x": 1.2781983558721095,
-        "y": 6.893814234228324
+        "x": 2.8770491803278686,
+        "y": 2.1129610655737703
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Alan First Part 2"
+      "linkedName": "CoralSW"
     }
   ],
   "rotationTargets": [],
@@ -33,7 +33,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.0,
+    "maxVelocity": 2.0,
     "maxAcceleration": 1.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 460.0,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 125.00000000000001
+    "rotation": 57.319445256636655
   },
   "reversed": false,
   "folder": "Test2025",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -119.99999999999999
+    "rotation": -125.7760777178947
   },
   "useDefaultConstraints": false
 }

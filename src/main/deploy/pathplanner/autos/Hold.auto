@@ -7,13 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Alans Basic"
+            "pathName": "Hold"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "2025Test",
+  "folder": "Tests",
   "choreoAuto": false
 }

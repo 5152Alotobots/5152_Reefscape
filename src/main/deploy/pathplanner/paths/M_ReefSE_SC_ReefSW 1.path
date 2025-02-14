@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.15775,
-        "y": 5.117
+        "x": 7.22,
+        "y": 4.0
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.459426229508197,
-        "y": 6.06890368852459
+        "x": 5.778073770491804,
+        "y": 3.215829918032787
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "MiddleStart"
     },
     {
       "anchor": {
-        "x": 1.04325,
-        "y": 6.9792499999999995
+        "x": 5.094774590163934,
+        "y": 2.9281249999999988
       },
       "prevControl": {
-        "x": 1.2781983558721095,
-        "y": 6.893814234228324
+        "x": 6.06577868852459,
+        "y": 2.832223360655737
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Alan First Part 2"
+      "linkedName": "CoralSE"
     }
   ],
   "rotationTargets": [],
@@ -33,7 +33,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.0,
+    "maxVelocity": 2.0,
     "maxAcceleration": 1.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 460.0,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 125.00000000000001
+    "rotation": 119.88652694042402
   },
   "reversed": false,
   "folder": "Test2025",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -119.99999999999999
+    "rotation": 180.0
   },
   "useDefaultConstraints": false
 }

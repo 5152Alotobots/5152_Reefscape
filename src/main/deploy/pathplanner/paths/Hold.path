@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.15775,
-        "y": 5.117
+        "x": 4.0,
+        "y": 6.0
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.459426229508197,
-        "y": 6.06890368852459
+        "x": 4.25,
+        "y": 6.0
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.04325,
-        "y": 6.9792499999999995
+        "x": 4.0,
+        "y": 6.0
       },
       "prevControl": {
-        "x": 1.2781983558721095,
-        "y": 6.893814234228324
+        "x": 3.7001995455306975,
+        "y": 6.0
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Alan First Part 2"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -33,22 +33,22 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.0,
-    "maxAcceleration": 1.0,
-    "maxAngularVelocity": 540.0,
+    "maxVelocity": 0.2,
+    "maxAcceleration": 0.2,
+    "maxAngularVelocity": 20.0,
     "maxAngularAcceleration": 460.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 125.00000000000001
+    "rotation": 0.0
   },
   "reversed": false,
   "folder": "Test2025",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -119.99999999999999
+    "rotation": 0.0
   },
   "useDefaultConstraints": false
 }
