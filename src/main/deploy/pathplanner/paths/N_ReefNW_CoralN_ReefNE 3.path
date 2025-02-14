@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.245148026315788,
-        "y": 6.199506578947369
+        "x": 0.625,
+        "y": 6.709
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.567315573770491,
-        "y": 6.260706967213114
+        "x": 1.625,
+        "y": 6.709
       },
       "isLocked": false,
-      "linkedName": "Start North"
+      "linkedName": "North Left Station"
     },
     {
       "anchor": {
-        "x": 3.8871710526315786,
+        "x": 5.109128289473684,
         "y": 5.102631578947368
       },
       "prevControl": {
-        "x": 3.4830592105263154,
-        "y": 6.084046052631579
+        "x": 4.663217213114754,
+        "y": 6.032940573770491
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Reef NorthWest"
+      "linkedName": "Reef NorthEast"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -60.70863782901576
+    "rotation": -118.21735585472942
   },
   "reversed": false,
   "folder": "Battle Creek",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 127.56859202882754
   },
   "useDefaultConstraints": true
 }
