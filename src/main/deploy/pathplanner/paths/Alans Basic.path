@@ -25,7 +25,7 @@
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "ReefEast"
+      "linkedName": "Reef East"
     }
   ],
   "rotationTargets": [],
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 178.72696997994328
+    "rotation": 180.0
   },
   "reversed": false,
   "folder": "Test2025",

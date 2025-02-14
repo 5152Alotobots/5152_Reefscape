@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.9368221808626718,
-        "y": 5.916973695743167
+        "x": 7.245148026315788,
+        "y": 1.8889802631578947
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.00412650408739,
-        "y": 5.879428536947493
+        "x": 4.368256578947368,
+        "y": 0.9460526315789484
       },
       "isLocked": false,
-      "linkedName": "HoloTest1_End"
+      "linkedName": "Start South"
     },
     {
       "anchor": {
-        "x": 1.3542201424191584,
-        "y": 5.569024212825211
+        "x": 3.8294407894736837,
+        "y": 2.966611842105263
       },
       "prevControl": {
-        "x": 2.4868482089674195,
-        "y": 5.514266063743396
+        "x": 2.6940789473684212,
+        "y": 1.7254111842105258
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "HoloTest1_Start"
+      "linkedName": "Reef SouthWest"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 60.78075330951532
   },
   "reversed": false,
-  "folder": "HoloTest",
+  "folder": "Battle Creek",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 180.0
   },
   "useDefaultConstraints": true
 }

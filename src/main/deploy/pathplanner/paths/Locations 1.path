@@ -3,29 +3,45 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.9368221808626718,
-        "y": 5.916973695743167
+        "x": 0.625,
+        "y": 6.709
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.00412650408739,
-        "y": 5.879428536947493
+        "x": 1.625,
+        "y": 6.709
       },
       "isLocked": false,
-      "linkedName": "HoloTest1_End"
+      "linkedName": "North Left Station"
     },
     {
       "anchor": {
-        "x": 1.3542201424191584,
-        "y": 5.569024212825211
+        "x": 4.0,
+        "y": 6.0
       },
       "prevControl": {
-        "x": 2.4868482089674195,
-        "y": 5.514266063743396
+        "x": 3.0,
+        "y": 6.0
+      },
+      "nextControl": {
+        "x": 5.0,
+        "y": 6.0
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.6260690789473682,
+        "y": 7.440707236842105
+      },
+      "prevControl": {
+        "x": 3.149465460526316,
+        "y": 6.715542763157894
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "HoloTest1_Start"
+      "linkedName": "North Right Station"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +58,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 126.57303097851924
   },
   "reversed": false,
-  "folder": "HoloTest",
+  "folder": "Positions",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 127.56859202882754
   },
   "useDefaultConstraints": true
 }

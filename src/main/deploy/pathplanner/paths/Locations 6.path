@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.9368221808626718,
-        "y": 5.916973695743167
+        "x": 5.109128289473684,
+        "y": 5.102631578947368
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.00412650408739,
-        "y": 5.879428536947493
+        "x": 6.109128289473685,
+        "y": 5.102631578947368
       },
       "isLocked": false,
-      "linkedName": "HoloTest1_End"
+      "linkedName": "Reef NorthEast"
     },
     {
       "anchor": {
-        "x": 1.3542201424191584,
-        "y": 5.569024212825211
+        "x": 5.75,
+        "y": 4.0
       },
       "prevControl": {
-        "x": 2.4868482089674195,
-        "y": 5.514266063743396
+        "x": 4.75,
+        "y": 4.0
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "HoloTest1_Start"
+      "linkedName": "Reef East"
     }
   ],
   "rotationTargets": [],
@@ -45,10 +45,10 @@
     "rotation": 180.0
   },
   "reversed": false,
-  "folder": "HoloTest",
+  "folder": "Positions",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -118.21735585472942
   },
   "useDefaultConstraints": true
 }

@@ -12,7 +12,7 @@
         "y": 5.752953767123288
       },
       "isLocked": false,
-      "linkedName": "ReefEast"
+      "linkedName": "Reef East"
     },
     {
       "anchor": {
@@ -48,7 +48,7 @@
   "folder": "Test2025",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 178.72696997994328
+    "rotation": 180.0
   },
   "useDefaultConstraints": false
 }

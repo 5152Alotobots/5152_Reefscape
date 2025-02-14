@@ -4,16 +4,19 @@
   "holonomicMode": true,
   "pathFolders": [
     "HoloTest",
-    "Test2025",
+    "Battle Creek",
+    "Positions",
     "RotationTest",
-    "StraightTest"
+    "StraightTest",
+    "Test2025"
   ],
   "autoFolders": [
     "2025Test",
+    "Battle Creek",
     "Tests"
   ],
-  "defaultMaxVel": 5.2,
-  "defaultMaxAccel": 3.5,
+  "defaultMaxVel": 3.0,
+  "defaultMaxAccel": 1.5,
   "defaultMaxAngVel": 540.0,
   "defaultMaxAngAccel": 460.0,
   "defaultNominalVoltage": 12.0,
