@@ -10,16 +10,13 @@
 *
 * Source code must be publicly available on GitHub or an alternative web accessible site
 */
-package frc.alotobots.library.subsystems.swervedrive.constants.mk4i2023;
+package frc.alotobots.library.subsystems.swervedrive.constants.mk4i2025;
 
 import static edu.wpi.first.units.Units.*;
+import static frc.alotobots.library.subsystems.swervedrive.constants.mk4i2023.TunerConstants2023.GeneratedConstants.kCANBus;
 
 import com.ctre.phoenix6.CANBus;
-import com.ctre.phoenix6.configs.CANcoderConfiguration;
-import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
-import com.ctre.phoenix6.configs.Pigeon2Configuration;
-import com.ctre.phoenix6.configs.Slot0Configs;
-import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.configs.*;
 import com.ctre.phoenix6.signals.StaticFeedforwardSignValue;
 import com.ctre.phoenix6.swerve.SwerveDrivetrainConstants;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
@@ -38,35 +35,26 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.units.measure.*;
 import frc.alotobots.library.subsystems.swervedrive.constants.TunerConstants;
-import org.ironmaple.simulation.drivesims.COTS;
-import org.ironmaple.simulation.drivesims.configs.DriveTrainSimulationConfig;
 
-public class TunerConstants2023 implements TunerConstants {
+public class TunerConstants2025 implements TunerConstants {
   public static class GeneratedConstants {
     // Both sets of gains need to be tuned to your individual robot.
 
     // The steer motor uses any SwerveModule.SteerRequestType control request with the
     // output type specified by SwerveModuleConstants.SteerMotorClosedLoopOutput
-    public static final Slot0Configs steerGains =
+    private static final Slot0Configs steerGains =
         new Slot0Configs()
-            .withKP(55)
+            .withKP(100)
             .withKI(0)
-            .withKD(0.2)
-            .withKS(0.12)
-            .withKV(0.102)
-            .withKA(0.015)
+            .withKD(0.5)
+            .withKS(0.1)
+            .withKV(2.66)
+            .withKA(0)
             .withStaticFeedforwardSign(StaticFeedforwardSignValue.UseClosedLoopSign);
-
     // When using closed-loop control, the drive motor uses the control
     // output type specified by SwerveModuleConstants.DriveMotorClosedLoopOutput
-    public static final Slot0Configs driveGains =
-        new Slot0Configs()
-            .withKP(.05)
-            .withKI(0)
-            .withKD(0.002)
-            .withKS(0.19437)
-            .withKV(0.75843)
-            .withKA(0.01);
+    private static final Slot0Configs driveGains =
+        new Slot0Configs().withKP(0.1).withKI(0).withKD(0).withKS(0.16504).withKV(0.55969);
 
     // The closed-loop output type to use for the steer motors;
     // This affects the PID/FF gains for the steer motors
@@ -108,18 +96,18 @@ public class TunerConstants2023 implements TunerConstants {
 
     // CAN bus that the devices are located on;
     // All swerve devices must share the same CAN bus
-    public static final CANBus kCANBus = new CANBus("", "./logs/example.hoot");
+    public static final CANBus kCANBus = new CANBus("Swerve", "./logs/example.hoot");
 
     // Theoretical free speed (m/s) at 12 V applied output;
     // This needs to be tuned to your individual robot
-    public static final LinearVelocity kSpeedAt12Volts = MetersPerSecond.of(4.73);
+    public static final LinearVelocity kSpeedAt12Volts = MetersPerSecond.of(6.21);
 
     // Every 1 rotation of the azimuth results in kCoupleRatio drive motor turns;
     // This may need to be tuned to your individual robot
     private static final double kCoupleRatio = 0;
 
-    private static final double kDriveGearRatio = 6.746031746031747;
-    private static final double kSteerGearRatio = 15.42857142857143;
+    private static final double kDriveGearRatio = 5.14;
+    private static final double kSteerGearRatio = 21.428571;
     private static final Distance kWheelRadius = Inches.of(2);
 
     private static final boolean kInvertLeftSide = false;
@@ -170,45 +158,45 @@ public class TunerConstants2023 implements TunerConstants {
     private static final int kFrontLeftDriveMotorId = 10;
     private static final int kFrontLeftSteerMotorId = 11;
     private static final int kFrontLeftEncoderId = 12;
-    private static final Angle kFrontLeftEncoderOffset = Rotations.of(0.491943359375);
+    private static final Angle kFrontLeftEncoderOffset = Rotations.of(-0.015625);
     private static final boolean kFrontLeftSteerMotorInverted = true;
     private static final boolean kFrontLeftEncoderInverted = false;
 
-    private static final Distance kFrontLeftXPos = Inches.of(9.25);
-    private static final Distance kFrontLeftYPos = Inches.of(9.25);
+    private static final Distance kFrontLeftXPos = Inches.of(11);
+    private static final Distance kFrontLeftYPos = Inches.of(9.5);
 
     // Front Right
     private static final int kFrontRightDriveMotorId = 13;
     private static final int kFrontRightSteerMotorId = 14;
     private static final int kFrontRightEncoderId = 15;
-    private static final Angle kFrontRightEncoderOffset = Rotations.of(0.1962890625);
+    private static final Angle kFrontRightEncoderOffset = Rotations.of(-0.25537109375);
     private static final boolean kFrontRightSteerMotorInverted = true;
     private static final boolean kFrontRightEncoderInverted = false;
 
-    private static final Distance kFrontRightXPos = Inches.of(9.25);
-    private static final Distance kFrontRightYPos = Inches.of(-9.25);
+    private static final Distance kFrontRightXPos = Inches.of(11);
+    private static final Distance kFrontRightYPos = Inches.of(-9.5);
 
     // Back Left
     private static final int kBackLeftDriveMotorId = 16;
     private static final int kBackLeftSteerMotorId = 17;
     private static final int kBackLeftEncoderId = 18;
-    private static final Angle kBackLeftEncoderOffset = Rotations.of(-0.468017578125);
+    private static final Angle kBackLeftEncoderOffset = Rotations.of(0.345703125);
     private static final boolean kBackLeftSteerMotorInverted = true;
     private static final boolean kBackLeftEncoderInverted = false;
 
-    private static final Distance kBackLeftXPos = Inches.of(-9.25);
-    private static final Distance kBackLeftYPos = Inches.of(9.25);
+    private static final Distance kBackLeftXPos = Inches.of(-11);
+    private static final Distance kBackLeftYPos = Inches.of(9.5);
 
     // Back Right
     private static final int kBackRightDriveMotorId = 19;
     private static final int kBackRightSteerMotorId = 20;
     private static final int kBackRightEncoderId = 21;
-    private static final Angle kBackRightEncoderOffset = Rotations.of(-0.2978515625);
+    private static final Angle kBackRightEncoderOffset = Rotations.of(0.340087890625);
     private static final boolean kBackRightSteerMotorInverted = true;
     private static final boolean kBackRightEncoderInverted = false;
 
-    private static final Distance kBackRightXPos = Inches.of(-9.25);
-    private static final Distance kBackRightYPos = Inches.of(-9.25);
+    private static final Distance kBackRightXPos = Inches.of(-11);
+    private static final Distance kBackRightYPos = Inches.of(-9.5);
 
     public static final SwerveModuleConstants<
             TalonFXConfiguration, TalonFXConfiguration, CANcoderConfiguration>
@@ -269,11 +257,9 @@ public class TunerConstants2023 implements TunerConstants {
     public static final PIDConstants translationPid = new PIDConstants(2.4, 0, 0.015);
     public static final PIDConstants rotationPid = new PIDConstants(7.8, 0, 0.015);
     public static final PathConstraints PATHFINDING_CONSTRAINTS =
-        new PathConstraints(5.02, 3.5, Units.degreesToRadians(540), Units.degreesToRadians(460));
+        new PathConstraints(6.2, 3.5, Units.degreesToRadians(540), Units.degreesToRadians(460));
     public static final PPHolonomicDriveController PP_HOLONOMIC_DRIVE_CONTROLLER =
         new PPHolonomicDriveController(translationPid, rotationPid);
-    public static final double precisionAlignTolerance = .03; // Meters
-    public static final double precisionAlignAllowRadius = .5; // Meters
     public static final ProfiledPIDController driveFacingAngleController =
         new ProfiledPIDController(
             rotationPid.kP,
@@ -282,33 +268,20 @@ public class TunerConstants2023 implements TunerConstants {
             new TrapezoidProfile.Constraints(
                 PATHFINDING_CONSTRAINTS.maxVelocityMPS(),
                 PATHFINDING_CONSTRAINTS.maxAccelerationMPSSq()));
-    public static final double ODOMETRY_FREQUENCY =
-        GeneratedConstants.kCANBus.isNetworkFD() ? 250.0 : 100.0;
+    public static final double ODOMETRY_FREQUENCY = kCANBus.isNetworkFD() ? 250.0 : 100.0;
     public static final Distance BUMPER_LENGTH = Distance.ofBaseUnits(.75, Meters);
     public static final Distance BUMPER_WIDTH = Distance.ofBaseUnits(.75, Meters);
     public static final LinearVelocity TURTLE_SPEED = MetersPerSecond.of(1.0);
-    public static final LinearVelocity NOMINAL_SPEED = MetersPerSecond.of(3.0);
-    public static final LinearVelocity TURBO_SPEED = MetersPerSecond.of(4.8);
+    public static final LinearVelocity NOMINAL_SPEED = MetersPerSecond.of(4.8);
+    public static final LinearVelocity TURBO_SPEED = MetersPerSecond.of(6.00);
     public static final double MAX_MODULAR_ROTATIONAL_RATE = Units.rotationsToRadians(12);
-    public static final Mass ROBOT_MASS = Mass.ofBaseUnits(70, Pounds);
+    public static final double ROBOT_MASS_KG = 34;
     public static final double ROBOT_MOI = 2.550;
-    public static final double WHEEL_COF = COTS.WHEELS.DEFAULT_NEOPRENE_TREAD.cof;
-
-    public static final Translation2d[] moduleTranslations =
-        new Translation2d[] {
-          new Translation2d(
-              GeneratedConstants.FrontLeft.LocationX, GeneratedConstants.FrontLeft.LocationY),
-          new Translation2d(
-              GeneratedConstants.FrontRight.LocationX, GeneratedConstants.FrontRight.LocationY),
-          new Translation2d(
-              GeneratedConstants.BackLeft.LocationX, GeneratedConstants.BackLeft.LocationY),
-          new Translation2d(
-              GeneratedConstants.BackRight.LocationX, GeneratedConstants.BackRight.LocationY)
-        };
+    public static final double WHEEL_COF = 0.6;
 
     public static final RobotConfig pathPlannerConfig =
         new RobotConfig(
-            ROBOT_MASS.magnitude(),
+            ROBOT_MASS_KG,
             ROBOT_MOI,
             new ModuleConfig(
                 GeneratedConstants.FrontLeft.WheelRadius,
@@ -318,7 +291,16 @@ public class TunerConstants2023 implements TunerConstants {
                     .withReduction(GeneratedConstants.FrontLeft.DriveMotorGearRatio),
                 GeneratedConstants.FrontLeft.SlipCurrent,
                 1),
-            moduleTranslations);
+            new Translation2d[] {
+              new Translation2d(
+                  GeneratedConstants.FrontLeft.LocationX, GeneratedConstants.FrontLeft.LocationY),
+              new Translation2d(
+                  GeneratedConstants.FrontRight.LocationX, GeneratedConstants.FrontRight.LocationY),
+              new Translation2d(
+                  GeneratedConstants.BackLeft.LocationX, GeneratedConstants.BackLeft.LocationY),
+              new Translation2d(
+                  GeneratedConstants.BackRight.LocationX, GeneratedConstants.BackRight.LocationY)
+            });
 
     public static final double DRIVE_BASE_RADIUS =
         Math.max(
@@ -334,16 +316,6 @@ public class TunerConstants2023 implements TunerConstants {
                 Math.hypot(
                     GeneratedConstants.BackRight.LocationX,
                     GeneratedConstants.BackRight.LocationY)));
-
-    public static final DriveTrainSimulationConfig mapleSimConfig =
-        DriveTrainSimulationConfig.Default()
-            .withRobotMass(ROBOT_MASS)
-            .withCustomModuleTranslations(moduleTranslations)
-            .withGyro(COTS.ofPigeon2())
-            .withBumperSize(BUMPER_LENGTH, BUMPER_WIDTH)
-            .withSwerveModule(
-                COTS.ofMark4i(
-                    DCMotor.getFalcon500Foc(1), DCMotor.getFalcon500Foc(1), WHEEL_COF, 2));
   }
 
   @Override
@@ -452,21 +424,15 @@ public class TunerConstants2023 implements TunerConstants {
 
   @Override
   public Translation2d[] getModuleTranslations() {
-    return CustomConstants.moduleTranslations;
-  }
-
-  @Override
-  public double getPrecisionAlignTolerance() {
-    return CustomConstants.precisionAlignTolerance;
-  }
-
-  @Override
-  public double getPrecisionAlignAllowRadius() {
-    return CustomConstants.precisionAlignAllowRadius;
-  }
-
-  @Override
-  public DriveTrainSimulationConfig getDriveTrainSimulationConfig() {
-    return CustomConstants.mapleSimConfig;
+    return new Translation2d[] {
+      new Translation2d(
+          GeneratedConstants.FrontLeft.LocationX, GeneratedConstants.FrontLeft.LocationY),
+      new Translation2d(
+          GeneratedConstants.FrontRight.LocationX, GeneratedConstants.FrontRight.LocationY),
+      new Translation2d(
+          GeneratedConstants.BackLeft.LocationX, GeneratedConstants.BackLeft.LocationY),
+      new Translation2d(
+          GeneratedConstants.BackRight.LocationX, GeneratedConstants.BackRight.LocationY)
+    };
   }
 }
