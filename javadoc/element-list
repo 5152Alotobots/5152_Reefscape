@@ -7,6 +7,7 @@ frc.alotobots.library.subsystems.swervedrive
 frc.alotobots.library.subsystems.swervedrive.commands
 frc.alotobots.library.subsystems.swervedrive.constants
 frc.alotobots.library.subsystems.swervedrive.constants.mk4i2023
+frc.alotobots.library.subsystems.swervedrive.constants.mk4i2025
 frc.alotobots.library.subsystems.swervedrive.io
 frc.alotobots.library.subsystems.swervedrive.util
 frc.alotobots.library.subsystems.vision.localizationfusion
