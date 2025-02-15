@@ -3,45 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.625,
-        "y": 6.709
+        "x": 7.156659836065575,
+        "y": 1.9691086065573733
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.625,
-        "y": 6.709
-      },
-      "isLocked": false,
-      "linkedName": "North Left Station"
-    },
-    {
-      "anchor": {
-        "x": 4.0,
-        "y": 6.0
-      },
-      "prevControl": {
-        "x": 3.0,
-        "y": 6.0
-      },
-      "nextControl": {
-        "x": 5.0,
-        "y": 6.0
+        "x": 5.945901639344262,
+        "y": 2.748309426229506
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.5405000000000002,
-        "y": 7.34975
+        "x": 5.274590163934428,
+        "y": 2.9401127049180285
       },
       "prevControl": {
-        "x": 3.0638963815789477,
-        "y": 6.62458552631579
+        "x": 5.754098360655739,
+        "y": 2.640420081967209
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "North Right Station"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -58,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 126.57303097851924
+    "rotation": 180.0
   },
   "reversed": false,
-  "folder": "Positions",
+  "folder": "Battle Creek",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 127.56859202882754
+    "rotation": 180.0
   },
   "useDefaultConstraints": true
 }
