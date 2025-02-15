@@ -12,7 +12,7 @@
         "y": 1.549538934426229
       },
       "isLocked": false,
-      "linkedName": "CoralSE"
+      "linkedName": null
     },
     {
       "anchor": {
@@ -25,7 +25,7 @@
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "South Station"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],

@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.368256578947368,
-        "y": 0.9460526315789484
+        "x": 4.368256578947369,
+        "y": 0.9460526315789486
       },
       "isLocked": false,
       "linkedName": "Start South"
@@ -20,12 +20,12 @@
         "y": 2.966611842105263
       },
       "prevControl": {
-        "x": 2.6940789473684212,
-        "y": 1.7254111842105258
+        "x": 2.6940789473684217,
+        "y": 1.7254111842105255
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Reef SouthWest"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],

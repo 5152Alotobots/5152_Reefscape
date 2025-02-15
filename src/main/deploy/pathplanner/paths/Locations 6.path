@@ -12,7 +12,7 @@
         "y": 5.102631578947368
       },
       "isLocked": false,
-      "linkedName": "Reef NorthEast"
+      "linkedName": null
     },
     {
       "anchor": {
@@ -25,7 +25,7 @@
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Reef East"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],

@@ -12,7 +12,7 @@
         "y": 5.557794394638085
       },
       "isLocked": false,
-      "linkedName": "StraightTest1_Start"
+      "linkedName": null
     },
     {
       "anchor": {
@@ -25,7 +25,7 @@
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "StraightTest1_End"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],

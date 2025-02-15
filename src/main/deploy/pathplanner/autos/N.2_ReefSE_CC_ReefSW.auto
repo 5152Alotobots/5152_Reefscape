@@ -1,0 +1,43 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "N.2_ReefSE 1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "N.2_ReefSE_CC"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "N.2_ReefSW"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "N.2_ReefSW_CC"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "N.2_CC_ReefSW"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": false,
+  "folder": "Battle Creek",
+  "choreoAuto": false
+}

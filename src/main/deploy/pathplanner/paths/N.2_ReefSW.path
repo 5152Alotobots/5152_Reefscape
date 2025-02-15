@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.245148026315788,
-        "y": 6.199506578947369
+        "x": 1.141,
+        "y": 1.119
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.99625,
-        "y": 5.57525
+        "x": 1.2349825749083447,
+        "y": 0.8873380143105102
       },
-      "isLocked": false,
-      "linkedName": "Start North"
+      "isLocked": true,
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.109128289473684,
-        "y": 5.102631578947368
+        "x": 3.656,
+        "y": 2.5137500000019006
       },
       "prevControl": {
-        "x": 5.810999999999999,
-        "y": 5.4095
+        "x": 2.69501003214117,
+        "y": 3.1442554360295034
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -118.21735585472942
+    "rotation": -125.7760777178947
   },
   "reversed": false,
   "folder": "Battle Creek",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": -125.00000000000001
   },
   "useDefaultConstraints": true
 }
