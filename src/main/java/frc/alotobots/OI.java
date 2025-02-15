@@ -122,8 +122,17 @@ public class OI {
   /** The primary driver's controller. Used for main robot control functions. */
   private static final CommandXboxController codriverController = new CommandXboxController(1);
 
-  /** A Misc test button */
-  public static Trigger testCoButton = codriverController.a();
+  /** Sets the elevator to stow position */
+  public static Trigger elevatorStowButton = codriverController.a();
+
+  /** Sets the elevator to L2 position */
+  public static Trigger elevatorL2Button = codriverController.b();
+
+  /** Sets the elevator to L3 position */
+  public static Trigger elevatorL3Button = codriverController.x();
+
+  /** Sets the elevator to L4 position */
+  public static Trigger elevatorL4Button = codriverController.y();
 
   /**
    * Gets the open loop elevator input from the co-driver controller

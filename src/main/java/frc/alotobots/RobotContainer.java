@@ -12,7 +12,6 @@
 */
 package frc.alotobots;
 
-import static edu.wpi.first.units.Units.Meters;
 import static frc.alotobots.OI.*;
 
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -45,6 +44,7 @@ import frc.alotobots.reefscape.subsystems.autocycle.commands.PathfindToReef;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.commands.DefaultElevatorOpenLoop;
 import frc.alotobots.reefscape.subsystems.elevator.commands.ElevatorRunToPosition;
+import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIO;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIOTalonFXReal;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIOTalonFXSim;
@@ -205,13 +205,12 @@ public class RobotContainer {
   private void configureDefaultCommands() {
     swerveDriveSubsystem.setDefaultCommand(new DefaultDrive(swerveDriveSubsystem).getCommand());
     elevatorSubsystem.setDefaultCommand(
-        new DefaultElevatorOpenLoop(elevatorSubsystem, () -> -getElevatorAxis() * .3));
+        new DefaultElevatorOpenLoop(elevatorSubsystem, () -> -getElevatorAxis() * .66));
     // blingSubsystem.setDefaultCommand(
     //    new NoAllianceWaiting(blingSubsystem).andThen(new SetToAllianceColor(blingSubsystem)));
   }
 
   private void configureLogicCommands() {
-    testCoButton.whileTrue(new ElevatorRunToPosition(elevatorSubsystem, Meters.of(1.5)));
     // Enabled state
     enablePathfindingButton.onChange(autoCycleSubsystem.togglePathfinding());
     enableFullAutoPathfindingButton.onTrue(new FullAutoCycle(autoCycleSubsystem).repeatedly());
@@ -234,6 +233,12 @@ public class RobotContainer {
         new PathfindToCoralStation(autoCycleSubsystem));
 
     hasDriverInput.whileTrue(new DriverInterruptCommand(autoCycleSubsystem));
+
+    // Elevator
+    elevatorStowButton.toggleOnTrue(new ElevatorRunToPosition(elevatorSubsystem, ElevatorConstants.Setpoints.STOWED));
+    elevatorL2Button.toggleOnTrue(new ElevatorRunToPosition(elevatorSubsystem, ElevatorConstants.Setpoints.L2_PLACE));
+    elevatorL3Button.toggleOnTrue(new ElevatorRunToPosition(elevatorSubsystem, ElevatorConstants.Setpoints.L3_PLACE));
+    elevatorL4Button.toggleOnTrue(new ElevatorRunToPosition(elevatorSubsystem, ElevatorConstants.Setpoints.L4_PLACE));
   }
 
   private void configureAutoChooser() {
