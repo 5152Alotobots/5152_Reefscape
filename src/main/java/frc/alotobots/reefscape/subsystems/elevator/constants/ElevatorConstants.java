@@ -37,10 +37,10 @@ public final class ElevatorConstants {
   /** Physical limits and safety thresholds */
   public static final class Limits {
     /** Maximum allowed height */
-    public static final Distance MAX_HEIGHT = Meters.of(5.0);
+    public static final Distance MAX_HEIGHT = Meters.of(1.8388);
 
     /** Minimum allowed height */
-    public static final Distance MIN_HEIGHT = Meters.of(0.0);
+    public static final Distance MIN_HEIGHT = Meters.of(0.2794);
 
     /** Maximum torque current for the motors */
     public static final Current PEAK_TORQUE_CURRENT = Amps.of(100.0);

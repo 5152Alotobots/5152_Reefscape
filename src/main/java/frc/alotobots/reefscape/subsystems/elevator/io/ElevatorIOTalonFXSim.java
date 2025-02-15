@@ -123,8 +123,8 @@ public class ElevatorIOTalonFXSim implements ElevatorIO {
 
     // Position (both motors and CANRange report same position in sim)
     Distance position = Meters.of(elevatorSim.getPositionMeters());
-    inputs.leftPosition = position;
-    inputs.rightPosition = position;
+    inputs.leftHeight = position;
+    inputs.rightHeight = position;
     inputs.canrangeDistance = position;
 
     // Velocity

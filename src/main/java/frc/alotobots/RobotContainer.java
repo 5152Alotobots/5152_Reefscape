@@ -12,6 +12,7 @@
 */
 package frc.alotobots;
 
+import static edu.wpi.first.units.Units.Meters;
 import static frc.alotobots.OI.*;
 
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -19,7 +20,6 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-import frc.alotobots.library.subsystems.bling.BlingSubsystem;
 import frc.alotobots.library.subsystems.bling.commands.*;
 import frc.alotobots.library.subsystems.bling.io.*;
 import frc.alotobots.library.subsystems.swervedrive.*;
@@ -44,6 +44,7 @@ import frc.alotobots.reefscape.subsystems.autocycle.commands.PathfindToCoralStat
 import frc.alotobots.reefscape.subsystems.autocycle.commands.PathfindToReef;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.commands.DefaultElevatorOpenLoop;
+import frc.alotobots.reefscape.subsystems.elevator.commands.ElevatorRunToPosition;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIO;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIOTalonFXReal;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIOTalonFXSim;
@@ -62,7 +63,7 @@ public class RobotContainer {
   private final OculusPoseSource oculusPoseSource;
   private final AprilTagPoseSource aprilTagPoseSource;
   private final ObjectDetectionSubsystem objectDetectionSubsystem;
-  private final BlingSubsystem blingSubsystem;
+  // private final BlingSubsystem blingSubsystem;
   private final PathPlannerManager pathPlannerManager;
   private final AutoCycleSubsystem autoCycleSubsystem;
   private LoggedDashboardChooser<Command> autoChooser;
@@ -107,7 +108,7 @@ public class RobotContainer {
             new ObjectDetectionSubsystem(
                 swerveDriveSubsystem::getPose,
                 new ObjectDetectionIOPhotonVision(ObjectDetectionConstants.CAMERA_CONFIGS[0]));
-        blingSubsystem = new BlingSubsystem(new BlingIOReal());
+        // blingSubsystem = new BlingSubsystem(new BlingIOReal());
         break;
 
       case SIM:
@@ -161,7 +162,7 @@ public class RobotContainer {
 
         objectDetectionSubsystem =
             new ObjectDetectionSubsystem(swerveDriveSubsystem::getPose, new ObjectDetectionIO() {});
-        blingSubsystem = new BlingSubsystem(new BlingIOSim());
+        // blingSubsystem = new BlingSubsystem(new BlingIOSim());
         break;
 
       default:
@@ -194,7 +195,7 @@ public class RobotContainer {
 
         objectDetectionSubsystem =
             new ObjectDetectionSubsystem(swerveDriveSubsystem::getPose, new ObjectDetectionIO() {});
-        blingSubsystem = new BlingSubsystem(new BlingIO() {});
+        // blingSubsystem = new BlingSubsystem(new BlingIO() {});
         break;
     }
     configureDefaultCommands();
@@ -204,12 +205,13 @@ public class RobotContainer {
   private void configureDefaultCommands() {
     swerveDriveSubsystem.setDefaultCommand(new DefaultDrive(swerveDriveSubsystem).getCommand());
     elevatorSubsystem.setDefaultCommand(
-        new DefaultElevatorOpenLoop(elevatorSubsystem, () -> -getElevatorAxis() * .25));
-    blingSubsystem.setDefaultCommand(
-        new NoAllianceWaiting(blingSubsystem).andThen(new SetToAllianceColor(blingSubsystem)));
+        new DefaultElevatorOpenLoop(elevatorSubsystem, () -> -getElevatorAxis() * .3));
+    // blingSubsystem.setDefaultCommand(
+    //    new NoAllianceWaiting(blingSubsystem).andThen(new SetToAllianceColor(blingSubsystem)));
   }
 
   private void configureLogicCommands() {
+    testCoButton.whileTrue(new ElevatorRunToPosition(elevatorSubsystem, Meters.of(1.5)));
     // Enabled state
     enablePathfindingButton.onChange(autoCycleSubsystem.togglePathfinding());
     enableFullAutoPathfindingButton.onTrue(new FullAutoCycle(autoCycleSubsystem).repeatedly());

@@ -46,11 +46,17 @@ public interface ElevatorIO {
     /** Bottom Software Limit */
     public boolean bottomLimit = false;
 
-    /** Current position of the left elevator motor in meters */
-    public Distance leftPosition = Meters.zero();
+    /** Current position of the left elevator motor */
+    public Distance leftHeight = Meters.zero();
 
-    /** Current position of the right elevator motor in meters */
-    public Distance rightPosition = Meters.zero();
+    /** Current position of the right elevator motor */
+    public Distance rightHeight = Meters.zero();
+
+    /** Current rotations of the left elevator motor */
+    public Angle leftMotorAngle = Rotations.zero();
+
+    /** Current rotations of the right elevator motor */
+    public Angle rightMotorAngle = Rotations.zero();
 
     /** Current position reading from the CANCoder in meters */
     public Distance canrangeDistance = Meters.zero();

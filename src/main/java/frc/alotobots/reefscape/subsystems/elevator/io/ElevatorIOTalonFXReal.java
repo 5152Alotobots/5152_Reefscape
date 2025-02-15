@@ -16,7 +16,6 @@ import static edu.wpi.first.units.Units.*;
 import static frc.alotobots.Constants.CanId.*;
 import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.Limits.MAX_HEIGHT;
 import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.Limits.MIN_HEIGHT;
-import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.Mechanics.PULLEY_CIRCUMFERENCE;
 import static frc.alotobots.util.PhoenixUtil.tryUntilOk;
 
 import com.ctre.phoenix6.BaseStatusSignal;
@@ -43,7 +42,7 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
   /** TalonFX-specific PID and motion control constants for no game piece (Empty mode). */
   private static final class EmptyPIDConstants {
     /** Position control proportional gain */
-    public static final double KP = 0.1;
+    public static final double KP = 3.3;
 
     /** Position control integral gain */
     public static final double KI = 0.0;
@@ -55,10 +54,10 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
     public static final double KA = 0.0;
 
     /** Gravity compensation gain */
-    public static final double KG = 0.0;
+    public static final double KG = 0.13;
 
     /** Static friction compensation */
-    public static final double KS = 0.0;
+    public static final double KS = 0.19;
 
     /** Velocity feedforward gain */
     public static final double KV = 0.0;
@@ -118,10 +117,7 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
    */
   private static final class HardwareConfig {
     /** Gear ratio between motor and pulley (motor rotations : pulley rotations) */
-    static final double GEAR_RATIO = 7.0;
-
-    /** Conversion factor from TalonFX rotations to meters of travel */
-    static final double ROTATIONS_TO_METERS = PULLEY_CIRCUMFERENCE.in(Meters) / GEAR_RATIO;
+    static final double GEAR_RATIO = 35.0;
   }
 
   /** The primary TalonFX motor controller for the elevator */
@@ -238,7 +234,6 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
         heightToTalonFX(MIN_HEIGHT).in(Rotations);
 
     leftConfig.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.RotorSensor;
-    leftConfig.Feedback.SensorToMechanismRatio = 1.0;
 
     leftConfig.TorqueCurrent.PeakForwardTorqueCurrent = 100.0;
     leftConfig.TorqueCurrent.PeakReverseTorqueCurrent = -100.0;
@@ -336,8 +331,10 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
     inputs.bottomLimit = bottomSoftLimit.getValue();
 
     // Positions
-    inputs.leftPosition = talonFXToHeight(leftPosition.getValue());
-    inputs.rightPosition = talonFXToHeight(rightPosition.getValue());
+    inputs.leftHeight = talonFXToHeight(leftPosition.getValue());
+    inputs.rightHeight = talonFXToHeight(rightPosition.getValue());
+    inputs.leftMotorAngle = leftPosition.getValue();
+    inputs.rightMotorAngle = rightPosition.getValue();
     inputs.canrangeDistance = canRangeDistance.getValue();
 
     // Velocities
@@ -364,8 +361,7 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
    */
   @Override
   public void setElevatorPosition(Distance position, int pidSlot) {
-    leftTalon.setControl(
-        positionTorqueCurrentFOC.withPosition(heightToTalonFX(position)).withSlot(pidSlot));
+    leftTalon.setControl(positionVoltage.withPosition(heightToTalonFX(position)).withSlot(pidSlot));
   }
 
   /**
@@ -396,47 +392,46 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
 
   /**
    * Converts TalonFX rotations to elevator height. TalonFX reports position in rotations in Phoenix
-   * 6.
+   * 6. Uses regression formula y = 0.00949501x + 0.26 where x is rotations and y is meters.
    *
    * @param rotations TalonFX motor rotations
    * @return Height as a Distance unit
    */
   private Distance talonFXToHeight(Angle rotations) {
-    return Meters.of(HardwareConfig.ROTATIONS_TO_METERS * rotations.in(Rotations));
+    return Meters.of(0.00942151 * rotations.in(Rotations) + 0.253311);
   }
 
   /**
    * Converts TalonFX rotational velocity to linear velocity. TalonFX reports velocity in rotations
-   * per second in Phoenix 6.
+   * per second in Phoenix 6. Uses slope from regression formula y = 0.00949501x + 0.26.
    *
    * @param rotationsPerSecond TalonFX motor rotational velocity
    * @return Linear velocity as a LinearVelocity unit
    */
   private LinearVelocity talonFXToLinearVelocity(AngularVelocity rotationsPerSecond) {
-    return MetersPerSecond.of(
-        rotationsPerSecond.in(RotationsPerSecond) * HardwareConfig.ROTATIONS_TO_METERS);
+    return MetersPerSecond.of(rotationsPerSecond.in(RotationsPerSecond) * 0.00942151);
   }
 
   /**
    * Converts elevator height to TalonFX rotations. TalonFX expects position in rotations in Phoenix
-   * 6.
+   * 6. Uses inverse of regression formula y = 0.00949501x + 0.26, solving for x: x = (y - 0.26) /
+   * 0.00949501 where y is meters and x is rotations.
    *
    * @param height Height as a Distance unit
    * @return TalonFX motor rotations as an Angle unit
    */
   private Angle heightToTalonFX(Distance height) {
-    return Rotations.of(height.in(Meters) / HardwareConfig.ROTATIONS_TO_METERS);
+    return Rotations.of((height.in(Meters) - 0.253311) / 0.00942151);
   }
 
   /**
    * Converts linear velocity to TalonFX rotational velocity. TalonFX expects velocity in rotations
-   * per second in Phoenix 6.
+   * per second in Phoenix 6. Uses inverse slope from regression formula y = 0.00949501x + 0.26.
    *
    * @param linearVelocity Linear velocity as a LinearVelocity unit
    * @return TalonFX motor rotational velocity as an AngularVelocity unit
    */
   private AngularVelocity linearVelocityToTalonFX(LinearVelocity linearVelocity) {
-    return RotationsPerSecond.of(
-        linearVelocity.in(MetersPerSecond) / HardwareConfig.ROTATIONS_TO_METERS);
+    return RotationsPerSecond.of(linearVelocity.in(MetersPerSecond) / 0.00942151);
   }
 }
