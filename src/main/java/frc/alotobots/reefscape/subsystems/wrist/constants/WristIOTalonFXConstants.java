@@ -20,7 +20,7 @@ public class WristIOTalonFXConstants {
   public static final int ROTOR_TO_SENSOR_RATIO = 189;
   public static final InvertedValue MOTOR_INVERT = InvertedValue.Clockwise_Positive;
 
-  public static final double ENCODER_MAGNET_OFFSET = -0.179931640625;
+  public static final double ENCODER_MAGNET_OFFSET = -0.085693359375;
   public static final SensorDirectionValue ENCODER_DIRCTION_VALUE =
       SensorDirectionValue.Clockwise_Positive;
 }
