@@ -59,8 +59,8 @@ public final class Constants {
     public static final int CANDLE_CAN_ID = 40;
 
     /** Wrist Motor CAN ID */
-    public static final int WRIST_MOTOR_CAN_ID = 42;
+    public static final int WRIST_MOTOR_CAN_ID = 33;
 
-    public static final int WRIST_ENCODER_CAN_ID = 43;
+    public static final int WRIST_ENCODER_CAN_ID = 34;
   }
 }
