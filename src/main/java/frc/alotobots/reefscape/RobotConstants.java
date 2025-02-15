@@ -12,9 +12,4 @@
 */
 package frc.alotobots.reefscape;
 
-import edu.wpi.first.math.util.Units;
-
-public class RobotConstants {
-  public static final double ROBOT_WIDTH = Units.inchesToMeters(30);
-  public static final double ROBOT_LENGTH = Units.inchesToMeters(30);
-}
+public class RobotConstants {}

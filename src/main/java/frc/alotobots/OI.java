@@ -30,6 +30,14 @@ public class OI {
   /** The primary driver's controller. Used for main robot control functions. */
   private static final CommandXboxController driverController = new CommandXboxController(0);
 
+  /** Trigger for when the driver is using the controller sticks to control the chassis */
+  public static final Trigger hasDriverInput =
+      new Trigger(
+          () ->
+              Math.abs(driverController.getLeftX()) > DEADBAND
+                  || Math.abs(driverController.getLeftY()) > DEADBAND
+                  || Math.abs(driverController.getRightX()) > DEADBAND);
+
   /**
    * Gets the forward/backward translation input from the driver's controller.
    *
@@ -75,15 +83,39 @@ public class OI {
     return driverController.getRightTriggerAxis();
   }
 
-  /** Button for activating the drive facing best object command. */
-  public static Trigger driveFacingBestObjectButton = driverController.a();
+  /** Enable pathfinding */
+  public static Trigger enablePathfindingButton = driverController.back();
 
-  /** Button for activating the pathfind to best object command. */
-  public static Trigger pathfindToBestObjectButton = driverController.b();
+  /** Enable auto pathfinding */
+  public static Trigger enableFullAutoPathfindingButton = driverController.start();
 
-  /** A temporary test button. */
-  public static Trigger testButton = driverController.y();
+  /** Pathfind to the selected branch */
+  public static Trigger pathfindToSelectedReefBranchButton = driverController.y();
 
-  /** A temporary test button. */
-  public static Trigger testButton2 = driverController.x();
+  /** Pathfind to the selected coral station */
+  public static Trigger pathfindToSelectedCoralStationButton = driverController.a();
+
+  /** Cycles the selected pickup position one to the left */
+  public static Trigger cycleCoralStationPickupPositionLeftButton = driverController.x();
+
+  /** Cycles the selected pickup position one to the right */
+  public static Trigger cycleCoralStationPickupPositionRightButton = driverController.b();
+
+  /** Cycles the selected coral station one to the left */
+  public static Trigger cycleCoralStationSideLeftButton = driverController.leftBumper();
+
+  /** Cycles the selected coral station one to the right */
+  public static Trigger cycleCoralStationSideRightButton = driverController.rightBumper();
+
+  /** Cycles the selected branch one to the left */
+  public static Trigger cycleSelectedBranchLeftButton = driverController.povLeft();
+
+  /** Cycles the selected branch one to the right */
+  public static Trigger cycleSelectedBranchRightButton = driverController.povRight();
+
+  /** Cycles the branch level up once */
+  public static Trigger cycleLevelUpButton = driverController.povUp();
+
+  /** Cycles the branch level down once */
+  public static Trigger cycleLevelDownButton = driverController.povDown();
 }

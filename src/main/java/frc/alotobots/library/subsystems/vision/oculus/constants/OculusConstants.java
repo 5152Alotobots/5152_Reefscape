@@ -50,13 +50,25 @@ public class OculusConstants {
 
   /**
    * Standard deviations representing how much we "trust" the position from the Oculus. By default,
-   * the Quest 3 provides sub-millimeter accuracy. Values represent: [0]: X position trust (5mm)
-   * [1]: Y position trust (5mm) [2]: Rotation trust (~2.87 degrees)
+   * the Quest 3 provides sub-centimeter accuracy. Values represent: [0]: X position trust (50mm)
+   * [1]: Y position trust (50mm) [2]: Rotation trust (~2.87 degrees)
    */
   public static final Matrix<N3, N1> OCULUS_STD_DEVS =
       VecBuilder.fill(
-          0.005, // Trust down to 5mm
-          0.005, // Trust down to 5mm
+          0.005, // Trust down to 50mm
+          0.005, // Trust down to 50mm
           0.05 // Trust down to ~2.87deg
           );
+
+  /**
+   * The divisor to divide the translational std devs by for simulation (how much we trust our sim)
+   * Higher = more trust
+   */
+  public static final double SIM_TRUST_TRANSLATION = 5.0;
+
+  /**
+   * The divisor to divide the rotational std devs by for simulation (how much we trust our sim)
+   * Higher = more trust
+   */
+  public static final double SIM_TRUST_ROTATION = 10.0;
 }
