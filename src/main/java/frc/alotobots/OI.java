@@ -30,6 +30,8 @@ public class OI {
   /** The primary driver's controller. Used for main robot control functions. */
   private static final CommandXboxController driverController = new CommandXboxController(0);
 
+  private static final CommandXboxController auxController = new CommandXboxController(1);
+
   /** Trigger for when the driver is using the controller sticks to control the chassis */
   public static final Trigger hasDriverInput =
       new Trigger(
@@ -81,6 +83,15 @@ public class OI {
    */
   public static double getTurboSpeedTrigger() {
     return driverController.getRightTriggerAxis();
+  }
+
+  /**
+   * Gets the turtle (slow) speed control input value.
+   *
+   * @return Value between 0.0 and 1.0
+   */
+  public static double getWristAxis() {
+    return auxController.getLeftY();
   }
 
   /** Enable pathfinding */
