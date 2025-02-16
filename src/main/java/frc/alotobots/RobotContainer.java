@@ -235,10 +235,14 @@ public class RobotContainer {
     hasDriverInput.whileTrue(new DriverInterruptCommand(autoCycleSubsystem));
 
     // Elevator
-    elevatorStowButton.toggleOnTrue(new ElevatorRunToPosition(elevatorSubsystem, ElevatorConstants.Setpoints.STOWED));
-    elevatorL2Button.toggleOnTrue(new ElevatorRunToPosition(elevatorSubsystem, ElevatorConstants.Setpoints.L2_PLACE));
-    elevatorL3Button.toggleOnTrue(new ElevatorRunToPosition(elevatorSubsystem, ElevatorConstants.Setpoints.L3_PLACE));
-    elevatorL4Button.toggleOnTrue(new ElevatorRunToPosition(elevatorSubsystem, ElevatorConstants.Setpoints.L4_PLACE));
+    elevatorStowButton.toggleOnTrue(
+        new ElevatorRunToPosition(elevatorSubsystem, ElevatorConstants.Setpoints.STOWED));
+    elevatorL2Button.toggleOnTrue(
+        new ElevatorRunToPosition(elevatorSubsystem, ElevatorConstants.Setpoints.L2_PLACE));
+    elevatorL3Button.toggleOnTrue(
+        new ElevatorRunToPosition(elevatorSubsystem, ElevatorConstants.Setpoints.L3_PLACE));
+    elevatorL4Button.toggleOnTrue(
+        new ElevatorRunToPosition(elevatorSubsystem, ElevatorConstants.Setpoints.L4_PLACE));
   }
 
   private void configureAutoChooser() {
