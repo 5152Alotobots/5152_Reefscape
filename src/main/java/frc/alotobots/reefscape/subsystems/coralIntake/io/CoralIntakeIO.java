@@ -21,6 +21,7 @@ public interface CoralIntakeIO {
   @AutoLog
   public static class CoralIntakeIOInputs {
     public boolean motorConnected = false;
+    public boolean intakeOccupied = false;
 
     public AngularVelocity velocity = RadiansPerSecond.zero();
     public Voltage motorAppliedVolts = Volts.zero();
@@ -29,9 +30,11 @@ public interface CoralIntakeIO {
 
   public default void updateInputs(CoralIntakeIOInputs inputs) {}
 
-  public default void setWristVelocity(AngularVelocity velocity, int pidSlot) {}
+  public default void setIntakeVelocity(AngularVelocity velocity, int pidSlot) {}
 
-  public default void setWristOpenLoop(double percentOutput) {}
+  public default void setIntakeOpenLoop(double percentOutput) {}
+
+  public default boolean getIntakeOccupied() { return false; }
 
   public default void stop() {}
 }

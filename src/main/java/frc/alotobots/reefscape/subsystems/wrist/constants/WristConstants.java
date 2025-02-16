@@ -17,6 +17,6 @@ import static edu.wpi.first.units.Units.Degrees;
 import edu.wpi.first.units.measure.Angle;
 
 public class WristConstants {
-  public static final Angle MAX_ANGLE = Degrees.of(-90);
-  public static final Angle MIN_ANGLE = Degrees.of(90);
+  public static final Angle MAX_ANGLE = Degrees.of(360);
+  public static final Angle MIN_ANGLE = Degrees.of(0);
 }

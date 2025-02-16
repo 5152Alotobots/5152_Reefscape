@@ -16,12 +16,21 @@ import static edu.wpi.first.units.Units.*;
 import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.*;
 import static frc.alotobots.reefscape.subsystems.wrist.constants.WristIOTalonFXConstants.*;
 
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.units.measure.*;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
+import edu.wpi.first.wpilibj.util.Color;
+import edu.wpi.first.wpilibj.util.Color8Bit;
+import org.littletonrobotics.junction.AutoLogOutput;
+import org.littletonrobotics.junction.mechanism.LoggedMechanism2d;
+import org.littletonrobotics.junction.mechanism.LoggedMechanismLigament2d;
 
 public class WristIOTalonFXSim implements WristIO {
   private final SingleJointedArmSim wristSim;
+  @AutoLogOutput private final LoggedMechanism2d wristMech = new LoggedMechanism2d(3, 3);
+  private final LoggedMechanismLigament2d wristArm =
+      new LoggedMechanismLigament2d("wrist", 0.5, 180, 6, new Color8Bit(Color.kPurple));
 
   private final DCMotor motor = DCMotor.getFalcon500(1);
 
@@ -30,6 +39,8 @@ public class WristIOTalonFXSim implements WristIO {
   private boolean brakeMode = true;
 
   public WristIOTalonFXSim() {
+    wristMech.getRoot("wrist", 1.5, 1.5).append(wristArm);
+
     wristSim =
         new SingleJointedArmSim(
             motor,
@@ -55,13 +66,14 @@ public class WristIOTalonFXSim implements WristIO {
     inputs.motorAppliedVolts = Volts.of(appliedVolts);
 
     inputs.position = Radians.of(wristSim.getAngleRads());
+    wristArm.setAngle(Rotation2d.fromDegrees(inputs.position.in(Degree)));
     inputs.pidSlot = currentPidSlot;
     inputs.motorCurrent = Amps.of(wristSim.getCurrentDrawAmps());
   }
 
   @Override
   public void setWristOpenLoop(double percentOutput) {
-    appliedVolts = percentOutput * 12.0;
+    appliedVolts = percentOutput * 13.0;
     wristSim.setInputVoltage(appliedVolts);
   }
 

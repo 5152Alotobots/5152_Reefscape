@@ -15,6 +15,7 @@ package frc.alotobots.reefscape.subsystems.wrist.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.alotobots.reefscape.subsystems.wrist.WristSubsystem;
 import java.util.function.DoubleSupplier;
+import org.littletonrobotics.junction.Logger;
 
 public class DefaultWristCommand extends Command {
   private final WristSubsystem wristSubsystem;
@@ -32,6 +33,7 @@ public class DefaultWristCommand extends Command {
 
   @Override
   public void execute() {
+    Logger.recordOutput("Wrist/PercentOut", input.getAsDouble());
     wristSubsystem.runAtPercentOutput(input.getAsDouble());
   }
 

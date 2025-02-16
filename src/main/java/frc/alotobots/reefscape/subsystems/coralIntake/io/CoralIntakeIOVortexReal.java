@@ -12,7 +12,14 @@
 */
 package frc.alotobots.reefscape.subsystems.coralIntake.io;
 
+import static edu.wpi.first.units.Units.*;
+
+import com.ctre.phoenix6.BaseStatusSignal;
+import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.hardware.CANrange;
+import com.ctre.phoenix6.hardware.ParentDevice;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
@@ -22,6 +29,8 @@ public class CoralIntakeIOVortexReal implements CoralIntakeIO {
 
   private final SparkFlex intakeMotor = new SparkFlex(0, MotorType.kBrushless);
   private final CANrange intakeSensor = new CANrange(0);
+
+  private final StatusSignal<Boolean> intakeOccupied = intakeSensor.getIsDetected();
 
   public CoralIntakeIOVortexReal() {
     SparkFlexConfig config = new SparkFlexConfig();
@@ -37,54 +46,43 @@ public class CoralIntakeIOVortexReal implements CoralIntakeIO {
     // intakePID.setD(0.0);
     // intakePID.setFF(0.0);  //  Important:  You *must* tune this if using velocity control.
     // intakePID.setOutputRange(-1.0, 1.0); //  Good practice to limit output.
-    // intakeMotor.burnFlash();
+    intakeMotor.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
 
+     BaseStatusSignal.setUpdateFrequencyForAll(
+        50.0,
+        intakeOccupied);
+    ParentDevice.optimizeBusUtilizationForAll(intakeSensor);
+  }
+
+  @Override
+  public void updateInputs(CoralIntakeIOInputs inputs) {
+      BaseStatusSignal.refreshAll(intakeOccupied);
+
+      inputs.intakeOccupied = intakeOccupied.getValue();
+      inputs.velocity = RevolutionsPerSecond.of((intakeMotor.getEncoder().getVelocity()) / 60);
+      inputs.motorAppliedVolts = Volts.of(intakeMotor.getAppliedOutput() * intakeMotor.getBusVoltage());
+      inputs.motorCurrentAmps = Amps.of(intakeMotor.getOutputCurrent());
+  }
+
+  @Override
+  public void setIntakeOpenLoop(double percent) {
+      intakeMotor.set(percent);
+  }
+
+  @Override 
+  public boolean getIntakeOccupied() {
+    return intakeOccupied.getValue();
   }
 
   // @Override
-  // public void updateInputs(IntakeIOInputs inputs) {
-  //     inputs.intakeSpeed = intakeEncoder.getVelocity();
-  //     inputs.intakeAppliedVolts = intakeMotor.getAppliedOutput() * intakeMotor.getBusVoltage();
-  //     inputs.intakeCurrentAmps = intakeMotor.getOutputCurrent();
-  //     inputs.intakeTempCelsius = intakeMotor.getMotorTemperature();
-  //     inputs.intakeSensorTripped = !intakeSensor.get(); //  Inverted because DigitalInput.get()
-  // is false when tripped.
-  // }
-
-  // @Override
-  // public void setIntakeVoltage(double volts) {
-  //     intakeMotor.setVoltage(volts);
-  // }
-
-  // @Override
-  // public void setIntakePercent(double percent) {
-  //     intakeMotor.set(percent);
-  // }
-
-  // @Override
   // public void setIntakeVelocity(double velocityRPM) {
-  //     //Use the velocity
+       //Use the velocity
   //     intakePID.setReference(velocityRPM, ControlType.kVelocity, 0, 0, ArbFFUnits.kVoltage); //
   // kVelocity, PID Slot, Arb Feedforward, Arb FF Units
   // }
 
-  // @Override
-  // public void stopIntake() {
-  //     intakeMotor.set(0.0);
-  // }
-
-  // @Override
-  // public boolean isIntakeSensorTripped(){
-  //     return !intakeSensor.get();
-  // }
-
-  // @Override
-  // public void periodic() {
-  //     // This method will be called once per scheduler run
-  //     // Log any values to SmartDashboard or Shuffleboard here.
-  //     SmartDashboard.putNumber("Intake Motor Speed", intakeEncoder.getVelocity());
-  //     SmartDashboard.putNumber("Intake Motor Current", intakeMotor.getOutputCurrent());
-  //     SmartDashboard.putBoolean("Intake Sensor Tripped", !intakeSensor.get()); //  Inverted for
-  // display.
-  // }
+  @Override
+  public void stop() {
+      intakeMotor.set(0.0);
+  }
 }
