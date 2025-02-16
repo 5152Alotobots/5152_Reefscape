@@ -23,4 +23,7 @@ public class WristIOTalonFXConstants {
   public static final double ENCODER_MAGNET_OFFSET = 0.103515625;
   public static final SensorDirectionValue ENCODER_DIRCTION_VALUE =
       SensorDirectionValue.Clockwise_Positive;
+
+  public static final double INERTIA_KGMETERSSQURD = 0.2809;
+  public static final double ARM_LENGTH = 0.3048;
 }

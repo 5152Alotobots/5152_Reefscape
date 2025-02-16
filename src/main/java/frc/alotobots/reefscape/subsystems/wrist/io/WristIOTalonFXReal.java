@@ -122,7 +122,7 @@ public class WristIOTalonFXReal implements WristIO {
     inputs.motorAppliedVolts = wristAppliedVoltage.getValue();
 
     // Current
-    inputs.motorCurrentAmps = wristAppliedCurrent.getValue();
+    inputs.motorCurrent = wristAppliedCurrent.getValue();
 
     // Velocity
     inputs.rotationVelocity = wristVelocity.getValue();

@@ -36,10 +36,15 @@ import frc.alotobots.library.subsystems.vision.photonvision.apriltag.util.AprilT
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.ObjectDetectionSubsystem;
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.constants.ObjectDetectionConstants;
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.io.*;
+import frc.alotobots.reefscape.commands.FullAutoCycle;
 import frc.alotobots.reefscape.subsystems.autocycle.AutoCycleSubsystem;
+import frc.alotobots.reefscape.subsystems.autocycle.commands.DriverInterruptCommand;
+import frc.alotobots.reefscape.subsystems.autocycle.commands.PathfindToCoralStation;
+import frc.alotobots.reefscape.subsystems.autocycle.commands.PathfindToReef;
 import frc.alotobots.reefscape.subsystems.wrist.WristSubsystem;
 import frc.alotobots.reefscape.subsystems.wrist.commands.DefaultWristCommand;
 import frc.alotobots.reefscape.subsystems.wrist.io.WristIOTalonFXReal;
+import frc.alotobots.reefscape.subsystems.wrist.io.WristIOTalonFXSim;
 import org.ironmaple.simulation.SimulatedArena;
 import org.ironmaple.simulation.drivesims.SwerveDriveSimulation;
 import org.littletonrobotics.junction.Logger;
@@ -103,7 +108,7 @@ public class RobotContainer {
         break;
 
       case SIM:
-        wristSubsystem = new WristSubsystem(new WristIOTalonFXReal());
+        wristSubsystem = new WristSubsystem(new WristIOTalonFXSim());
         Pose2d simStartPose = new Pose2d(3, 3, new Rotation2d(0));
         driveSimulation =
             new SwerveDriveSimulation(
@@ -156,7 +161,7 @@ public class RobotContainer {
         break;
 
       default:
-        wristSubsystem = new WristSubsystem(new WristIOTalonFXReal());
+        wristSubsystem = new WristSubsystem(new WristIOTalonFXSim());
         // Replay mode initialization
         swerveDriveSubsystem =
             new SwerveDriveSubsystem(
@@ -202,27 +207,27 @@ public class RobotContainer {
 
   private void configureLogicCommands() {
     // Enabled state
-    // enablePathfindingButton.onChange(autoCycleSubsystem.togglePathfinding());
-    // enableFullAutoPathfindingButton.onTrue(new FullAutoCycle(autoCycleSubsystem).repeatedly());
+    enablePathfindingButton.onChange(autoCycleSubsystem.togglePathfinding());
+    enableFullAutoPathfindingButton.onTrue(new FullAutoCycle(autoCycleSubsystem).repeatedly());
 
-    // // Auto Cycle Reef Branch Controls
-    // cycleSelectedBranchRightButton.onTrue(autoCycleSubsystem.cycleReefBranchRight());
-    // cycleSelectedBranchLeftButton.onTrue(autoCycleSubsystem.cycleReefBranchLeft());
-    // cycleLevelUpButton.onTrue(autoCycleSubsystem.cycleReefLevelUp());
-    // cycleLevelDownButton.onTrue(autoCycleSubsystem.cycleReefLevelDown());
-    // pathfindToSelectedReefBranchButton.toggleOnTrue(new PathfindToReef(autoCycleSubsystem));
+    // Auto Cycle Reef Branch Controls
+    cycleSelectedBranchRightButton.onTrue(autoCycleSubsystem.cycleReefBranchRight());
+    cycleSelectedBranchLeftButton.onTrue(autoCycleSubsystem.cycleReefBranchLeft());
+    cycleLevelUpButton.onTrue(autoCycleSubsystem.cycleReefLevelUp());
+    cycleLevelDownButton.onTrue(autoCycleSubsystem.cycleReefLevelDown());
+    pathfindToSelectedReefBranchButton.toggleOnTrue(new PathfindToReef(autoCycleSubsystem));
 
-    // // Auto Cycle Coral Station Controls
-    // cycleCoralStationSideLeftButton.onTrue(autoCycleSubsystem.cycleCoralStationSideLeft());
-    // cycleCoralStationSideRightButton.onTrue(autoCycleSubsystem.cycleCoralStationSideRight());
-    // cycleCoralStationPickupPositionLeftButton.onTrue(
-    //     autoCycleSubsystem.cycleCoralStationPositionLeft());
-    // cycleCoralStationPickupPositionRightButton.onTrue(
-    //     autoCycleSubsystem.cycleCoralStationPositionRight());
-    // pathfindToSelectedCoralStationButton.toggleOnTrue(
-    //     new PathfindToCoralStation(autoCycleSubsystem));
+    // Auto Cycle Coral Station Controls
+    cycleCoralStationSideLeftButton.onTrue(autoCycleSubsystem.cycleCoralStationSideLeft());
+    cycleCoralStationSideRightButton.onTrue(autoCycleSubsystem.cycleCoralStationSideRight());
+    cycleCoralStationPickupPositionLeftButton.onTrue(
+        autoCycleSubsystem.cycleCoralStationPositionLeft());
+    cycleCoralStationPickupPositionRightButton.onTrue(
+        autoCycleSubsystem.cycleCoralStationPositionRight());
+    pathfindToSelectedCoralStationButton.toggleOnTrue(
+        new PathfindToCoralStation(autoCycleSubsystem));
 
-    // hasDriverInput.whileTrue(new DriverInterruptCommand(autoCycleSubsystem));
+    hasDriverInput.whileTrue(new DriverInterruptCommand(autoCycleSubsystem));
   }
 
   private void configureAutoChooser() {

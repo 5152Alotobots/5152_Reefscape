@@ -22,8 +22,16 @@ public interface CoralIntakeIO {
   public static class CoralIntakeIOInputs {
     public boolean motorConnected = false;
 
-    public LinearVelocity Velocity = MetersPerSecond.zero();
+    public AngularVelocity velocity = RadiansPerSecond.zero();
     public Voltage motorAppliedVolts = Volts.zero();
     public Current motorCurrentAmps = Amps.zero();
   }
+
+  public default void updateInputs(CoralIntakeIOInputs inputs) {}
+
+  public default void setWristVelocity(AngularVelocity velocity, int pidSlot) {}
+
+  public default void setWristOpenLoop(double percentOutput) {}
+
+  public default void stop() {}
 }

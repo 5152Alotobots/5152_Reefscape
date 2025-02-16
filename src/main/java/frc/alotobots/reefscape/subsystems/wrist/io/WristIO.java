@@ -29,7 +29,7 @@ public interface WristIO {
     public Angle position = Degrees.zero();
     public AngularVelocity rotationVelocity = RotationsPerSecond.zero();
     public Voltage motorAppliedVolts = Volts.zero();
-    public Current motorCurrentAmps = Amps.zero();
+    public Current motorCurrent = Amps.zero();
   }
 
   public default void updateInputs(WristIOInputs inputs) {}

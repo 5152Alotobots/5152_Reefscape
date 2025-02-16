@@ -54,8 +54,6 @@ import edu.wpi.first.units.measure.Voltage;
 import frc.alotobots.library.subsystems.swervedrive.constants.TunerConstants;
 import org.ironmaple.simulation.drivesims.COTS;
 import org.ironmaple.simulation.drivesims.configs.DriveTrainSimulationConfig;
-import org.ironmaple.simulation.drivesims.COTS;
-import org.ironmaple.simulation.drivesims.configs.DriveTrainSimulationConfig;
 
 public class TunerConstants2025 implements TunerConstants {
   public static class GeneratedConstants {
@@ -349,8 +347,6 @@ public class TunerConstants2025 implements TunerConstants {
             .withSwerveModule(
                 COTS.ofMark4i(
                     DCMotor.getFalcon500Foc(1), DCMotor.getFalcon500Foc(1), WHEEL_COF, 2));
-
- 
   }
 
   @Override
