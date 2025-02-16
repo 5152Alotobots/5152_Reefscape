@@ -7,19 +7,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "StraightTest1"
+            "pathName": "S_ReefSE_SC_ReefSW 1"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "StraightTest2"
+            "pathName": "S_ReefSE_SC_ReefSW 2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "S_ReefSE_SC_ReefSW 3"
           }
         }
       ]
     }
   },
-  "resetOdom": false,
-  "folder": "Tests",
+  "resetOdom": true,
+  "folder": "Two Piece",
   "choreoAuto": false
 }

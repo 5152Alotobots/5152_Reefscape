@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.04325,
-        "y": 6.9792499999999995
+        "x": 0.625,
+        "y": 6.709
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.52525,
-        "y": 6.443
+        "x": 2.107,
+        "y": 6.17275
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "North Left Station"
     },
     {
       "anchor": {
-        "x": 3.8220000000000005,
-        "y": 5.10725
+        "x": 4.02675,
+        "y": 5.22425
       },
       "prevControl": {
-        "x": 2.871114011966718,
-        "y": 5.475624754856169
+        "x": 3.075864011966717,
+        "y": 5.592624754856169
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Reef_NW_L"
     }
   ],
   "rotationTargets": [],
@@ -48,7 +48,7 @@
   "folder": "Test2025",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 125.00000000000001
+    "rotation": 127.56859202882754
   },
   "useDefaultConstraints": false
 }

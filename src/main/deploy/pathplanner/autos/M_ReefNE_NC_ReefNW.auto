@@ -7,19 +7,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "HoloTest1"
+            "pathName": "Alan First Part 1"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "HoloTest2"
+            "pathName": "Alan First Part 2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Alan First Part 3"
           }
         }
       ]
     }
   },
-  "resetOdom": false,
-  "folder": "Tests",
+  "resetOdom": true,
+  "folder": "Two Piece",
   "choreoAuto": false
 }

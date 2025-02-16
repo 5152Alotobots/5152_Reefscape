@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.437397540983607,
-        "y": 4.09093237704918
+        "x": 5.503618421052631,
+        "y": 5.554851973684211
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.15775,
-        "y": 5.117
+        "x": 5.25525,
+        "y": 5.029249999999999
       },
       "prevControl": {
-        "x": 6.257581967213115,
-        "y": 4.618391393442622
+        "x": 5.753782894736841,
+        "y": 5.102631578947368
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Reef_NE_L"
     }
   ],
   "rotationTargets": [],

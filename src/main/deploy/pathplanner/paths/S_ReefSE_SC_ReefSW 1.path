@@ -3,37 +3,32 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.899165375795541,
-        "y": 5.579248046700319
+        "x": 7.245148026315788,
+        "y": 1.8889802631578947
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.149020318440082,
-        "y": 5.570732905122335
+        "x": 5.821134868421052,
+        "y": 1.9178453947368415
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Start South"
     },
     {
       "anchor": {
-        "x": 1.3291532436938118,
-        "y": 5.579248046700319
+        "x": 4.9822500000000005,
+        "y": 2.8744999999999994
       },
       "prevControl": {
-        "x": 1.0243294165748782,
-        "y": 5.579850559700821
+        "x": 5.4458881578947365,
+        "y": 2.244983552631579
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Reef_SE_L"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.5,
-      "rotationDegrees": 90.0
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -47,10 +42,10 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 119.99999999999999
   },
   "reversed": false,
-  "folder": "RotationTest",
+  "folder": "Test2025",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 180.0

@@ -3,17 +3,16 @@
   "robotLength": 0.74,
   "holonomicMode": true,
   "pathFolders": [
-    "HoloTest",
     "Battle Creek",
     "Positions",
-    "RotationTest",
-    "StraightTest",
     "Test2025"
   ],
   "autoFolders": [
     "2025Test",
-    "Battle Creek",
-    "Tests"
+    "Just Leave",
+    "Bens Things",
+    "One Piece",
+    "Two Piece"
   ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 1.5,

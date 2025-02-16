@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.953,
-        "y": 5.22425
+        "x": 7.245148026315788,
+        "y": 6.199506578947369
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.953000000000001,
-        "y": 5.22425
+        "x": 5.85,
+        "y": 6.95
       },
       "isLocked": false,
-      "linkedName": "Reef_NE_R"
+      "linkedName": "Start North"
     },
     {
       "anchor": {
-        "x": 5.25525,
-        "y": 5.029249999999999
+        "x": 2.857648026315789,
+        "y": 7.604276315789473
       },
       "prevControl": {
-        "x": 4.25525,
-        "y": 5.029249999999999
+        "x": 4.368256578947368,
+        "y": 7.613898026315789
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Reef_NE_L"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -119.99999999999999
+    "rotation": 180.0
   },
   "reversed": false,
-  "folder": "Positions",
+  "folder": "Battle Creek",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -119.99999999999999
+    "rotation": 180.0
   },
   "useDefaultConstraints": true
 }

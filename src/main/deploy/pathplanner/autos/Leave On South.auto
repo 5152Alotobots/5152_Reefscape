@@ -7,13 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "StartS_ReefSW"
+            "pathName": "Leave On South"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "One Piece",
+  "folder": "Just Leave",
   "choreoAuto": false
 }

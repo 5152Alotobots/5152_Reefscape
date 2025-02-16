@@ -7,25 +7,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Alan First Part 1"
+            "pathName": "N_ReefNE_NC_ReefNW 1"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Alan First Part 2"
+            "pathName": "N_ReefNE_NC_ReefNW 2"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Alan First Part 3"
+            "pathName": "N_ReefNE_NC_ReefNW 3"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "2025Test",
+  "folder": "Two Piece",
   "choreoAuto": false
 }

@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.3542201424191584,
-        "y": 5.569024212825211
+        "x": 0.625,
+        "y": 6.709
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.3542201424191584,
-        "y": 5.569024212825211
+        "x": 1.6250000000000009,
+        "y": 6.709
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "North Left Station"
     },
     {
       "anchor": {
-        "x": 2.9368221808626718,
-        "y": 5.916973695743167
+        "x": 5.25525,
+        "y": 5.029249999999999
       },
       "prevControl": {
-        "x": 1.9118769780704805,
-        "y": 5.921641238560395
+        "x": 4.820476973684211,
+        "y": 5.978207236842105
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Reef_NE_L"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -119.99999999999999
   },
   "reversed": false,
-  "folder": "HoloTest",
+  "folder": "Test2025",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 127.56859202882754
   },
   "useDefaultConstraints": true
 }

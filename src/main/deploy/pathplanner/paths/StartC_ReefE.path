@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.2540951232799635,
-        "y": 4.0
+        "x": 6.321463815789473,
+        "y": 3.8133223684210527
       },
       "isLocked": false,
       "linkedName": "Start Center"
     },
     {
       "anchor": {
-        "x": 5.75,
-        "y": 4.0
+        "x": 5.733,
+        "y": 3.8397499999999996
       },
       "prevControl": {
-        "x": 6.244490131578947,
-        "y": 4.015378289473684
+        "x": 6.227490131578946,
+        "y": 3.855128289473684
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Reef_E_L"
     }
   ],
   "rotationTargets": [],

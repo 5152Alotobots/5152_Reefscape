@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.15775,
-        "y": 5.117
+        "x": 5.25525,
+        "y": 5.029249999999999
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.459426229508197,
-        "y": 6.06890368852459
+        "x": 4.556926229508197,
+        "y": 5.981153688524589
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Reef_NE_L"
     },
     {
       "anchor": {
-        "x": 1.04325,
-        "y": 6.9792499999999995
+        "x": 0.625,
+        "y": 6.709
       },
       "prevControl": {
-        "x": 1.2781983558721095,
-        "y": 6.893814234228324
+        "x": 0.8599483558721095,
+        "y": 6.623564234228324
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "North Left Station"
     }
   ],
   "rotationTargets": [],
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 125.00000000000001
+    "rotation": 127.56859202882754
   },
   "reversed": false,
   "folder": "Test2025",
