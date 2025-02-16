@@ -25,31 +25,16 @@ public final class ElevatorConstants {
   /** Prevent construction */
   private ElevatorConstants() {}
 
-  /** Physical dimensions and mechanical configuration */
-  public static final class Mechanics {
-    /** Diameter of the elevator pulley */
-    public static final Distance PULLEY_DIAMETER = Centimeters.of(3.2);
-
-    /** Circumference of the elevator pulley */
-    public static final Distance PULLEY_CIRCUMFERENCE = PULLEY_DIAMETER.times(Math.PI);
-  }
-
   /** Physical limits and safety thresholds */
   public static final class Limits {
     /** Maximum allowed height */
     public static final Distance MAX_HEIGHT = Meters.of(1.8388);
 
     /** Minimum allowed height */
-    public static final Distance MIN_HEIGHT = Meters.of(0.2794);
+    public static final Distance MIN_HEIGHT = Meters.of(0.253311);
 
-    /** Maximum torque current for the motors */
-    public static final Current PEAK_TORQUE_CURRENT = Amps.of(100.0);
-
-    /** Maximum stator current for the motors */
-    public static final Current STATOR_CURRENT_LIMIT = Amps.of(120.0);
-
-    /** Maximum voltage that can be applied to the motors */
-    public static final Voltage MAX_VOLTAGE = Volts.of(12.0);
+    /** Enable Limits */
+    public static final boolean LIMITS_ENABLED = true;
   }
 
   /** Position setpoints for different elevator states */

@@ -14,8 +14,10 @@ package frc.alotobots.reefscape.subsystems.elevator.io;
 
 import static edu.wpi.first.units.Units.*;
 import static frc.alotobots.Constants.CanId.*;
-import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.Limits.MAX_HEIGHT;
-import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.Limits.MIN_HEIGHT;
+import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.Limits.*;
+import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorTalonFXRealConstants.LEFT_MOTOR_DIRECTION;
+import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorTalonFXRealConstants.MECHANISM_NEUTRAL_MODE;
+import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorTalonFXRealConstants.MotorSafetyLimits.*;
 import static frc.alotobots.util.PhoenixUtil.tryUntilOk;
 
 import com.ctre.phoenix6.BaseStatusSignal;
@@ -31,6 +33,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.*;
 import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.units.measure.*;
+import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorTalonFXRealConstants;
 
 /**
  * Hardware implementation of the Elevator subsystem using TalonFX motors and a CANRange sensor.
@@ -39,86 +42,6 @@ import edu.wpi.first.units.measure.*;
  * The CANRange provides absolute position feedback for the elevator mechanism.
  */
 public class ElevatorIOTalonFXReal implements ElevatorIO {
-  /** TalonFX-specific PID and motion control constants for no game piece (Empty mode). */
-  private static final class EmptyPIDConstants {
-    /** Position control proportional gain */
-    public static final double KP = 3.3;
-
-    /** Position control integral gain */
-    public static final double KI = 0.0;
-
-    /** Position control derivative gain */
-    public static final double KD = 0.0;
-
-    /** Acceleration feedforward gain */
-    public static final double KA = 0.0;
-
-    /** Gravity compensation gain */
-    public static final double KG = 0.13;
-
-    /** Static friction compensation */
-    public static final double KS = 0.19;
-
-    /** Velocity feedforward gain */
-    public static final double KV = 0.0;
-  }
-
-  /** TalonFX-specific PID and motion control constants for coral game piece (Coral mode). */
-  private static final class CoralPIDConstants {
-    /** Position control proportional gain */
-    public static final double KP = 0.1;
-
-    /** Position control integral gain */
-    public static final double KI = 0.0;
-
-    /** Position control derivative gain */
-    public static final double KD = 0.0;
-
-    /** Acceleration feedforward gain */
-    public static final double KA = 0.0;
-
-    /** Gravity compensation gain */
-    public static final double KG = 0.0;
-
-    /** Static friction compensation */
-    public static final double KS = 0.0;
-
-    /** Velocity feedforward gain */
-    public static final double KV = 0.0;
-  }
-
-  /** TalonFX-specific PID and motion control constants for algae game piece (Algae mode). */
-  private static final class AlgaePIDConstants {
-    /** Position control proportional gain */
-    public static final double KP = 0.1;
-
-    /** Position control integral gain */
-    public static final double KI = 0.0;
-
-    /** Position control derivative gain */
-    public static final double KD = 0.0;
-
-    /** Acceleration feedforward gain */
-    public static final double KA = 0.0;
-
-    /** Gravity compensation gain */
-    public static final double KG = 0.0;
-
-    /** Static friction compensation */
-    public static final double KS = 0.0;
-
-    /** Velocity feedforward gain */
-    public static final double KV = 0.0;
-  }
-
-  /**
-   * TalonFX-specific hardware configuration constants defining the mechanical properties of the
-   * elevator system.
-   */
-  private static final class HardwareConfig {
-    /** Gear ratio between motor and pulley (motor rotations : pulley rotations) */
-    static final double GEAR_RATIO = 35.0;
-  }
 
   /** The primary TalonFX motor controller for the elevator */
   private final TalonFX leftTalon;
@@ -195,39 +118,39 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
     var leftConfig = new TalonFXConfiguration();
 
     // PID configuration for empty mode (Slot 0)
-    leftConfig.Slot0.kP = EmptyPIDConstants.KP;
-    leftConfig.Slot0.kI = EmptyPIDConstants.KI;
-    leftConfig.Slot0.kD = EmptyPIDConstants.KD;
+    leftConfig.Slot0.kP = ElevatorTalonFXRealConstants.PIDConstants.EmptyPIDConstants.KP;
+    leftConfig.Slot0.kI = ElevatorTalonFXRealConstants.PIDConstants.EmptyPIDConstants.KI;
+    leftConfig.Slot0.kD = ElevatorTalonFXRealConstants.PIDConstants.EmptyPIDConstants.KD;
     leftConfig.Slot0.GravityType = GravityTypeValue.Elevator_Static;
-    leftConfig.Slot0.kA = EmptyPIDConstants.KA;
-    leftConfig.Slot0.kG = EmptyPIDConstants.KG;
-    leftConfig.Slot0.kS = EmptyPIDConstants.KS;
-    leftConfig.Slot0.kV = EmptyPIDConstants.KV;
+    leftConfig.Slot0.kA = ElevatorTalonFXRealConstants.PIDConstants.EmptyPIDConstants.KA;
+    leftConfig.Slot0.kG = ElevatorTalonFXRealConstants.PIDConstants.EmptyPIDConstants.KG;
+    leftConfig.Slot0.kS = ElevatorTalonFXRealConstants.PIDConstants.EmptyPIDConstants.KS;
+    leftConfig.Slot0.kV = ElevatorTalonFXRealConstants.PIDConstants.EmptyPIDConstants.KV;
 
     // PID configuration for Coral mode (Slot 1)
-    leftConfig.Slot1.kP = CoralPIDConstants.KP;
-    leftConfig.Slot1.kI = CoralPIDConstants.KI;
-    leftConfig.Slot1.kD = CoralPIDConstants.KD;
+    leftConfig.Slot1.kP = ElevatorTalonFXRealConstants.PIDConstants.CoralPIDConstants.KP;
+    leftConfig.Slot1.kI = ElevatorTalonFXRealConstants.PIDConstants.CoralPIDConstants.KI;
+    leftConfig.Slot1.kD = ElevatorTalonFXRealConstants.PIDConstants.CoralPIDConstants.KD;
     leftConfig.Slot1.GravityType = GravityTypeValue.Elevator_Static;
-    leftConfig.Slot1.kA = CoralPIDConstants.KA;
-    leftConfig.Slot1.kG = CoralPIDConstants.KG;
-    leftConfig.Slot1.kS = CoralPIDConstants.KS;
-    leftConfig.Slot1.kV = CoralPIDConstants.KV;
+    leftConfig.Slot1.kA = ElevatorTalonFXRealConstants.PIDConstants.CoralPIDConstants.KA;
+    leftConfig.Slot1.kG = ElevatorTalonFXRealConstants.PIDConstants.CoralPIDConstants.KG;
+    leftConfig.Slot1.kS = ElevatorTalonFXRealConstants.PIDConstants.CoralPIDConstants.KS;
+    leftConfig.Slot1.kV = ElevatorTalonFXRealConstants.PIDConstants.CoralPIDConstants.KV;
 
     // PID configuration for Algae mode (Slot 2)
-    leftConfig.Slot2.kP = AlgaePIDConstants.KP;
-    leftConfig.Slot2.kI = AlgaePIDConstants.KI;
-    leftConfig.Slot2.kD = AlgaePIDConstants.KD;
+    leftConfig.Slot2.kP = ElevatorTalonFXRealConstants.PIDConstants.AlgaePIDConstants.KP;
+    leftConfig.Slot2.kI = ElevatorTalonFXRealConstants.PIDConstants.AlgaePIDConstants.KI;
+    leftConfig.Slot2.kD = ElevatorTalonFXRealConstants.PIDConstants.AlgaePIDConstants.KD;
     leftConfig.Slot2.GravityType = GravityTypeValue.Elevator_Static;
-    leftConfig.Slot2.kA = AlgaePIDConstants.KA;
-    leftConfig.Slot2.kG = AlgaePIDConstants.KG;
-    leftConfig.Slot2.kS = AlgaePIDConstants.KS;
-    leftConfig.Slot2.kV = AlgaePIDConstants.KV;
+    leftConfig.Slot2.kA = ElevatorTalonFXRealConstants.PIDConstants.AlgaePIDConstants.KA;
+    leftConfig.Slot2.kG = ElevatorTalonFXRealConstants.PIDConstants.AlgaePIDConstants.KG;
+    leftConfig.Slot2.kS = ElevatorTalonFXRealConstants.PIDConstants.AlgaePIDConstants.KS;
+    leftConfig.Slot2.kV = ElevatorTalonFXRealConstants.PIDConstants.AlgaePIDConstants.KV;
 
-    leftConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+    leftConfig.MotorOutput.NeutralMode = MECHANISM_NEUTRAL_MODE;
 
-    leftConfig.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
-    leftConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
+    leftConfig.SoftwareLimitSwitch.ForwardSoftLimitEnable = LIMITS_ENABLED;
+    leftConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = LIMITS_ENABLED;
     leftConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold =
         heightToTalonFX(MAX_HEIGHT).in(Rotations);
     leftConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold =
@@ -235,16 +158,13 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
 
     leftConfig.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.RotorSensor;
 
-    leftConfig.TorqueCurrent.PeakForwardTorqueCurrent = 100.0;
-    leftConfig.TorqueCurrent.PeakReverseTorqueCurrent = -100.0;
+    leftConfig.TorqueCurrent.PeakForwardTorqueCurrent = TORQUE_FORWARD_AMP_LIMIT.in(Amps);
+    leftConfig.TorqueCurrent.PeakReverseTorqueCurrent = TORQUE_REVERSE_AMP_LIMIT.in(Amps);
 
-    leftConfig.CurrentLimits.StatorCurrentLimit = 120.0;
-    leftConfig.CurrentLimits.StatorCurrentLimitEnable = true;
+    leftConfig.CurrentLimits.StatorCurrentLimit = STATOR_AMP_LIMIT.in(Amps);
+    leftConfig.CurrentLimits.StatorCurrentLimitEnable = true; // Always should be true
 
-    leftConfig.OpenLoopRamps.TorqueOpenLoopRampPeriod = 0.0;
-    leftConfig.ClosedLoopRamps.TorqueClosedLoopRampPeriod = 0.0;
-
-    leftConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+    leftConfig.MotorOutput.Inverted = LEFT_MOTOR_DIRECTION;
 
     // Apply config to left motor
     tryUntilOk(5, () -> leftTalon.getConfigurator().apply(leftConfig, 0.25));
@@ -348,9 +268,6 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
     // Amps
     inputs.leftCurrentAmps = leftAppliedCurrent.getValue();
     inputs.rightCurrentAmps = rightAppliedCurrent.getValue();
-
-    // Set CANRange height to TalonFX motor position (This is a terrible idea! Thanks, Rowan!)
-    // leftTalon.setPosition(heightToTalonFX(canRangeDistance.getValue()));
   }
 
   /**
@@ -398,7 +315,7 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
    * @return Height as a Distance unit
    */
   private Distance talonFXToHeight(Angle rotations) {
-    return Meters.of(0.00942151 * rotations.in(Rotations) + 0.253311);
+    return Meters.of(0.00942151 * rotations.in(Rotations) + MIN_HEIGHT.in(Meters));
   }
 
   /**
@@ -421,7 +338,7 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
    * @return TalonFX motor rotations as an Angle unit
    */
   private Angle heightToTalonFX(Distance height) {
-    return Rotations.of((height.in(Meters) - 0.253311) / 0.00942151);
+    return Rotations.of((height.minus(MIN_HEIGHT).in(Meters)) / 0.00942151);
   }
 
   /**
