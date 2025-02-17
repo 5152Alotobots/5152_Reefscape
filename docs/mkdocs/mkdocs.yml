@@ -17,6 +17,7 @@ nav:
           - Elevator:
               - Default Elevator Run At Velocity: reefscape/defaultelevatorrunatvelocity.md
               - Elevator Run to Height: reefscape/elevatorruntoheight.md
+              - Elevator Open Loop: reefscape/elevatoropenloop.md
   - Library:
       - Commands:
           - Swerve:

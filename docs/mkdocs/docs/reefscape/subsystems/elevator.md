@@ -15,9 +15,9 @@ public ElevatorSubsystem(ElevatorIO io, Supplier<GameElement> elementInIntake)
 
 The Elevator subsystem is used by the following commands:
 
-- [DefaultElevatorOpenLoop](/5152_Reefscape/library/commands/elevator/defaultelevatoropenloop) - Default command for manual control using percent output
-- [ElevatorHoldHeight](/5152_Reefscape/library/commands/elevator/elevatorholdheight) - Maintains the elevator at its current height
-- [ElevatorRunToHeight](/5152_Reefscape/library/commands/elevator/elevatorruntoheight) - Moves the elevator to a specified target height
+- [DefaultElevatorRunAtVelocity](/5152_Reefscape/library/commands/elevator/defaultelevatorrunatvelocity)
+- [ElevatorOpenLoop](/5152_Reefscape/library/commands/elevator/elevatoropenloop) - Command for manual control using percent output
+- [ElevatorRunToHeight](/5152_Reefscape/library/commands/elevator/elevatorruntoheight) - Moves the elevator to a specified target height and maintains it
 
 ## Configuration Requirements
 
