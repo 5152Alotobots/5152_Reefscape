@@ -1,5 +1,6 @@
 package frc.alotobots.reefscape.subsystems.elevator.commands;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.units.measure.LinearVelocity;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
@@ -59,7 +60,8 @@ public class DefaultElevatorRunAtVelocity extends Command {
      */
     @Override
     public void execute() {
-        LinearVelocity velocity = MAX_SPEED.times(input.getAsDouble());
+        double adjustedInput = MathUtil.clamp(input.getAsDouble(),-1, 1);
+        LinearVelocity velocity = MAX_SPEED.times(adjustedInput);
         elevatorSubsystem.runToTargetVelocity(velocity);
     }
 
