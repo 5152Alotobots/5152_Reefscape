@@ -319,7 +319,7 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
 
   /**
    * Converts TalonFX rotations to elevator height. TalonFX reports position in rotations in Phoenix
-   * 6. Uses regression formula y = 0.00949501x + 0.26 where x is rotations and y is meters.
+   * 6. Uses regression formula y = 0.00942151x + 0.26 where x is rotations and y is meters.
    *
    * @param rotations TalonFX motor rotations
    * @return Height as a Distance unit
@@ -330,7 +330,7 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
 
   /**
    * Converts TalonFX rotational velocity to linear velocity. TalonFX reports velocity in rotations
-   * per second in Phoenix 6. Uses slope from regression formula y = 0.00949501x + 0.26.
+   * per second in Phoenix 6. Uses slope from regression formula y = 0.00942151x + 0.26.
    *
    * @param rotationsPerSecond TalonFX motor rotational velocity
    * @return Linear velocity as a LinearVelocity unit
@@ -341,7 +341,7 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
 
   /**
    * Converts elevator height to TalonFX rotations. TalonFX expects position in rotations in Phoenix
-   * 6. Uses inverse of regression formula y = 0.00949501x + 0.26, solving for x: x = (y - 0.26) /
+   * 6. Uses inverse of regression formula y = 0.00942151x + 0.26, solving for x: x = (y - 0.26) /
    * 0.00949501 where y is meters and x is rotations.
    *
    * @param height Height as a Distance unit
@@ -353,7 +353,7 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
 
   /**
    * Converts linear velocity to TalonFX rotational velocity. TalonFX expects velocity in rotations
-   * per second in Phoenix 6. Uses inverse slope from regression formula y = 0.00949501x + 0.26.
+   * per second in Phoenix 6. Uses inverse slope from regression formula y = 0.00942151x + 0.26.
    *
    * @param linearVelocity Linear velocity as a LinearVelocity unit
    * @return TalonFX motor rotational velocity as an AngularVelocity unit
