@@ -22,8 +22,31 @@ import edu.wpi.first.units.measure.Mass;
  * different game piece modes and physical configuration parameters.
  */
 public class ElevatorTalonFXSimConstants {
-  /** TalonFX-specific PID and motion control constants for coral game piece (Coral mode). */
-  public static final class CoralPIDConstants {
+  /** TalonFX-specific PID and motion control constants for no game piece (Empty mode). */
+  public static final class EmptyPIDConstants {
+    /** Position control proportional gain */
+    public static final double KP = 3.3;
+
+    /** Position control integral gain */
+    public static final double KI = 0.0;
+
+    /** Position control derivative gain */
+    public static final double KD = 0.0;
+
+    /** Acceleration feedforward gain */
+    public static final double KA = 0.0;
+
+    /** Gravity compensation gain */
+    public static final double KG = 0.13;
+
+    /** Static friction compensation */
+    public static final double KS = 0.19;
+
+    /** Velocity feedforward gain */
+    public static final double KV = 0.0;
+  }
+  /** TalonFX-specific PID and motion control constants for coral/algae game piece (Coral/Algae mode). */
+  public static final class CoralAlgaePIDConstants {
     /** Position control proportional gain */
     public static final double KP = 0.1;
 
@@ -46,8 +69,8 @@ public class ElevatorTalonFXSimConstants {
     public static final double KV = 0.0;
   }
 
-  /** TalonFX-specific PID and motion control constants for algae game piece (Algae mode). */
-  public static final class AlgaePIDConstants {
+  /** TalonFX-specific PID and motion control constants for cage game piece (Cage mode). */
+  public static final class CagePIDConstants {
     /** Position control proportional gain */
     public static final double KP = 0.1;
 

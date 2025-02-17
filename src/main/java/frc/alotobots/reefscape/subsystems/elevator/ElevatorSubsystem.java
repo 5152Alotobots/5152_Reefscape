@@ -21,7 +21,6 @@ import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorCons
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIO;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIOInputsAutoLogged;
 import frc.alotobots.reefscape.util.GameElement;
@@ -76,14 +75,14 @@ public class ElevatorSubsystem extends SubsystemBase {
     Distance adjustedHeight =
         Meters.of(MathUtil.clamp(height.in(Meters), MIN_HEIGHT.in(Meters), MAX_HEIGHT.in(Meters)));
     switch (elementInIntake.get()) {
-      case NONE:
-        io.setElevatorPosition(adjustedHeight, ElevatorConstants.PIDSlot.NONE);
+      case EMPTY:
+        io.setElevatorPosition(adjustedHeight, GameElement.EMPTY.ordinal());
         break;
-      case CORAL:
-        io.setElevatorPosition(adjustedHeight, ElevatorConstants.PIDSlot.CORAL);
+      case CORAL_ALGAE:
+        io.setElevatorPosition(adjustedHeight, GameElement.CORAL_ALGAE.ordinal());
         break;
-      case ALGAE:
-        io.setElevatorPosition(adjustedHeight, ElevatorConstants.PIDSlot.ALGAE);
+      case CAGE:
+        io.setElevatorPosition(adjustedHeight, GameElement.CAGE.ordinal());
         break;
     }
   }

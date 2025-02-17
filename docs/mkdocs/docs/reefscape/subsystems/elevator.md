@@ -22,7 +22,7 @@ The Elevator subsystem is used by the following commands:
 ## Configuration Requirements
 
 1. PID Configuration:
-    - Separate PID slots must be configured for each game element type (NONE, CORAL, ALGAE)
+    - Separate PID slots must be configured for each game element type (NONE, CORAL_ALGAE, CAGE)
     - AT_SET_POINT_THRESHOLD must be set in ElevatorConstants
 
 2. Hardware Limits:

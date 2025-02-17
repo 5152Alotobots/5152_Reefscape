@@ -13,7 +13,10 @@
 package frc.alotobots.reefscape.util;
 
 public enum GameElement {
-  CORAL,
-  ALGAE,
-  NONE
+  /** No element */
+  EMPTY,
+  /** Coral or Algae */
+  CORAL_ALGAE,
+  /** Cage */
+  CAGE
 }

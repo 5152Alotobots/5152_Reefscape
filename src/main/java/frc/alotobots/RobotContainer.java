@@ -74,7 +74,7 @@ public class RobotContainer {
                 new ModuleIOTalonFXReal(ModulePosition.BACK_LEFT.index),
                 new ModuleIOTalonFXReal(ModulePosition.BACK_RIGHT.index));
         elevatorSubsystem =
-            new ElevatorSubsystem(new ElevatorIOTalonFXReal(), () -> GameElement.NONE);
+            new ElevatorSubsystem(new ElevatorIOTalonFXReal(), () -> GameElement.EMPTY);
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         configureAutoChooser();
 
@@ -127,7 +127,7 @@ public class RobotContainer {
                     driveSimulation.getModules()[ModulePosition.BACK_RIGHT.index]));
         swerveDriveSubsystem.setPose(simStartPose);
         elevatorSubsystem =
-            new ElevatorSubsystem(new ElevatorIOTalonFXSim(), () -> GameElement.NONE);
+            new ElevatorSubsystem(new ElevatorIOTalonFXSim(), () -> GameElement.EMPTY);
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         configureAutoChooser();
 
@@ -163,7 +163,7 @@ public class RobotContainer {
                 new ModuleIO() {},
                 new ModuleIO() {},
                 new ModuleIO() {});
-        elevatorSubsystem = new ElevatorSubsystem(new ElevatorIO() {}, () -> GameElement.NONE);
+        elevatorSubsystem = new ElevatorSubsystem(new ElevatorIO() {}, () -> GameElement.EMPTY);
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         configureAutoChooser();
 

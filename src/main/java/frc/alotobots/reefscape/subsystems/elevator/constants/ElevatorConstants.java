@@ -63,10 +63,4 @@ public final class ElevatorConstants {
     /** Height for L1 placement */
     public static final Distance L1_PLACE = Meters.of(0.5);
   }
-
-  public static final class PIDSlot {
-    public static final int NONE = 0;
-    public static final int CORAL = 1;
-    public static final int ALGAE = 2;
-  }
 }

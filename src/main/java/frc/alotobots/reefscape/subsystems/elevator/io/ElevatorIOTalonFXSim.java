@@ -89,9 +89,12 @@ public class ElevatorIOTalonFXSim implements ElevatorIO {
     // Simulate position control with basic P controller
     double error = position.in(Meters) - elevatorSim.getPositionMeters();
     double kP =
-        (pidSlot == 0)
-            ? ElevatorTalonFXSimConstants.CoralPIDConstants.KP
-            : ElevatorTalonFXSimConstants.AlgaePIDConstants.KP;
+        switch (pidSlot) {
+          case 0 -> ElevatorTalonFXSimConstants.EmptyPIDConstants.KP;
+          case 1 -> ElevatorTalonFXSimConstants.CoralAlgaePIDConstants.KP;
+          case 2 -> ElevatorTalonFXSimConstants.CagePIDConstants.KP;
+          default -> throw new IllegalStateException("Unexpected value: " + pidSlot);
+        };
     appliedVolts = error * kP;
     appliedVolts = Math.min(12.0, Math.max(-12.0, appliedVolts));
     elevatorSim.setInputVoltage(appliedVolts);

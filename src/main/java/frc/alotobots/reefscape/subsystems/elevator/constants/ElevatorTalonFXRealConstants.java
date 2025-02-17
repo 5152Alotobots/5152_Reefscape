@@ -52,8 +52,8 @@ public final class ElevatorTalonFXRealConstants {
       public static final double KV = 0.0;
     }
 
-    /** TalonFX-specific PID and motion control constants for coral game piece (Coral mode). */
-    public static final class CoralPIDConstants {
+    /** TalonFX-specific PID and motion control constants for coral/algae game pieces (Coral/Algae mode). */
+    public static final class CoralAlgaePIDConstants {
       /** Position control proportional gain */
       public static final double KP = 0.1;
 
@@ -76,8 +76,8 @@ public final class ElevatorTalonFXRealConstants {
       public static final double KV = 0.0;
     }
 
-    /** TalonFX-specific PID and motion control constants for algae game piece (Algae mode). */
-    public static final class AlgaePIDConstants {
+    /** TalonFX-specific PID and motion control constants for cage game piece (Cage mode). */
+    public static final class CagePIDConstants {
       /** Position control proportional gain */
       public static final double KP = 0.1;
 

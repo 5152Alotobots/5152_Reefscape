@@ -130,25 +130,25 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
     leftConfig.Slot0.kS = ElevatorTalonFXRealConstants.PIDConstants.EmptyPIDConstants.KS;
     leftConfig.Slot0.kV = ElevatorTalonFXRealConstants.PIDConstants.EmptyPIDConstants.KV;
 
-    // PID configuration for Coral mode (Slot 1)
-    leftConfig.Slot1.kP = ElevatorTalonFXRealConstants.PIDConstants.CoralPIDConstants.KP;
-    leftConfig.Slot1.kI = ElevatorTalonFXRealConstants.PIDConstants.CoralPIDConstants.KI;
-    leftConfig.Slot1.kD = ElevatorTalonFXRealConstants.PIDConstants.CoralPIDConstants.KD;
+    // PID configuration for Coral/Algae mode (Slot 1)
+    leftConfig.Slot1.kP = ElevatorTalonFXRealConstants.PIDConstants.CoralAlgaePIDConstants.KP;
+    leftConfig.Slot1.kI = ElevatorTalonFXRealConstants.PIDConstants.CoralAlgaePIDConstants.KI;
+    leftConfig.Slot1.kD = ElevatorTalonFXRealConstants.PIDConstants.CoralAlgaePIDConstants.KD;
     leftConfig.Slot1.GravityType = GravityTypeValue.Elevator_Static;
-    leftConfig.Slot1.kA = ElevatorTalonFXRealConstants.PIDConstants.CoralPIDConstants.KA;
-    leftConfig.Slot1.kG = ElevatorTalonFXRealConstants.PIDConstants.CoralPIDConstants.KG;
-    leftConfig.Slot1.kS = ElevatorTalonFXRealConstants.PIDConstants.CoralPIDConstants.KS;
-    leftConfig.Slot1.kV = ElevatorTalonFXRealConstants.PIDConstants.CoralPIDConstants.KV;
+    leftConfig.Slot1.kA = ElevatorTalonFXRealConstants.PIDConstants.CoralAlgaePIDConstants.KA;
+    leftConfig.Slot1.kG = ElevatorTalonFXRealConstants.PIDConstants.CoralAlgaePIDConstants.KG;
+    leftConfig.Slot1.kS = ElevatorTalonFXRealConstants.PIDConstants.CoralAlgaePIDConstants.KS;
+    leftConfig.Slot1.kV = ElevatorTalonFXRealConstants.PIDConstants.CoralAlgaePIDConstants.KV;
 
-    // PID configuration for Algae mode (Slot 2)
-    leftConfig.Slot2.kP = ElevatorTalonFXRealConstants.PIDConstants.AlgaePIDConstants.KP;
-    leftConfig.Slot2.kI = ElevatorTalonFXRealConstants.PIDConstants.AlgaePIDConstants.KI;
-    leftConfig.Slot2.kD = ElevatorTalonFXRealConstants.PIDConstants.AlgaePIDConstants.KD;
+    // PID configuration for Cage mode (Slot 2)
+    leftConfig.Slot2.kP = ElevatorTalonFXRealConstants.PIDConstants.CagePIDConstants.KP;
+    leftConfig.Slot2.kI = ElevatorTalonFXRealConstants.PIDConstants.CagePIDConstants.KI;
+    leftConfig.Slot2.kD = ElevatorTalonFXRealConstants.PIDConstants.CagePIDConstants.KD;
     leftConfig.Slot2.GravityType = GravityTypeValue.Elevator_Static;
-    leftConfig.Slot2.kA = ElevatorTalonFXRealConstants.PIDConstants.AlgaePIDConstants.KA;
-    leftConfig.Slot2.kG = ElevatorTalonFXRealConstants.PIDConstants.AlgaePIDConstants.KG;
-    leftConfig.Slot2.kS = ElevatorTalonFXRealConstants.PIDConstants.AlgaePIDConstants.KS;
-    leftConfig.Slot2.kV = ElevatorTalonFXRealConstants.PIDConstants.AlgaePIDConstants.KV;
+    leftConfig.Slot2.kA = ElevatorTalonFXRealConstants.PIDConstants.CagePIDConstants.KA;
+    leftConfig.Slot2.kG = ElevatorTalonFXRealConstants.PIDConstants.CagePIDConstants.KG;
+    leftConfig.Slot2.kS = ElevatorTalonFXRealConstants.PIDConstants.CagePIDConstants.KS;
+    leftConfig.Slot2.kV = ElevatorTalonFXRealConstants.PIDConstants.CagePIDConstants.KV;
 
     leftConfig.MotorOutput.NeutralMode = MECHANISM_NEUTRAL_MODE;
 
