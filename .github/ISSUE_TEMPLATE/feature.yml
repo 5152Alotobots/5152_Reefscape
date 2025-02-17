@@ -1,90 +1,67 @@
 name: Feature Request
-description: Suggest a new feature or improvement (only use this template if your feature request doesn't fit into any mechanism-specific templates)
+description: Suggest a new feature for REEFSCAPE
 title: "[FEATURE]: "
 labels: ["enhancement"]
 body:
-  - type: markdown
-    attributes:
-      value: |
-        Thanks for taking the time to suggest a new feature!
-        
-        NOTE: Please only use this template if your feature request doesn't fit into any of the mechanism-specific templates (CORAL, ALGAE, Climber, Vision). For mechanism-specific features, use the appropriate mechanism template instead.
-
   - type: dropdown
-    id: subsystem
+    id: feature-type
     attributes:
-      label: Subsystem
+      label: Feature Type
+      description: What type of feature are you proposing?
       options:
-
-        - Drive Train
-        - Controls
-        - Dashboard
+        - Game Piece Mechanism
+        - Vision/Sensing System
+        - Autonomous Function
+        - Endgame Strategy
+        - Control/Interface
         - Other
     validations:
       required: true
-
   - type: textarea
-    id: objective-issue
+    id: feature-description
     attributes:
-      label: Objective/Issue
-      description: Clear, single-sentence description of the problem or needed feature
-      placeholder: "Example: Need automated calibration system for vision targeting"
+      label: Feature Description
+      description: Provide a clear description of the feature you're proposing
+      placeholder: "A detailed description of what you want to accomplish..."
     validations:
       required: true
-
   - type: textarea
     id: proposed-solution
     attributes:
       label: Proposed Solution
-      description: Describe your proposed approach to solve this issue
-      placeholder: |
-        - Technical approach
-        - Design considerations
-        - Implementation steps
-        - Required resources
+      description: Describe your technical approach to implementing this feature
+      placeholder: "Technical details of how this could be implemented..."
     validations:
       required: true
-
   - type: textarea
     id: required-kpis
     attributes:
       label: Required KPIs
-      description: List measurable requirements for success
-      placeholder: |
-        - Performance metrics
-        - Resource requirements
-        - Time constraints
+      description: List measurable requirements for this feature
+      placeholder: "- Speed: X seconds\n- Accuracy: Y%\n- Reliability: Z%..."
     validations:
       required: true
-
   - type: textarea
     id: prerequisites
     attributes:
       label: Prerequisites
-      description: List required systems and setup needed
-      placeholder: |
-        - Required systems
-        - Dependencies
-        - Resource needs
+      description: List any systems, components, or other issues that must be completed first
+      placeholder: "- Working X mechanism\n- Updated Y controls\n- Vision system Z..."
     validations:
-      required: true
-
+      required: false
   - type: textarea
     id: success-metrics
     attributes:
       label: Success Metrics
-      description: Specific measurable outcomes to determine completion
-      placeholder: |
-        - Specific performance targets
-        - Quality metrics
-        - Completion criteria
+      description: How will we know when this feature is successfully implemented?
+      placeholder: "Specific, measurable outcomes that define success..."
     validations:
       required: true
-
   - type: dropdown
     id: priority
     attributes:
       label: Priority Level
+      description: How urgent is this feature?
       options:
         - P0-Critical
         - P1-High
@@ -92,9 +69,19 @@ body:
         - P3-Low
     validations:
       required: true
-
   - type: textarea
     id: additional-info
     attributes:
       label: Additional Information
-      description: Any other context, logs, images, or videos?
+      description: Any other context, screenshots, or relevant information
+      placeholder: "Other details that might help with implementation..."
+    validations:
+      required: false
+  - type: input
+    id: meme-upload
+    attributes:
+      label: Mandatory Meme Upload
+      description: Please upload a relevant (or completely random) meme
+      placeholder: "Drag and drop your meme image here or click to upload"
+    validations:
+      required: true
