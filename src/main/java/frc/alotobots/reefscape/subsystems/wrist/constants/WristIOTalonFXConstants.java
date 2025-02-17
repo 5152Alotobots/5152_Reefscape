@@ -12,10 +12,19 @@
 */
 package frc.alotobots.reefscape.subsystems.wrist.constants;
 
+import static edu.wpi.first.units.Units.Degrees;
+
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 
+import edu.wpi.first.units.measure.Angle;
+
 public class WristIOTalonFXConstants {
+  public class WristPositions {
+    public static final Angle L4_CORAL_POSITION = Degrees.of(90);
+    public static final Angle GROUND_INTAKE = Degrees.of(-7);
+    public static final Angle L2AND3_CORAL_POSITION = Degrees.of(90);
+  }
 
   public class PositionPIDConstants {
     public static final double KP = 70;
