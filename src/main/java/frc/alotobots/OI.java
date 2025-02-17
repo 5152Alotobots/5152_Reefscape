@@ -104,6 +104,6 @@ public class OI {
    * @return Value between -1.0 (down) and 1.0 (up)
    */
   public static double getElevatorAxis() {
-    return codriverController.getRightY();
+    return MathUtil.applyDeadband(codriverController.getRightY(), DEADBAND);
   }
 }
