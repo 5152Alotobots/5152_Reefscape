@@ -1,0 +1,110 @@
+name: Bug Report
+description: Report a problem with an existing system
+title: "[BUG]: "
+labels: ["bug"]
+body:
+  - type: dropdown
+    id: system-affected
+    attributes:
+      label: Affected System
+      description: Which system is experiencing the bug?
+      options:
+        - CORAL Handling
+        - ALGAE Handling
+        - Climber
+        - Drive Train
+        - Vision/Sensing
+        - Autonomous
+        - Controls/Software
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: bug-description
+    attributes:
+      label: Bug Description
+      description: Provide a clear description of what is not working correctly
+      placeholder: "Detailed explanation of the issue..."
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction-steps
+    attributes:
+      label: Steps to Reproduce
+      description: List the steps to consistently reproduce the bug
+      placeholder: "1. Initialize system\n2. Send command X\n3. Observe error Y..."
+    validations:
+      required: true
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected Behavior
+      description: What should happen when the system is working correctly?
+      placeholder: "The system should..."
+    validations:
+      required: true
+  - type: textarea
+    id: observed-behavior
+    attributes:
+      label: Observed Behavior
+      description: What actually happens when the bug occurs?
+      placeholder: "Instead, the system..."
+    validations:
+      required: true
+  - type: dropdown
+    id: frequency
+    attributes:
+      label: Bug Frequency
+      description: How often does this bug occur?
+      options:
+        - Always (100%)
+        - Frequently (75%)
+        - Sometimes (50%)
+        - Rarely (25%)
+        - Once/Unpredictable
+    validations:
+      required: true
+  - type: textarea
+    id: logs-data
+    attributes:
+      label: Logs and Data
+      description: Include any relevant logs, error messages, or diagnostic data
+      placeholder: "Error logs, system output, etc..."
+    validations:
+      required: false
+  - type: textarea
+    id: fix-proposal
+    attributes:
+      label: Proposed Fix
+      description: If you have ideas on how to fix this, describe them here
+      placeholder: "Potential solutions or workarounds..."
+    validations:
+      required: false
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority Level
+      description: How serious is this bug?
+      options:
+        - P0-Critical (breaks robot/competition)
+        - P1-High (major function impact)
+        - P2-Medium (partial functionality loss)
+        - P3-Low (minor inconvenience)
+    validations:
+      required: true
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Any other information that might help diagnose and fix the bug
+      placeholder: "Environmental factors, recent changes, etc..."
+    validations:
+      required: false
+  - type: input
+    id: meme-upload
+    attributes:
+      label: Mandatory Meme Upload
+      description: Please upload a meme that expresses your feelings about this bug
+      placeholder: "Drag and drop your meme image here or click to upload"
+    validations:
+      required: true
