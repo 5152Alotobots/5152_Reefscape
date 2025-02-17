@@ -7,7 +7,7 @@ A command that moves the elevator to a specified target height and continuously 
 
 ## Constructor Parameters
 ```java
-public ElevatorRunToHeightAndHold(ElevatorSubsystem elevatorSubsystem, Distance targetHeight)
+public ElevatorRunToHeight(ElevatorSubsystem elevatorSubsystem, Distance targetHeight)
 ```
 - `elevatorSubsystem`: The elevator subsystem to control
 - `targetHeight`: The desired height for the elevator to reach and maintain (automatically clamped between MIN_HEIGHT and MAX_HEIGHT)
