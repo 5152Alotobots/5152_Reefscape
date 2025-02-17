@@ -12,6 +12,7 @@
 */
 package frc.alotobots;
 
+import static edu.wpi.first.units.Units.Degrees;
 import static frc.alotobots.OI.*;
 
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -41,8 +42,12 @@ import frc.alotobots.reefscape.subsystems.autocycle.AutoCycleSubsystem;
 import frc.alotobots.reefscape.subsystems.autocycle.commands.DriverInterruptCommand;
 import frc.alotobots.reefscape.subsystems.autocycle.commands.PathfindToCoralStation;
 import frc.alotobots.reefscape.subsystems.autocycle.commands.PathfindToReef;
+import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
+import frc.alotobots.reefscape.subsystems.coralIntake.commands.DefaultCoralIntakeOpenLoop;
+import frc.alotobots.reefscape.subsystems.coralIntake.io.CoralIntakeIOVortexReal;
 import frc.alotobots.reefscape.subsystems.wrist.WristSubsystem;
-import frc.alotobots.reefscape.subsystems.wrist.commands.DefaultWristCommand;
+import frc.alotobots.reefscape.subsystems.wrist.commands.DefaultWristOpenLoop;
+import frc.alotobots.reefscape.subsystems.wrist.commands.WristRunToAngle;
 import frc.alotobots.reefscape.subsystems.wrist.io.WristIOTalonFXReal;
 import frc.alotobots.reefscape.subsystems.wrist.io.WristIOTalonFXSim;
 import org.ironmaple.simulation.SimulatedArena;
@@ -59,6 +64,7 @@ public class RobotContainer {
   private final OculusPoseSource oculusPoseSource;
   private final AprilTagPoseSource aprilTagPoseSource;
   private final ObjectDetectionSubsystem objectDetectionSubsystem;
+  private final CoralIntakeSubsystem coralIntakeSubsystem;
   //   private final BlingSubsystem blingSubsystem;
   private final PathPlannerManager pathPlannerManager;
   private final AutoCycleSubsystem autoCycleSubsystem;
@@ -69,6 +75,7 @@ public class RobotContainer {
 
     switch (Constants.currentMode) {
       case REAL:
+        coralIntakeSubsystem = new CoralIntakeSubsystem(new CoralIntakeIOVortexReal());
         wristSubsystem = new WristSubsystem(new WristIOTalonFXReal());
         // Real robot hardware initialization
 
@@ -109,6 +116,7 @@ public class RobotContainer {
 
       case SIM:
         wristSubsystem = new WristSubsystem(new WristIOTalonFXSim());
+        coralIntakeSubsystem = new CoralIntakeSubsystem(new CoralIntakeIOVortexReal());
         Pose2d simStartPose = new Pose2d(3, 3, new Rotation2d(0));
         driveSimulation =
             new SwerveDriveSimulation(
@@ -162,6 +170,7 @@ public class RobotContainer {
 
       default:
         wristSubsystem = new WristSubsystem(new WristIOTalonFXSim());
+        coralIntakeSubsystem = new CoralIntakeSubsystem(new CoralIntakeIOVortexReal());
         // Replay mode initialization
         swerveDriveSubsystem =
             new SwerveDriveSubsystem(
@@ -199,13 +208,16 @@ public class RobotContainer {
 
   private void configureDefaultCommands() {
     wristSubsystem.setDefaultCommand(
-        new DefaultWristCommand(() -> OI.getWristAxis(), wristSubsystem));
+        new DefaultWristOpenLoop(() -> OI.getWristAxis(), wristSubsystem));
     swerveDriveSubsystem.setDefaultCommand(new DefaultDrive(swerveDriveSubsystem).getCommand());
     // blingSubsystem.setDefaultCommand(
     // new NoAllianceWaiting(blingSubsystem).andThen(new SetToAllianceColor(blingSubsystem)));
   }
 
   private void configureLogicCommands() {
+    wristTestButton.whileTrue(new WristRunToAngle(Degrees.of(90), wristSubsystem));
+    intakeTestButton.whileTrue(
+        new DefaultCoralIntakeOpenLoop(() -> Double.valueOf(10), coralIntakeSubsystem));
     // Enabled state
     enablePathfindingButton.onChange(autoCycleSubsystem.togglePathfinding());
     enableFullAutoPathfindingButton.onTrue(new FullAutoCycle(autoCycleSubsystem).repeatedly());

@@ -26,7 +26,7 @@ public interface WristIO {
     public boolean topLimit = false;
     public boolean bottomLimit = false;
 
-    public Angle position = Degrees.zero();
+    public Angle position = Radians.zero();
     public AngularVelocity rotationVelocity = RotationsPerSecond.zero();
     public Voltage motorAppliedVolts = Volts.zero();
     public Current motorCurrent = Amps.zero();

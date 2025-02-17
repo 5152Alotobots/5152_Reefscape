@@ -34,7 +34,9 @@ public interface CoralIntakeIO {
 
   public default void setIntakeOpenLoop(double percentOutput) {}
 
-  public default boolean getIntakeOccupied() { return false; }
+  public default boolean getIntakeOccupied() {
+    return false;
+  }
 
   public default void stop() {}
 }

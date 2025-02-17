@@ -15,6 +15,7 @@ package frc.alotobots.reefscape.subsystems.coralIntake;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.alotobots.reefscape.subsystems.coralIntake.io.CoralIntakeIO;
 import frc.alotobots.reefscape.subsystems.coralIntake.io.CoralIntakeIOInputsAutoLogged;
+import org.littletonrobotics.junction.Logger;
 
 public class CoralIntakeSubsystem extends SubsystemBase {
   private CoralIntakeIOInputsAutoLogged inputs = new CoralIntakeIOInputsAutoLogged();
@@ -27,6 +28,7 @@ public class CoralIntakeSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     io.updateInputs(inputs);
+    Logger.processInputs("CoralIntake", inputs);
   }
 
   public void runAtPercentOutput(double percentOutput) {
@@ -45,5 +47,3 @@ public class CoralIntakeSubsystem extends SubsystemBase {
     io.stop();
   }
 }
-
-

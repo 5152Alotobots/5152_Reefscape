@@ -10,22 +10,23 @@
 *
 * Source code must be publicly available on GitHub or an alternative web accessible site
 */
-package frc.alotobots.reefscape.subsystems.wrist.commands;
+package frc.alotobots.reefscape.subsystems.coralIntake.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.alotobots.reefscape.subsystems.wrist.WristSubsystem;
+import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
 import java.util.function.DoubleSupplier;
 import org.littletonrobotics.junction.Logger;
 
-public class DefaultWristCommand extends Command {
-  private final WristSubsystem wristSubsystem;
+public class DefaultCoralIntakeOpenLoop extends Command {
+  private final CoralIntakeSubsystem coralIntakeSubsystem;
   private final DoubleSupplier input;
 
-  public DefaultWristCommand(DoubleSupplier input, WristSubsystem wristSubsystem) {
-    this.wristSubsystem = wristSubsystem;
+  public DefaultCoralIntakeOpenLoop(
+      DoubleSupplier input, CoralIntakeSubsystem coralIntakeSubsystem) {
+    this.coralIntakeSubsystem = coralIntakeSubsystem;
     this.input = input;
 
-    addRequirements(wristSubsystem);
+    addRequirements(coralIntakeSubsystem);
   }
 
   @Override
@@ -34,11 +35,11 @@ public class DefaultWristCommand extends Command {
   @Override
   public void execute() {
     Logger.recordOutput("Wrist/PercentOut", input.getAsDouble());
-    wristSubsystem.runAtPercentOutput(input.getAsDouble());
+    coralIntakeSubsystem.runAtPercentOutputWithLimits(input.getAsDouble());
   }
 
   @Override
   public void end(boolean interrupted) {
-    wristSubsystem.stop();
+    coralIntakeSubsystem.stop();
   }
 }

@@ -62,5 +62,7 @@ public final class Constants {
     public static final int WRIST_MOTOR_CAN_ID = 33;
 
     public static final int WRIST_ENCODER_CAN_ID = 34;
+    public static final int INTAKE_MOTOR_CAN_ID = 35;
+    public static final int INTAKE_CANRANGE_ID = 36;
   }
 }

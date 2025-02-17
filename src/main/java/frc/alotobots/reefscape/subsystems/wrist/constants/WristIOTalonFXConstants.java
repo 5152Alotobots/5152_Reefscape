@@ -17,12 +17,18 @@ import com.ctre.phoenix6.signals.SensorDirectionValue;
 
 public class WristIOTalonFXConstants {
 
+  public class PositionPIDConstants {
+    public static final double KP = 70;
+    public static final double KI = 0.0;
+    public static final double KD = 0.0;
+  }
+
   public static final int ROTOR_TO_SENSOR_RATIO = 189;
   public static final InvertedValue MOTOR_INVERT = InvertedValue.Clockwise_Positive;
 
-  public static final double ENCODER_MAGNET_OFFSET = 0.103515625;
+  public static final double ENCODER_MAGNET_OFFSET = 0.095458984375;
   public static final SensorDirectionValue ENCODER_DIRCTION_VALUE =
-      SensorDirectionValue.Clockwise_Positive;
+      SensorDirectionValue.CounterClockwise_Positive;
 
   public static final double INERTIA_KGMETERSSQURD = 0.2809;
   public static final double ARM_LENGTH = 0.3048;

@@ -94,6 +94,9 @@ public class OI {
     return auxController.getLeftY();
   }
 
+  public static Trigger wristTestButton = auxController.a();
+  public static Trigger intakeTestButton = auxController.b();
+
   /** Enable pathfinding */
   public static Trigger enablePathfindingButton = driverController.back();
 

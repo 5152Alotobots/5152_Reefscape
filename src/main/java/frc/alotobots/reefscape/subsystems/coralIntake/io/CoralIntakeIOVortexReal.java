@@ -13,6 +13,8 @@
 package frc.alotobots.reefscape.subsystems.coralIntake.io;
 
 import static edu.wpi.first.units.Units.*;
+import static frc.alotobots.Constants.CanId.INTAKE_CANRANGE_ID;
+import static frc.alotobots.Constants.CanId.INTAKE_MOTOR_CAN_ID;
 
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
@@ -24,11 +26,12 @@ import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkFlexConfig;
+import org.littletonrobotics.junction.Logger;
 
 public class CoralIntakeIOVortexReal implements CoralIntakeIO {
 
-  private final SparkFlex intakeMotor = new SparkFlex(0, MotorType.kBrushless);
-  private final CANrange intakeSensor = new CANrange(0);
+  private final SparkFlex intakeMotor = new SparkFlex(INTAKE_MOTOR_CAN_ID, MotorType.kBrushless);
+  private final CANrange intakeSensor = new CANrange(INTAKE_CANRANGE_ID);
 
   private final StatusSignal<Boolean> intakeOccupied = intakeSensor.getIsDetected();
 
@@ -46,43 +49,43 @@ public class CoralIntakeIOVortexReal implements CoralIntakeIO {
     // intakePID.setD(0.0);
     // intakePID.setFF(0.0);  //  Important:  You *must* tune this if using velocity control.
     // intakePID.setOutputRange(-1.0, 1.0); //  Good practice to limit output.
-    intakeMotor.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+    intakeMotor.configure(
+        config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
 
-     BaseStatusSignal.setUpdateFrequencyForAll(
-        50.0,
-        intakeOccupied);
+    BaseStatusSignal.setUpdateFrequencyForAll(50.0, intakeOccupied);
     ParentDevice.optimizeBusUtilizationForAll(intakeSensor);
   }
 
   @Override
   public void updateInputs(CoralIntakeIOInputs inputs) {
-      BaseStatusSignal.refreshAll(intakeOccupied);
-
-      inputs.intakeOccupied = intakeOccupied.getValue();
-      inputs.velocity = RevolutionsPerSecond.of((intakeMotor.getEncoder().getVelocity()) / 60);
-      inputs.motorAppliedVolts = Volts.of(intakeMotor.getAppliedOutput() * intakeMotor.getBusVoltage());
-      inputs.motorCurrentAmps = Amps.of(intakeMotor.getOutputCurrent());
+    BaseStatusSignal.refreshAll(intakeOccupied);
+    Logger.recordOutput("Temp/Occ", intakeOccupied.getValue());
+    inputs.intakeOccupied = intakeOccupied.getValue();
+    inputs.velocity = RevolutionsPerSecond.of((intakeMotor.getEncoder().getVelocity()) / 60);
+    inputs.motorAppliedVolts =
+        Volts.of(intakeMotor.getAppliedOutput() * intakeMotor.getBusVoltage());
+    inputs.motorCurrentAmps = Amps.of(intakeMotor.getOutputCurrent());
   }
 
   @Override
   public void setIntakeOpenLoop(double percent) {
-      intakeMotor.set(percent);
+    intakeMotor.set(percent);
   }
 
-  @Override 
+  @Override
   public boolean getIntakeOccupied() {
     return intakeOccupied.getValue();
   }
 
   // @Override
   // public void setIntakeVelocity(double velocityRPM) {
-       //Use the velocity
+  // Use the velocity
   //     intakePID.setReference(velocityRPM, ControlType.kVelocity, 0, 0, ArbFFUnits.kVoltage); //
   // kVelocity, PID Slot, Arb Feedforward, Arb FF Units
   // }
 
   @Override
   public void stop() {
-      intakeMotor.set(0.0);
+    intakeMotor.set(0.0);
   }
 }

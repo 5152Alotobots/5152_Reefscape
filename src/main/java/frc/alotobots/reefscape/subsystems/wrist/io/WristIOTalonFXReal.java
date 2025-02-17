@@ -14,6 +14,7 @@ package frc.alotobots.reefscape.subsystems.wrist.io;
 
 import static frc.alotobots.Constants.CanId.WRIST_ENCODER_CAN_ID;
 import static frc.alotobots.Constants.CanId.WRIST_MOTOR_CAN_ID;
+import static frc.alotobots.reefscape.subsystems.wrist.constants.WristIOTalonFXConstants.ENCODER_DIRCTION_VALUE;
 import static frc.alotobots.reefscape.subsystems.wrist.constants.WristIOTalonFXConstants.ENCODER_MAGNET_OFFSET;
 import static frc.alotobots.reefscape.subsystems.wrist.constants.WristIOTalonFXConstants.MOTOR_INVERT;
 import static frc.alotobots.reefscape.subsystems.wrist.constants.WristIOTalonFXConstants.ROTOR_TO_SENSOR_RATIO;
@@ -24,15 +25,18 @@ import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.PositionTorqueCurrentFOC;
+import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.ParentDevice;
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.ctre.phoenix6.signals.SensorDirectionValue;
+import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Voltage;
+import frc.alotobots.reefscape.subsystems.wrist.constants.WristIOTalonFXConstants.PositionPIDConstants;
 
 public class WristIOTalonFXReal implements WristIO {
 
@@ -42,6 +46,7 @@ public class WristIOTalonFXReal implements WristIO {
 
   // Control Modes
   private final PositionTorqueCurrentFOC positionTorqueCurrentFOC = new PositionTorqueCurrentFOC(0);
+  private final PositionVoltage positionVoltage = new PositionVoltage(0);
 
   // Status Signals
   StatusSignal<Integer> currentPidSlot;
@@ -67,13 +72,19 @@ public class WristIOTalonFXReal implements WristIO {
     var wristMotorConfig = new TalonFXConfiguration();
 
     wristMotorConfig.MotorOutput.Inverted = MOTOR_INVERT;
+    wristMotorConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
     wristMotorConfig.Feedback.FeedbackRemoteSensorID = WRIST_ENCODER_CAN_ID;
     wristMotorConfig.Feedback.RotorToSensorRatio = ROTOR_TO_SENSOR_RATIO;
+    wristMotorConfig.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.RemoteCANcoder;
+
+    wristMotorConfig.Slot0.kP = PositionPIDConstants.KP;
+    wristMotorConfig.Slot0.kI = PositionPIDConstants.KI;
+    wristMotorConfig.Slot0.kD = PositionPIDConstants.KD;
 
     var wristEncoderConfig = new CANcoderConfiguration();
 
     wristEncoderConfig.MagnetSensor.MagnetOffset = ENCODER_MAGNET_OFFSET;
-    wristEncoderConfig.MagnetSensor.SensorDirection = SensorDirectionValue.Clockwise_Positive;
+    wristEncoderConfig.MagnetSensor.SensorDirection = ENCODER_DIRCTION_VALUE;
 
     // Apply config wrist
     tryUntilOk(5, () -> wristMotor.getConfigurator().apply(wristMotorConfig, 0.25));
@@ -137,7 +148,7 @@ public class WristIOTalonFXReal implements WristIO {
 
   @Override
   public void setWristPosition(Angle rotation, int pidSlot) {
-    wristMotor.setControl(positionTorqueCurrentFOC.withPosition(rotation).withSlot(pidSlot));
+    wristMotor.setControl(positionVoltage.withPosition(rotation).withSlot(pidSlot));
   }
 
   @Override
