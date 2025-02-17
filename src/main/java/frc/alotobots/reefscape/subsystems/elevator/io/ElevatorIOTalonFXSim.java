@@ -88,7 +88,10 @@ public class ElevatorIOTalonFXSim implements ElevatorIO {
     currentPidSlot = pidSlot;
     // Simulate position control with basic P controller
     double error = position.in(Meters) - elevatorSim.getPositionMeters();
-    double kP = (pidSlot == 0) ? ElevatorTalonFXSimConstants.CoralPIDConstants.KP : ElevatorTalonFXSimConstants.AlgaePIDConstants.KP;
+    double kP =
+        (pidSlot == 0)
+            ? ElevatorTalonFXSimConstants.CoralPIDConstants.KP
+            : ElevatorTalonFXSimConstants.AlgaePIDConstants.KP;
     appliedVolts = error * kP;
     appliedVolts = Math.min(12.0, Math.max(-12.0, appliedVolts));
     elevatorSim.setInputVoltage(appliedVolts);

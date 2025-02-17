@@ -1,15 +1,15 @@
 /*
- * ALOTOBOTS - FRC Team 5152
- * https://github.com/5152Alotobots
- * Copyright (C) 2025 ALOTOBOTS
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * Source code must be publicly available on GitHub or an alternative web accessible site
- */
+* ALOTOBOTS - FRC Team 5152
+  https://github.com/5152Alotobots
+* Copyright (C) 2025 ALOTOBOTS
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* Source code must be publicly available on GitHub or an alternative web accessible site
+*/
 package frc.alotobots.reefscape.subsystems.elevator.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -17,9 +17,9 @@ import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 import java.util.function.DoubleSupplier;
 
 /**
- * Default command for manual control of the elevator using percent output.
- * This command is typically used as the default command for the elevator subsystem,
- * allowing direct operator control through a joystick or other input device.
+ * Default command for manual control of the elevator using percent output. This command is
+ * typically used as the default command for the elevator subsystem, allowing direct operator
+ * control through a joystick or other input device.
  */
 public class DefaultElevatorOpenLoop extends Command {
   /** The elevator subsystem being controlled. */
@@ -41,15 +41,13 @@ public class DefaultElevatorOpenLoop extends Command {
   }
 
   /**
-   * Called when the command is initially scheduled.
-   * No initialization is required for this command.
+   * Called when the command is initially scheduled. No initialization is required for this command.
    */
   @Override
   public void initialize() {}
 
   /**
-   * Executes the manual control loop.
-   * Called every scheduler run while the command is scheduled.
+   * Executes the manual control loop. Called every scheduler run while the command is scheduled.
    */
   @Override
   public void execute() {
@@ -57,8 +55,8 @@ public class DefaultElevatorOpenLoop extends Command {
   }
 
   /**
-   * Called when the command ends or is interrupted.
-   * Stops the elevator to prevent uncontrolled motion.
+   * Called when the command ends or is interrupted. Stops the elevator to prevent uncontrolled
+   * motion.
    *
    * @param interrupted true if the command was interrupted, false if it completed normally
    */
@@ -68,8 +66,8 @@ public class DefaultElevatorOpenLoop extends Command {
   }
 
   /**
-   * Determines if the command has finished.
-   * This command runs until interrupted, so it never finishes on its own.
+   * Determines if the command has finished. This command runs until interrupted, so it never
+   * finishes on its own.
    *
    * @return false as this command runs continuously
    */

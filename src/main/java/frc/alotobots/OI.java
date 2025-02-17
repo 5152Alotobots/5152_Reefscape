@@ -83,43 +83,7 @@ public class OI {
     return driverController.getRightTriggerAxis();
   }
 
-  /** Enable pathfinding */
-  public static Trigger enablePathfindingButton = driverController.back();
-
-  /** Enable auto pathfinding */
-  public static Trigger enableFullAutoPathfindingButton = driverController.start();
-
-  /** Pathfind to the selected branch */
-  public static Trigger pathfindToSelectedReefBranchButton = driverController.y();
-
-  /** Pathfind to the selected coral station */
-  public static Trigger pathfindToSelectedCoralStationButton = driverController.a();
-
-  /** Cycles the selected pickup position one to the left */
-  public static Trigger cycleCoralStationPickupPositionLeftButton = driverController.x();
-
-  /** Cycles the selected pickup position one to the right */
-  public static Trigger cycleCoralStationPickupPositionRightButton = driverController.b();
-
-  /** Cycles the selected coral station one to the left */
-  public static Trigger cycleCoralStationSideLeftButton = driverController.leftBumper();
-
-  /** Cycles the selected coral station one to the right */
-  public static Trigger cycleCoralStationSideRightButton = driverController.rightBumper();
-
-  /** Cycles the selected branch one to the left */
-  public static Trigger cycleSelectedBranchLeftButton = driverController.povLeft();
-
-  /** Cycles the selected branch one to the right */
-  public static Trigger cycleSelectedBranchRightButton = driverController.povRight();
-
-  /** Cycles the branch level up once */
-  public static Trigger cycleLevelUpButton = driverController.povUp();
-
-  /** Cycles the branch level down once */
-  public static Trigger cycleLevelDownButton = driverController.povDown();
-
-  /** The primary driver's controller. Used for main robot control functions. */
+  /** The co-driver driver's controller. Used for secondary robot control functions. */
   private static final CommandXboxController codriverController = new CommandXboxController(1);
 
   /** Sets the elevator to stow position */

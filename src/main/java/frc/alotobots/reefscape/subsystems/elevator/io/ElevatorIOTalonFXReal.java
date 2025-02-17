@@ -219,7 +219,7 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
         topSoftLimit,
         bottomSoftLimit,
         currentPidSlot,
-            closedLoopError);
+        closedLoopError);
     ParentDevice.optimizeBusUtilizationForAll(leftTalon, rightTalon, canRange);
   }
 
@@ -239,7 +239,7 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
             leftAppliedCurrent,
             topSoftLimit,
             bottomSoftLimit,
-                closedLoopError);
+            closedLoopError);
     var rightSignals =
         BaseStatusSignal.refreshAll(
             rightPosition, rightVelocity, rightAppliedVoltage, rightAppliedCurrent);

@@ -12,121 +12,110 @@
 */
 package frc.alotobots.reefscape.subsystems.elevator.constants;
 
-import com.ctre.phoenix.motorcontrol.NeutralMode;
+import static edu.wpi.first.units.Units.Amps;
+
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.units.measure.Current;
 import lombok.experimental.UtilityClass;
 
-import static edu.wpi.first.units.Units.Amps;
-
 /**
- * Constants for the physical elevator subsystem using TalonFX motors.
- * Contains PID constants for different game piece modes and motor safety limits.
+ * Constants for the physical elevator subsystem using TalonFX motors. Contains PID constants for
+ * different game piece modes and motor safety limits.
  */
 @UtilityClass
 public final class ElevatorTalonFXRealConstants {
 
-    /**
-     * Contains PID and motion control constants for different game piece modes.
-     */
-    public static final class PIDConstants {
-        /**
-         * TalonFX-specific PID and motion control constants for no game piece (Empty mode).
-         */
-        public static final class EmptyPIDConstants {
-            /** Position control proportional gain */
-            public static final double KP = 3.3;
+  /** Contains PID and motion control constants for different game piece modes. */
+  public static final class PIDConstants {
+    /** TalonFX-specific PID and motion control constants for no game piece (Empty mode). */
+    public static final class EmptyPIDConstants {
+      /** Position control proportional gain */
+      public static final double KP = 3.3;
 
-            /** Position control integral gain */
-            public static final double KI = 0.0;
+      /** Position control integral gain */
+      public static final double KI = 0.0;
 
-            /** Position control derivative gain */
-            public static final double KD = 0.0;
+      /** Position control derivative gain */
+      public static final double KD = 0.0;
 
-            /** Acceleration feedforward gain */
-            public static final double KA = 0.0;
+      /** Acceleration feedforward gain */
+      public static final double KA = 0.0;
 
-            /** Gravity compensation gain */
-            public static final double KG = 0.13;
+      /** Gravity compensation gain */
+      public static final double KG = 0.13;
 
-            /** Static friction compensation */
-            public static final double KS = 0.19;
+      /** Static friction compensation */
+      public static final double KS = 0.19;
 
-            /** Velocity feedforward gain */
-            public static final double KV = 0.0;
-        }
-
-        /**
-         * TalonFX-specific PID and motion control constants for coral game piece (Coral mode).
-         */
-        public static final class CoralPIDConstants {
-            /** Position control proportional gain */
-            public static final double KP = 0.1;
-
-            /** Position control integral gain */
-            public static final double KI = 0.0;
-
-            /** Position control derivative gain */
-            public static final double KD = 0.0;
-
-            /** Acceleration feedforward gain */
-            public static final double KA = 0.0;
-
-            /** Gravity compensation gain */
-            public static final double KG = 0.0;
-
-            /** Static friction compensation */
-            public static final double KS = 0.0;
-
-            /** Velocity feedforward gain */
-            public static final double KV = 0.0;
-        }
-
-        /**
-         * TalonFX-specific PID and motion control constants for algae game piece (Algae mode).
-         */
-        public static final class AlgaePIDConstants {
-            /** Position control proportional gain */
-            public static final double KP = 0.1;
-
-            /** Position control integral gain */
-            public static final double KI = 0.0;
-
-            /** Position control derivative gain */
-            public static final double KD = 0.0;
-
-            /** Acceleration feedforward gain */
-            public static final double KA = 0.0;
-
-            /** Gravity compensation gain */
-            public static final double KG = 0.0;
-
-            /** Static friction compensation */
-            public static final double KS = 0.0;
-
-            /** Velocity feedforward gain */
-            public static final double KV = 0.0;
-        }
+      /** Velocity feedforward gain */
+      public static final double KV = 0.0;
     }
 
-    /**
-     * Contains safety limit constants for the elevator motors.
-     */
-    public static final class MotorSafetyLimits {
-        /** Maximum forward torque current limit in amperes */
-        public static final Current TORQUE_FORWARD_AMP_LIMIT = Amps.of(100);
+    /** TalonFX-specific PID and motion control constants for coral game piece (Coral mode). */
+    public static final class CoralPIDConstants {
+      /** Position control proportional gain */
+      public static final double KP = 0.1;
 
-        /** Maximum reverse torque current limit in amperes */
-        public static final Current TORQUE_REVERSE_AMP_LIMIT = Amps.of(-100);
+      /** Position control integral gain */
+      public static final double KI = 0.0;
 
-        /** Maximum stator current limit in amperes */
-        public static final Current STATOR_AMP_LIMIT = Amps.of(120);
+      /** Position control derivative gain */
+      public static final double KD = 0.0;
+
+      /** Acceleration feedforward gain */
+      public static final double KA = 0.0;
+
+      /** Gravity compensation gain */
+      public static final double KG = 0.0;
+
+      /** Static friction compensation */
+      public static final double KS = 0.0;
+
+      /** Velocity feedforward gain */
+      public static final double KV = 0.0;
     }
 
-    /** Direction of the left motor rotation */
-    public static final InvertedValue LEFT_MOTOR_DIRECTION = InvertedValue.Clockwise_Positive;
+    /** TalonFX-specific PID and motion control constants for algae game piece (Algae mode). */
+    public static final class AlgaePIDConstants {
+      /** Position control proportional gain */
+      public static final double KP = 0.1;
 
-    /** Neutral mode (brake/coast) setting for the mechanism */
-    public static final NeutralModeValue MECHANISM_NEUTRAL_MODE = NeutralModeValue.Brake;
+      /** Position control integral gain */
+      public static final double KI = 0.0;
+
+      /** Position control derivative gain */
+      public static final double KD = 0.0;
+
+      /** Acceleration feedforward gain */
+      public static final double KA = 0.0;
+
+      /** Gravity compensation gain */
+      public static final double KG = 0.0;
+
+      /** Static friction compensation */
+      public static final double KS = 0.0;
+
+      /** Velocity feedforward gain */
+      public static final double KV = 0.0;
+    }
+  }
+
+  /** Contains safety limit constants for the elevator motors. */
+  public static final class MotorSafetyLimits {
+    /** Maximum forward torque current limit in amperes */
+    public static final Current TORQUE_FORWARD_AMP_LIMIT = Amps.of(100);
+
+    /** Maximum reverse torque current limit in amperes */
+    public static final Current TORQUE_REVERSE_AMP_LIMIT = Amps.of(-100);
+
+    /** Maximum stator current limit in amperes */
+    public static final Current STATOR_AMP_LIMIT = Amps.of(120);
+  }
+
+  /** Direction of the left motor rotation */
+  public static final InvertedValue LEFT_MOTOR_DIRECTION = InvertedValue.Clockwise_Positive;
+
+  /** Neutral mode (brake/coast) setting for the mechanism */
+  public static final NeutralModeValue MECHANISM_NEUTRAL_MODE = NeutralModeValue.Brake;
 }

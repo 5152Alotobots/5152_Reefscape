@@ -34,11 +34,6 @@ import frc.alotobots.library.subsystems.vision.photonvision.apriltag.util.AprilT
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.ObjectDetectionSubsystem;
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.constants.ObjectDetectionConstants;
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.io.*;
-import frc.alotobots.reefscape.commands.FullAutoCycle;
-import frc.alotobots.reefscape.subsystems.autocycle.AutoCycleSubsystem;
-import frc.alotobots.reefscape.subsystems.autocycle.commands.DriverInterruptCommand;
-import frc.alotobots.reefscape.subsystems.autocycle.commands.PathfindToCoralStation;
-import frc.alotobots.reefscape.subsystems.autocycle.commands.PathfindToReef;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.commands.DefaultElevatorOpenLoop;
 import frc.alotobots.reefscape.subsystems.elevator.commands.ElevatorRunToHeightAndHold;
@@ -63,7 +58,6 @@ public class RobotContainer {
   private final ObjectDetectionSubsystem objectDetectionSubsystem;
   // private final BlingSubsystem blingSubsystem;
   private final PathPlannerManager pathPlannerManager;
-  private final AutoCycleSubsystem autoCycleSubsystem;
   private LoggedDashboardChooser<Command> autoChooser;
   private SwerveDriveSimulation driveSimulation;
 
@@ -83,7 +77,6 @@ public class RobotContainer {
             new ElevatorSubsystem(new ElevatorIOTalonFXReal(), () -> GameElement.NONE);
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         configureAutoChooser();
-        autoCycleSubsystem = new AutoCycleSubsystem(pathPlannerManager, swerveDriveSubsystem);
 
         oculusSubsystem = new OculusSubsystem(new OculusIOReal());
         aprilTagSubsystem =
@@ -138,8 +131,6 @@ public class RobotContainer {
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         configureAutoChooser();
 
-        autoCycleSubsystem = new AutoCycleSubsystem(pathPlannerManager, swerveDriveSubsystem);
-
         oculusSubsystem = new OculusSubsystem(new OculusIOSim(driveSimulation));
         aprilTagSubsystem =
             new AprilTagSubsystem(
@@ -176,8 +167,6 @@ public class RobotContainer {
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         configureAutoChooser();
 
-        autoCycleSubsystem = new AutoCycleSubsystem(pathPlannerManager, swerveDriveSubsystem);
-
         oculusSubsystem = new OculusSubsystem(new OculusIO() {});
         aprilTagSubsystem = new AprilTagSubsystem(new AprilTagIO() {}, new AprilTagIO() {});
 
@@ -209,29 +198,6 @@ public class RobotContainer {
   }
 
   private void configureLogicCommands() {
-    // Enabled state
-    enablePathfindingButton.onChange(autoCycleSubsystem.togglePathfinding());
-    enableFullAutoPathfindingButton.onTrue(new FullAutoCycle(autoCycleSubsystem).repeatedly());
-
-    // Auto Cycle Reef Branch Controls
-    cycleSelectedBranchRightButton.onTrue(autoCycleSubsystem.cycleReefBranchRight());
-    cycleSelectedBranchLeftButton.onTrue(autoCycleSubsystem.cycleReefBranchLeft());
-    cycleLevelUpButton.onTrue(autoCycleSubsystem.cycleReefLevelUp());
-    cycleLevelDownButton.onTrue(autoCycleSubsystem.cycleReefLevelDown());
-    pathfindToSelectedReefBranchButton.toggleOnTrue(new PathfindToReef(autoCycleSubsystem));
-
-    // Auto Cycle Coral Station Controls
-    cycleCoralStationSideLeftButton.onTrue(autoCycleSubsystem.cycleCoralStationSideLeft());
-    cycleCoralStationSideRightButton.onTrue(autoCycleSubsystem.cycleCoralStationSideRight());
-    cycleCoralStationPickupPositionLeftButton.onTrue(
-        autoCycleSubsystem.cycleCoralStationPositionLeft());
-    cycleCoralStationPickupPositionRightButton.onTrue(
-        autoCycleSubsystem.cycleCoralStationPositionRight());
-    pathfindToSelectedCoralStationButton.toggleOnTrue(
-        new PathfindToCoralStation(autoCycleSubsystem));
-
-    hasDriverInput.whileTrue(new DriverInterruptCommand(autoCycleSubsystem));
-
     // Elevator
     elevatorStowButton.toggleOnTrue(
         new ElevatorRunToHeightAndHold(elevatorSubsystem, ElevatorConstants.Setpoints.STOWED));
