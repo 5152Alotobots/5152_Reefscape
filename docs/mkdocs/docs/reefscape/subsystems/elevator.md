@@ -1,16 +1,14 @@
 # Elevator Subsystem
 
-The Elevator subsystem is responsible for controlling the vertical movement of the robot's elevator mechanism. It provides both closed-loop position control and open-loop manual control capabilities, with different PID configurations based on the game element being handled.
+The Elevator subsystem is responsible for controlling the vertical movement of the robot's elevator mechanism. It provides both closed-loop velocity/position control and open-loop manual control capabilities.
 
 ## Constructor and Parameters
 
 ```java
-public ElevatorSubsystem(ElevatorIO io, Supplier<GameElement> elementInIntake)
+public ElevatorSubsystem(ElevatorIO io)
 ```
 
 - `io`: Hardware interface for controlling the elevator mechanism
-- `elementInIntake`: Supplier that provides information about the current game element in the intake
-
 ## Commands
 
 The Elevator subsystem is used by the following commands:
@@ -22,7 +20,7 @@ The Elevator subsystem is used by the following commands:
 ## Configuration Requirements
 
 1. PID Configuration:
-    - Separate PID slots must be configured for each game element type (NONE, CORAL_ALGAE, CAGE)
+    - Separate PID slots must be configured for each control type (VELOCITY, POSITION)
     - AT_SET_POINT_THRESHOLD must be set in ElevatorConstants
 
 2. Hardware Limits:

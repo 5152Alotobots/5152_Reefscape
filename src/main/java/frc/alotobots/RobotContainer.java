@@ -41,7 +41,6 @@ import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIO;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIOTalonFXReal;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIOTalonFXSim;
-import frc.alotobots.reefscape.util.GameElement;
 import org.ironmaple.simulation.SimulatedArena;
 import org.ironmaple.simulation.drivesims.SwerveDriveSimulation;
 import org.littletonrobotics.junction.Logger;
@@ -73,8 +72,7 @@ public class RobotContainer {
                 new ModuleIOTalonFXReal(ModulePosition.FRONT_RIGHT.index),
                 new ModuleIOTalonFXReal(ModulePosition.BACK_LEFT.index),
                 new ModuleIOTalonFXReal(ModulePosition.BACK_RIGHT.index));
-        elevatorSubsystem =
-            new ElevatorSubsystem(new ElevatorIOTalonFXReal(), () -> GameElement.EMPTY);
+        elevatorSubsystem = new ElevatorSubsystem(new ElevatorIOTalonFXReal());
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         configureAutoChooser();
 
@@ -126,8 +124,7 @@ public class RobotContainer {
                     ModulePosition.BACK_RIGHT.index,
                     driveSimulation.getModules()[ModulePosition.BACK_RIGHT.index]));
         swerveDriveSubsystem.setPose(simStartPose);
-        elevatorSubsystem =
-            new ElevatorSubsystem(new ElevatorIOTalonFXSim(), () -> GameElement.EMPTY);
+        elevatorSubsystem = new ElevatorSubsystem(new ElevatorIOTalonFXSim());
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         configureAutoChooser();
 
@@ -163,7 +160,7 @@ public class RobotContainer {
                 new ModuleIO() {},
                 new ModuleIO() {},
                 new ModuleIO() {});
-        elevatorSubsystem = new ElevatorSubsystem(new ElevatorIO() {}, () -> GameElement.EMPTY);
+        elevatorSubsystem = new ElevatorSubsystem(new ElevatorIO() {});
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         configureAutoChooser();
 

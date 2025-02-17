@@ -13,7 +13,7 @@ public ElevatorRunToHeight(ElevatorSubsystem elevatorSubsystem, Distance targetH
 - `targetHeight`: The desired height for the elevator to reach and maintain (automatically clamped between MIN_HEIGHT and MAX_HEIGHT)
 
 ## Configuration
-- Ensure PID constants are properly tuned for each game element type
+- Ensure PID constants are properly tuned
 - Configure MAX_HEIGHT and MIN_HEIGHT in ElevatorConstants
 - AT_SET_POINT_THRESHOLD must be set appropriately for position tolerance
 - Soft limits should be enabled to prevent mechanical damage

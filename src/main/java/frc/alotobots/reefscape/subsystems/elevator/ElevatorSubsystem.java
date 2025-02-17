@@ -22,16 +22,15 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.LinearVelocity;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.alotobots.reefscape.subsystems.elevator.constants.ControlType;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIO;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIOInputsAutoLogged;
-import frc.alotobots.reefscape.util.GameElement;
-import java.util.function.Supplier;
 import org.littletonrobotics.junction.Logger;
 
 /**
  * The Elevator subsystem controls the vertical movement of the robot's elevator mechanism. This
- * subsystem manages both closed-loop position control and open-loop manual control of the elevator,
- * with different PID configurations based on the game element being handled.
+ * subsystem manages closed-loop position control, closed-loop velocity control, and open loop
+ * control
  */
 public class ElevatorSubsystem extends SubsystemBase {
   /** The hardware interface for controlling and monitoring the elevator mechanism. */
@@ -40,19 +39,13 @@ public class ElevatorSubsystem extends SubsystemBase {
   /** Auto-logged inputs from elevator sensors and motor controllers. */
   private final ElevatorIOInputsAutoLogged inputs = new ElevatorIOInputsAutoLogged();
 
-  /** Provides real-time information about the current game element in the intake. */
-  private final Supplier<GameElement> elementInIntake;
-
   /**
-   * Constructs a new ElevatorSubsystem with the specified hardware interface and game element
-   * supplier.
+   * Constructs a new ElevatorSubsystem with the specified hardware interface.
    *
    * @param io The hardware interface for controlling the elevator mechanism
-   * @param elementInIntake Supplier that provides information about the current game element
    */
-  public ElevatorSubsystem(ElevatorIO io, Supplier<GameElement> elementInIntake) {
+  public ElevatorSubsystem(ElevatorIO io) {
     this.io = io;
-    this.elementInIntake = elementInIntake;
   }
 
   /**
@@ -66,8 +59,7 @@ public class ElevatorSubsystem extends SubsystemBase {
   }
 
   /**
-   * Controls the elevator to move to a specified height using closed-loop position control. The PID
-   * configuration is automatically selected based on the current game element.
+   * Controls the elevator to move to a specified height using closed-loop position control.
    *
    * @param height Target height in meters, automatically constrained between MIN_HEIGHT and
    *     MAX_HEIGHT
@@ -75,22 +67,11 @@ public class ElevatorSubsystem extends SubsystemBase {
   public void runToTargetPosition(Distance height) {
     Distance adjustedHeight =
         Meters.of(MathUtil.clamp(height.in(Meters), MIN_HEIGHT.in(Meters), MAX_HEIGHT.in(Meters)));
-    switch (elementInIntake.get()) {
-      case EMPTY:
-        io.setElevatorPosition(adjustedHeight, GameElement.EMPTY.ordinal());
-        break;
-      case CORAL_ALGAE:
-        io.setElevatorPosition(adjustedHeight, GameElement.CORAL_ALGAE.ordinal());
-        break;
-      case CAGE:
-        io.setElevatorPosition(adjustedHeight, GameElement.CAGE.ordinal());
-        break;
-    }
+    io.setElevatorPosition(adjustedHeight, ControlType.POSITION.ordinal());
   }
 
   /**
-   * Controls the elevator to move to a specified velocity using closed-loop velocity control. The
-   * PID configuration is automatically selected based on the current game element.
+   * Controls the elevator to move to a specified velocity using closed-loop velocity control.
    *
    * @param velocity Target velocity in meters per second, automatically constrained between
    *     -MAX_SPEED and MAX_SPEED
@@ -102,17 +83,7 @@ public class ElevatorSubsystem extends SubsystemBase {
                 velocity.in(MetersPerSecond),
                 -MAX_SPEED.in(MetersPerSecond),
                 MAX_SPEED.in(MetersPerSecond)));
-    switch (elementInIntake.get()) {
-      case EMPTY:
-        io.setElevatorVelocity(adjustedVelocity, GameElement.EMPTY.ordinal());
-        break;
-      case CORAL_ALGAE:
-        io.setElevatorVelocity(adjustedVelocity, GameElement.CORAL_ALGAE.ordinal());
-        break;
-      case CAGE:
-        io.setElevatorVelocity(adjustedVelocity, GameElement.CAGE.ordinal());
-        break;
-    }
+    io.setElevatorVelocity(adjustedVelocity, ControlType.VELOCITY.ordinal());
   }
 
   /**

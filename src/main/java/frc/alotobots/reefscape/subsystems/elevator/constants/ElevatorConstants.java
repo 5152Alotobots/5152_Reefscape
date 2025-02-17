@@ -40,7 +40,7 @@ public final class ElevatorConstants {
     public static final Distance MIN_HEIGHT = Meters.of(0.253311);
 
     /** Max speed (magnitude) */
-    public static final LinearVelocity MAX_SPEED = MetersPerSecond.of(2.0);
+    public static final LinearVelocity MAX_SPEED = MetersPerSecond.of(0.5);
 
     /** Enable Limits */
     public static final boolean LIMITS_ENABLED = true;

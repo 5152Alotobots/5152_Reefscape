@@ -21,15 +21,39 @@ import lombok.experimental.UtilityClass;
 
 /**
  * Constants for the physical elevator subsystem using TalonFX motors. Contains PID constants for
- * different game piece modes and motor safety limits.
+ * different control modes and motor safety limits.
  */
 @UtilityClass
 public final class ElevatorTalonFXRealConstants {
 
-  /** Contains PID and motion control constants for different game piece modes. */
+  /** Contains PID and motion control constants for different control modes. */
   public static final class PIDConstants {
-    /** TalonFX-specific PID and motion control constants for no game piece (Empty mode). */
-    public static final class EmptyPIDConstants {
+    /** TalonFX-specific PID and motion control constants for velocity (Velocity mode). */
+    public static final class VelocityPIDConstants {
+      /** Position control proportional gain */
+      public static final double KP = 0.1;
+
+      /** Position control integral gain */
+      public static final double KI = 0.0;
+
+      /** Position control derivative gain */
+      public static final double KD = 0.0;
+
+      /** Acceleration feedforward gain */
+      public static final double KA = 0.0;
+
+      /** Gravity compensation gain */
+      public static final double KG = 0.14;
+
+      /** Static friction compensation */
+      public static final double KS = 0.0;
+
+      /** Velocity feedforward gain */
+      public static final double KV = 0.11;
+    }
+
+    /** TalonFX-specific PID and motion control constants for Position mode (Position mode). */
+    public static final class PositionPIDConstants {
       /** Position control proportional gain */
       public static final double KP = 3.3;
 
@@ -43,61 +67,10 @@ public final class ElevatorTalonFXRealConstants {
       public static final double KA = 0.0;
 
       /** Gravity compensation gain */
-      public static final double KG = 0.13;
+      public static final double KG = 0.14;
 
       /** Static friction compensation */
       public static final double KS = 0.19;
-
-      /** Velocity feedforward gain */
-      public static final double KV = 0.0;
-    }
-
-    /**
-     * TalonFX-specific PID and motion control constants for coral/algae game pieces (Coral/Algae
-     * mode).
-     */
-    public static final class CoralAlgaePIDConstants {
-      /** Position control proportional gain */
-      public static final double KP = 0.1;
-
-      /** Position control integral gain */
-      public static final double KI = 0.0;
-
-      /** Position control derivative gain */
-      public static final double KD = 0.0;
-
-      /** Acceleration feedforward gain */
-      public static final double KA = 0.0;
-
-      /** Gravity compensation gain */
-      public static final double KG = 0.0;
-
-      /** Static friction compensation */
-      public static final double KS = 0.0;
-
-      /** Velocity feedforward gain */
-      public static final double KV = 0.0;
-    }
-
-    /** TalonFX-specific PID and motion control constants for cage game piece (Cage mode). */
-    public static final class CagePIDConstants {
-      /** Position control proportional gain */
-      public static final double KP = 0.1;
-
-      /** Position control integral gain */
-      public static final double KI = 0.0;
-
-      /** Position control derivative gain */
-      public static final double KD = 0.0;
-
-      /** Acceleration feedforward gain */
-      public static final double KA = 0.0;
-
-      /** Gravity compensation gain */
-      public static final double KG = 0.0;
-
-      /** Static friction compensation */
-      public static final double KS = 0.0;
 
       /** Velocity feedforward gain */
       public static final double KV = 0.0;
