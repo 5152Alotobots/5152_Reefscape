@@ -94,9 +94,16 @@ public interface ElevatorIO {
   /**
    * Sets the target position for the elevator using closed-loop control.
    *
-   * @param position The desired position for the elevator in meters
+   * @param position The desired position for the elevator
    */
   public default void setElevatorPosition(Distance position, int pidSlot) {}
+
+  /**
+   * Sets the target velocity for the elevator using closed-loop control.
+   *
+   * @param velocity The desired velocity for the elevator
+   */
+  public default void setElevatorVelocity(LinearVelocity velocity, int pidSlot) {}
 
   /**
    * Sets the elevator motors to run in open-loop control mode.

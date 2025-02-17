@@ -17,11 +17,10 @@ import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 import java.util.function.DoubleSupplier;
 
 /**
- * Default command for manual control of the elevator using percent output. This command is
- * typically used as the default command for the elevator subsystem, allowing direct operator
+ * Default command for manual control of the elevator using percent output. Allows direct operator
  * control through a joystick or other input device.
  */
-public class DefaultElevatorOpenLoop extends Command {
+public class ElevatorOpenLoop extends Command {
   /** The elevator subsystem being controlled. */
   private final ElevatorSubsystem elevatorSubsystem;
 
@@ -29,12 +28,12 @@ public class DefaultElevatorOpenLoop extends Command {
   private final DoubleSupplier percent;
 
   /**
-   * Creates a new DefaultElevatorOpenLoop command for manual elevator control.
+   * Creates a new ElevatorOpenLoop command for manual elevator control.
    *
    * @param elevatorSubsystem The elevator subsystem to control
    * @param percent Supplier for the control input (-1.0 to 1.0), typically from a joystick
    */
-  public DefaultElevatorOpenLoop(ElevatorSubsystem elevatorSubsystem, DoubleSupplier percent) {
+  public ElevatorOpenLoop(ElevatorSubsystem elevatorSubsystem, DoubleSupplier percent) {
     this.elevatorSubsystem = elevatorSubsystem;
     this.percent = percent;
     addRequirements(elevatorSubsystem);

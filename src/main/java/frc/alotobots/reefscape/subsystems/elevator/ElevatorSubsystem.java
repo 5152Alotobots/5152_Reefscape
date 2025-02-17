@@ -13,13 +13,14 @@
 package frc.alotobots.reefscape.subsystems.elevator;
 
 import static edu.wpi.first.units.Units.Meters;
+import static edu.wpi.first.units.Units.MetersPerSecond;
 import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.AT_SET_POINT_THRESHOLD;
-import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.Limits.MAX_HEIGHT;
-import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.Limits.MIN_HEIGHT;
+import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.Limits.*;
 import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.MAX_OPEN_LOOP_PERCENTAGE;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.units.measure.Distance;
+import edu.wpi.first.units.measure.LinearVelocity;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIO;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIOInputsAutoLogged;
@@ -83,6 +84,33 @@ public class ElevatorSubsystem extends SubsystemBase {
         break;
       case CAGE:
         io.setElevatorPosition(adjustedHeight, GameElement.CAGE.ordinal());
+        break;
+    }
+  }
+
+  /**
+   * Controls the elevator to move to a specified velocity using closed-loop velocity control. The
+   * PID configuration is automatically selected based on the current game element.
+   *
+   * @param velocity Target velocity in meters per second, automatically constrained between
+   *     -MAX_SPEED and MAX_SPEED
+   */
+  public void runToTargetVelocity(LinearVelocity velocity) {
+    LinearVelocity adjustedVelocity =
+        MetersPerSecond.of(
+            MathUtil.clamp(
+                velocity.in(MetersPerSecond),
+                -MAX_SPEED.in(MetersPerSecond),
+                MAX_SPEED.in(MetersPerSecond)));
+    switch (elementInIntake.get()) {
+      case EMPTY:
+        io.setElevatorVelocity(adjustedVelocity, GameElement.EMPTY.ordinal());
+        break;
+      case CORAL_ALGAE:
+        io.setElevatorVelocity(adjustedVelocity, GameElement.CORAL_ALGAE.ordinal());
+        break;
+      case CAGE:
+        io.setElevatorVelocity(adjustedVelocity, GameElement.CAGE.ordinal());
         break;
     }
   }

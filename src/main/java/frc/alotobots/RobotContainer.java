@@ -35,8 +35,9 @@ import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.Obje
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.constants.ObjectDetectionConstants;
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.io.*;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
-import frc.alotobots.reefscape.subsystems.elevator.commands.DefaultElevatorOpenLoop;
-import frc.alotobots.reefscape.subsystems.elevator.commands.ElevatorRunToHeightAndHold;
+import frc.alotobots.reefscape.subsystems.elevator.commands.DefaultElevatorRunAtVelocity;
+import frc.alotobots.reefscape.subsystems.elevator.commands.ElevatorOpenLoop;
+import frc.alotobots.reefscape.subsystems.elevator.commands.ElevatorRunToHeight;
 import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIO;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIOTalonFXReal;
@@ -192,7 +193,7 @@ public class RobotContainer {
   private void configureDefaultCommands() {
     swerveDriveSubsystem.setDefaultCommand(new DefaultDrive(swerveDriveSubsystem).getCommand());
     elevatorSubsystem.setDefaultCommand(
-        new DefaultElevatorOpenLoop(elevatorSubsystem, () -> -getElevatorAxis()));
+        new DefaultElevatorRunAtVelocity(elevatorSubsystem, () -> -getElevatorAxis()));
     // blingSubsystem.setDefaultCommand(
     //    new NoAllianceWaiting(blingSubsystem).andThen(new SetToAllianceColor(blingSubsystem)));
   }
@@ -200,13 +201,13 @@ public class RobotContainer {
   private void configureLogicCommands() {
     // Elevator
     elevatorStowButton.toggleOnTrue(
-        new ElevatorRunToHeightAndHold(elevatorSubsystem, ElevatorConstants.Setpoints.STOWED));
+        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.STOWED));
     elevatorL2Button.toggleOnTrue(
-        new ElevatorRunToHeightAndHold(elevatorSubsystem, ElevatorConstants.Setpoints.L2_PLACE));
+        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L2_PLACE));
     elevatorL3Button.toggleOnTrue(
-        new ElevatorRunToHeightAndHold(elevatorSubsystem, ElevatorConstants.Setpoints.L3_PLACE));
+        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L3_PLACE));
     elevatorL4Button.toggleOnTrue(
-        new ElevatorRunToHeightAndHold(elevatorSubsystem, ElevatorConstants.Setpoints.L4_PLACE));
+        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L4_PLACE));
   }
 
   private void configureAutoChooser() {

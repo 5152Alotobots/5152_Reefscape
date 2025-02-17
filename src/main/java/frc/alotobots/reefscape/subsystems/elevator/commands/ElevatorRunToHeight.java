@@ -18,8 +18,7 @@ import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 
 /**
  * Command that moves the elevator to a specified target height. Uses closed-loop control to
- * accurately position the elevator and completes when the target height is reached within
- * tolerance.
+ * accurately position the elevator and hold when the target height is reached within tolerance.
  */
 public class ElevatorRunToHeight extends Command {
   /** The elevator subsystem being controlled. */
@@ -32,7 +31,7 @@ public class ElevatorRunToHeight extends Command {
    * Creates a new ElevatorRunToHeight command.
    *
    * @param elevatorSubsystem The elevator subsystem to control
-   * @param targetHeight The desired height for the elevator to reach
+   * @param targetHeight The desired height for the elevator to reach and hold
    */
   public ElevatorRunToHeight(ElevatorSubsystem elevatorSubsystem, Distance targetHeight) {
     this.elevatorSubsystem = elevatorSubsystem;
@@ -66,13 +65,12 @@ public class ElevatorRunToHeight extends Command {
   }
 
   /**
-   * Determines if the command has finished. Returns true when the elevator has reached its target
-   * height within tolerance.
+   * Determines if the command has finished. Always returns false in this case
    *
-   * @return true if the elevator is at the target height, false otherwise
+   * @return false; Holds set point until canceled
    */
   @Override
   public boolean isFinished() {
-    return elevatorSubsystem.isAtTargetHeight();
+    return false;
   }
 }

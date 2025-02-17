@@ -24,9 +24,7 @@ import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.CANrangeConfiguration;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.controls.Follower;
-import com.ctre.phoenix6.controls.PositionTorqueCurrentFOC;
-import com.ctre.phoenix6.controls.PositionVoltage;
+import com.ctre.phoenix6.controls.*;
 import com.ctre.phoenix6.hardware.CANrange;
 import com.ctre.phoenix6.hardware.ParentDevice;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -58,6 +56,13 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
   /** Position torque current FOC control request for position control with torque management */
   private final PositionTorqueCurrentFOC positionTorqueCurrentFOC =
       new PositionTorqueCurrentFOC(0.0);
+
+  /** Velocity voltage control request for standard velocity-based control */
+  private final VelocityVoltage velocityVoltage = new VelocityVoltage(0.0);
+
+  /** Velocity torque current FOC control request for velocity control with torque management */
+  private final VelocityTorqueCurrentFOC velocityTorqueCurrentFOC =
+      new VelocityTorqueCurrentFOC(0.0);
 
   /** Status signal for the current PID slot */
   private final StatusSignal<Integer> currentPidSlot;
@@ -289,6 +294,18 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
   @Override
   public void setElevatorPosition(Distance position, int pidSlot) {
     leftTalon.setControl(positionVoltage.withPosition(heightToTalonFX(position)).withSlot(pidSlot));
+  }
+
+  /**
+   * Sets the elevator to a specific velocity using closed-loop control.
+   *
+   * @param velocity The target velocity as a LinearVelocity unit
+   * @param pidSlot The PID slot to use (0 for Coral mode, 1 for Algae mode)
+   */
+  @Override
+  public void setElevatorVelocity(LinearVelocity velocity, int pidSlot) {
+    leftTalon.setControl(
+        velocityVoltage.withVelocity(linearVelocityToTalonFX(velocity)).withSlot(pidSlot));
   }
 
   /**
