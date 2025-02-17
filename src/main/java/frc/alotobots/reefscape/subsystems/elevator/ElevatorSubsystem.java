@@ -16,6 +16,7 @@ import static edu.wpi.first.units.Units.Meters;
 import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.AT_SET_POINT_THRESHOLD;
 import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.Limits.MAX_HEIGHT;
 import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.Limits.MIN_HEIGHT;
+import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.MAX_OPEN_LOOP_PERCENTAGE;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.units.measure.Distance;
@@ -91,7 +92,8 @@ public class ElevatorSubsystem extends SubsystemBase {
    * @param percentOutput The percent output to apply to the elevator motor (-1.0 to 1.0)
    */
   public void runAtPercentOutput(double percentOutput) {
-    io.setElevatorOpenLoop(percentOutput);
+    double adjustedSpeed = MathUtil.clamp(percentOutput, -MAX_OPEN_LOOP_PERCENTAGE, MAX_OPEN_LOOP_PERCENTAGE);
+    io.setElevatorOpenLoop(adjustedSpeed);
   }
 
   /**

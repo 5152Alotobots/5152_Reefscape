@@ -203,7 +203,7 @@ public class RobotContainer {
   private void configureDefaultCommands() {
     swerveDriveSubsystem.setDefaultCommand(new DefaultDrive(swerveDriveSubsystem).getCommand());
     elevatorSubsystem.setDefaultCommand(
-        new DefaultElevatorOpenLoop(elevatorSubsystem, () -> -getElevatorAxis() * .66));
+        new DefaultElevatorOpenLoop(elevatorSubsystem, () -> -getElevatorAxis()));
     // blingSubsystem.setDefaultCommand(
     //    new NoAllianceWaiting(blingSubsystem).andThen(new SetToAllianceColor(blingSubsystem)));
   }

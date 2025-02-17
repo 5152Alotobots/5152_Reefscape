@@ -28,6 +28,10 @@ public final class ElevatorConstants {
 
   /** Acceptable PID error that will classify as "at position" */
   public static final Distance AT_SET_POINT_THRESHOLD = Meters.of(.1);
+
+  /** Maximum open loop percent output */
+  public static final double MAX_OPEN_LOOP_PERCENTAGE = 0.5;
+
   /** Physical limits and safety thresholds */
   public static final class Limits {
     /** Maximum allowed height */
