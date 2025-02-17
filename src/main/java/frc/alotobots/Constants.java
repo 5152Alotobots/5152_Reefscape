@@ -57,5 +57,6 @@ public final class Constants {
 
     /** CANdle LED controller CAN ID */
     public static final int CANDLE_CAN_ID = 40;
+    public static final int SERVO_HUB_CAN_ID = 4;
   }
 }
