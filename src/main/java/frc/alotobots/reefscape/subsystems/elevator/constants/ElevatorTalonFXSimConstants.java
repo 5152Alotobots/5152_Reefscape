@@ -45,7 +45,11 @@ public class ElevatorTalonFXSimConstants {
     /** Velocity feedforward gain */
     public static final double KV = 0.0;
   }
-  /** TalonFX-specific PID and motion control constants for coral/algae game piece (Coral/Algae mode). */
+
+  /**
+   * TalonFX-specific PID and motion control constants for coral/algae game piece (Coral/Algae
+   * mode).
+   */
   public static final class CoralAlgaePIDConstants {
     /** Position control proportional gain */
     public static final double KP = 0.1;
