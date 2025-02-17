@@ -19,8 +19,6 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-import frc.alotobots.library.subsystems.bling.commands.*;
-import frc.alotobots.library.subsystems.bling.io.*;
 import frc.alotobots.library.subsystems.swervedrive.*;
 import frc.alotobots.library.subsystems.swervedrive.commands.*;
 import frc.alotobots.library.subsystems.swervedrive.io.*;
@@ -43,7 +41,7 @@ import frc.alotobots.reefscape.subsystems.autocycle.commands.PathfindToCoralStat
 import frc.alotobots.reefscape.subsystems.autocycle.commands.PathfindToReef;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.commands.DefaultElevatorOpenLoop;
-import frc.alotobots.reefscape.subsystems.elevator.commands.ElevatorRunToPosition;
+import frc.alotobots.reefscape.subsystems.elevator.commands.ElevatorRunToHeight;
 import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIO;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIOTalonFXReal;
@@ -236,13 +234,13 @@ public class RobotContainer {
 
     // Elevator
     elevatorStowButton.toggleOnTrue(
-        new ElevatorRunToPosition(elevatorSubsystem, ElevatorConstants.Setpoints.STOWED));
+        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.STOWED));
     elevatorL2Button.toggleOnTrue(
-        new ElevatorRunToPosition(elevatorSubsystem, ElevatorConstants.Setpoints.L2_PLACE));
+        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L2_PLACE));
     elevatorL3Button.toggleOnTrue(
-        new ElevatorRunToPosition(elevatorSubsystem, ElevatorConstants.Setpoints.L3_PLACE));
+        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L3_PLACE));
     elevatorL4Button.toggleOnTrue(
-        new ElevatorRunToPosition(elevatorSubsystem, ElevatorConstants.Setpoints.L4_PLACE));
+        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L4_PLACE));
   }
 
   private void configureAutoChooser() {

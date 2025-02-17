@@ -78,6 +78,9 @@ public interface ElevatorIO {
 
     /** Current draw of the right elevator motor in amperes */
     public Current rightCurrentAmps = Amps.zero();
+
+    /** Error reported from the LEFT motor closed loop motor controller */
+    public Distance mechanismClosedLoopError = Meters.zero();
   }
 
   /**

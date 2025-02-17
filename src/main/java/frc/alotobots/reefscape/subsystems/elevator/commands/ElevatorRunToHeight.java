@@ -16,25 +16,25 @@ import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 
-public class ElevatorRunToPosition extends Command {
-  private final ElevatorSubsystem elevator;
+public class ElevatorRunToHeight extends Command {
+  private final ElevatorSubsystem elevatorSubsystem;
   private final Distance targetHeight;
 
   /**
-   * Creates a new ElevatorToHeightCommand.
+   * Creates a new ElevatorRunToHeightCommand.
    *
-   * @param elevator The elevator subsystem to use
+   * @param elevatorSubsystem The elevator subsystem to use
    * @param targetHeight The target height in meters
    */
-  public ElevatorRunToPosition(ElevatorSubsystem elevator, Distance targetHeight) {
-    this.elevator = elevator;
+  public ElevatorRunToHeight(ElevatorSubsystem elevatorSubsystem, Distance targetHeight) {
+    this.elevatorSubsystem = elevatorSubsystem;
     this.targetHeight = targetHeight;
-    addRequirements(elevator);
+    addRequirements(elevatorSubsystem);
   }
 
   @Override
   public void initialize() {
-    elevator.runToTargetPosition(targetHeight);
+    elevatorSubsystem.runToTargetPosition(targetHeight);
   }
 
   @Override
@@ -44,13 +44,12 @@ public class ElevatorRunToPosition extends Command {
 
   @Override
   public void end(boolean interrupted) {
-    elevator.stop();
+    elevatorSubsystem.stop();
   }
 
   @Override
   public boolean isFinished() {
-    // TODO: Add position tolerance check based on your requirements
-    // Example: return Math.abs(elevator.getCurrentHeight() - targetHeight) < TOLERANCE;
-    return false;
+    // Return true once we are within the specified error
+    return elevatorSubsystem.isAtTargetHeight();
   }
 }

@@ -25,6 +25,9 @@ public final class ElevatorConstants {
   /** Prevent construction */
   private ElevatorConstants() {}
 
+
+  /** Acceptable PID error that will classify as "at position" */
+  public static final Distance AT_SET_POINT_THRESHOLD = Meters.of(.1);
   /** Physical limits and safety thresholds */
   public static final class Limits {
     /** Maximum allowed height */

@@ -95,6 +95,9 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
   /** Status signal indicating if the bottom soft limit is reached */
   private final StatusSignal<Boolean> bottomSoftLimit;
 
+  /** Status signal reporting the closed loop error from the master (LEFT) motor */
+  private final StatusSignal<Double> closedLoopError;
+
   /** Debouncer for filtering left motor connection status */
   private final Debouncer leftConnectedDebounce = new Debouncer(0.5);
 
@@ -200,6 +203,8 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
     topSoftLimit = leftTalon.getFault_ForwardSoftLimit();
     bottomSoftLimit = rightTalon.getFault_ReverseSoftLimit();
 
+    closedLoopError = leftTalon.getClosedLoopError();
+
     BaseStatusSignal.setUpdateFrequencyForAll(
         50.0,
         leftPosition,
@@ -213,7 +218,8 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
         rightAppliedCurrent,
         topSoftLimit,
         bottomSoftLimit,
-        currentPidSlot);
+        currentPidSlot,
+            closedLoopError);
     ParentDevice.optimizeBusUtilizationForAll(leftTalon, rightTalon, canRange);
   }
 
@@ -232,7 +238,8 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
             leftAppliedVoltage,
             leftAppliedCurrent,
             topSoftLimit,
-            bottomSoftLimit);
+            bottomSoftLimit,
+                closedLoopError);
     var rightSignals =
         BaseStatusSignal.refreshAll(
             rightPosition, rightVelocity, rightAppliedVoltage, rightAppliedCurrent);
@@ -268,6 +275,9 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
     // Amps
     inputs.leftCurrentAmps = leftAppliedCurrent.getValue();
     inputs.rightCurrentAmps = rightAppliedCurrent.getValue();
+
+    // Closed Loop General
+    inputs.mechanismClosedLoopError = talonFXToHeight(Rotations.of(closedLoopError.getValue()));
   }
 
   /**
