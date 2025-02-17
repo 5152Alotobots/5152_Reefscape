@@ -35,9 +35,9 @@ public class OI {
   public static final Trigger hasDriverInput =
       new Trigger(
           () ->
-              Math.abs(driverController.getLeftX()) > DEADBAND
-                  || Math.abs(driverController.getLeftY()) > DEADBAND
-                  || Math.abs(driverController.getRightX()) > DEADBAND);
+              MathUtil.applyDeadband(driverController.getLeftX(), DEADBAND) != 0
+                  || MathUtil.applyDeadband(driverController.getLeftY(), DEADBAND) != 0
+                  || MathUtil.applyDeadband(driverController.getRightX(), DEADBAND) != 0);
 
   /**
    * Gets the forward/backward translation input from the driver's controller.
