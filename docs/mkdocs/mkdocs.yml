@@ -45,6 +45,7 @@ nav:
               - AprilTag: library/subsystems/vision/apriltag.md
               - Oculus: library/subsystems/vision/oculus.md
   - Core:
+      - CAN IDs: core/canids.md
       - Controller Bindings: core/bindings.md
       - Auto Named Commands: core/autonamedcommands.md
       - Robot: core/robot.md
