@@ -41,7 +41,7 @@ import frc.alotobots.reefscape.subsystems.autocycle.commands.PathfindToCoralStat
 import frc.alotobots.reefscape.subsystems.autocycle.commands.PathfindToReef;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.commands.DefaultElevatorOpenLoop;
-import frc.alotobots.reefscape.subsystems.elevator.commands.ElevatorRunToHeight;
+import frc.alotobots.reefscape.subsystems.elevator.commands.ElevatorRunToHeightAndHold;
 import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIO;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIOTalonFXReal;
@@ -234,13 +234,13 @@ public class RobotContainer {
 
     // Elevator
     elevatorStowButton.toggleOnTrue(
-        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.STOWED));
+        new ElevatorRunToHeightAndHold(elevatorSubsystem, ElevatorConstants.Setpoints.STOWED));
     elevatorL2Button.toggleOnTrue(
-        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L2_PLACE));
+        new ElevatorRunToHeightAndHold(elevatorSubsystem, ElevatorConstants.Setpoints.L2_PLACE));
     elevatorL3Button.toggleOnTrue(
-        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L3_PLACE));
+        new ElevatorRunToHeightAndHold(elevatorSubsystem, ElevatorConstants.Setpoints.L3_PLACE));
     elevatorL4Button.toggleOnTrue(
-        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L4_PLACE));
+        new ElevatorRunToHeightAndHold(elevatorSubsystem, ElevatorConstants.Setpoints.L4_PLACE));
   }
 
   private void configureAutoChooser() {
