@@ -80,13 +80,13 @@ public final class ElevatorTalonFXRealConstants {
   /** Contains safety limit constants for the elevator motors. */
   public static final class MotorSafetyLimits {
     /** Maximum forward torque current limit in amperes */
-    public static final Current TORQUE_FORWARD_AMP_LIMIT = Amps.of(45);
+    public static final Current TORQUE_FORWARD_AMP_LIMIT = Amps.of(35);
 
     /** Maximum reverse torque current limit in amperes */
-    public static final Current TORQUE_REVERSE_AMP_LIMIT = Amps.of(-45);
+    public static final Current TORQUE_REVERSE_AMP_LIMIT = Amps.of(-35);
 
     /** Maximum stator current limit in amperes */
-    public static final Current STATOR_AMP_LIMIT = Amps.of(45);
+    public static final Current STATOR_AMP_LIMIT = Amps.of(35);
   }
 
   /** Direction of the left motor rotation */
