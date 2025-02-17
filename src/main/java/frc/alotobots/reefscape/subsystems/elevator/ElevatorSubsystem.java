@@ -30,24 +30,24 @@ import org.littletonrobotics.junction.Logger;
 
 /**
  * The Elevator subsystem controls the vertical movement of the robot's elevator mechanism.
- * It supports different PID configurations based on the game element being handled and
- * provides both position-based and manual control options.
+ * This subsystem manages both closed-loop position control and open-loop manual control
+ * of the elevator, with different PID configurations based on the game element being handled.
  */
 public class ElevatorSubsystem extends SubsystemBase {
-  /** The hardware interface for the elevator. */
+  /** The hardware interface for controlling and monitoring the elevator mechanism. */
   private final ElevatorIO io;
 
-  /** Logged inputs from the elevator hardware. */
+  /** Auto-logged inputs from elevator sensors and motor controllers. */
   private final ElevatorIOInputsAutoLogged inputs = new ElevatorIOInputsAutoLogged();
 
-  /** Supplier that provides information about the current game element in the intake. */
+  /** Provides real-time information about the current game element in the intake. */
   private final Supplier<GameElement> elementInIntake;
 
   /**
-   * Creates a new ElevatorSubsystem.
+   * Constructs a new ElevatorSubsystem with the specified hardware interface and game element supplier.
    *
-   * @param io The hardware interface for the elevator
-   * @param elementInIntake Supplier that provides the current game element in the intake
+   * @param io The hardware interface for controlling the elevator mechanism
+   * @param elementInIntake Supplier that provides information about the current game element
    */
   public ElevatorSubsystem(ElevatorIO io, Supplier<GameElement> elementInIntake) {
     this.io = io;
@@ -55,8 +55,8 @@ public class ElevatorSubsystem extends SubsystemBase {
   }
 
   /**
-   * Periodic update function that updates and logs elevator inputs.
-   * This method is called periodically by the command scheduler.
+   * Updates and logs elevator sensor inputs. Called periodically by the command scheduler.
+   * This method ensures that the latest sensor data is available for control decisions.
    */
   @Override
   public void periodic() {
@@ -65,10 +65,10 @@ public class ElevatorSubsystem extends SubsystemBase {
   }
 
   /**
-   * Runs the elevator to a target position with PID control, using different PID slots
-   * based on the current game element.
+   * Controls the elevator to move to a specified height using closed-loop position control.
+   * The PID configuration is automatically selected based on the current game element.
    *
-   * @param height The target height in meters, automatically clamped between MIN_HEIGHT and MAX_HEIGHT
+   * @param height Target height in meters, automatically constrained between MIN_HEIGHT and MAX_HEIGHT
    */
   public void runToTargetPosition(Distance height) {
     Distance adjustedHeight =
@@ -87,9 +87,10 @@ public class ElevatorSubsystem extends SubsystemBase {
   }
 
   /**
-   * Runs the elevator using direct percent output control.
+   * Controls the elevator using direct percent output (open-loop control).
+   * The output is clamped to prevent excessive speed.
    *
-   * @param percentOutput The percent output to apply to the elevator motor (-1.0 to 1.0)
+   * @param percentOutput Motor output percentage (-1.0 to 1.0)
    */
   public void runAtPercentOutput(double percentOutput) {
     double adjustedSpeed = MathUtil.clamp(percentOutput, -MAX_OPEN_LOOP_PERCENTAGE, MAX_OPEN_LOOP_PERCENTAGE);
@@ -97,24 +98,29 @@ public class ElevatorSubsystem extends SubsystemBase {
   }
 
   /**
-   * Stops the elevator movement and enables brake mode.
-   * This method should be called when the elevator needs to maintain its position.
+   * Stops elevator movement and enables brake mode to maintain position.
+   * This method should be called when active control of the elevator is no longer needed.
    */
   public void stop() {
     io.stop();
     io.setElevatorBrakeMode(true);
   }
 
-  /** Getter method that returns the current lift height
-   * @return Distance representing the height of the lift
-   * */
+  /**
+   * Retrieves the current height of the elevator.
+   *
+   * @return The current height as a Distance object
+   */
   public Distance getCurrentHeight() {
     return inputs.leftHeight;
   }
 
-  /** Checks to see if the lift is within the acceptable range specified in {@link ElevatorConstants}
-   * @return True if within range
-   * */
+  /**
+   * Checks if the elevator is within the acceptable range of its target height.
+   * Uses the threshold defined in ElevatorConstants.
+   *
+   * @return true if the elevator is at its target height within tolerance
+   */
   public boolean isAtTargetHeight() {
     return inputs.mechanismClosedLoopError.abs(Meters) < AT_SET_POINT_THRESHOLD.in(Meters);
   }

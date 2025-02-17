@@ -17,22 +17,22 @@ import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 import java.util.function.DoubleSupplier;
 
 /**
- * A default command for manually controlling the elevator using open-loop control.
- * This command allows direct control of the elevator's motor output using a percent value,
- * typically bound to a joystick or other controller input.
+ * Default command for manual control of the elevator using percent output.
+ * This command is typically used as the default command for the elevator subsystem,
+ * allowing direct operator control through a joystick or other input device.
  */
 public class DefaultElevatorOpenLoop extends Command {
   /** The elevator subsystem being controlled. */
   private final ElevatorSubsystem elevatorSubsystem;
 
-  /** Supplier for the percent output value, typically from a controller input. */
+  /** Provides the control input value, typically from a joystick or controller. */
   private final DoubleSupplier percent;
 
   /**
-   * Creates a new DefaultElevatorOpenLoop command.
+   * Creates a new DefaultElevatorOpenLoop command for manual elevator control.
    *
-   * @param elevatorSubsystem The elevator subsystem to be controlled
-   * @param percent A supplier for the percent output value (-1.0 to 1.0)
+   * @param elevatorSubsystem The elevator subsystem to control
+   * @param percent Supplier for the control input (-1.0 to 1.0), typically from a joystick
    */
   public DefaultElevatorOpenLoop(ElevatorSubsystem elevatorSubsystem, DoubleSupplier percent) {
     this.elevatorSubsystem = elevatorSubsystem;
@@ -48,8 +48,8 @@ public class DefaultElevatorOpenLoop extends Command {
   public void initialize() {}
 
   /**
-   * Called every time the scheduler runs while the command is scheduled.
-   * Updates the elevator's output based on the current percent value from the supplier.
+   * Executes the manual control loop.
+   * Called every scheduler run while the command is scheduled.
    */
   @Override
   public void execute() {
@@ -57,10 +57,10 @@ public class DefaultElevatorOpenLoop extends Command {
   }
 
   /**
-   * Called once the command ends or is interrupted.
+   * Called when the command ends or is interrupted.
    * Stops the elevator to prevent uncontrolled motion.
    *
-   * @param interrupted whether the command was interrupted/canceled
+   * @param interrupted true if the command was interrupted, false if it completed normally
    */
   @Override
   public void end(boolean interrupted) {
@@ -68,10 +68,10 @@ public class DefaultElevatorOpenLoop extends Command {
   }
 
   /**
-   * Returns whether this command has finished.
-   * This command never finishes on its own as it's designed to run continuously.
+   * Determines if the command has finished.
+   * This command runs until interrupted, so it never finishes on its own.
    *
-   * @return false since this is a continuous command
+   * @return false as this command runs continuously
    */
   @Override
   public boolean isFinished() {
