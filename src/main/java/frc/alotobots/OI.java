@@ -28,8 +28,14 @@ public class OI {
    */
   public static final double DEADBAND = 0.1;
 
+  /** Driver controller ID */
+  private static final int DRIVER_CONTROLLER_ID = 0;
+
+  /** Co-Driver controller ID */
+  private static final int CO_DRIVER_CONTROLLER_ID = 1;
+
   /** The primary driver's controller. Used for main robot control functions. */
-  private static final CommandXboxController driverController = new CommandXboxController(0);
+  private static final CommandXboxController driverController = new CommandXboxController(DRIVER_CONTROLLER_ID);
 
   /** Trigger for when the driver is using the controller sticks to control the chassis */
   public static final Trigger hasDriverInput =
@@ -85,7 +91,7 @@ public class OI {
   }
 
   /** The co-driver driver's controller. Used for secondary robot control functions. */
-  private static final CommandXboxController codriverController = new CommandXboxController(1);
+  private static final CommandXboxController codriverController = new CommandXboxController(CO_DRIVER_CONTROLLER_ID);
 
   /** Sets the elevator to stow position */
   public static Trigger elevatorStowButton = codriverController.a();
