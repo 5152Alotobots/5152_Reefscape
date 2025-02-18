@@ -308,6 +308,17 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
     leftTalon.setNeutralMode(brake ? NeutralModeValue.Brake : NeutralModeValue.Coast);
   }
 
+  /**
+   * Resets the rotor sensors of both motors to be equal to the given height
+   *
+   * @param height The height off the floor the elevator is at
+   */
+  @Override
+  public void resetRotorPositions(Distance height) {
+    leftTalon.setPosition(heightToTalonFX(height));
+    rightTalon.setPosition(heightToTalonFX(height));
+  }
+
   /** Stops all elevator motor movement. */
   @Override
   public void stop() {

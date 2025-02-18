@@ -30,6 +30,8 @@ public final class ElevatorConstants {
   /** How long the elevator must be "at position" to classify as "at position" */
   public static final Time AT_SET_POINT_TIME_THRESHOLD = Seconds.of(.2);
 
+  public static final Distance CAN_RANGE_MAX_VALID_DISTANCE = Meters.of(.5);
+
   /** Maximum open loop percent output */
   public static final double MAX_OPEN_LOOP_PERCENTAGE = 0.5;
 

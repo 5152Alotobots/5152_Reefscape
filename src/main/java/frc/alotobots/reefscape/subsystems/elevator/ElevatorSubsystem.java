@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.alotobots.reefscape.subsystems.elevator.constants.ControlType;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIO;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIOInputsAutoLogged;
+import frc.alotobots.util.Elastic;
 import org.littletonrobotics.junction.Logger;
 
 /**
@@ -54,6 +55,18 @@ public class ElevatorSubsystem extends SubsystemBase {
    */
   public ElevatorSubsystem(ElevatorIO io) {
     this.io = io;
+
+    // Set the rotor positions based on CANrange on startup for better reliability
+    if (inputs.canrangeConnected && inputs.canrangeDistance.lt(CAN_RANGE_MAX_VALID_DISTANCE)) {
+      io.resetRotorPositions(inputs.canrangeDistance);
+    } else if (inputs.canrangeConnected) {
+      Logger.recordOutput("Elevator/Faults/CANrangeTooFarDuringInit", true);
+      Elastic.sendAlert(
+          new Elastic.ElasticNotification(
+              Elastic.ElasticNotification.NotificationLevel.WARNING,
+              "Failed to apply offset to elevator",
+              "Verify that elevator is at zero position!"));
+    }
   }
 
   /**

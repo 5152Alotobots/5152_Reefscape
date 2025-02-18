@@ -117,6 +117,14 @@ public interface ElevatorIO {
    */
   public default void setElevatorBrakeMode(boolean brake) {}
 
+  /**
+   * Resets both motors' (left and right) dead-reckoning position to the rotor count consistent with
+   * the input height
+   *
+   * @param height The height that the elevator should reference as zero
+   */
+  public default void resetRotorPositions(Distance height) {}
+
   /** Stops all motors */
   public default void stop() {}
 }
