@@ -12,16 +12,14 @@
 */
 package frc.alotobots;
 
-import static edu.wpi.first.units.Units.Degrees;
 import static frc.alotobots.OI.*;
+import static frc.alotobots.reefscape.subsystems.wrist.constants.WristIOTalonFXConstants.WristPositions.*;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-import frc.alotobots.library.subsystems.bling.commands.*;
-import frc.alotobots.library.subsystems.bling.io.*;
 import frc.alotobots.library.subsystems.swervedrive.*;
 import frc.alotobots.library.subsystems.swervedrive.commands.*;
 import frc.alotobots.library.subsystems.swervedrive.io.*;
@@ -37,13 +35,10 @@ import frc.alotobots.library.subsystems.vision.photonvision.apriltag.util.AprilT
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.ObjectDetectionSubsystem;
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.constants.ObjectDetectionConstants;
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.io.*;
-import frc.alotobots.reefscape.commands.FullAutoCycle;
 import frc.alotobots.reefscape.subsystems.autocycle.AutoCycleSubsystem;
-import frc.alotobots.reefscape.subsystems.autocycle.commands.DriverInterruptCommand;
-import frc.alotobots.reefscape.subsystems.autocycle.commands.PathfindToCoralStation;
-import frc.alotobots.reefscape.subsystems.autocycle.commands.PathfindToReef;
 import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.DefaultCoralIntakeOpenLoop;
+import frc.alotobots.reefscape.subsystems.coralIntake.commands.DefaultCoralIntakeOpenLoopWOLimits;
 import frc.alotobots.reefscape.subsystems.coralIntake.io.CoralIntakeIOVortexReal;
 import frc.alotobots.reefscape.subsystems.wrist.WristSubsystem;
 import frc.alotobots.reefscape.subsystems.wrist.commands.DefaultWristOpenLoop;
@@ -215,31 +210,35 @@ public class RobotContainer {
   }
 
   private void configureLogicCommands() {
-    wristTestButton.whileTrue(new WristRunToAngle(Degrees.of(90), wristSubsystem));
-    intakeTestButton.whileTrue(
-        new DefaultCoralIntakeOpenLoop(() -> Double.valueOf(10), coralIntakeSubsystem));
+    wristL4coralButton.whileTrue(new WristRunToAngle(L4_CORAL_POSITION, wristSubsystem));
+    wristL2and3coralButton.whileTrue(new WristRunToAngle(L2AND3_CORAL_POSITION, wristSubsystem));
+    wristGroundButton.whileTrue(new WristRunToAngle(GROUND_INTAKE, wristSubsystem));
+    intakeButton.whileTrue(new DefaultCoralIntakeOpenLoop(() -> 1.0, coralIntakeSubsystem));
+    intakeButtonNoLimits.whileTrue(
+        new DefaultCoralIntakeOpenLoopWOLimits(() -> 1.0, coralIntakeSubsystem));
     // Enabled state
-    enablePathfindingButton.onChange(autoCycleSubsystem.togglePathfinding());
-    enableFullAutoPathfindingButton.onTrue(new FullAutoCycle(autoCycleSubsystem).repeatedly());
+    //    enablePathfindingButton.onChange(autoCycleSubsystem.togglePathfinding());
+    //    enableFullAutoPathfindingButton.onTrue(new
+    // FullAutoCycle(autoCycleSubsystem).repeatedly());
 
     // Auto Cycle Reef Branch Controls
-    cycleSelectedBranchRightButton.onTrue(autoCycleSubsystem.cycleReefBranchRight());
-    cycleSelectedBranchLeftButton.onTrue(autoCycleSubsystem.cycleReefBranchLeft());
-    cycleLevelUpButton.onTrue(autoCycleSubsystem.cycleReefLevelUp());
-    cycleLevelDownButton.onTrue(autoCycleSubsystem.cycleReefLevelDown());
-    pathfindToSelectedReefBranchButton.toggleOnTrue(new PathfindToReef(autoCycleSubsystem));
+    //    cycleSelectedBranchRightButton.onTrue(autoCycleSubsystem.cycleReefBranchRight());
+    //    cycleSelectedBranchLeftButton.onTrue(autoCycleSubsystem.cycleReefBranchLeft());
+    //    cycleLevelUpButton.onTrue(autoCycleSubsystem.cycleReefLevelUp());
+    //    cycleLevelDownButton.onTrue(autoCycleSubsystem.cycleReefLevelDown());
+    //    pathfindToSelectedReefBranchButton.toggleOnTrue(new PathfindToReef(autoCycleSubsystem));
 
     // Auto Cycle Coral Station Controls
-    cycleCoralStationSideLeftButton.onTrue(autoCycleSubsystem.cycleCoralStationSideLeft());
-    cycleCoralStationSideRightButton.onTrue(autoCycleSubsystem.cycleCoralStationSideRight());
-    cycleCoralStationPickupPositionLeftButton.onTrue(
-        autoCycleSubsystem.cycleCoralStationPositionLeft());
-    cycleCoralStationPickupPositionRightButton.onTrue(
-        autoCycleSubsystem.cycleCoralStationPositionRight());
-    pathfindToSelectedCoralStationButton.toggleOnTrue(
-        new PathfindToCoralStation(autoCycleSubsystem));
-
-    hasDriverInput.whileTrue(new DriverInterruptCommand(autoCycleSubsystem));
+    //    cycleCoralStationSideLeftButton.onTrue(autoCycleSubsystem.cycleCoralStationSideLeft());
+    //    cycleCoralStationSideRightButton.onTrue(autoCycleSubsystem.cycleCoralStationSideRight());
+    //    cycleCoralStationPickupPositionLeftButton.onTrue(
+    //        autoCycleSubsystem.cycleCoralStationPositionLeft());
+    //    cycleCoralStationPickupPositionRightButton.onTrue(
+    //        autoCycleSubsystem.cycleCoralStationPositionRight());
+    //    pathfindToSelectedCoralStationButton.toggleOnTrue(
+    //        new PathfindToCoralStation(autoCycleSubsystem));
+    //
+    //    hasDriverInput.whileTrue(new DriverInterruptCommand(autoCycleSubsystem));
   }
 
   private void configureAutoChooser() {
