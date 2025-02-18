@@ -12,12 +12,12 @@ nav:
   - Reefscape:
       - Field Constants: reefscape/fieldconstants.md
       - Subsystems:
-          - Auto Cycle: reefscape/subsystems/autocycle.md
+          - reefscape/elevator.md
       - Commands:
-          - Auto Cycle:
-            - Pathfind to Selected Coral Station: reefscape/commands/autocycle/pathfindtoselectedcoralstation.md
-            - Pathfind to Selected Reef Branch: reefscape/commands/autocycle/pathfindtoselectedcoralstation.md
-            - Stop Pathfinding: reefscape/commands/autocycle/stoppathfinding.md
+          - Elevator:
+              - Default Elevator Run At Velocity: reefscape/defaultelevatorrunatvelocity.md
+              - Elevator Run to Height: reefscape/elevatorruntoheight.md
+              - Elevator Open Loop: reefscape/elevatoropenloop.md
   - Library:
       - Commands:
           - Swerve:
@@ -47,6 +47,7 @@ nav:
               - AprilTag: library/subsystems/vision/apriltag.md
               - Oculus: library/subsystems/vision/oculus.md
   - Core:
+      - CAN IDs: core/canids.md
       - Controller Bindings: core/bindings.md
       - Auto Named Commands: core/autonamedcommands.md
       - Robot: core/robot.md

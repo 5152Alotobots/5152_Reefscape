@@ -20,8 +20,6 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-import frc.alotobots.library.subsystems.bling.commands.*;
-import frc.alotobots.library.subsystems.bling.io.*;
 import frc.alotobots.library.subsystems.swervedrive.*;
 import frc.alotobots.library.subsystems.swervedrive.commands.*;
 import frc.alotobots.library.subsystems.swervedrive.io.*;
@@ -37,14 +35,16 @@ import frc.alotobots.library.subsystems.vision.photonvision.apriltag.util.AprilT
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.ObjectDetectionSubsystem;
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.constants.ObjectDetectionConstants;
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.io.*;
-import frc.alotobots.reefscape.commands.FullAutoCycle;
-import frc.alotobots.reefscape.subsystems.autocycle.AutoCycleSubsystem;
-import frc.alotobots.reefscape.subsystems.autocycle.commands.DriverInterruptCommand;
-import frc.alotobots.reefscape.subsystems.autocycle.commands.PathfindToCoralStation;
-import frc.alotobots.reefscape.subsystems.autocycle.commands.PathfindToReef;
 import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.DefaultCoralIntakeOpenLoop;
 import frc.alotobots.reefscape.subsystems.coralIntake.io.CoralIntakeIOVortexReal;
+import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
+import frc.alotobots.reefscape.subsystems.elevator.commands.DefaultElevatorRunAtVelocity;
+import frc.alotobots.reefscape.subsystems.elevator.commands.ElevatorRunToHeight;
+import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants;
+import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIO;
+import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIOTalonFXReal;
+import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIOTalonFXSim;
 import frc.alotobots.reefscape.subsystems.wrist.WristSubsystem;
 import frc.alotobots.reefscape.subsystems.wrist.commands.DefaultWristOpenLoop;
 import frc.alotobots.reefscape.subsystems.wrist.commands.WristRunToAngle;
@@ -57,17 +57,17 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 public class RobotContainer {
   private final SwerveDriveSubsystem swerveDriveSubsystem;
-  private final WristSubsystem wristSubsystem;
+  private final ElevatorSubsystem elevatorSubsystem;
   private final OculusSubsystem oculusSubsystem;
   private final AprilTagSubsystem aprilTagSubsystem;
   private final LocalizationFusion localizationFusion;
   private final OculusPoseSource oculusPoseSource;
   private final AprilTagPoseSource aprilTagPoseSource;
   private final ObjectDetectionSubsystem objectDetectionSubsystem;
+  private final WristSubsystem wristSubsystem;
   private final CoralIntakeSubsystem coralIntakeSubsystem;
-  //   private final BlingSubsystem blingSubsystem;
+  // private final BlingSubsystem blingSubsystem;
   private final PathPlannerManager pathPlannerManager;
-  private final AutoCycleSubsystem autoCycleSubsystem;
   private LoggedDashboardChooser<Command> autoChooser;
   private SwerveDriveSimulation driveSimulation;
 
@@ -86,9 +86,9 @@ public class RobotContainer {
                 new ModuleIOTalonFXReal(ModulePosition.FRONT_RIGHT.index),
                 new ModuleIOTalonFXReal(ModulePosition.BACK_LEFT.index),
                 new ModuleIOTalonFXReal(ModulePosition.BACK_RIGHT.index));
+        elevatorSubsystem = new ElevatorSubsystem(new ElevatorIOTalonFXReal());
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         configureAutoChooser();
-        autoCycleSubsystem = new AutoCycleSubsystem(pathPlannerManager, swerveDriveSubsystem);
 
         oculusSubsystem = new OculusSubsystem(new OculusIOReal());
         aprilTagSubsystem =
@@ -140,10 +140,9 @@ public class RobotContainer {
                     ModulePosition.BACK_RIGHT.index,
                     driveSimulation.getModules()[ModulePosition.BACK_RIGHT.index]));
         swerveDriveSubsystem.setPose(simStartPose);
+        elevatorSubsystem = new ElevatorSubsystem(new ElevatorIOTalonFXSim());
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         configureAutoChooser();
-
-        autoCycleSubsystem = new AutoCycleSubsystem(pathPlannerManager, swerveDriveSubsystem);
 
         oculusSubsystem = new OculusSubsystem(new OculusIOSim(driveSimulation));
         aprilTagSubsystem =
@@ -179,10 +178,9 @@ public class RobotContainer {
                 new ModuleIO() {},
                 new ModuleIO() {},
                 new ModuleIO() {});
+        elevatorSubsystem = new ElevatorSubsystem(new ElevatorIO() {});
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         configureAutoChooser();
-
-        autoCycleSubsystem = new AutoCycleSubsystem(pathPlannerManager, swerveDriveSubsystem);
 
         oculusSubsystem = new OculusSubsystem(new OculusIO() {});
         aprilTagSubsystem = new AprilTagSubsystem(new AprilTagIO() {}, new AprilTagIO() {});
@@ -210,36 +208,25 @@ public class RobotContainer {
     wristSubsystem.setDefaultCommand(
         new DefaultWristOpenLoop(() -> OI.getWristAxis(), wristSubsystem));
     swerveDriveSubsystem.setDefaultCommand(new DefaultDrive(swerveDriveSubsystem).getCommand());
+    elevatorSubsystem.setDefaultCommand(
+        new DefaultElevatorRunAtVelocity(elevatorSubsystem, () -> -getElevatorAxis()));
     // blingSubsystem.setDefaultCommand(
-    // new NoAllianceWaiting(blingSubsystem).andThen(new SetToAllianceColor(blingSubsystem)));
+    //    new NoAllianceWaiting(blingSubsystem).andThen(new SetToAllianceColor(blingSubsystem)));
   }
 
   private void configureLogicCommands() {
+    // Elevator
+    elevatorStowButton.onTrue(
+        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.STOWED));
+    elevatorL2Button.onTrue(
+        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L2_PLACE));
+    elevatorL3Button.onTrue(
+        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L3_PLACE));
+    elevatorL4Button.onTrue(
+        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L4_PLACE));
     wristTestButton.whileTrue(new WristRunToAngle(Degrees.of(90), wristSubsystem));
     intakeTestButton.whileTrue(
         new DefaultCoralIntakeOpenLoop(() -> Double.valueOf(10), coralIntakeSubsystem));
-    // Enabled state
-    enablePathfindingButton.onChange(autoCycleSubsystem.togglePathfinding());
-    enableFullAutoPathfindingButton.onTrue(new FullAutoCycle(autoCycleSubsystem).repeatedly());
-
-    // Auto Cycle Reef Branch Controls
-    cycleSelectedBranchRightButton.onTrue(autoCycleSubsystem.cycleReefBranchRight());
-    cycleSelectedBranchLeftButton.onTrue(autoCycleSubsystem.cycleReefBranchLeft());
-    cycleLevelUpButton.onTrue(autoCycleSubsystem.cycleReefLevelUp());
-    cycleLevelDownButton.onTrue(autoCycleSubsystem.cycleReefLevelDown());
-    pathfindToSelectedReefBranchButton.toggleOnTrue(new PathfindToReef(autoCycleSubsystem));
-
-    // Auto Cycle Coral Station Controls
-    cycleCoralStationSideLeftButton.onTrue(autoCycleSubsystem.cycleCoralStationSideLeft());
-    cycleCoralStationSideRightButton.onTrue(autoCycleSubsystem.cycleCoralStationSideRight());
-    cycleCoralStationPickupPositionLeftButton.onTrue(
-        autoCycleSubsystem.cycleCoralStationPositionLeft());
-    cycleCoralStationPickupPositionRightButton.onTrue(
-        autoCycleSubsystem.cycleCoralStationPositionRight());
-    pathfindToSelectedCoralStationButton.toggleOnTrue(
-        new PathfindToCoralStation(autoCycleSubsystem));
-
-    hasDriverInput.whileTrue(new DriverInterruptCommand(autoCycleSubsystem));
   }
 
   private void configureAutoChooser() {

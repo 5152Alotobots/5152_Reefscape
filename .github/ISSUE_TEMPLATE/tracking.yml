@@ -1,0 +1,101 @@
+name: Tracking Issue
+description: Track progress on a multi-part component or system
+title: "[TRACKING]: "
+labels: ["documentation"]
+body:
+  - type: dropdown
+    id: system-type
+    attributes:
+      label: System Type
+      description: What overall system is being tracked?
+      options:
+        - CORAL Handling System
+        - ALGAE Handling System
+        - Climber System
+        - Autonomous System
+        - Vision System
+        - Drive Train
+        - Complete Robot Integration
+    validations:
+      required: true
+  - type: textarea
+    id: system-overview
+    attributes:
+      label: System Overview
+      description: Provide a high-level description of the system being tracked
+      placeholder: "Description of the complete system purpose and components..."
+    validations:
+      required: true
+  - type: textarea
+    id: component-issues
+    attributes:
+      label: Component Issues
+      description: List all related issues that make up this system (use #issue-number format)
+      placeholder: "- #123 Intake Mechanism\n- #124 Transfer System\n- #125 Scoring Mechanism..."
+    validations:
+      required: true
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies
+      description: List any external dependencies or blockers
+      placeholder: "- Field elements needed\n- Other systems that must be completed\n- Resources required..."
+    validations:
+      required: false
+  - type: textarea
+    id: integration-plan
+    attributes:
+      label: Integration Plan
+      description: How will these components be integrated into the final system?
+      placeholder: "Steps for bringing individual components together..."
+    validations:
+      required: true
+  - type: textarea
+    id: testing-criteria
+    attributes:
+      label: Testing Criteria
+      description: How will the complete system be tested?
+      placeholder: "Overall system success metrics and testing methodology..."
+    validations:
+      required: true
+  - type: dropdown
+    id: completion-status
+    attributes:
+      label: Completion Status
+      description: Current status of the overall tracking issue
+      options:
+        - Planning (0%)
+        - Early Development (25%)
+        - Active Development (50%)
+        - Integration Testing (75%)
+        - Complete (100%)
+    validations:
+      required: true
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority Level
+      description: How critical is this system to robot functionality?
+      options:
+        - P0-Critical
+        - P1-High
+        - P2-Medium
+        - P3-Low
+    validations:
+      required: true
+  - type: textarea
+    id: additional-notes
+    attributes:
+      label: Additional Notes
+      description: Any other information relevant to tracking this system
+      placeholder: "Timeline considerations, resource requirements, etc..."
+    validations:
+      required: false
+  - type: input
+    id: meme-upload
+    attributes:
+      label: Mandatory Meme Upload
+      description: Please upload a relevant (or completely random) meme
+      placeholder: "Drag and drop your meme image here or click to upload"
+    validations:
+      required: true

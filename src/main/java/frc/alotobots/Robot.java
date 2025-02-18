@@ -162,7 +162,9 @@ public class Robot extends LoggedRobot {
   /** Called periodically during simulation mode. */
   @Override
   public void simulationPeriodic() {
-    SimulatedArena.getInstance().simulationPeriodic();
-    robotContainer.displaySimFieldToAdvantageScope();
+    if (Constants.currentMode == Constants.Mode.SIM) {
+      SimulatedArena.getInstance().simulationPeriodic();
+      robotContainer.displaySimFieldToAdvantageScope();
+    }
   }
 }

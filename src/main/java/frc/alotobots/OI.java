@@ -12,6 +12,7 @@
 */
 package frc.alotobots;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -27,8 +28,15 @@ public class OI {
    */
   public static final double DEADBAND = 0.1;
 
+  /** Driver controller ID */
+  private static final int DRIVER_CONTROLLER_ID = 0;
+
+  /** Co-Driver controller ID */
+  private static final int CO_DRIVER_CONTROLLER_ID = 1;
+
   /** The primary driver's controller. Used for main robot control functions. */
-  private static final CommandXboxController driverController = new CommandXboxController(0);
+  private static final CommandXboxController driverController =
+      new CommandXboxController(DRIVER_CONTROLLER_ID);
 
   private static final CommandXboxController auxController = new CommandXboxController(1);
 
@@ -36,9 +44,9 @@ public class OI {
   public static final Trigger hasDriverInput =
       new Trigger(
           () ->
-              Math.abs(driverController.getLeftX()) > DEADBAND
-                  || Math.abs(driverController.getLeftY()) > DEADBAND
-                  || Math.abs(driverController.getRightX()) > DEADBAND);
+              MathUtil.applyDeadband(driverController.getLeftX(), DEADBAND) != 0
+                  || MathUtil.applyDeadband(driverController.getLeftY(), DEADBAND) != 0
+                  || MathUtil.applyDeadband(driverController.getRightX(), DEADBAND) != 0);
 
   /**
    * Gets the forward/backward translation input from the driver's controller.
@@ -86,50 +94,39 @@ public class OI {
   }
 
   /**
-   * Gets the turtle (slow) speed control input value.
+   * Gets the wrist axis
    *
-   * @return Value between 0.0 and 1.0
+   * @return Value between -1.0 and 1.0
    */
   public static double getWristAxis() {
-    return auxController.getLeftY();
+    return MathUtil.applyDeadband(auxController.getLeftY(), DEADBAND);
   }
 
   public static Trigger wristTestButton = auxController.a();
   public static Trigger intakeTestButton = auxController.b();
 
-  /** Enable pathfinding */
-  public static Trigger enablePathfindingButton = driverController.back();
+  /** The co-driver driver's controller. Used for secondary robot control functions. */
+  private static final CommandXboxController codriverController =
+      new CommandXboxController(CO_DRIVER_CONTROLLER_ID);
 
-  /** Enable auto pathfinding */
-  public static Trigger enableFullAutoPathfindingButton = driverController.start();
+  /** Sets the elevator to stow position */
+  public static Trigger elevatorStowButton = codriverController.a();
 
-  /** Pathfind to the selected branch */
-  public static Trigger pathfindToSelectedReefBranchButton = driverController.y();
+  /** Sets the elevator to L2 position */
+  public static Trigger elevatorL2Button = codriverController.b();
 
-  /** Pathfind to the selected coral station */
-  public static Trigger pathfindToSelectedCoralStationButton = driverController.a();
+  /** Sets the elevator to L3 position */
+  public static Trigger elevatorL3Button = codriverController.x();
 
-  /** Cycles the selected pickup position one to the left */
-  public static Trigger cycleCoralStationPickupPositionLeftButton = driverController.x();
+  /** Sets the elevator to L4 position */
+  public static Trigger elevatorL4Button = codriverController.y();
 
-  /** Cycles the selected pickup position one to the right */
-  public static Trigger cycleCoralStationPickupPositionRightButton = driverController.b();
-
-  /** Cycles the selected coral station one to the left */
-  public static Trigger cycleCoralStationSideLeftButton = driverController.leftBumper();
-
-  /** Cycles the selected coral station one to the right */
-  public static Trigger cycleCoralStationSideRightButton = driverController.rightBumper();
-
-  /** Cycles the selected branch one to the left */
-  public static Trigger cycleSelectedBranchLeftButton = driverController.povLeft();
-
-  /** Cycles the selected branch one to the right */
-  public static Trigger cycleSelectedBranchRightButton = driverController.povRight();
-
-  /** Cycles the branch level up once */
-  public static Trigger cycleLevelUpButton = driverController.povUp();
-
-  /** Cycles the branch level down once */
-  public static Trigger cycleLevelDownButton = driverController.povDown();
+  /**
+   * Gets the open loop elevator input from the co-driver controller
+   *
+   * @return Value between -1.0 (down) and 1.0 (up)
+   */
+  public static double getElevatorAxis() {
+    return MathUtil.applyDeadband(codriverController.getRightY(), DEADBAND);
+  }
 }

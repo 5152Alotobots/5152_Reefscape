@@ -23,7 +23,7 @@ import lombok.experimental.UtilityClass;
  */
 public final class Constants {
   /** The simulation mode to use when not running on real hardware. */
-  public static final Mode simMode = Mode.SIM;
+  public static final Mode simMode = Mode.REPLAY;
 
   /** The current runtime mode, determined by whether running on real hardware or in simulation. */
   public static final Mode currentMode = RobotBase.isReal() ? Mode.REAL : simMode;
@@ -55,14 +55,28 @@ public final class Constants {
     /** Pneumatic Control Module CAN ID */
     public static final int PCM_CAN_ID = 2;
 
-    /** CANdle LED controller CAN ID */
-    public static final int CANDLE_CAN_ID = 40;
+    /** Left Elevator CAN ID */
+    public static final int LEFT_ELEVATOR_CAN_ID = 30;
+
+    /** Right Elevator CAN ID */
+    public static final int RIGHT_ELEVATOR_CAN_ID = 31;
+
+    /** Elevator CANrange CAN ID */
+    public static final int ELEVATOR_CANRANGE_ID = 32;
 
     /** Wrist Motor CAN ID */
     public static final int WRIST_MOTOR_CAN_ID = 33;
 
+    /** Wrist Encoder CAN ID */
     public static final int WRIST_ENCODER_CAN_ID = 34;
+
+    /** Intake Motor CAN ID */
     public static final int INTAKE_MOTOR_CAN_ID = 35;
+
+    /** Intake CANrange CAN ID */
     public static final int INTAKE_CANRANGE_ID = 36;
+
+    /** CANdle LED controller CAN ID */
+    public static final int CANDLE_CAN_ID = 40;
   }
 }
