@@ -29,6 +29,9 @@ frc.alotobots.library.subsystems.vision.photonvision.objectdetection.constants
 frc.alotobots.library.subsystems.vision.photonvision.objectdetection.io
 frc.alotobots.library.subsystems.vision.photonvision.objectdetection.util
 frc.alotobots.reefscape
-frc.alotobots.reefscape.commands.scoring.reef.alignment
-frc.alotobots.reefscape.commands.scoring.reef.alignment.constants
+frc.alotobots.reefscape.subsystems.elevator
+frc.alotobots.reefscape.subsystems.elevator.commands
+frc.alotobots.reefscape.subsystems.elevator.constants
+frc.alotobots.reefscape.subsystems.elevator.io
+frc.alotobots.reefscape.util
 frc.alotobots.util

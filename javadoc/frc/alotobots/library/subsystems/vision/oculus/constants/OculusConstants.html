@@ -112,6 +112,18 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">Transform from the robot center to the headset.</div>
 </div>
+<div class="col-first odd-row-color"><code>static final double</code></div>
+<div class="col-second odd-row-color"><code><a href="#SIM_TRUST_ROTATION" class="member-name-link">SIM_TRUST_ROTATION</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">The divisor to divide the rotational std devs by for simulation (how much we trust our sim)
+ Higher = more trust</div>
+</div>
+<div class="col-first even-row-color"><code>static final double</code></div>
+<div class="col-second even-row-color"><code><a href="#SIM_TRUST_TRANSLATION" class="member-name-link">SIM_TRUST_TRANSLATION</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">The divisor to divide the translational std devs by for simulation (how much we trust our sim)
+ Higher = more trust</div>
+</div>
 </div>
 </section>
 </li>
@@ -206,8 +218,40 @@ loadScripts(document, 'script');</script>
 <h3>OCULUS_STD_DEVS</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/math/Matrix.html" title="class or interface in edu.wpi.first.math" class="external-link">Matrix</a>&lt;<a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/math/numbers/N3.html" title="class or interface in edu.wpi.first.math.numbers" class="external-link">N3</a>,<wbr><a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/math/numbers/N1.html" title="class or interface in edu.wpi.first.math.numbers" class="external-link">N1</a>&gt;</span>&nbsp;<span class="element-name">OCULUS_STD_DEVS</span></div>
 <div class="block">Standard deviations representing how much we "trust" the position from the Oculus. By default,
- the Quest 3 provides sub-millimeter accuracy. Values represent: [0]: X position trust (5mm)
- [1]: Y position trust (5mm) [2]: Rotation trust (~2.87 degrees)</div>
+ the Quest 3 provides sub-centimeter accuracy. Values represent: [0]: X position trust (50mm)
+ [1]: Y position trust (50mm) [2]: Rotation trust (~2.87 degrees)</div>
+</section>
+</li>
+<li>
+<section class="detail" id="SIM_TRUST_TRANSLATION">
+<h3>SIM_TRUST_TRANSLATION</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">SIM_TRUST_TRANSLATION</span></div>
+<div class="block">The divisor to divide the translational std devs by for simulation (how much we trust our sim)
+ Higher = more trust</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../../../../../../../constant-values.html#frc.alotobots.library.subsystems.vision.oculus.constants.OculusConstants.SIM_TRUST_TRANSLATION">Constant Field Values</a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="SIM_TRUST_ROTATION">
+<h3>SIM_TRUST_ROTATION</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">SIM_TRUST_ROTATION</span></div>
+<div class="block">The divisor to divide the rotational std devs by for simulation (how much we trust our sim)
+ Higher = more trust</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../../../../../../../constant-values.html#frc.alotobots.library.subsystems.vision.oculus.constants.OculusConstants.SIM_TRUST_ROTATION">Constant Field Values</a></li>
+</ul>
+</dd>
+</dl>
 </section>
 </li>
 </ul>

@@ -43,7 +43,7 @@ loadScripts(document, 'script');</script>
 <div>
 <ul class="sub-nav-list">
 <li>Summary:&nbsp;</li>
-<li><a href="#nested-class-summary">Nested</a>&nbsp;|&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor-summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-summary">Method</a></li>
@@ -82,23 +82,6 @@ loadScripts(document, 'script');</script>
 </section>
 <section class="summary">
 <ul class="summary-list">
-<!-- ======== NESTED CLASS SUMMARY ======== -->
-<li>
-<section class="nested-class-summary" id="nested-class-summary">
-<h2>Nested Class Summary</h2>
-<div class="caption"><span>Nested Classes</span></div>
-<div class="summary-table three-column-summary">
-<div class="table-header col-first">Modifier and Type</div>
-<div class="table-header col-second">Class</div>
-<div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>static enum&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="PathPlannerManager.HPStation.html" class="type-name-link" title="enum class in frc.alotobots.library.subsystems.swervedrive.util">PathPlannerManager.HPStation</a></code></div>
-<div class="col-last even-row-color">
-<div class="block">Enum representing which human player station we're approaching from</div>
-</div>
-</div>
-</section>
-</li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <li>
 <section class="constructor-summary" id="constructor-summary">
@@ -125,17 +108,43 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/Command.html" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">Command</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPathFinderCommand(edu.wpi.first.math.geometry.Pose2d,edu.wpi.first.units.measure.LinearVelocity)" class="member-name-link">getPathFinderCommand</a><wbr>(<a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/math/geometry/Pose2d.html" title="class or interface in edu.wpi.first.math.geometry" class="external-link">Pose2d</a>&nbsp;target,
- edu.wpi.first.units.measure.LinearVelocity&nbsp;velocity)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/math/geometry/Pose2d.html" title="class or interface in edu.wpi.first.math.geometry" class="external-link">Pose2d</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPathEndPose(java.lang.String)" class="member-name-link">getPathEndPose</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;pathName)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Creates a pathfinding command to the specified pose.</div>
+<div class="block">Gets the final target pose from a PathPlanner path.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/Command.html" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">Command</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPathfindToReefBranchCommand(frc.alotobots.reefscape.FieldConstants.ReefBranch,frc.alotobots.reefscape.FieldConstants.Level)" class="member-name-link">getPathfindToReefBranchCommand</a><wbr>(<a href="../../../../reefscape/FieldConstants.ReefBranch.html" title="enum class in frc.alotobots.reefscape">FieldConstants.ReefBranch</a>&nbsp;branch,
- <a href="../../../../reefscape/FieldConstants.Level.html" title="enum class in frc.alotobots.reefscape">FieldConstants.Level</a>&nbsp;level)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPathFinderCommand(edu.wpi.first.math.geometry.Pose2d,edu.wpi.first.units.measure.LinearVelocity)" class="member-name-link">getPathFinderCommand</a><wbr>(<a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/math/geometry/Pose2d.html" title="class or interface in edu.wpi.first.math.geometry" class="external-link">Pose2d</a>&nbsp;target,
+ edu.wpi.first.units.measure.LinearVelocity&nbsp;velocity)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Creates a command that will pathfind to and then follow a pre-made path to the target branch.</div>
+<div class="block">Creates a pathfinding command to the specified pose.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/Command.html" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">Command</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPathfindThenFollowPathCommand(java.lang.String)" class="member-name-link">getPathfindThenFollowPathCommand</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;pathName)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/math/geometry/Pose2d.html" title="class or interface in edu.wpi.first.math.geometry" class="external-link">Pose2d</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPathStartPose(java.lang.String)" class="member-name-link">getPathStartPose</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;pathName)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Gets the starting pose from a PathPlanner path.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/math/geometry/Pose2d.html" title="class or interface in edu.wpi.first.math.geometry" class="external-link">Pose2d</a>&gt;&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPathTrajectory(java.lang.String)" class="member-name-link">getPathTrajectory</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;pathName)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Gets the trajectory points for a given path name.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#nearEndOfPath(java.lang.String,double,double)" class="member-name-link">nearEndOfPath</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;pathName,
+ double&nbsp;translationalTolerance,
+ double&nbsp;rotationalTolerance)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Whether the current robot pose is near the end of a path</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#nearStartOfPath(java.lang.String,double,double)" class="member-name-link">nearStartOfPath</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;pathName,
+ double&nbsp;translationalTolerance,
+ double&nbsp;rotationalTolerance)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Whether the current robot pose is near the start of a path</div>
 </div>
 </div>
 </div>
@@ -189,17 +198,87 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="getPathfindToReefBranchCommand(frc.alotobots.reefscape.FieldConstants.ReefBranch,frc.alotobots.reefscape.FieldConstants.Level)">
-<h3>getPathfindToReefBranchCommand</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/Command.html" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">Command</a></span>&nbsp;<span class="element-name">getPathfindToReefBranchCommand</span><wbr><span class="parameters">(<a href="../../../../reefscape/FieldConstants.ReefBranch.html" title="enum class in frc.alotobots.reefscape">FieldConstants.ReefBranch</a>&nbsp;branch,
- <a href="../../../../reefscape/FieldConstants.Level.html" title="enum class in frc.alotobots.reefscape">FieldConstants.Level</a>&nbsp;level)</span></div>
-<div class="block">Creates a command that will pathfind to and then follow a pre-made path to the target branch.</div>
+<section class="detail" id="getPathfindThenFollowPathCommand(java.lang.String)">
+<h3>getPathfindThenFollowPathCommand</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/Command.html" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">Command</a></span>&nbsp;<span class="element-name">getPathfindThenFollowPathCommand</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;pathName)</span></div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>branch</code> - Target branch</dd>
-<dd><code>level</code> - Target level</dd>
+<dd><code>pathName</code> - The path name to follow after pathfinding to it</dd>
 <dt>Returns:</dt>
-<dd>Combined pathfind and follow command, or null if path loading fails</dd>
+<dd>The command to be scheduled</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getPathStartPose(java.lang.String)">
+<h3>getPathStartPose</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/math/geometry/Pose2d.html" title="class or interface in edu.wpi.first.math.geometry" class="external-link">Pose2d</a>&gt;</span>&nbsp;<span class="element-name">getPathStartPose</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;pathName)</span></div>
+<div class="block">Gets the starting pose from a PathPlanner path.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>pathName</code> - The name of the path to load</dd>
+<dt>Returns:</dt>
+<dd>Optional containing the starting pose, or empty if path cannot be loaded</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getPathEndPose(java.lang.String)">
+<h3>getPathEndPose</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/math/geometry/Pose2d.html" title="class or interface in edu.wpi.first.math.geometry" class="external-link">Pose2d</a>&gt;</span>&nbsp;<span class="element-name">getPathEndPose</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;pathName)</span></div>
+<div class="block">Gets the final target pose from a PathPlanner path.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>pathName</code> - The name of the path to load</dd>
+<dt>Returns:</dt>
+<dd>Optional containing the final pose, or empty if path cannot be loaded</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="nearEndOfPath(java.lang.String,double,double)">
+<h3>nearEndOfPath</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">nearEndOfPath</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;pathName,
+ double&nbsp;translationalTolerance,
+ double&nbsp;rotationalTolerance)</span></div>
+<div class="block">Whether the current robot pose is near the end of a path</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>pathName</code> - The path name to get the end pose from</dd>
+<dd><code>translationalTolerance</code> - The translational tolerance in meters</dd>
+<dd><code>rotationalTolerance</code> - The rotational tolerance in radians</dd>
+<dt>Returns:</dt>
+<dd>true if near the end of a path</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="nearStartOfPath(java.lang.String,double,double)">
+<h3>nearStartOfPath</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">nearStartOfPath</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;pathName,
+ double&nbsp;translationalTolerance,
+ double&nbsp;rotationalTolerance)</span></div>
+<div class="block">Whether the current robot pose is near the start of a path</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>pathName</code> - The path name to get the end pose from</dd>
+<dd><code>translationalTolerance</code> - The translational tolerance in meters</dd>
+<dd><code>rotationalTolerance</code> - The rotational tolerance in radians</dd>
+<dt>Returns:</dt>
+<dd>true if near the start of a path</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getPathTrajectory(java.lang.String)">
+<h3>getPathTrajectory</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/math/geometry/Pose2d.html" title="class or interface in edu.wpi.first.math.geometry" class="external-link">Pose2d</a>&gt;&gt;</span>&nbsp;<span class="element-name">getPathTrajectory</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;pathName)</span></div>
+<div class="block">Gets the trajectory points for a given path name.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>pathName</code> - The name of the path to get the trajectory for</dd>
+<dt>Returns:</dt>
+<dd>Optional containing List of Pose2d points if path exists, empty Optional otherwise</dd>
 </dl>
 </section>
 </li>

@@ -98,24 +98,29 @@ loadScripts(document, 'script');</script>
 <div class="block">The minimum value that joystick inputs must exceed to be registered.</div>
 </div>
 <div class="col-first odd-row-color"><code>static <a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#driveFacingBestObjectButton" class="member-name-link">driveFacingBestObjectButton</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#elevatorL2Button" class="member-name-link">elevatorL2Button</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">Button for activating the drive facing best object command.</div>
+<div class="block">Sets the elevator to L2 position</div>
 </div>
 <div class="col-first even-row-color"><code>static <a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></code></div>
-<div class="col-second even-row-color"><code><a href="#pathfindToBestObjectButton" class="member-name-link">pathfindToBestObjectButton</a></code></div>
+<div class="col-second even-row-color"><code><a href="#elevatorL3Button" class="member-name-link">elevatorL3Button</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">Button for activating the pathfind to best object command.</div>
+<div class="block">Sets the elevator to L3 position</div>
 </div>
 <div class="col-first odd-row-color"><code>static <a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#testButton" class="member-name-link">testButton</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#elevatorL4Button" class="member-name-link">elevatorL4Button</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">A temporary test button.</div>
+<div class="block">Sets the elevator to L4 position</div>
 </div>
 <div class="col-first even-row-color"><code>static <a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></code></div>
-<div class="col-second even-row-color"><code><a href="#testButton2" class="member-name-link">testButton2</a></code></div>
+<div class="col-second even-row-color"><code><a href="#elevatorStowButton" class="member-name-link">elevatorStowButton</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">A temporary test button.</div>
+<div class="block">Sets the elevator to stow position</div>
+</div>
+<div class="col-first odd-row-color"><code>static final <a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#hasDriverInput" class="member-name-link">hasDriverInput</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">Trigger for when the driver is using the controller sticks to control the chassis</div>
 </div>
 </div>
 </section>
@@ -145,28 +150,33 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static double</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getRotationAxis()" class="member-name-link">getRotationAxis</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getElevatorAxis()" class="member-name-link">getElevatorAxis</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Gets the open loop elevator input from the co-driver controller</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static double</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getRotationAxis()" class="member-name-link">getRotationAxis</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Gets the rotation input from the driver's controller.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static double</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getTranslateForwardAxis()" class="member-name-link">getTranslateForwardAxis</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static double</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getTranslateForwardAxis()" class="member-name-link">getTranslateForwardAxis</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Gets the forward/backward translation input from the driver's controller.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static double</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getTranslateStrafeAxis()" class="member-name-link">getTranslateStrafeAxis</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static double</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getTranslateStrafeAxis()" class="member-name-link">getTranslateStrafeAxis</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Gets the left/right translation input from the driver's controller.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static double</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getTurboSpeedTrigger()" class="member-name-link">getTurboSpeedTrigger</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static double</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getTurboSpeedTrigger()" class="member-name-link">getTurboSpeedTrigger</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Gets the turbo (fast) speed control input value.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static double</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getTurtleSpeedTrigger()" class="member-name-link">getTurtleSpeedTrigger</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static double</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getTurtleSpeedTrigger()" class="member-name-link">getTurtleSpeedTrigger</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Gets the turtle (slow) speed control input value.</div>
 </div>
 </div>
@@ -203,31 +213,38 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="driveFacingBestObjectButton">
-<h3>driveFacingBestObjectButton</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></span>&nbsp;<span class="element-name">driveFacingBestObjectButton</span></div>
-<div class="block">Button for activating the drive facing best object command.</div>
+<section class="detail" id="hasDriverInput">
+<h3>hasDriverInput</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></span>&nbsp;<span class="element-name">hasDriverInput</span></div>
+<div class="block">Trigger for when the driver is using the controller sticks to control the chassis</div>
 </section>
 </li>
 <li>
-<section class="detail" id="pathfindToBestObjectButton">
-<h3>pathfindToBestObjectButton</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></span>&nbsp;<span class="element-name">pathfindToBestObjectButton</span></div>
-<div class="block">Button for activating the pathfind to best object command.</div>
+<section class="detail" id="elevatorStowButton">
+<h3>elevatorStowButton</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></span>&nbsp;<span class="element-name">elevatorStowButton</span></div>
+<div class="block">Sets the elevator to stow position</div>
 </section>
 </li>
 <li>
-<section class="detail" id="testButton">
-<h3>testButton</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></span>&nbsp;<span class="element-name">testButton</span></div>
-<div class="block">A temporary test button.</div>
+<section class="detail" id="elevatorL2Button">
+<h3>elevatorL2Button</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></span>&nbsp;<span class="element-name">elevatorL2Button</span></div>
+<div class="block">Sets the elevator to L2 position</div>
 </section>
 </li>
 <li>
-<section class="detail" id="testButton2">
-<h3>testButton2</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></span>&nbsp;<span class="element-name">testButton2</span></div>
-<div class="block">A temporary test button.</div>
+<section class="detail" id="elevatorL3Button">
+<h3>elevatorL3Button</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></span>&nbsp;<span class="element-name">elevatorL3Button</span></div>
+<div class="block">Sets the elevator to L3 position</div>
+</section>
+</li>
+<li>
+<section class="detail" id="elevatorL4Button">
+<h3>elevatorL4Button</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></span>&nbsp;<span class="element-name">elevatorL4Button</span></div>
+<div class="block">Sets the elevator to L4 position</div>
 </section>
 </li>
 </ul>
@@ -304,6 +321,17 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>Value between 0.0 and 1.0</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getElevatorAxis()">
+<h3>getElevatorAxis</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">getElevatorAxis</span>()</div>
+<div class="block">Gets the open loop elevator input from the co-driver controller</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>Value between -1.0 (down) and 1.0 (up)</dd>
 </dl>
 </section>
 </li>

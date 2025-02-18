@@ -43,7 +43,7 @@ loadScripts(document, 'script');</script>
 <div>
 <ul class="sub-nav-list">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested-class-summary">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor-summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-summary">Method</a></li>
@@ -75,11 +75,29 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">PhoenixUtil</span>
+<div class="type-signature"><span class="modifiers">public final class </span><span class="element-name type-name-label">PhoenixUtil</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+<li>
+<section class="nested-class-summary" id="nested-class-summary">
+<h2>Nested Class Summary</h2>
+<div class="caption"><span>Nested Classes</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Class</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static class&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="PhoenixUtil.TalonFXMotorControllerSim.html" class="type-name-link" title="class in frc.alotobots.util">PhoenixUtil.TalonFXMotorControllerSim</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static class&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="PhoenixUtil.TalonFXMotorControllerWithRemoteCancoderSim.html" class="type-name-link" title="class in frc.alotobots.util">PhoenixUtil.TalonFXMotorControllerWithRemoteCancoderSim</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <li>
 <section class="constructor-summary" id="constructor-summary">
@@ -104,10 +122,13 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#tryUntilOk(int,java.util.function.Supplier)" class="member-name-link">tryUntilOk</a><wbr>(int&nbsp;maxAttempts,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static double[]</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getSimulationOdometryTimeStamps()" class="member-name-link">getSimulationOdometryTimeStamps</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#tryUntilOk(int,java.util.function.Supplier)" class="member-name-link">tryUntilOk</a><wbr>(int&nbsp;maxAttempts,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Supplier.html" title="class or interface in java.util.function" class="external-link">Supplier</a>&lt;com.ctre.phoenix6.StatusCode&gt;&nbsp;command)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Attempts to run the command until no error is produced.</div>
 </div>
 </div>
@@ -147,6 +168,12 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">tryUntilOk</span><wbr><span class="parameters">(int&nbsp;maxAttempts,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Supplier.html" title="class or interface in java.util.function" class="external-link">Supplier</a>&lt;com.ctre.phoenix6.StatusCode&gt;&nbsp;command)</span></div>
 <div class="block">Attempts to run the command until no error is produced.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getSimulationOdometryTimeStamps()">
+<h3>getSimulationOdometryTimeStamps</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">double[]</span>&nbsp;<span class="element-name">getSimulationOdometryTimeStamps</span>()</div>
 </section>
 </li>
 </ul>

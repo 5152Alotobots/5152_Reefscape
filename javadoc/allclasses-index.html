@@ -59,12 +59,6 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Class</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/reefscape/commands/scoring/reef/alignment/AlignToReefBranch.html" title="class in frc.alotobots.reefscape.commands.scoring.reef.alignment">AlignToReefBranch</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
-<div class="block">A command that aligns the robot to a specific reef branch at a given level.</div>
-</div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/reefscape/commands/scoring/reef/alignment/constants/AlignToReefBranchConstants.html" title="class in frc.alotobots.reefscape.commands.scoring.reef.alignment.constants">AlignToReefBranchConstants</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
 <div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/vision/photonvision/apriltag/constants/AprilTagConstants.html" title="class in frc.alotobots.library.subsystems.vision.photonvision.apriltag.constants">AprilTagConstants</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
 <div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="frc/alotobots/library/subsystems/vision/photonvision/apriltag/io/AprilTagIO.html" title="interface in frc.alotobots.library.subsystems.vision.photonvision.apriltag.io">AprilTagIO</a></div>
@@ -155,8 +149,18 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab3">
 <div class="block">Defines the possible runtime modes for the robot code.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/swervedrive/commands/DefaultDrive.html" title="class in frc.alotobots.library.subsystems.swervedrive.commands">DefaultDrive</a></div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/reefscape/subsystems/elevator/constants/ControlType.html" title="class in frc.alotobots.reefscape.subsystems.elevator.constants">ControlType</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab3"><a href="frc/alotobots/reefscape/subsystems/elevator/constants/ControlType.ClosedLoop.html" title="enum class in frc.alotobots.reefscape.subsystems.elevator.constants">ControlType.ClosedLoop</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab3"><a href="frc/alotobots/reefscape/subsystems/elevator/constants/ControlType.OpenLoop.html" title="enum class in frc.alotobots.reefscape.subsystems.elevator.constants">ControlType.OpenLoop</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/swervedrive/commands/DefaultDrive.html" title="class in frc.alotobots.library.subsystems.swervedrive.commands">DefaultDrive</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/reefscape/subsystems/elevator/commands/DefaultElevatorRunAtVelocity.html" title="class in frc.alotobots.reefscape.subsystems.elevator.commands">DefaultElevatorRunAtVelocity</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="block">Default command that runs the elevator at a specified velocity.</div>
+</div>
 <div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/swervedrive/util/DriveCalculator.html" title="class in frc.alotobots.library.subsystems.swervedrive.util">DriveCalculator</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
 <div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/swervedrive/commands/DriveFacingAngle.html" title="class in frc.alotobots.library.subsystems.swervedrive.commands">DriveFacingAngle</a></div>
@@ -168,45 +172,146 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/swervedrive/commands/DriveFacingPose.html" title="class in frc.alotobots.library.subsystems.swervedrive.commands">DriveFacingPose</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/util/Elastic.html" title="class in frc.alotobots.util">Elastic</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/util/Elastic.ElasticNotification.html" title="class in frc.alotobots.util">Elastic.ElasticNotification</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/swervedrive/commands/DrivePrecisionAlign.html" title="class in frc.alotobots.library.subsystems.swervedrive.commands">DrivePrecisionAlign</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="block">Handles precision alignment requests to a target pose using PathPlanner's holonomic drive
+ controller.</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/util/Elastic.html" title="class in frc.alotobots.util">Elastic</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/util/Elastic.ElasticNotification.html" title="class in frc.alotobots.util">Elastic.ElasticNotification</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Represents a notification object to be sent to the Elastic dashboard.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab3"><a href="frc/alotobots/util/Elastic.ElasticNotification.NotificationLevel.html" title="enum class in frc.alotobots.util">Elastic.ElasticNotification.NotificationLevel</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab3">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab3"><a href="frc/alotobots/util/Elastic.ElasticNotification.NotificationLevel.html" title="enum class in frc.alotobots.util">Elastic.ElasticNotification.NotificationLevel</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab3">
 <div class="block">Represents the possible levels of notifications for the Elastic dashboard.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/swervedrive/commands/FeedforwardCharacterization.html" title="class in frc.alotobots.library.subsystems.swervedrive.commands">FeedforwardCharacterization</a></div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/reefscape/subsystems/elevator/constants/ElevatorConstants.html" title="class in frc.alotobots.reefscape.subsystems.elevator.constants">ElevatorConstants</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="block">Constants for the Elevator subsystem.</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/reefscape/subsystems/elevator/constants/ElevatorConstants.Limits.html" title="class in frc.alotobots.reefscape.subsystems.elevator.constants">ElevatorConstants.Limits</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="block">Physical limits and safety thresholds</div>
+</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/reefscape/subsystems/elevator/constants/ElevatorConstants.Setpoints.html" title="class in frc.alotobots.reefscape.subsystems.elevator.constants">ElevatorConstants.Setpoints</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="block">Position setpoints for different elevator states</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="frc/alotobots/reefscape/subsystems/elevator/io/ElevatorIO.html" title="interface in frc.alotobots.reefscape.subsystems.elevator.io">ElevatorIO</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="block">Interface for elevator input/output operations.</div>
+</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/reefscape/subsystems/elevator/io/ElevatorIO.ElevatorIOInputs.html" title="class in frc.alotobots.reefscape.subsystems.elevator.io">ElevatorIO.ElevatorIOInputs</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="block">Class containing all input values from elevator sensors and motors.</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/reefscape/subsystems/elevator/io/ElevatorIOInputsAutoLogged.html" title="class in frc.alotobots.reefscape.subsystems.elevator.io">ElevatorIOInputsAutoLogged</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/reefscape/subsystems/elevator/io/ElevatorIOTalonFXReal.html" title="class in frc.alotobots.reefscape.subsystems.elevator.io">ElevatorIOTalonFXReal</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="block">Hardware implementation of the Elevator subsystem using TalonFX motors and a CANRange sensor.</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/reefscape/subsystems/elevator/io/ElevatorIOTalonFXSim.html" title="class in frc.alotobots.reefscape.subsystems.elevator.io">ElevatorIOTalonFXSim</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/reefscape/subsystems/elevator/commands/ElevatorOpenLoop.html" title="class in frc.alotobots.reefscape.subsystems.elevator.commands">ElevatorOpenLoop</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="block">Default command for manual control of the elevator using percent output.</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/reefscape/subsystems/elevator/commands/ElevatorRunToHeight.html" title="class in frc.alotobots.reefscape.subsystems.elevator.commands">ElevatorRunToHeight</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="block">Command that moves the elevator to a specified target height.</div>
+</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/reefscape/subsystems/elevator/ElevatorSubsystem.html" title="class in frc.alotobots.reefscape.subsystems.elevator">ElevatorSubsystem</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="block">The Elevator subsystem controls the vertical movement of the robot's elevator mechanism.</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/reefscape/subsystems/elevator/constants/ElevatorTalonFXRealConstants.html" title="class in frc.alotobots.reefscape.subsystems.elevator.constants">ElevatorTalonFXRealConstants</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="block">Constants for the physical elevator subsystem using TalonFX motors.</div>
+</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/reefscape/subsystems/elevator/constants/ElevatorTalonFXRealConstants.MotorSafetyLimits.html" title="class in frc.alotobots.reefscape.subsystems.elevator.constants">ElevatorTalonFXRealConstants.MotorSafetyLimits</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="block">Contains safety limit constants for the elevator motors.</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/reefscape/subsystems/elevator/constants/ElevatorTalonFXRealConstants.PIDConstants.html" title="class in frc.alotobots.reefscape.subsystems.elevator.constants">ElevatorTalonFXRealConstants.PIDConstants</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="block">Contains PID and motion control constants for different control modes.</div>
+</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/reefscape/subsystems/elevator/constants/ElevatorTalonFXRealConstants.PIDConstants.PositionPIDConstants.html" title="class in frc.alotobots.reefscape.subsystems.elevator.constants">ElevatorTalonFXRealConstants.PIDConstants.PositionPIDConstants</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="block">TalonFX-specific PID and motion control constants for Position mode (Position mode).</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/reefscape/subsystems/elevator/constants/ElevatorTalonFXRealConstants.PIDConstants.VelocityPIDConstants.html" title="class in frc.alotobots.reefscape.subsystems.elevator.constants">ElevatorTalonFXRealConstants.PIDConstants.VelocityPIDConstants</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="block">TalonFX-specific PID and motion control constants for velocity (Velocity mode).</div>
+</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/reefscape/subsystems/elevator/constants/ElevatorTalonFXSimConstants.html" title="class in frc.alotobots.reefscape.subsystems.elevator.constants">ElevatorTalonFXSimConstants</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="block">Constants for the simulated elevator subsystem using TalonFX motors.</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/reefscape/subsystems/elevator/constants/ElevatorTalonFXSimConstants.CagePIDConstants.html" title="class in frc.alotobots.reefscape.subsystems.elevator.constants">ElevatorTalonFXSimConstants.CagePIDConstants</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="block">TalonFX-specific PID and motion control constants for cage game piece (Cage mode).</div>
+</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/reefscape/subsystems/elevator/constants/ElevatorTalonFXSimConstants.CoralAlgaePIDConstants.html" title="class in frc.alotobots.reefscape.subsystems.elevator.constants">ElevatorTalonFXSimConstants.CoralAlgaePIDConstants</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="block">TalonFX-specific PID and motion control constants for coral/algae game piece (Coral/Algae
+ mode).</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/reefscape/subsystems/elevator/constants/ElevatorTalonFXSimConstants.EmptyPIDConstants.html" title="class in frc.alotobots.reefscape.subsystems.elevator.constants">ElevatorTalonFXSimConstants.EmptyPIDConstants</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="block">TalonFX-specific PID and motion control constants for no game piece (Empty mode).</div>
+</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/reefscape/subsystems/elevator/constants/ElevatorTalonFXSimConstants.HardwareConfig.html" title="class in frc.alotobots.reefscape.subsystems.elevator.constants">ElevatorTalonFXSimConstants.HardwareConfig</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="block">TalonFX-specific hardware configuration constants defining the mechanical properties of the
+ elevator system.</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/reefscape/subsystems/elevator/constants/ElevatorTalonFXSimConstants.Mechanics.html" title="class in frc.alotobots.reefscape.subsystems.elevator.constants">ElevatorTalonFXSimConstants.Mechanics</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="block">Physical dimensions and mechanical configuration of the elevator system.</div>
+</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/swervedrive/commands/FeedforwardCharacterization.html" title="class in frc.alotobots.library.subsystems.swervedrive.commands">FeedforwardCharacterization</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Command that measures the velocity feedforward constants for the drive motors.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/reefscape/FieldConstants.html" title="class in frc.alotobots.reefscape">FieldConstants</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/reefscape/FieldConstants.html" title="class in frc.alotobots.reefscape">FieldConstants</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Constants class containing field-specific positions and measurements for the game field.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab3"><a href="frc/alotobots/reefscape/FieldConstants.GamePieceFloorPosition.html" title="enum class in frc.alotobots.reefscape">FieldConstants.GamePieceFloorPosition</a></div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab3"><a href="frc/alotobots/reefscape/FieldConstants.CoralStationPickupPosition.html" title="enum class in frc.alotobots.reefscape">FieldConstants.CoralStationPickupPosition</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab3">
+<div class="block">Enum representing the available position in coral stations.</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab3"><a href="frc/alotobots/reefscape/FieldConstants.CoralStationSide.html" title="enum class in frc.alotobots.reefscape">FieldConstants.CoralStationSide</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab3">
+<div class="block">Enum representing the available coral stations.</div>
+</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab3"><a href="frc/alotobots/reefscape/FieldConstants.GamePieceFloorPosition.html" title="enum class in frc.alotobots.reefscape">FieldConstants.GamePieceFloorPosition</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab3">
 <div class="block">Enum representing the possible floor positions for game pieces.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab3"><a href="frc/alotobots/reefscape/FieldConstants.Level.html" title="enum class in frc.alotobots.reefscape">FieldConstants.Level</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab3">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab3"><a href="frc/alotobots/reefscape/FieldConstants.Level.html" title="enum class in frc.alotobots.reefscape">FieldConstants.Level</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab3">
 <div class="block">Enum representing the different height levels for branches.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab3"><a href="frc/alotobots/reefscape/FieldConstants.ReefAlgaePosition.html" title="enum class in frc.alotobots.reefscape">FieldConstants.ReefAlgaePosition</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab3">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab3"><a href="frc/alotobots/reefscape/FieldConstants.ReefAlgaePosition.html" title="enum class in frc.alotobots.reefscape">FieldConstants.ReefAlgaePosition</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab3">
 <div class="block">Enum representing the algae positions between reef branches.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab3"><a href="frc/alotobots/reefscape/FieldConstants.ReefBranch.html" title="enum class in frc.alotobots.reefscape">FieldConstants.ReefBranch</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab3">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab3"><a href="frc/alotobots/reefscape/FieldConstants.ReefBranch.html" title="enum class in frc.alotobots.reefscape">FieldConstants.ReefBranch</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab3">
 <div class="block">Enum representing the available reef branches on the field, labeled A through L in
  counterclockwise order.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab4"><a href="frc/alotobots/library/subsystems/vision/photonvision/objectdetection/util/GameElement.html" title="class in frc.alotobots.library.subsystems.vision.photonvision.objectdetection.util">GameElement</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab4">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab4"><a href="frc/alotobots/library/subsystems/vision/photonvision/objectdetection/util/GameElement.html" title="class in frc.alotobots.library.subsystems.vision.photonvision.objectdetection.util">GameElement</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab4">
 <div class="block">Represents a game element (measurements are in meters)</div>
 </div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab3"><a href="frc/alotobots/reefscape/util/GameElement.html" title="enum class in frc.alotobots.reefscape.util">GameElement</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="frc/alotobots/library/subsystems/swervedrive/io/GyroIO.html" title="interface in frc.alotobots.library.subsystems.swervedrive.io">GyroIO</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab1">&nbsp;</div>
 <div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/swervedrive/io/GyroIO.GyroIOInputs.html" title="class in frc.alotobots.library.subsystems.swervedrive.io">GyroIO.GyroIOInputs</a></div>
@@ -217,55 +322,62 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">IO implementation for Pigeon 2.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/util/LocalADStarAK.html" title="class in frc.alotobots.util">LocalADStarAK</a></div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/swervedrive/io/GyroIOSim.html" title="class in frc.alotobots.library.subsystems.swervedrive.io">GyroIOSim</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/vision/localizationfusion/LocalizationFusion.html" title="class in frc.alotobots.library.subsystems.vision.localizationfusion">LocalizationFusion</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/util/LocalADStarAK.html" title="class in frc.alotobots.util">LocalADStarAK</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/vision/localizationfusion/LocalizationFusion.html" title="class in frc.alotobots.library.subsystems.vision.localizationfusion">LocalizationFusion</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">The LocalizationFusion subsystem manages robot pose estimation by fusing data from multiple
  sources.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/vision/localizationfusion/constants/LocalizationFusionConstants.html" title="class in frc.alotobots.library.subsystems.vision.localizationfusion.constants">LocalizationFusionConstants</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/vision/localizationfusion/constants/LocalizationFusionConstants.html" title="class in frc.alotobots.library.subsystems.vision.localizationfusion.constants">LocalizationFusionConstants</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Constants used by the LocalizationFusion subsystem for robot pose estimation and tracking.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/vision/localizationfusion/constants/LocalizationFusionConstants.InitializationRequirements.html" title="class in frc.alotobots.library.subsystems.vision.localizationfusion.constants">LocalizationFusionConstants.InitializationRequirements</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/vision/localizationfusion/constants/LocalizationFusionConstants.InitializationRequirements.html" title="class in frc.alotobots.library.subsystems.vision.localizationfusion.constants">LocalizationFusionConstants.InitializationRequirements</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Constants related to initialization requirements and validation counts.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/vision/localizationfusion/constants/LocalizationFusionConstants.Timing.html" title="class in frc.alotobots.library.subsystems.vision.localizationfusion.constants">LocalizationFusionConstants.Timing</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/vision/localizationfusion/constants/LocalizationFusionConstants.Timing.html" title="class in frc.alotobots.library.subsystems.vision.localizationfusion.constants">LocalizationFusionConstants.Timing</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Constants related to timing and update intervals.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/vision/localizationfusion/constants/LocalizationFusionConstants.ValidationThresholds.html" title="class in frc.alotobots.library.subsystems.vision.localizationfusion.constants">LocalizationFusionConstants.ValidationThresholds</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/vision/localizationfusion/constants/LocalizationFusionConstants.ValidationThresholds.html" title="class in frc.alotobots.library.subsystems.vision.localizationfusion.constants">LocalizationFusionConstants.ValidationThresholds</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Constants related to pose validation and thresholds.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/vision/localizationfusion/util/LocalizationState.html" title="class in frc.alotobots.library.subsystems.vision.localizationfusion.util">LocalizationState</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/vision/localizationfusion/util/LocalizationState.html" title="class in frc.alotobots.library.subsystems.vision.localizationfusion.util">LocalizationState</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Manages the state machine for the robot localization system.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab3"><a href="frc/alotobots/library/subsystems/vision/localizationfusion/util/LocalizationState.State.html" title="enum class in frc.alotobots.library.subsystems.vision.localizationfusion.util">LocalizationState.State</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab3">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab3"><a href="frc/alotobots/library/subsystems/vision/localizationfusion/util/LocalizationState.State.html" title="enum class in frc.alotobots.library.subsystems.vision.localizationfusion.util">LocalizationState.State</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab3">
 <div class="block">Represents the possible states of the localization system.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/Main.html" title="class in frc.alotobots">Main</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/Main.html" title="class in frc.alotobots">Main</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">The Main class serves as the entry point for the robot program.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/swervedrive/Module.html" title="class in frc.alotobots.library.subsystems.swervedrive">Module</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="frc/alotobots/library/subsystems/swervedrive/io/ModuleIO.html" title="interface in frc.alotobots.library.subsystems.swervedrive.io">ModuleIO</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">&nbsp;</div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/swervedrive/io/ModuleIO.ModuleIOInputs.html" title="class in frc.alotobots.library.subsystems.swervedrive.io">ModuleIO.ModuleIOInputs</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/swervedrive/io/ModuleIOInputsAutoLogged.html" title="class in frc.alotobots.library.subsystems.swervedrive.io">ModuleIOInputsAutoLogged</a></div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/swervedrive/Module.html" title="class in frc.alotobots.library.subsystems.swervedrive">Module</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/swervedrive/io/ModuleIOSim.html" title="class in frc.alotobots.library.subsystems.swervedrive.io">ModuleIOSim</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
-<div class="block">Physics sim implementation of module IO.</div>
-</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="frc/alotobots/library/subsystems/swervedrive/io/ModuleIO.html" title="interface in frc.alotobots.library.subsystems.swervedrive.io">ModuleIO</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">&nbsp;</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/swervedrive/io/ModuleIO.ModuleIOInputs.html" title="class in frc.alotobots.library.subsystems.swervedrive.io">ModuleIO.ModuleIOInputs</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/swervedrive/io/ModuleIOInputsAutoLogged.html" title="class in frc.alotobots.library.subsystems.swervedrive.io">ModuleIOInputsAutoLogged</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
 <div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/swervedrive/io/ModuleIOTalonFX.html" title="class in frc.alotobots.library.subsystems.swervedrive.io">ModuleIOTalonFX</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/swervedrive/io/ModuleIOTalonFXReal.html" title="class in frc.alotobots.library.subsystems.swervedrive.io">ModuleIOTalonFXReal</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="block">Module IO implementation for Talon FX drive motor controller, Talon FX turn motor controller, and
+ CANcoder.</div>
+</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/swervedrive/io/ModuleIOTalonFXSim.html" title="class in frc.alotobots.library.subsystems.swervedrive.io">ModuleIOTalonFXSim</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="block">Physics sim implementation of module IO.</div>
+</div>
 <div class="col-first odd-row-color all-classes-table all-classes-table-tab3"><a href="frc/alotobots/library/subsystems/swervedrive/ModulePosition.html" title="enum class in frc.alotobots.library.subsystems.swervedrive">ModulePosition</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/bling/commands/NoAllianceWaiting.html" title="class in frc.alotobots.library.subsystems.bling.commands">NoAllianceWaiting</a></div>
@@ -312,7 +424,7 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/vision/oculus/io/OculusIOSim.html" title="class in frc.alotobots.library.subsystems.vision.oculus.io">OculusIOSim</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab2">
-<div class="block">Simulation implementation of OculusIO that provides static test values.</div>
+<div class="block">Simulation implementation of OculusIO that provides realistic noisy measurements.</div>
 </div>
 <div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/vision/oculus/util/OculusPoseSource.html" title="class in frc.alotobots.library.subsystems.vision.oculus.util">OculusPoseSource</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
@@ -336,81 +448,81 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Manages PathPlanner integration for autonomous path following and path finding.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab3"><a href="frc/alotobots/library/subsystems/swervedrive/util/PathPlannerManager.HPStation.html" title="enum class in frc.alotobots.library.subsystems.swervedrive.util">PathPlannerManager.HPStation</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab3">
-<div class="block">Enum representing which human player station we're approaching from</div>
-</div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/swervedrive/PhoenixOdometryThread.html" title="class in frc.alotobots.library.subsystems.swervedrive">PhoenixOdometryThread</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/swervedrive/PhoenixOdometryThread.html" title="class in frc.alotobots.library.subsystems.swervedrive">PhoenixOdometryThread</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Provides an interface for asynchronously reading high-frequency measurements to a set of queues.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/util/PhoenixUtil.html" title="class in frc.alotobots.util">PhoenixUtil</a></div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/util/PhoenixUtil.html" title="class in frc.alotobots.util">PhoenixUtil</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/util/PhoenixUtil.TalonFXMotorControllerSim.html" title="class in frc.alotobots.util">PhoenixUtil.TalonFXMotorControllerSim</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/vision/oculus/commands/PingCommand.html" title="class in frc.alotobots.library.subsystems.vision.oculus.commands">PingCommand</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/util/PhoenixUtil.TalonFXMotorControllerWithRemoteCancoderSim.html" title="class in frc.alotobots.util">PhoenixUtil.TalonFXMotorControllerWithRemoteCancoderSim</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/vision/oculus/commands/PingCommand.html" title="class in frc.alotobots.library.subsystems.vision.oculus.commands">PingCommand</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Command that sends a ping to the Oculus system and waits for a response.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="frc/alotobots/library/subsystems/vision/localizationfusion/util/PoseSource.html" title="interface in frc.alotobots.library.subsystems.vision.localizationfusion.util">PoseSource</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="frc/alotobots/library/subsystems/vision/localizationfusion/util/PoseSource.html" title="interface in frc.alotobots.library.subsystems.vision.localizationfusion.util">PoseSource</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Standardized interface for pose estimation sources in the robot localization system.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="frc/alotobots/library/subsystems/vision/localizationfusion/util/PoseVisionConsumer.html" title="interface in frc.alotobots.library.subsystems.vision.localizationfusion.util">PoseVisionConsumer</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="frc/alotobots/library/subsystems/vision/localizationfusion/util/PoseVisionConsumer.html" title="interface in frc.alotobots.library.subsystems.vision.localizationfusion.util">PoseVisionConsumer</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Functional interface for consuming pose updates from the fusion system.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/vision/localizationfusion/commands/RequestPositionResetViaTags.html" title="class in frc.alotobots.library.subsystems.vision.localizationfusion.commands">RequestPositionResetViaTags</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/vision/localizationfusion/commands/RequestPositionResetViaTags.html" title="class in frc.alotobots.library.subsystems.vision.localizationfusion.commands">RequestPositionResetViaTags</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">A command that requests a position reset using AprilTag detection.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/vision/oculus/commands/ResetPoseCommand.html" title="class in frc.alotobots.library.subsystems.vision.oculus.commands">ResetPoseCommand</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/vision/oculus/commands/ResetPoseCommand.html" title="class in frc.alotobots.library.subsystems.vision.oculus.commands">ResetPoseCommand</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Command that resets the Oculus system's pose estimation to a specified target pose.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/Robot.html" title="class in frc.alotobots">Robot</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/Robot.html" title="class in frc.alotobots">Robot</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Main robot class that handles robot lifecycle and mode transitions.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/reefscape/RobotConstants.html" title="class in frc.alotobots.reefscape">RobotConstants</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/RobotContainer.html" title="class in frc.alotobots">RobotContainer</a></div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/reefscape/RobotConstants.html" title="class in frc.alotobots.reefscape">RobotConstants</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/swervedrive/commands/SeedFieldRelative.html" title="class in frc.alotobots.library.subsystems.swervedrive.commands">SeedFieldRelative</a></div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/RobotContainer.html" title="class in frc.alotobots">RobotContainer</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/bling/commands/SetToAllianceColor.html" title="class in frc.alotobots.library.subsystems.bling.commands">SetToAllianceColor</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/swervedrive/commands/SeedFieldRelative.html" title="class in frc.alotobots.library.subsystems.swervedrive.commands">SeedFieldRelative</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/bling/commands/SetToAllianceColor.html" title="class in frc.alotobots.library.subsystems.bling.commands">SetToAllianceColor</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Command that sets the LED color based on the current alliance color.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="frc/alotobots/library/subsystems/vision/localizationfusion/util/StateTransitionLogger.html" title="interface in frc.alotobots.library.subsystems.vision.localizationfusion.util">StateTransitionLogger</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="frc/alotobots/library/subsystems/vision/localizationfusion/util/StateTransitionLogger.html" title="interface in frc.alotobots.library.subsystems.vision.localizationfusion.util">StateTransitionLogger</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Interface for logging state transitions in the localization system.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/swervedrive/SwerveDriveSubsystem.html" title="class in frc.alotobots.library.subsystems.swervedrive">SwerveDriveSubsystem</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/swervedrive/SwerveDriveSubsystem.html" title="class in frc.alotobots.library.subsystems.swervedrive">SwerveDriveSubsystem</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">The SwerveDriveSubsystem class manages the robot's swerve drive system, handling odometry, module
  control, and autonomous path following capabilities.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="frc/alotobots/library/subsystems/swervedrive/constants/TunerConstants.html" title="interface in frc.alotobots.library.subsystems.swervedrive.constants">TunerConstants</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="frc/alotobots/library/subsystems/swervedrive/constants/TunerConstants.html" title="interface in frc.alotobots.library.subsystems.swervedrive.constants">TunerConstants</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Interface defining constants and configuration values for swerve drive tuning.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/swervedrive/constants/mk4i2023/TunerConstants2023.html" title="class in frc.alotobots.library.subsystems.swervedrive.constants.mk4i2023">TunerConstants2023</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/swervedrive/constants/mk4i2023/TunerConstants2023.CustomConstants.html" title="class in frc.alotobots.library.subsystems.swervedrive.constants.mk4i2023">TunerConstants2023.CustomConstants</a></div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/swervedrive/constants/mk4i2023/TunerConstants2023.html" title="class in frc.alotobots.library.subsystems.swervedrive.constants.mk4i2023">TunerConstants2023</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/swervedrive/constants/mk4i2023/TunerConstants2023.GeneratedConstants.html" title="class in frc.alotobots.library.subsystems.swervedrive.constants.mk4i2023">TunerConstants2023.GeneratedConstants</a></div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/swervedrive/constants/mk4i2023/TunerConstants2023.CustomConstants.html" title="class in frc.alotobots.library.subsystems.swervedrive.constants.mk4i2023">TunerConstants2023.CustomConstants</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/swervedrive/constants/mk4i2025/TunerConstants2025.html" title="class in frc.alotobots.library.subsystems.swervedrive.constants.mk4i2025">TunerConstants2025</a></div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/swervedrive/constants/mk4i2023/TunerConstants2023.GeneratedConstants.html" title="class in frc.alotobots.library.subsystems.swervedrive.constants.mk4i2023">TunerConstants2023.GeneratedConstants</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/swervedrive/constants/mk4i2025/TunerConstants2025.CustomConstants.html" title="class in frc.alotobots.library.subsystems.swervedrive.constants.mk4i2025">TunerConstants2025.CustomConstants</a></div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/swervedrive/constants/mk4i2025/TunerConstants2025.html" title="class in frc.alotobots.library.subsystems.swervedrive.constants.mk4i2025">TunerConstants2025</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/swervedrive/constants/mk4i2025/TunerConstants2025.GeneratedConstants.html" title="class in frc.alotobots.library.subsystems.swervedrive.constants.mk4i2025">TunerConstants2025.GeneratedConstants</a></div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/swervedrive/constants/mk4i2025/TunerConstants2025.CustomConstants.html" title="class in frc.alotobots.library.subsystems.swervedrive.constants.mk4i2025">TunerConstants2025.CustomConstants</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/swervedrive/commands/WheelRadiusCharacterization.html" title="class in frc.alotobots.library.subsystems.swervedrive.commands">WheelRadiusCharacterization</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/swervedrive/constants/mk4i2025/TunerConstants2025.GeneratedConstants.html" title="class in frc.alotobots.library.subsystems.swervedrive.constants.mk4i2025">TunerConstants2025.GeneratedConstants</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/swervedrive/commands/WheelRadiusCharacterization.html" title="class in frc.alotobots.library.subsystems.swervedrive.commands">WheelRadiusCharacterization</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Command that measures the robot's wheel radius by spinning in a circle.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/vision/oculus/commands/ZeroHeadingCommand.html" title="class in frc.alotobots.library.subsystems.vision.oculus.commands">ZeroHeadingCommand</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="frc/alotobots/library/subsystems/vision/oculus/commands/ZeroHeadingCommand.html" title="class in frc.alotobots.library.subsystems.vision.oculus.commands">ZeroHeadingCommand</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Command that zeros the heading (rotation) of the Oculus system.</div>
 </div>
 </div>
