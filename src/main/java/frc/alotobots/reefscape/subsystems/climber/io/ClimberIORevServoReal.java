@@ -24,7 +24,7 @@ public class ClimberIORevServoReal implements ClimberIO {
   private final ServoChannel plungerServoChannel = servoHub.getServoChannel(PLUNGER_SERVO_ID);
   private final ServoChannel lockingServoChannel = servoHub.getServoChannel(LOCKING_SERVO_ID);
 
-  ClimberIORevServoReal() {}
+  public ClimberIORevServoReal() {}
 
   @Override
   public void updateInputs(ClimberIOInputs inputs) {

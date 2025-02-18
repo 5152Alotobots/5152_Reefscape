@@ -30,4 +30,11 @@ public class ClimberSubsystem extends SubsystemBase {
     io.updateInputs(inputs);
     Logger.processInputs("Climber", inputs);
   }
+
+  public void climb() {
+    io.toggleLockingServoEnabled();
+    io.togglePlungerServoEnabled();
+    io.setLockingServoPosition();
+    io.setPlungerServoPosition();
+  }
 }
