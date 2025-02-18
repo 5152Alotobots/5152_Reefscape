@@ -196,13 +196,13 @@ public class RobotContainer {
 
   private void configureLogicCommands() {
     // Elevator
-    elevatorStowButton.toggleOnTrue(
+    elevatorStowButton.onTrue(
         new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.STOWED));
-    elevatorL2Button.toggleOnTrue(
+    elevatorL2Button.onTrue(
         new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L2_PLACE));
-    elevatorL3Button.toggleOnTrue(
+    elevatorL3Button.onTrue(
         new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L3_PLACE));
-    elevatorL4Button.toggleOnTrue(
+    elevatorL4Button.onTrue(
         new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L4_PLACE));
   }
 

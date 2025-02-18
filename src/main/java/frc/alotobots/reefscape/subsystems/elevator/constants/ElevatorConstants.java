@@ -14,7 +14,6 @@ package frc.alotobots.reefscape.subsystems.elevator.constants;
 
 import static edu.wpi.first.units.Units.*;
 
-import edu.wpi.first.units.*;
 import edu.wpi.first.units.measure.*;
 
 /**
@@ -26,7 +25,10 @@ public final class ElevatorConstants {
   private ElevatorConstants() {}
 
   /** Acceptable PID error that will classify as "at position" */
-  public static final Distance AT_SET_POINT_THRESHOLD = Meters.of(.02);
+  public static final Distance AT_SET_POINT_POSITION_THRESHOLD = Meters.of(.02);
+
+  /** How long the elevator must be "at position" to classify as "at position" */
+  public static final Time AT_SET_POINT_TIME_THRESHOLD = Seconds.of(.2);
 
   /** Maximum open loop percent output */
   public static final double MAX_OPEN_LOOP_PERCENTAGE = 0.5;

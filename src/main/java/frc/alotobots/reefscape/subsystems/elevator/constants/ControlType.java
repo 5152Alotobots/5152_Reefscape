@@ -12,7 +12,13 @@
 */
 package frc.alotobots.reefscape.subsystems.elevator.constants;
 
-public enum ControlType {
-  VELOCITY,
-  POSITION
+public class ControlType {
+  public enum ClosedLoop {
+    VELOCITY,
+    POSITION
+  }
+
+  public enum OpenLoop {
+    OPEN_LOOP
+  }
 }

@@ -12,15 +12,14 @@
 */
 package frc.alotobots.reefscape.subsystems.elevator;
 
-import static edu.wpi.first.units.Units.Meters;
-import static edu.wpi.first.units.Units.MetersPerSecond;
-import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.AT_SET_POINT_THRESHOLD;
+import static edu.wpi.first.units.Units.*;
+import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.*;
 import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.Limits.*;
-import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.MAX_OPEN_LOOP_PERCENTAGE;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.LinearVelocity;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.alotobots.reefscape.subsystems.elevator.constants.ControlType;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIO;
@@ -39,6 +38,15 @@ public class ElevatorSubsystem extends SubsystemBase {
   /** Auto-logged inputs from elevator sensors and motor controllers. */
   private final ElevatorIOInputsAutoLogged inputs = new ElevatorIOInputsAutoLogged();
 
+  /** Timer that handles the checking for at position */
+  private final Timer atSetpointTimer = new Timer();
+
+  /**
+   * Distance object that tracks the currently selected position (maintains last position if not in
+   * POSITION control mode)
+   */
+  private Distance targetHeight = Meters.zero();
+
   /**
    * Constructs a new ElevatorSubsystem with the specified hardware interface.
    *
@@ -56,6 +64,7 @@ public class ElevatorSubsystem extends SubsystemBase {
   public void periodic() {
     io.updateInputs(inputs);
     Logger.processInputs("Elevator", inputs);
+    Logger.recordOutput("Elevator/TargetHeight", targetHeight);
   }
 
   /**
@@ -67,7 +76,9 @@ public class ElevatorSubsystem extends SubsystemBase {
   public void runToTargetPosition(Distance height) {
     Distance adjustedHeight =
         Meters.of(MathUtil.clamp(height.in(Meters), MIN_HEIGHT.in(Meters), MAX_HEIGHT.in(Meters)));
-    io.setElevatorPosition(adjustedHeight, ControlType.POSITION.ordinal());
+    targetHeight = adjustedHeight;
+    io.setElevatorPosition(adjustedHeight, ControlType.ClosedLoop.POSITION.ordinal());
+    Logger.recordOutput("Elevator/ControlType", ControlType.ClosedLoop.POSITION);
   }
 
   /**
@@ -83,7 +94,8 @@ public class ElevatorSubsystem extends SubsystemBase {
                 velocity.in(MetersPerSecond),
                 -MAX_SPEED.in(MetersPerSecond),
                 MAX_SPEED.in(MetersPerSecond)));
-    io.setElevatorVelocity(adjustedVelocity, ControlType.VELOCITY.ordinal());
+    io.setElevatorVelocity(adjustedVelocity, ControlType.ClosedLoop.VELOCITY.ordinal());
+    Logger.recordOutput("Elevator/ControlType", ControlType.ClosedLoop.VELOCITY);
   }
 
   /**
@@ -96,6 +108,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     double adjustedSpeed =
         MathUtil.clamp(percentOutput, -MAX_OPEN_LOOP_PERCENTAGE, MAX_OPEN_LOOP_PERCENTAGE);
     io.setElevatorOpenLoop(adjustedSpeed);
+    Logger.recordOutput("Elevator/ControlType", ControlType.OpenLoop.OPEN_LOOP);
   }
 
   /**
@@ -117,12 +130,23 @@ public class ElevatorSubsystem extends SubsystemBase {
   }
 
   /**
-   * Checks if the elevator is within the acceptable range of its target height. Uses the threshold
-   * defined in ElevatorConstants.
+   * Checks if the elevator is stably at its target height for a minimum duration. Uses position and
+   * time thresholds defined in ElevatorConstants.
    *
-   * @return true if the elevator is at its target height within tolerance
+   * @return true if the elevator has maintained its target height within tolerance
    */
   public boolean isAtTargetHeight() {
-    return inputs.mechanismClosedLoopError.abs(Meters) < AT_SET_POINT_THRESHOLD.in(Meters);
+    boolean inSetPointThreshold =
+        targetHeight.minus(inputs.leftHeight).abs(Meters)
+            < AT_SET_POINT_POSITION_THRESHOLD.in(Meters);
+    if (inSetPointThreshold) {
+      if (!atSetpointTimer.isRunning()) {
+        atSetpointTimer.restart();
+      }
+      return atSetpointTimer.hasElapsed(AT_SET_POINT_TIME_THRESHOLD.in(Seconds));
+    } else {
+      atSetpointTimer.stop();
+      return false;
+    }
   }
 }

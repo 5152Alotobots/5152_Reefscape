@@ -1,6 +1,6 @@
 # ElevatorRunToHeight Command
 
-A command that moves the elevator to a specified target height and continuously maintains that position using closed-loop control. This command does not complete when reaching the target height but continues to actively maintain the position until interrupted.
+A command that moves the elevator to a specified target height and ends, handing off holding using closed-loop control to the velocity controller.
 
 ## Required Subsystems
 - [Elevator Subsystem](/5152_Reefscape/library/subsystems/elevator)
@@ -10,7 +10,7 @@ A command that moves the elevator to a specified target height and continuously 
 public ElevatorRunToHeight(ElevatorSubsystem elevatorSubsystem, Distance targetHeight)
 ```
 - `elevatorSubsystem`: The elevator subsystem to control
-- `targetHeight`: The desired height for the elevator to reach and maintain (automatically clamped between MIN_HEIGHT and MAX_HEIGHT)
+- `targetHeight`: The desired height for the elevator to reach (automatically clamped between MIN_HEIGHT and MAX_HEIGHT)
 
 ## Configuration
 - Ensure PID constants are properly tuned
