@@ -24,6 +24,7 @@ import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.LinearVelocity;
+import org.ironmaple.simulation.drivesims.configs.DriveTrainSimulationConfig;
 
 /**
  * Interface defining constants and configuration values for swerve drive tuning. This interface
@@ -185,4 +186,25 @@ public interface TunerConstants {
    * @return ProfiledPIDController for heading control
    */
   ProfiledPIDController getDriveFacingAnglePIDController();
+
+  /**
+   * Gets the precision align tolerance (when it stops trying to correct)
+   *
+   * @return double of tolerance
+   */
+  double getPrecisionAlignTolerance();
+
+  /**
+   * Gets the radius in which precision align should function
+   *
+   * @return double of tolerance
+   */
+  double getPrecisionAlignAllowRadius();
+
+  /**
+   * Gets the simulation config for Maple-Sim
+   *
+   * @return The simulation config
+   */
+  DriveTrainSimulationConfig getDriveTrainSimulationConfig();
 }

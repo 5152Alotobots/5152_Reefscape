@@ -10,9 +10,15 @@
 *
 * Source code must be publicly available on GitHub or an alternative web accessible site
 */
-package frc.alotobots.reefscape.commands.scoring.reef.alignment.constants;
+package frc.alotobots.reefscape.subsystems.elevator.constants;
 
-public class AlignToReefBranchConstants {
-  public static final double ALIGNMENT_RADIUS = 1.0; // 1 meter radius
-  public static final double POSITION_TOLERANCE = 0.05; // 5cm position tolerance
+public class ControlType {
+  public enum ClosedLoop {
+    VELOCITY,
+    POSITION
+  }
+
+  public enum OpenLoop {
+    OPEN_LOOP
+  }
 }

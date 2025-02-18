@@ -13,6 +13,8 @@
 package frc.alotobots.library.subsystems.swervedrive.constants.mk4i2025;
 
 import static edu.wpi.first.units.Units.*;
+import static frc.alotobots.library.subsystems.swervedrive.constants.mk4i2023.TunerConstants2023.CustomConstants.ROBOT_MASS;
+import static frc.alotobots.library.subsystems.swervedrive.constants.mk4i2023.TunerConstants2023.CustomConstants.moduleTranslations;
 import static frc.alotobots.library.subsystems.swervedrive.constants.mk4i2023.TunerConstants2023.GeneratedConstants.kCANBus;
 
 import com.ctre.phoenix6.CANBus;
@@ -35,6 +37,8 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.units.measure.*;
 import frc.alotobots.library.subsystems.swervedrive.constants.TunerConstants;
+import org.ironmaple.simulation.drivesims.COTS;
+import org.ironmaple.simulation.drivesims.configs.DriveTrainSimulationConfig;
 
 public class TunerConstants2025 implements TunerConstants {
   public static class GeneratedConstants {
@@ -256,6 +260,8 @@ public class TunerConstants2025 implements TunerConstants {
     // Custom constants go here
     public static final PIDConstants translationPid = new PIDConstants(2.4, 0, 0.015);
     public static final PIDConstants rotationPid = new PIDConstants(7.8, 0, 0.015);
+    public static final double precisionAlignTolerance = .03; // Meters
+    public static final double precisionAlignAllowRadius = .5; // Meters
     public static final PathConstraints PATHFINDING_CONSTRAINTS =
         new PathConstraints(6.2, 3.5, Units.degreesToRadians(540), Units.degreesToRadians(460));
     public static final PPHolonomicDriveController PP_HOLONOMIC_DRIVE_CONTROLLER =
@@ -316,6 +322,16 @@ public class TunerConstants2025 implements TunerConstants {
                 Math.hypot(
                     GeneratedConstants.BackRight.LocationX,
                     GeneratedConstants.BackRight.LocationY)));
+
+    public static final DriveTrainSimulationConfig mapleSimConfig =
+        DriveTrainSimulationConfig.Default()
+            .withRobotMass(ROBOT_MASS)
+            .withCustomModuleTranslations(moduleTranslations)
+            .withGyro(COTS.ofPigeon2())
+            .withBumperSize(BUMPER_LENGTH, BUMPER_WIDTH)
+            .withSwerveModule(
+                COTS.ofMark4i(
+                    DCMotor.getFalcon500Foc(1), DCMotor.getFalcon500Foc(1), WHEEL_COF, 2));
   }
 
   @Override
@@ -420,6 +436,21 @@ public class TunerConstants2025 implements TunerConstants {
   @Override
   public ProfiledPIDController getDriveFacingAnglePIDController() {
     return CustomConstants.driveFacingAngleController;
+  }
+
+  @Override
+  public double getPrecisionAlignTolerance() {
+    return CustomConstants.precisionAlignTolerance;
+  }
+
+  @Override
+  public double getPrecisionAlignAllowRadius() {
+    return CustomConstants.precisionAlignAllowRadius;
+  }
+
+  @Override
+  public DriveTrainSimulationConfig getDriveTrainSimulationConfig() {
+    return CustomConstants.mapleSimConfig;
   }
 
   @Override

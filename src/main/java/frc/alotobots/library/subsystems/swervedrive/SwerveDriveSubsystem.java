@@ -205,11 +205,41 @@ public class SwerveDriveSubsystem extends SubsystemBase {
    * @param speeds Desired chassis speeds in meters/sec
    */
   public void runVelocity(ChassisSpeeds speeds) {
+    // Set that we are not using setpoint gen
+    Logger.recordOutput("Drive/UsingSetpointGenerator", false);
+    // Calculate module setpoints
+    ChassisSpeeds discreteSpeeds = ChassisSpeeds.discretize(speeds, 0.02);
+    SwerveModuleState[] setpointStates = kinematics.toSwerveModuleStates(discreteSpeeds);
+    SwerveDriveKinematics.desaturateWheelSpeeds(
+        setpointStates, Constants.tunerConstants.getSpeedAt12Volts());
+
+    // Log unoptimized setpoints and setpoint speeds
+    Logger.recordOutput("SwerveStates/Setpoints", setpointStates);
+    Logger.recordOutput("SwerveChassisSpeeds/Setpoints", discreteSpeeds);
+
+    // Send setpoints to modules
+    for (int i = 0; i < 4; i++) {
+      modules[i].runSetpoint(setpointStates[i]);
+    }
+
+    // Log optimized setpoints (runSetpoint mutates each state)
+    Logger.recordOutput("SwerveStates/SetpointsOptimized", setpointStates);
+  }
+
+  /**
+   * Runs the drive at the desired velocity.
+   *
+   * @param speeds Desired chassis speeds in meters/sec
+   */
+  public void runVelocityWithSetpointGen(ChassisSpeeds speeds) {
+    // Set that we are using setpoint gen
+    Logger.recordOutput("Drive/UsingSetpointGenerator", true);
+
     previousSetpoint = setpointGenerator.generateSetpoint(previousSetpoint, speeds, 0.02);
     SwerveModuleState[] setpointStates = previousSetpoint.moduleStates();
 
-    SwerveDriveKinematics.desaturateWheelSpeeds(
-        setpointStates, Constants.tunerConstants.getSpeedAt12Volts());
+    // SwerveDriveKinematics.desaturateWheelSpeeds(
+    //    setpointStates, Constants.tunerConstants.getSpeedAt12Volts());
 
     Logger.recordOutput("SwerveStates/Setpoints", setpointStates);
     Logger.recordOutput("SwerveChassisSpeeds/Setpoints", speeds);

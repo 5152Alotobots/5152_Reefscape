@@ -9,13 +9,15 @@ theme:
 nav:
   - Home: index.md
   - Style Guide: styleguide.md
-  - Game:
+  - Reefscape:
       - Field Constants: reefscape/fieldconstants.md
+      - Subsystems:
+          - reefscape/elevator.md
       - Commands:
-          - Scoring:
-              - Reef:
-                  - Alignment:
-                      - Align to Reef Branch: reefscape/aligntoreefbranch.md
+          - Elevator:
+              - Default Elevator Run At Velocity: reefscape/defaultelevatorrunatvelocity.md
+              - Elevator Run to Height: reefscape/elevatorruntoheight.md
+              - Elevator Open Loop: reefscape/elevatoropenloop.md
   - Library:
       - Commands:
           - Swerve:
@@ -45,6 +47,7 @@ nav:
               - AprilTag: library/subsystems/vision/apriltag.md
               - Oculus: library/subsystems/vision/oculus.md
   - Core:
+      - CAN IDs: core/canids.md
       - Controller Bindings: core/bindings.md
       - Auto Named Commands: core/autonamedcommands.md
       - Robot: core/robot.md
