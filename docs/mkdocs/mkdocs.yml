@@ -9,13 +9,15 @@ theme:
 nav:
   - Home: index.md
   - Style Guide: styleguide.md
-  - Game:
+  - Reefscape:
       - Field Constants: reefscape/fieldconstants.md
+      - Subsystems:
+          - reefscape/elevator.md
       - Commands:
-          - Scoring:
-              - Reef:
-                  - Alignment:
-                      - Align to Reef Branch: reefscape/aligntoreefbranch.md
+          - Elevator:
+              - Default Elevator Run At Velocity: reefscape/defaultelevatorrunatvelocity.md
+              - Elevator Run to Height: reefscape/elevatorruntoheight.md
+              - Elevator Open Loop: reefscape/elevatoropenloop.md
   - Library:
       - Commands:
           - Swerve:

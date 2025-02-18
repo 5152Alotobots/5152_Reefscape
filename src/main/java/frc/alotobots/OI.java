@@ -12,6 +12,7 @@
 */
 package frc.alotobots;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -27,8 +28,23 @@ public class OI {
    */
   public static final double DEADBAND = 0.1;
 
+  /** Driver controller ID */
+  private static final int DRIVER_CONTROLLER_ID = 0;
+
+  /** Co-Driver controller ID */
+  private static final int CO_DRIVER_CONTROLLER_ID = 1;
+
   /** The primary driver's controller. Used for main robot control functions. */
-  private static final CommandXboxController driverController = new CommandXboxController(0);
+  private static final CommandXboxController driverController =
+      new CommandXboxController(DRIVER_CONTROLLER_ID);
+
+  /** Trigger for when the driver is using the controller sticks to control the chassis */
+  public static final Trigger hasDriverInput =
+      new Trigger(
+          () ->
+              MathUtil.applyDeadband(driverController.getLeftX(), DEADBAND) != 0
+                  || MathUtil.applyDeadband(driverController.getLeftY(), DEADBAND) != 0
+                  || MathUtil.applyDeadband(driverController.getRightX(), DEADBAND) != 0);
 
   /**
    * Gets the forward/backward translation input from the driver's controller.
@@ -75,15 +91,28 @@ public class OI {
     return driverController.getRightTriggerAxis();
   }
 
-  /** Button for activating the drive facing best object command. */
-  public static Trigger driveFacingBestObjectButton = driverController.a();
+  /** The co-driver driver's controller. Used for secondary robot control functions. */
+  private static final CommandXboxController codriverController =
+      new CommandXboxController(CO_DRIVER_CONTROLLER_ID);
 
-  /** Button for activating the pathfind to best object command. */
-  public static Trigger pathfindToBestObjectButton = driverController.b();
+  /** Sets the elevator to stow position */
+  public static Trigger elevatorStowButton = codriverController.a();
 
-  /** A temporary test button. */
-  public static Trigger testButton = driverController.y();
+  /** Sets the elevator to L2 position */
+  public static Trigger elevatorL2Button = codriverController.b();
 
-  /** A temporary test button. */
-  public static Trigger testButton2 = driverController.x();
+  /** Sets the elevator to L3 position */
+  public static Trigger elevatorL3Button = codriverController.x();
+
+  /** Sets the elevator to L4 position */
+  public static Trigger elevatorL4Button = codriverController.y();
+
+  /**
+   * Gets the open loop elevator input from the co-driver controller
+   *
+   * @return Value between -1.0 (down) and 1.0 (up)
+   */
+  public static double getElevatorAxis() {
+    return MathUtil.applyDeadband(codriverController.getRightY(), DEADBAND);
+  }
 }

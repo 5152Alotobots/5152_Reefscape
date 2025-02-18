@@ -13,14 +13,12 @@
 package frc.alotobots;
 
 import static frc.alotobots.OI.*;
-import static frc.alotobots.library.subsystems.vision.photonvision.objectdetection.constants.ObjectDetectionConstants.NOTE;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-import frc.alotobots.library.subsystems.bling.BlingSubsystem;
-import frc.alotobots.library.subsystems.bling.commands.*;
-import frc.alotobots.library.subsystems.bling.io.*;
 import frc.alotobots.library.subsystems.swervedrive.*;
 import frc.alotobots.library.subsystems.swervedrive.commands.*;
 import frc.alotobots.library.subsystems.swervedrive.io.*;
@@ -34,22 +32,33 @@ import frc.alotobots.library.subsystems.vision.photonvision.apriltag.constants.A
 import frc.alotobots.library.subsystems.vision.photonvision.apriltag.io.*;
 import frc.alotobots.library.subsystems.vision.photonvision.apriltag.util.AprilTagPoseSource;
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.ObjectDetectionSubsystem;
-import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.commands.*;
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.constants.ObjectDetectionConstants;
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.io.*;
-import frc.alotobots.reefscape.FieldConstants;
-import frc.alotobots.reefscape.commands.scoring.reef.alignment.AlignToReefBranch;
+import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
+import frc.alotobots.reefscape.subsystems.elevator.commands.DefaultElevatorRunAtVelocity;
+import frc.alotobots.reefscape.subsystems.elevator.commands.ElevatorRunToHeight;
+import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants;
+import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIO;
+import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIOTalonFXReal;
+import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIOTalonFXSim;
+import org.ironmaple.simulation.SimulatedArena;
+import org.ironmaple.simulation.drivesims.SwerveDriveSimulation;
+import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 public class RobotContainer {
   private final SwerveDriveSubsystem swerveDriveSubsystem;
+  private final ElevatorSubsystem elevatorSubsystem;
   private final OculusSubsystem oculusSubsystem;
   private final AprilTagSubsystem aprilTagSubsystem;
   private final LocalizationFusion localizationFusion;
+  private final OculusPoseSource oculusPoseSource;
+  private final AprilTagPoseSource aprilTagPoseSource;
   private final ObjectDetectionSubsystem objectDetectionSubsystem;
-  private final BlingSubsystem blingSubsystem;
+  // private final BlingSubsystem blingSubsystem;
   private final PathPlannerManager pathPlannerManager;
   private LoggedDashboardChooser<Command> autoChooser;
+  private SwerveDriveSimulation driveSimulation;
 
   public RobotContainer() {
 
@@ -59,10 +68,11 @@ public class RobotContainer {
         swerveDriveSubsystem =
             new SwerveDriveSubsystem(
                 new GyroIOPigeon2(),
-                new ModuleIOTalonFX(ModulePosition.FRONT_LEFT.index),
-                new ModuleIOTalonFX(ModulePosition.FRONT_RIGHT.index),
-                new ModuleIOTalonFX(ModulePosition.BACK_LEFT.index),
-                new ModuleIOTalonFX(ModulePosition.BACK_RIGHT.index));
+                new ModuleIOTalonFXReal(ModulePosition.FRONT_LEFT.index),
+                new ModuleIOTalonFXReal(ModulePosition.FRONT_RIGHT.index),
+                new ModuleIOTalonFXReal(ModulePosition.BACK_LEFT.index),
+                new ModuleIOTalonFXReal(ModulePosition.BACK_RIGHT.index));
+        elevatorSubsystem = new ElevatorSubsystem(new ElevatorIOTalonFXReal());
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         configureAutoChooser();
 
@@ -73,8 +83,8 @@ public class RobotContainer {
                 new AprilTagIOPhotonVision(AprilTagConstants.CAMERA_CONFIGS[1]));
 
         // Create pose sources
-        OculusPoseSource oculusPoseSource = new OculusPoseSource(oculusSubsystem);
-        AprilTagPoseSource aprilTagPoseSource = new AprilTagPoseSource(aprilTagSubsystem);
+        oculusPoseSource = new OculusPoseSource(oculusSubsystem);
+        aprilTagPoseSource = new AprilTagPoseSource(aprilTagSubsystem);
 
         localizationFusion =
             new LocalizationFusion(
@@ -87,22 +97,38 @@ public class RobotContainer {
             new ObjectDetectionSubsystem(
                 swerveDriveSubsystem::getPose,
                 new ObjectDetectionIOPhotonVision(ObjectDetectionConstants.CAMERA_CONFIGS[0]));
-        blingSubsystem = new BlingSubsystem(new BlingIOReal());
+        // blingSubsystem = new BlingSubsystem(new BlingIOReal());
         break;
 
       case SIM:
+        Pose2d simStartPose = new Pose2d(3, 3, new Rotation2d(0));
+        driveSimulation =
+            new SwerveDriveSimulation(
+                Constants.tunerConstants.getDriveTrainSimulationConfig(), simStartPose);
+        SimulatedArena.getInstance().addDriveTrainSimulation(driveSimulation);
+
         // Simulation hardware initialization
         swerveDriveSubsystem =
             new SwerveDriveSubsystem(
                 new GyroIO() {},
-                new ModuleIOSim(ModulePosition.FRONT_LEFT.index),
-                new ModuleIOSim(ModulePosition.FRONT_RIGHT.index),
-                new ModuleIOSim(ModulePosition.BACK_LEFT.index),
-                new ModuleIOSim(ModulePosition.BACK_RIGHT.index));
+                new ModuleIOTalonFXSim(
+                    ModulePosition.FRONT_LEFT.index,
+                    driveSimulation.getModules()[ModulePosition.FRONT_LEFT.index]),
+                new ModuleIOTalonFXSim(
+                    ModulePosition.FRONT_RIGHT.index,
+                    driveSimulation.getModules()[ModulePosition.FRONT_RIGHT.index]),
+                new ModuleIOTalonFXSim(
+                    ModulePosition.BACK_LEFT.index,
+                    driveSimulation.getModules()[ModulePosition.BACK_LEFT.index]),
+                new ModuleIOTalonFXSim(
+                    ModulePosition.BACK_RIGHT.index,
+                    driveSimulation.getModules()[ModulePosition.BACK_RIGHT.index]));
+        swerveDriveSubsystem.setPose(simStartPose);
+        elevatorSubsystem = new ElevatorSubsystem(new ElevatorIOTalonFXSim());
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         configureAutoChooser();
 
-        oculusSubsystem = new OculusSubsystem(new OculusIOSim());
+        oculusSubsystem = new OculusSubsystem(new OculusIOSim(driveSimulation));
         aprilTagSubsystem =
             new AprilTagSubsystem(
                 new AprilTagIOPhotonVisionSim(
@@ -122,7 +148,7 @@ public class RobotContainer {
 
         objectDetectionSubsystem =
             new ObjectDetectionSubsystem(swerveDriveSubsystem::getPose, new ObjectDetectionIO() {});
-        blingSubsystem = new BlingSubsystem(new BlingIOSim());
+        // blingSubsystem = new BlingSubsystem(new BlingIOSim());
         break;
 
       default:
@@ -134,6 +160,7 @@ public class RobotContainer {
                 new ModuleIO() {},
                 new ModuleIO() {},
                 new ModuleIO() {});
+        elevatorSubsystem = new ElevatorSubsystem(new ElevatorIO() {});
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         configureAutoChooser();
 
@@ -152,7 +179,7 @@ public class RobotContainer {
 
         objectDetectionSubsystem =
             new ObjectDetectionSubsystem(swerveDriveSubsystem::getPose, new ObjectDetectionIO() {});
-        blingSubsystem = new BlingSubsystem(new BlingIO() {});
+        // blingSubsystem = new BlingSubsystem(new BlingIO() {});
         break;
     }
     configureDefaultCommands();
@@ -161,19 +188,22 @@ public class RobotContainer {
 
   private void configureDefaultCommands() {
     swerveDriveSubsystem.setDefaultCommand(new DefaultDrive(swerveDriveSubsystem).getCommand());
-    blingSubsystem.setDefaultCommand(
-        new NoAllianceWaiting(blingSubsystem).andThen(new SetToAllianceColor(blingSubsystem)));
+    elevatorSubsystem.setDefaultCommand(
+        new DefaultElevatorRunAtVelocity(elevatorSubsystem, () -> -getElevatorAxis()));
+    // blingSubsystem.setDefaultCommand(
+    //    new NoAllianceWaiting(blingSubsystem).andThen(new SetToAllianceColor(blingSubsystem)));
   }
 
   private void configureLogicCommands() {
-    driveFacingBestObjectButton.toggleOnTrue(
-        new DriveFacingBestObject(objectDetectionSubsystem, swerveDriveSubsystem, NOTE));
-    pathfindToBestObjectButton.onTrue(
-        new PathfindToBestObject(
-            objectDetectionSubsystem, swerveDriveSubsystem, pathPlannerManager, NOTE));
-    testButton.toggleOnTrue(
-        new AlignToReefBranch(
-            swerveDriveSubsystem, FieldConstants.ReefBranch.A, FieldConstants.Level.L4));
+    // Elevator
+    elevatorStowButton.onTrue(
+        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.STOWED));
+    elevatorL2Button.onTrue(
+        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L2_PLACE));
+    elevatorL3Button.onTrue(
+        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L3_PLACE));
+    elevatorL4Button.onTrue(
+        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L4_PLACE));
   }
 
   private void configureAutoChooser() {
@@ -202,5 +232,23 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     return autoChooser.get();
+  }
+
+  public void resetSimulationField() {
+    if (Constants.currentMode != Constants.Mode.SIM) return;
+
+    driveSimulation.setSimulationWorldPose(new Pose2d(3, 3, new Rotation2d()));
+    SimulatedArena.getInstance().resetFieldForAuto();
+  }
+
+  public void displaySimFieldToAdvantageScope() {
+    if (Constants.currentMode != Constants.Mode.SIM) return;
+
+    Logger.recordOutput(
+        "FieldSimulation/RobotPosition", driveSimulation.getSimulatedDriveTrainPose());
+    Logger.recordOutput(
+        "FieldSimulation/Coral", SimulatedArena.getInstance().getGamePiecesArrayByType("Coral"));
+    Logger.recordOutput(
+        "FieldSimulation/Algae", SimulatedArena.getInstance().getGamePiecesArrayByType("Algae"));
   }
 }

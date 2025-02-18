@@ -15,6 +15,7 @@ package frc.alotobots;
 import edu.wpi.first.wpilibj.Threads;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import org.ironmaple.simulation.SimulatedArena;
 import org.littletonrobotics.junction.LogFileUtil;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
@@ -160,5 +161,10 @@ public class Robot extends LoggedRobot {
 
   /** Called periodically during simulation mode. */
   @Override
-  public void simulationPeriodic() {}
+  public void simulationPeriodic() {
+    if (Constants.currentMode == Constants.Mode.SIM) {
+      SimulatedArena.getInstance().simulationPeriodic();
+      robotContainer.displaySimFieldToAdvantageScope();
+    }
+  }
 }

@@ -27,9 +27,24 @@ import lombok.experimental.UtilityClass;
  */
 @UtilityClass
 public class FieldConstants {
-
+  /** The length of the field in meters */
   public static final double FIELD_LENGTH = 17.548; // Meters
+
+  /** The width of the field in meters */
   public static final double FIELD_WIDTH = 8.052;
+
+  /** Enum representing the available coral stations. Used primarily for pathfinding */
+  public enum CoralStationSide {
+    LEFT,
+    RIGHT
+  }
+
+  /** Enum representing the available position in coral stations. Used primarily for pathfinding */
+  public enum CoralStationPickupPosition {
+    P1,
+    P2,
+    P3
+  }
 
   /**
    * Enum representing the available reef branches on the field, labeled A through L in
