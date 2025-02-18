@@ -102,8 +102,11 @@ public class OI {
     return MathUtil.applyDeadband(auxController.getLeftY(), DEADBAND);
   }
 
-  public static Trigger wristTestButton = auxController.a();
-  public static Trigger intakeTestButton = auxController.b();
+  public static Trigger wristL4coralButton = auxController.povUp();
+  public static Trigger wristL2and3coralButton = auxController.povRight();
+  public static Trigger wristGroundButton = auxController.povLeft();
+  public static Trigger intakeButton = auxController.back();
+  public static Trigger intakeButtonNoLimits = auxController.start();
 
   /** The co-driver driver's controller. Used for secondary robot control functions. */
   private static final CommandXboxController codriverController =

@@ -14,6 +14,7 @@ package frc.alotobots;
 
 import static edu.wpi.first.units.Units.Degrees;
 import static frc.alotobots.OI.*;
+import static frc.alotobots.reefscape.subsystems.wrist.constants.WristIOTalonFXConstants.WristPositions.*;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -37,6 +38,7 @@ import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.cons
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.io.*;
 import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.DefaultCoralIntakeOpenLoop;
+import frc.alotobots.reefscape.subsystems.coralIntake.commands.DefaultCoralIntakeOpenLoopWOLimits;
 import frc.alotobots.reefscape.subsystems.coralIntake.io.CoralIntakeIOVortexReal;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.commands.DefaultElevatorRunAtVelocity;
@@ -144,6 +146,7 @@ public class RobotContainer {
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         configureAutoChooser();
 
+
         oculusSubsystem = new OculusSubsystem(new OculusIOSim(driveSimulation));
         aprilTagSubsystem =
             new AprilTagSubsystem(
@@ -224,9 +227,11 @@ public class RobotContainer {
         new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L3_PLACE));
     elevatorL4Button.onTrue(
         new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L4_PLACE));
-    wristTestButton.whileTrue(new WristRunToAngle(Degrees.of(90), wristSubsystem));
-    intakeTestButton.whileTrue(
-        new DefaultCoralIntakeOpenLoop(() -> Double.valueOf(10), coralIntakeSubsystem));
+    wristL4coralButton.whileTrue(new WristRunToAngle(L4_CORAL_POSITION, wristSubsystem));
+    wristL2and3coralButton.whileTrue(new WristRunToAngle(L2AND3_CORAL_POSITION, wristSubsystem));
+    wristGroundButton.whileTrue(new WristRunToAngle(GROUND_INTAKE, wristSubsystem));
+    intakeButton.whileTrue(new DefaultCoralIntakeOpenLoop(() -> 1.0, coralIntakeSubsystem));
+    intakeButtonNoLimits.whileTrue(new DefaultCoralIntakeOpenLoopWOLimits(() -> 1.0, coralIntakeSubsystem));
   }
 
   private void configureAutoChooser() {

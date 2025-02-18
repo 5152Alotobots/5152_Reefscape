@@ -22,7 +22,7 @@ public class WristIOTalonFXConstants {
   public class WristPositions {
     public static final Angle L4_CORAL_POSITION = Degrees.of(90);
     public static final Angle GROUND_INTAKE = Degrees.of(-7);
-    public static final Angle L2AND3_CORAL_POSITION = Degrees.of(90);
+    public static final Angle L2AND3_CORAL_POSITION = Degrees.of(125);
   }
 
   public class PositionPIDConstants {
