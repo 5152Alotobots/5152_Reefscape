@@ -12,22 +12,25 @@
 */
 package frc.alotobots.reefscape.subsystems.climber.io;
 
-import com.revrobotics.servohub.ServoChannel;
-import com.revrobotics.servohub.ServoHub;
-import com.revrobotics.servohub.config.ServoChannelConfig;
 import static frc.alotobots.Constants.CanId.SERVO_HUB_CAN_ID;
 import static frc.alotobots.reefscape.subsystems.climber.constants.ClimberRevServoReal.LOCKING_SERVO_ID;
 import static frc.alotobots.reefscape.subsystems.climber.constants.ClimberRevServoReal.PLUNGER_SERVO_ID;
+
+import com.revrobotics.servohub.ServoChannel;
+import com.revrobotics.servohub.ServoHub;
 
 public class ClimberIORevServoReal implements ClimberIO {
   private final ServoHub servoHub = new ServoHub(SERVO_HUB_CAN_ID);
   private final ServoChannel plungerServoChannel = servoHub.getServoChannel(PLUNGER_SERVO_ID);
   private final ServoChannel lockingServoChannel = servoHub.getServoChannel(LOCKING_SERVO_ID);
 
+  ClimberIORevServoReal() {}
 
-  ClimberIORevServoReal() {
-    
-
+  @Override
+  public void updateInputs(ClimberIOInputs inputs) {
+    inputs.servoHubConnected = true;
+    inputs.lockingServoPosition = lockingServoChannel.getPulseWidth();
+    inputs.plungerServoPosition = plungerServoChannel.getPulseWidth();
   }
 
   @Override
@@ -43,7 +46,7 @@ public class ClimberIORevServoReal implements ClimberIO {
 
   @Override
   public void toggleLockingServoEnabled() {
-    if(!lockingServoChannel.isEnabled()) {
+    if (!lockingServoChannel.isEnabled()) {
       lockingServoChannel.setEnabled(true);
       lockingServoChannel.setPowered(true);
     } else {

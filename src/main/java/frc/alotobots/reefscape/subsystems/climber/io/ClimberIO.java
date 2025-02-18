@@ -12,8 +12,6 @@
 */
 package frc.alotobots.reefscape.subsystems.climber.io;
 
-import static edu.wpi.first.units.Units.Degrees;
-
 import edu.wpi.first.math.util.Units.*;
 import edu.wpi.first.units.measure.*;
 import org.littletonrobotics.junction.AutoLog;
@@ -23,18 +21,17 @@ public interface ClimberIO {
   @AutoLog
   public static class ClimberIOInputs {
     public boolean servoHubConnected = false;
-    public boolean plungerServoPowered = false;
-    public boolean lockingServoPowered = false;
 
-    public boolean plungerServoEnabled = false;
-    public boolean lockingServoEnabled = false;
-
-    public Angle plungerServoPosition = Degrees.zero();
-    public Angle lockingServoPosition = Degrees.zero();
+    public int plungerServoPosition = 0;
+    public int lockingServoPosition = 0;
   }
 
+  public void updateInputs(ClimberIOInputs inputs);
+
   public void togglePlungerServoEnabled();
+
   public void toggleLockingServoEnabled();
+
   public void setPlungerServoPosition();
 
   public void setLockingServoPosition();

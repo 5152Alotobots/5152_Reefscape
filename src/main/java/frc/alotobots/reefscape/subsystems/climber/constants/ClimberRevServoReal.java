@@ -15,6 +15,6 @@ package frc.alotobots.reefscape.subsystems.climber.constants;
 import com.revrobotics.servohub.ServoChannel.ChannelId;
 
 public final class ClimberRevServoReal {
-    public static final ChannelId PLUNGER_SERVO_ID = ChannelId.kChannelId2;
-    public static final ChannelId LOCKING_SERVO_ID = ChannelId.kChannelId0;
+  public static final ChannelId PLUNGER_SERVO_ID = ChannelId.kChannelId2;
+  public static final ChannelId LOCKING_SERVO_ID = ChannelId.kChannelId0;
 }
