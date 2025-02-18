@@ -33,6 +33,8 @@ public interface ClimberIO {
     public Angle lockingServoPosition = Degrees.zero();
   }
 
+  public void togglePlungerServoEnabled();
+  public void toggleLockingServoEnabled();
   public void setPlungerServoPosition();
 
   public void setLockingServoPosition();
