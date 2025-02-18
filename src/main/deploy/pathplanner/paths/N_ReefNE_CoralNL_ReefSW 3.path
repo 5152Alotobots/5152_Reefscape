@@ -8,7 +8,7 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.301,
+        "x": 2.3010000000000006,
         "y": 5.04875
       },
       "isLocked": false,
@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 3.8294407894736837,
-        "y": 2.966611842105263
+        "x": 4.017,
+        "y": 2.8452499999999996
       },
       "prevControl": {
-        "x": 2.42775,
-        "y": 1.8019999999999996
+        "x": 2.6153092105263167,
+        "y": 1.680638157894736
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Reef_SW_R"
     }
   ],
   "rotationTargets": [],
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 60.78075330951532
+    "rotation": 59.99999999999999
   },
   "reversed": false,
   "folder": "Battle Creek",

@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.1,
-        "y": 1.9
+        "x": 7.245148026315788,
+        "y": 1.8889802631578947
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.1,
-        "y": 1.8999999999999997
+        "x": 6.245148026315788,
+        "y": 1.8889802631578945
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Start South"
     },
     {
       "anchor": {
-        "x": 5.359,
-        "y": 5.482
+        "x": 4.953,
+        "y": 5.22425
       },
       "prevControl": {
-        "x": 7.449,
-        "y": 5.789750000000001
+        "x": 7.043,
+        "y": 5.532
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Reef_NE_R"
     }
   ],
   "rotationTargets": [],
