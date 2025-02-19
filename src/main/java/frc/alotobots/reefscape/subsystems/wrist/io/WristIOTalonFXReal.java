@@ -39,33 +39,52 @@ import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Voltage;
 import frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXRealConstants;
 
+/**
+ * Hardware implementation of the WristIO interface using TalonFX motor controller
+ * and CANCoder for real robot operation.
+ */
 public class WristIOTalonFXReal implements WristIO {
 
-  // Motors
+  /** Main wrist motor controller */
   private final TalonFX wristTalon;
+
+  /** Wrist position encoder */
   private final CANcoder wristEncoder;
 
-  // Control Modes
+  /** Control mode for position control using torque-based FOC */
   private final PositionTorqueCurrentFOC positionTorqueCurrentFOC = new PositionTorqueCurrentFOC(0);
+
+  /** Control mode for position control using voltage */
   private final PositionVoltage positionVoltage = new PositionVoltage(0);
 
-  // Status Signals
+  // Status Signals for monitoring hardware state
+  /** Current active PID slot */
   StatusSignal<Integer> currentPidSlot;
 
+  /** Current applied voltage to motor */
   StatusSignal<Voltage> wristAppliedVoltage;
 
+  /** Current being drawn by motor */
   StatusSignal<Current> wristAppliedCurrent;
 
+  /** Current angular velocity */
   StatusSignal<AngularVelocity> wristVelocity;
 
+  /** Current wrist position */
   StatusSignal<Angle> wristPosition;
 
+  /** Top limit switch status */
   StatusSignal<Boolean> topSoftLimit;
 
+  /** Bottom limit switch status */
   StatusSignal<Boolean> bottomSoftLimit;
 
+  /** Debouncer for filtering connection status */
   private final Debouncer wristConnectedDebouncer = new Debouncer(0.5);
 
+  /**
+   * Creates a new WristIOTalonFXReal and configures all motor controller and encoder settings.
+   */
   public WristIOTalonFXReal() {
     wristTalon = new TalonFX(WRIST_MOTOR_CAN_ID);
     wristEncoder = new CANcoder(WRIST_ENCODER_CAN_ID);
@@ -107,7 +126,7 @@ public class WristIOTalonFXReal implements WristIO {
     wristMotorConfig.TorqueCurrent.PeakReverseTorqueCurrent = TORQUE_REVERSE_AMP_LIMIT.in(Amps);
 
     wristMotorConfig.CurrentLimits.StatorCurrentLimit = STATOR_AMP_LIMIT.in(Amps);
-    wristMotorConfig.CurrentLimits.StatorCurrentLimitEnable = true; // Always should be true
+    wristMotorConfig.CurrentLimits.StatorCurrentLimitEnable = true;
 
     wristMotorConfig.MotorOutput.Inverted = MOTOR_DIRECTION;
 
@@ -118,9 +137,9 @@ public class WristIOTalonFXReal implements WristIO {
     wristEncoderConfig.MagnetSensor.MagnetOffset = ENCODER_MAGNET_OFFSET;
     wristEncoderConfig.MagnetSensor.SensorDirection = ENCODER_DIRECTION;
 
-    // Apply config wrist
     tryUntilOk(5, () -> wristEncoder.getConfigurator().apply(wristEncoderConfig, 0.25));
 
+    // Initialize status signals
     currentPidSlot = wristTalon.getClosedLoopSlot();
     wristAppliedVoltage = wristTalon.getMotorVoltage();
     wristAppliedCurrent = wristTalon.getStatorCurrent();
@@ -130,22 +149,7 @@ public class WristIOTalonFXReal implements WristIO {
     bottomSoftLimit = wristTalon.getFault_ReverseSoftLimit();
 
     BaseStatusSignal.setUpdateFrequencyForAll(
-        50,
-        currentPidSlot,
-        wristAppliedVoltage,
-        wristAppliedCurrent,
-        wristVelocity,
-        wristPosition,
-        topSoftLimit,
-        bottomSoftLimit);
-
-    ParentDevice.optimizeBusUtilizationForAll(wristTalon);
-  }
-
-  @Override
-  public void updateInputs(WristIOInputs inputs) {
-    var wristSignals =
-        BaseStatusSignal.refreshAll(
+            50,
             currentPidSlot,
             wristAppliedVoltage,
             wristAppliedCurrent,
@@ -154,26 +158,31 @@ public class WristIOTalonFXReal implements WristIO {
             topSoftLimit,
             bottomSoftLimit);
 
-    // Is connected
+    ParentDevice.optimizeBusUtilizationForAll(wristTalon);
+  }
+
+  @Override
+  public void updateInputs(WristIOInputs inputs) {
+    var wristSignals =
+            BaseStatusSignal.refreshAll(
+                    currentPidSlot,
+                    wristAppliedVoltage,
+                    wristAppliedCurrent,
+                    wristVelocity,
+                    wristPosition,
+                    topSoftLimit,
+                    bottomSoftLimit);
+
+    // Update connection status
     inputs.motorConnected = wristConnectedDebouncer.calculate(wristSignals.isOK());
     inputs.cancoderConnected = wristConnectedDebouncer.calculate(wristEncoder.isConnected());
 
-    // PID slot
+    // Update all input values
     inputs.pidSlot = currentPidSlot.getValue();
-
-    // Voltage
     inputs.motorAppliedVolts = wristAppliedVoltage.getValue();
-
-    // Current
     inputs.motorCurrent = wristAppliedCurrent.getValue();
-
-    // Velocity
     inputs.rotationVelocity = wristVelocity.getValue();
-
-    // Position
     inputs.mechanismAngle = wristPosition.getValue();
-
-    // Limits
     inputs.topLimit = topSoftLimit.getValue();
     inputs.bottomLimit = bottomSoftLimit.getValue();
   }

@@ -20,27 +20,65 @@ import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Voltage;
 import org.littletonrobotics.junction.AutoLog;
 
+/**
+ * Interface defining the hardware abstraction layer for the wrist subsystem.
+ * This interface allows for different hardware implementations (real, simulated, etc.)
+ * while maintaining consistent functionality.
+ */
 public interface WristIO {
+  /** Data structure for inputs from wrist hardware. */
   @AutoLog
   public static class WristIOInputs {
-
+    /** Current PID slot being used (0 for velocity, 1 for position) */
     public int pidSlot = 0;
+
+    /** Whether the motor controller is connected */
     public boolean motorConnected = false;
+
+    /** Whether the CANCoder is connected */
     public boolean cancoderConnected = false;
+
+    /** Whether the top limit switch/soft limit is triggered */
     public boolean topLimit = false;
+
+    /** Whether the bottom limit switch/soft limit is triggered */
     public boolean bottomLimit = false;
 
+    /** Current angle of the wrist mechanism */
     public Angle mechanismAngle = Rotations.zero();
+
+    /** Current angular velocity of the wrist */
     public AngularVelocity rotationVelocity = RotationsPerSecond.zero();
+
+    /** Current voltage being applied to the motor */
     public Voltage motorAppliedVolts = Volts.zero();
+
+    /** Current being drawn by the motor */
     public Current motorCurrent = Amps.zero();
   }
 
+  /**
+   * Updates the wrist input values from hardware.
+   *
+   * @param inputs The input object to update with the latest hardware state
+   */
   public default void updateInputs(WristIOInputs inputs) {}
 
+  /**
+   * Sets the wrist to run to a target position using closed-loop control.
+   *
+   * @param rotation The target angle to move to
+   * @param pidSlot The PID slot to use (0 for velocity, 1 for position)
+   */
   public default void setWristPosition(Angle rotation, int pidSlot) {}
 
+  /**
+   * Runs the wrist using direct percentage output (open-loop control).
+   *
+   * @param percentOutput The motor output as a percentage (-1.0 to 1.0)
+   */
   public default void setWristOpenLoop(double percentOutput) {}
 
+  /** Stops all wrist motor movement. */
   public default void stop() {}
 }

@@ -17,10 +17,23 @@ import frc.alotobots.reefscape.subsystems.wrist.WristSubsystem;
 import java.util.function.DoubleSupplier;
 import org.littletonrobotics.junction.Logger;
 
+/**
+ * Default command for controlling the wrist in open-loop mode.
+ * This command runs when no other command is using the wrist subsystem.
+ */
 public class DefaultWristOpenLoop extends Command {
+  /** The wrist subsystem being controlled */
   private final WristSubsystem wristSubsystem;
+
+  /** Supplier for the percent output value */
   private final DoubleSupplier input;
 
+  /**
+   * Creates a new DefaultWristOpenLoop command.
+   *
+   * @param wristSubsystem The wrist subsystem to control
+   * @param input Supplier for the percent output (-1.0 to 1.0)
+   */
   public DefaultWristOpenLoop(WristSubsystem wristSubsystem, DoubleSupplier input) {
     this.wristSubsystem = wristSubsystem;
     this.input = input;
@@ -33,7 +46,6 @@ public class DefaultWristOpenLoop extends Command {
 
   @Override
   public void execute() {
-    Logger.recordOutput("Wrist/PercentOut", input.getAsDouble());
     wristSubsystem.runAtPercentOutput(input.getAsDouble());
   }
 

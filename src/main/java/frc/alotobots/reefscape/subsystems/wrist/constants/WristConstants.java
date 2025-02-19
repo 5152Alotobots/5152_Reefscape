@@ -17,9 +17,16 @@ import static edu.wpi.first.units.Units.*;
 import edu.wpi.first.units.measure.*;
 import lombok.experimental.UtilityClass;
 
+/**
+ * Contains all constants related to the wrist subsystem.
+ * Organized into inner classes for different categories of constants.
+ */
 @UtilityClass
 public class WristConstants {
 
+  /**
+   * Contains threshold values for various wrist operations.
+   */
   public static final class Thresholds {
     /** Acceptable PID error that will classify as "at position" */
     public static final Angle AT_SET_POINT_POSITION_THRESHOLD = Degrees.of(3);
@@ -28,7 +35,9 @@ public class WristConstants {
     public static final Time AT_SET_POINT_TIME_THRESHOLD = Seconds.of(.2);
   }
 
-  /** Physical limits and safety thresholds */
+  /**
+   * Contains physical limits and safety thresholds for the wrist.
+   */
   public static final class Limits {
     /** Maximum allowed angle */
     public static final Angle MAX_ANGLE = Degrees.of(125);
@@ -46,7 +55,9 @@ public class WristConstants {
     public static final boolean LIMITS_ENABLED = true;
   }
 
-  /** Position setpoints for different wrist states */
+  /**
+   * Contains position setpoints for different wrist states.
+   */
   public static final class Setpoints {
     /** Angle when wrist is fully retracted/stowed */
     public static final Angle STOWED = Degrees.of(110);
@@ -57,10 +68,10 @@ public class WristConstants {
     /** Angle for L4 placement */
     public static final Angle L4_PLACE = Degrees.of(90);
 
-    /** Angle for L3 placement Equal to the angle for L2 placement */
+    /** Angle for L3 placement (Equal to the angle for L2 placement) */
     public static final Angle L3_PLACE = Degrees.of(125);
 
-    /** Angle for L2 placement Equal to the angle for L3 placement */
+    /** Angle for L2 placement (Equal to the angle for L3 placement) */
     public static final Angle L2_PLACE = Degrees.of(125);
 
     /** Angle for L1 placement */

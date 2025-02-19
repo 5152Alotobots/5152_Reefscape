@@ -26,49 +26,70 @@ import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.mechanism.LoggedMechanism2d;
 import org.littletonrobotics.junction.mechanism.LoggedMechanismLigament2d;
 
+/**
+ * Simulated implementation of the WristIO interface.
+ * Uses WPILib's SingleJointedArmSim for physics simulation and visualization.
+ */
 public class WristIOTalonFXSim implements WristIO {
+  /** Physics simulation of the wrist mechanism */
   private final SingleJointedArmSim wristSim;
-  @AutoLogOutput private final LoggedMechanism2d wristMech = new LoggedMechanism2d(3, 3);
-  private final LoggedMechanismLigament2d wristArm =
-      new LoggedMechanismLigament2d("wrist", 0.5, 180, 6, new Color8Bit(Color.kPurple));
 
+  /** Visualization of the wrist mechanism */
+  @AutoLogOutput
+  private final LoggedMechanism2d wristMech = new LoggedMechanism2d(3, 3);
+
+  /** Visual representation of the wrist arm */
+  private final LoggedMechanismLigament2d wristArm =
+          new LoggedMechanismLigament2d("wrist", 0.5, 180, 6, new Color8Bit(Color.kPurple));
+
+  /** Simulated Falcon 500 motor */
   private final DCMotor motor = DCMotor.getFalcon500(1);
 
+  /** Current applied voltage to the simulated motor */
   private double appliedVolts = 0.0;
+
+  /** Current active PID slot */
   private int currentPidSlot = 0;
+
+  /** Current brake mode state */
   private boolean brakeMode = true;
 
+  /**
+   * Creates a new WristIOTalonFXSim with a simulated wrist mechanism.
+   * Configures the physics simulation and visualization.
+   */
   public WristIOTalonFXSim() {
     wristMech.getRoot("wrist", 1.5, 1.5).append(wristArm);
 
     wristSim =
-        new SingleJointedArmSim(
-            motor,
-            ROTOR_TO_SENSOR_RATIO,
-            INERTIA_KGMETERSSQURD,
-            ARM_LENGTH,
-            MIN_ANGLE.in(Radians),
-            MAX_ANGLE.in(Radians),
-            true,
-            MIN_ANGLE.in(Radians));
+            new SingleJointedArmSim(
+                    motor,
+                    ROTOR_TO_SENSOR_RATIO,
+                    INERTIA_KGM2,
+                    ARM_LENGTH,
+                    MIN_ANGLE.in(Radians),
+                    MAX_ANGLE.in(Radians),
+                    true,
+                    MIN_ANGLE.in(Radians));
   }
 
   @Override
   public void updateInputs(WristIOInputs inputs) {
+    // Update physics simulation
     wristSim.update(0.2);
 
+    // Update inputs with simulated values
     inputs.motorConnected = true;
     inputs.topLimit = wristSim.getAngleRads() >= MIN_ANGLE.in(Radians);
     inputs.bottomLimit = wristSim.getAngleRads() <= MAX_ANGLE.in(Radians);
-
     inputs.rotationVelocity = RadiansPerSecond.of(wristSim.getVelocityRadPerSec());
-
     inputs.motorAppliedVolts = Volts.of(appliedVolts);
-
     inputs.mechanismAngle = Radians.of(wristSim.getAngleRads());
-    wristArm.setAngle(Rotation2d.fromDegrees(inputs.mechanismAngle.in(Degree)));
     inputs.pidSlot = currentPidSlot;
     inputs.motorCurrent = Amps.of(wristSim.getCurrentDrawAmps());
+
+    // Update visualization
+    wristArm.setAngle(Rotation2d.fromDegrees(inputs.mechanismAngle.in(Degree)));
   }
 
   @Override

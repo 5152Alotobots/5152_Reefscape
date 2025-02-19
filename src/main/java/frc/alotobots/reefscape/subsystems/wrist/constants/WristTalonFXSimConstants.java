@@ -14,10 +14,19 @@ package frc.alotobots.reefscape.subsystems.wrist.constants;
 
 import lombok.experimental.UtilityClass;
 
+/**
+ * Contains constants specific to the simulated implementation of the wrist.
+ * These values are used to configure the physics simulation.
+ */
 @UtilityClass
 public class WristTalonFXSimConstants {
 
+  /** Gear ratio between motor rotation and mechanism rotation */
   public static final int ROTOR_TO_SENSOR_RATIO = 189;
-  public static final double INERTIA_KGMETERSSQURD = 0.2809;
+
+  /** Moment of inertia of the wrist mechanism in kg⋅m² */
+  public static final double INERTIA_KGM2 = 0.2809;
+
+  /** Length of the wrist arm in meters */
   public static final double ARM_LENGTH = 0.3048;
 }
