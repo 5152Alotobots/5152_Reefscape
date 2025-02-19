@@ -79,8 +79,8 @@ public class WristIOTalonFXSim implements WristIO {
 
     // Update inputs with simulated values
     inputs.motorConnected = true;
-    inputs.topLimit = wristSim.getAngleRads() >= MIN_ANGLE.in(Radians);
-    inputs.bottomLimit = wristSim.getAngleRads() <= MAX_ANGLE.in(Radians);
+    inputs.topLimit = wristSim.getAngleRads() >= MAX_ANGLE.in(Radians);
+    inputs.bottomLimit = wristSim.getAngleRads() <= MIN_ANGLE.in(Radians);
     inputs.rotationVelocity = RadiansPerSecond.of(wristSim.getVelocityRadPerSec());
     inputs.motorAppliedVolts = Volts.of(appliedVolts);
     inputs.mechanismAngle = Radians.of(wristSim.getAngleRads());
