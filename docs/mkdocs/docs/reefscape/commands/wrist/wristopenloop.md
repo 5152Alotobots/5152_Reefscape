@@ -1,13 +1,13 @@
-# DefaultWristOpenLoop Command
+# WristOpenLoop Command
 
-Default command that runs on the wrist subsystem when no other command is scheduled. Provides direct operator control of the wrist using percentage output.
+Command that runs on the wrist subsystem. Provides direct operator control of the wrist using percentage output.
 
 ## Required Subsystems
 - [Wrist Subsystem](/5152_Reefscape/library/subsystems/wrist)
 
 ## Constructor Parameters
 ```java
-public DefaultWristOpenLoop(WristSubsystem wristSubsystem, DoubleSupplier input)
+public WristOpenLoop(WristSubsystem wristSubsystem, DoubleSupplier input)
 ```
 - `wristSubsystem`: The wrist subsystem instance to control
 - `input`: A supplier for the percent output value (-1.0 to 1.0), typically from a joystick or controller

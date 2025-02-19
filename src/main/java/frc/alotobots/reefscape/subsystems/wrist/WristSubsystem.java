@@ -17,9 +17,11 @@ import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.units.measure.Angle;
+import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.alotobots.reefscape.subsystems.wrist.io.WristIO;
 import frc.alotobots.reefscape.subsystems.wrist.io.WristIOInputsAutoLogged;
+import frc.alotobots.reefscape.util.ControlType;
 import org.littletonrobotics.junction.Logger;
 
 /**
@@ -58,6 +60,22 @@ public class WristSubsystem extends SubsystemBase {
     Angle adjustedAngle =
         Degrees.of(MathUtil.clamp(angle.in(Degrees), MIN_ANGLE.in(Degrees), MAX_ANGLE.in(Degrees)));
     io.setWristPosition(adjustedAngle, 1);
+  }
+
+  /**
+   * Controls the wrist to move to a specified velocity using closed-loop velocity control.
+   *
+   * @param velocity Target velocity in degrees per second, automatically constrained between
+   *     -MAX_SPEED and MAX_SPEED
+   */
+  public void runToTargetVelocity(AngularVelocity velocity) {
+    AngularVelocity adjustedVelocity =
+        DegreesPerSecond.of(
+            MathUtil.clamp(
+                velocity.in(DegreesPerSecond),
+                -MAX_SPEED.in(DegreesPerSecond),
+                MAX_SPEED.in(DegreesPerSecond)));
+    io.setWristVelocity(adjustedVelocity, ControlType.ClosedLoop.VELOCITY.ordinal());
   }
 
   /**

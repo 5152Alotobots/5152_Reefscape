@@ -73,6 +73,14 @@ public interface WristIO {
   public default void setWristPosition(Angle rotation, int pidSlot) {}
 
   /**
+   * Sets the wrist to run at a target velocity using closed-loop control.
+   *
+   * @param velocity The target velocity to move at
+   * @param pidSlot The PID slot to use (0 for velocity, 1 for position)
+   */
+  public default void setWristVelocity(AngularVelocity velocity, int pidSlot) {}
+
+  /**
    * Runs the wrist using direct percentage output (open-loop control).
    *
    * @param percentOutput The motor output as a percentage (-1.0 to 1.0)

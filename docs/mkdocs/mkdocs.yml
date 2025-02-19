@@ -20,7 +20,8 @@ nav:
               - Elevator Run to Height: reefscape/elevatorruntoheight.md
               - Elevator Open Loop: reefscape/elevatoropenloop.md
           - Wrist:
-              - Default Wrist Open Loop: reefscape/defaultwristopenloop.md
+              - Default Wrist Run At Velocity: reefscape/defaultwristrunatvelocity.md
+              - Wrist Open Loop: reefscape/wristopenloop.md
               - Wrist Run to Angle: reefscape/wristruntoangle.md
   - Library:
       - Commands:

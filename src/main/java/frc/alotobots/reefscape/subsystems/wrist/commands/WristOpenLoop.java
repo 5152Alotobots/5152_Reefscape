@@ -16,11 +16,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.alotobots.reefscape.subsystems.wrist.WristSubsystem;
 import java.util.function.DoubleSupplier;
 
-/**
- * Default command for controlling the wrist in open-loop mode. This command runs when no other
- * command is using the wrist subsystem.
- */
-public class DefaultWristOpenLoop extends Command {
+/** Command for controlling the wrist in open-loop mode. */
+public class WristOpenLoop extends Command {
   /** The wrist subsystem being controlled */
   private final WristSubsystem wristSubsystem;
 
@@ -28,12 +25,12 @@ public class DefaultWristOpenLoop extends Command {
   private final DoubleSupplier input;
 
   /**
-   * Creates a new DefaultWristOpenLoop command.
+   * Creates a new WristOpenLoop command.
    *
    * @param wristSubsystem The wrist subsystem to control
    * @param input Supplier for the percent output (-1.0 to 1.0)
    */
-  public DefaultWristOpenLoop(WristSubsystem wristSubsystem, DoubleSupplier input) {
+  public WristOpenLoop(WristSubsystem wristSubsystem, DoubleSupplier input) {
     this.wristSubsystem = wristSubsystem;
     this.input = input;
 

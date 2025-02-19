@@ -46,7 +46,7 @@ import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIO;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIOTalonFXReal;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIOTalonFXSim;
 import frc.alotobots.reefscape.subsystems.wrist.WristSubsystem;
-import frc.alotobots.reefscape.subsystems.wrist.commands.DefaultWristOpenLoop;
+import frc.alotobots.reefscape.subsystems.wrist.commands.DefaultWristRunAtVelocity;
 import frc.alotobots.reefscape.subsystems.wrist.commands.WristRunToAngle;
 import frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants;
 import frc.alotobots.reefscape.subsystems.wrist.io.WristIOTalonFXReal;
@@ -206,11 +206,11 @@ public class RobotContainer {
   }
 
   private void configureDefaultCommands() {
-    wristSubsystem.setDefaultCommand(
-        new DefaultWristOpenLoop(wristSubsystem, () -> OI.getWristAxis()));
     swerveDriveSubsystem.setDefaultCommand(new DefaultDrive(swerveDriveSubsystem).getCommand());
     elevatorSubsystem.setDefaultCommand(
         new DefaultElevatorRunAtVelocity(elevatorSubsystem, () -> -getElevatorAxis()));
+    wristSubsystem.setDefaultCommand(
+        new DefaultWristRunAtVelocity(wristSubsystem, () -> getWristAxis()));
     // blingSubsystem.setDefaultCommand(
     //    new NoAllianceWaiting(blingSubsystem).andThen(new SetToAllianceColor(blingSubsystem)));
   }
