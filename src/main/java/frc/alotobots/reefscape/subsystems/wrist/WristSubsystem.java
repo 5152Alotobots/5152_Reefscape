@@ -71,6 +71,7 @@ public class WristSubsystem extends SubsystemBase {
   public void runToTargetAngle(Angle angle) {
     Angle adjustedAngle =
         Degrees.of(MathUtil.clamp(angle.in(Degrees), MIN_ANGLE.in(Degrees), MAX_ANGLE.in(Degrees)));
+    targetAngle = adjustedAngle;
     io.setWristPosition(adjustedAngle, ControlType.ClosedLoop.POSITION.ordinal());
     Logger.recordOutput("Wrist/ControlType", ControlType.ClosedLoop.POSITION);
   }

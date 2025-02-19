@@ -233,9 +233,9 @@ public class RobotContainer {
     wristGroundButton.onTrue(
         new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.GROUND_INTAKE));
     // Intake
-    intakeButton.whileTrue(new DefaultCoralIntakeOpenLoop(coralIntakeSubsystem, () -> 1.0));
+    intakeButton.whileTrue(new DefaultCoralIntakeOpenLoop(coralIntakeSubsystem, () -> .4));
     intakeButtonNoLimits.whileTrue(
-        new DefaultCoralIntakeOpenLoopWOLimits(coralIntakeSubsystem, () -> 1.0));
+        new DefaultCoralIntakeOpenLoopWOLimits(coralIntakeSubsystem, () -> .4));
   }
 
   private void configureAutoChooser() {
