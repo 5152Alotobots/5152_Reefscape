@@ -35,7 +35,7 @@ public final class ElevatorConstants {
   /** Physical limits and safety thresholds */
   public static final class Limits {
     /** Maximum allowed height */
-    public static final Distance MAX_HEIGHT = Meters.of(1.8);
+    public static final Distance MAX_HEIGHT = Meters.of(1.80);
 
     /** Minimum allowed height */
     public static final Distance MIN_HEIGHT = Meters.of(0.253311);
