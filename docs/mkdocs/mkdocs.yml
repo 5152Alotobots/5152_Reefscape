@@ -12,12 +12,16 @@ nav:
   - Reefscape:
       - Field Constants: reefscape/fieldconstants.md
       - Subsystems:
-          - reefscape/elevator.md
+          - Elevator: reefscape/elevator.md
+          - Wrist: reefscape/wrist.md
       - Commands:
           - Elevator:
               - Default Elevator Run At Velocity: reefscape/defaultelevatorrunatvelocity.md
               - Elevator Run to Height: reefscape/elevatorruntoheight.md
               - Elevator Open Loop: reefscape/elevatoropenloop.md
+          - Wrist:
+              - Default Wrist Open Loop: reefscape/defaultwristopenloop.md
+              - Wrist Run to Angle: reefscape/wristruntoangle.md
   - Library:
       - Commands:
           - Swerve:

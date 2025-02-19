@@ -16,9 +16,7 @@ import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.alotobots.reefscape.subsystems.wrist.WristSubsystem;
 
-/**
- * Command to move the wrist to a specific angle using closed-loop control.
- */
+/** Command to move the wrist to a specific angle using closed-loop control. */
 public class WristRunToAngle extends Command {
   /** The wrist subsystem being controlled */
   private final WristSubsystem wristSubsystem;

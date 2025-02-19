@@ -21,9 +21,9 @@ import edu.wpi.first.units.measure.Voltage;
 import org.littletonrobotics.junction.AutoLog;
 
 /**
- * Interface defining the hardware abstraction layer for the wrist subsystem.
- * This interface allows for different hardware implementations (real, simulated, etc.)
- * while maintaining consistent functionality.
+ * Interface defining the hardware abstraction layer for the wrist subsystem. This interface allows
+ * for different hardware implementations (real, simulated, etc.) while maintaining consistent
+ * functionality.
  */
 public interface WristIO {
   /** Data structure for inputs from wrist hardware. */

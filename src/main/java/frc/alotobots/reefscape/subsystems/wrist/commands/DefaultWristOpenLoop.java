@@ -15,11 +15,10 @@ package frc.alotobots.reefscape.subsystems.wrist.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.alotobots.reefscape.subsystems.wrist.WristSubsystem;
 import java.util.function.DoubleSupplier;
-import org.littletonrobotics.junction.Logger;
 
 /**
- * Default command for controlling the wrist in open-loop mode.
- * This command runs when no other command is using the wrist subsystem.
+ * Default command for controlling the wrist in open-loop mode. This command runs when no other
+ * command is using the wrist subsystem.
  */
 public class DefaultWristOpenLoop extends Command {
   /** The wrist subsystem being controlled */

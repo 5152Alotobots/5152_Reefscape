@@ -15,8 +15,8 @@ package frc.alotobots.reefscape.subsystems.wrist.constants;
 import lombok.experimental.UtilityClass;
 
 /**
- * Contains constants specific to the simulated implementation of the wrist.
- * These values are used to configure the physics simulation.
+ * Contains constants specific to the simulated implementation of the wrist. These values are used
+ * to configure the physics simulation.
  */
 @UtilityClass
 public class WristTalonFXSimConstants {

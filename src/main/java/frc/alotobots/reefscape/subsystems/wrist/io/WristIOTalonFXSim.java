@@ -27,20 +27,19 @@ import org.littletonrobotics.junction.mechanism.LoggedMechanism2d;
 import org.littletonrobotics.junction.mechanism.LoggedMechanismLigament2d;
 
 /**
- * Simulated implementation of the WristIO interface.
- * Uses WPILib's SingleJointedArmSim for physics simulation and visualization.
+ * Simulated implementation of the WristIO interface. Uses WPILib's SingleJointedArmSim for physics
+ * simulation and visualization.
  */
 public class WristIOTalonFXSim implements WristIO {
   /** Physics simulation of the wrist mechanism */
   private final SingleJointedArmSim wristSim;
 
   /** Visualization of the wrist mechanism */
-  @AutoLogOutput
-  private final LoggedMechanism2d wristMech = new LoggedMechanism2d(3, 3);
+  @AutoLogOutput private final LoggedMechanism2d wristMech = new LoggedMechanism2d(3, 3);
 
   /** Visual representation of the wrist arm */
   private final LoggedMechanismLigament2d wristArm =
-          new LoggedMechanismLigament2d("wrist", 0.5, 180, 6, new Color8Bit(Color.kPurple));
+      new LoggedMechanismLigament2d("wrist", 0.5, 180, 6, new Color8Bit(Color.kPurple));
 
   /** Simulated Falcon 500 motor */
   private final DCMotor motor = DCMotor.getFalcon500(1);
@@ -55,22 +54,22 @@ public class WristIOTalonFXSim implements WristIO {
   private boolean brakeMode = true;
 
   /**
-   * Creates a new WristIOTalonFXSim with a simulated wrist mechanism.
-   * Configures the physics simulation and visualization.
+   * Creates a new WristIOTalonFXSim with a simulated wrist mechanism. Configures the physics
+   * simulation and visualization.
    */
   public WristIOTalonFXSim() {
     wristMech.getRoot("wrist", 1.5, 1.5).append(wristArm);
 
     wristSim =
-            new SingleJointedArmSim(
-                    motor,
-                    ROTOR_TO_SENSOR_RATIO,
-                    INERTIA_KGM2,
-                    ARM_LENGTH,
-                    MIN_ANGLE.in(Radians),
-                    MAX_ANGLE.in(Radians),
-                    true,
-                    MIN_ANGLE.in(Radians));
+        new SingleJointedArmSim(
+            motor,
+            ROTOR_TO_SENSOR_RATIO,
+            INERTIA_KGM2,
+            ARM_LENGTH,
+            MIN_ANGLE.in(Radians),
+            MAX_ANGLE.in(Radians),
+            true,
+            MIN_ANGLE.in(Radians));
   }
 
   @Override

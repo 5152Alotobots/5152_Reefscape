@@ -21,19 +21,15 @@ import edu.wpi.first.units.measure.Current;
 import lombok.experimental.UtilityClass;
 
 /**
- * Contains TalonFX-specific constants for the real robot implementation of the wrist.
- * Includes PID values, motor configuration, and safety limits.
+ * Contains TalonFX-specific constants for the real robot implementation of the wrist. Includes PID
+ * values, motor configuration, and safety limits.
  */
 @UtilityClass
 public class WristTalonFXRealConstants {
 
-  /**
-   * Contains PID and motion control constants for different control modes.
-   */
+  /** Contains PID and motion control constants for different control modes. */
   public static final class PIDConstants {
-    /**
-     * TalonFX-specific PID and motion control constants for velocity mode.
-     */
+    /** TalonFX-specific PID and motion control constants for velocity mode. */
     public static final class VelocityPIDConstants {
       /** Position control proportional gain */
       public static final double KP = 0.1;
@@ -57,9 +53,7 @@ public class WristTalonFXRealConstants {
       public static final double KV = 0.11;
     }
 
-    /**
-     * TalonFX-specific PID and motion control constants for Position mode.
-     */
+    /** TalonFX-specific PID and motion control constants for Position mode. */
     public static final class PositionPIDConstants {
       /** Position control proportional gain */
       public static final double KP = 70;
@@ -84,9 +78,7 @@ public class WristTalonFXRealConstants {
     }
   }
 
-  /**
-   * Contains safety limit constants for the wrist motors.
-   */
+  /** Contains safety limit constants for the wrist motors. */
   public static final class MotorSafetyLimits {
     /** Maximum forward torque current limit in amperes */
     public static final Current TORQUE_FORWARD_AMP_LIMIT = Amps.of(35);
@@ -103,7 +95,7 @@ public class WristTalonFXRealConstants {
 
   /** Direction of the encoder rotation */
   public static final SensorDirectionValue ENCODER_DIRECTION =
-          SensorDirectionValue.CounterClockwise_Positive;
+      SensorDirectionValue.CounterClockwise_Positive;
 
   /** Neutral mode (brake/coast) setting for the mechanism */
   public static final NeutralModeValue MECHANISM_NEUTRAL_MODE = NeutralModeValue.Brake;

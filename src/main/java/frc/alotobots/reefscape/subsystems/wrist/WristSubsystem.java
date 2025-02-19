@@ -23,8 +23,8 @@ import frc.alotobots.reefscape.subsystems.wrist.io.WristIOInputsAutoLogged;
 import org.littletonrobotics.junction.Logger;
 
 /**
- * Subsystem for controlling the robot's wrist mechanism.
- * Handles both position and velocity control of the wrist joint.
+ * Subsystem for controlling the robot's wrist mechanism. Handles both position and velocity control
+ * of the wrist joint.
  */
 public class WristSubsystem extends SubsystemBase {
   /** Hardware abstraction for the wrist */
@@ -49,26 +49,26 @@ public class WristSubsystem extends SubsystemBase {
   }
 
   /**
-   * Commands the wrist to move to a target angle using closed-loop control.
-   * Target angle is clamped within the allowed range.
+   * Commands the wrist to move to a target angle using closed-loop control. Target angle is clamped
+   * within the allowed range.
    *
    * @param angle The target angle for the wrist
    */
   public void runToTargetAngle(Angle angle) {
     Angle adjustedAngle =
-            Degrees.of(MathUtil.clamp(angle.in(Degrees), MIN_ANGLE.in(Degrees), MAX_ANGLE.in(Degrees)));
+        Degrees.of(MathUtil.clamp(angle.in(Degrees), MIN_ANGLE.in(Degrees), MAX_ANGLE.in(Degrees)));
     io.setWristPosition(adjustedAngle, 1);
   }
 
   /**
-   * Runs the wrist using direct percent output (open-loop control).
-   * Output is clamped within the allowed range.
+   * Runs the wrist using direct percent output (open-loop control). Output is clamped within the
+   * allowed range.
    *
    * @param percentOutput The motor output as a percentage (-1.0 to 1.0)
    */
   public void runAtPercentOutput(double percentOutput) {
     double adjustedSpeed =
-            MathUtil.clamp(percentOutput, -MAX_OPEN_LOOP_PERCENTAGE, MAX_OPEN_LOOP_PERCENTAGE);
+        MathUtil.clamp(percentOutput, -MAX_OPEN_LOOP_PERCENTAGE, MAX_OPEN_LOOP_PERCENTAGE);
     io.setWristOpenLoop(adjustedSpeed);
   }
 
