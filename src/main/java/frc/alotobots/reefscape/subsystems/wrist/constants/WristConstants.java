@@ -45,7 +45,7 @@ public class WristConstants {
     public static final double MAX_OPEN_LOOP_PERCENTAGE = 0.5;
 
     /** Max speed (magnitude) */
-    public static final AngularVelocity MAX_SPEED = DegreesPerSecond.of(30);
+    public static final AngularVelocity MAX_SPEED = DegreesPerSecond.of(90);
 
     /** Enable Limits */
     public static final boolean LIMITS_ENABLED = true;
