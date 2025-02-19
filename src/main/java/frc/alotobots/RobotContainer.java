@@ -226,11 +226,11 @@ public class RobotContainer {
     elevatorL4Button.onTrue(
         new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L4_PLACE));
     // Wrist
-    wristL4coralButton.whileTrue(
+    wristL4coralButton.onTrue(
         new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.L4_PLACE));
-    wristL2and3coralButton.whileTrue(
+    wristL2and3coralButton.onTrue(
         new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.L3_PLACE));
-    wristGroundButton.whileTrue(
+    wristGroundButton.onTrue(
         new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.GROUND_INTAKE));
     // Intake
     intakeButton.whileTrue(new DefaultCoralIntakeOpenLoop(coralIntakeSubsystem, () -> 1.0));

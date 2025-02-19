@@ -14,10 +14,13 @@ package frc.alotobots.reefscape.subsystems.wrist;
 
 import static edu.wpi.first.units.Units.*;
 import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.Limits.*;
+import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.Thresholds.AT_SET_POINT_POSITION_THRESHOLD;
+import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.Thresholds.AT_SET_POINT_TIME_THRESHOLD;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.alotobots.reefscape.subsystems.wrist.io.WristIO;
 import frc.alotobots.reefscape.subsystems.wrist.io.WristIOInputsAutoLogged;
@@ -34,6 +37,15 @@ public class WristSubsystem extends SubsystemBase {
 
   /** Latest inputs from the wrist hardware */
   private WristIOInputsAutoLogged inputs = new WristIOInputsAutoLogged();
+
+  /** Timer that handles the checking for at position */
+  private final Timer atSetpointTimer = new Timer();
+
+  /**
+   * Angle object that tracks the currently selected position (maintains last position if not in
+   * POSITION control mode)
+   */
+  private Angle targetAngle = Degrees.zero();
 
   /**
    * Creates a new WristSubsystem.
@@ -96,5 +108,35 @@ public class WristSubsystem extends SubsystemBase {
   /** Stops all wrist movement. */
   public void stop() {
     io.stop();
+  }
+
+  /**
+   * Retrieves the current angle of the wrist.
+   *
+   * @return The current angle as an Angle object
+   */
+  public Angle getCurrentAngle() {
+    return inputs.mechanismAngle;
+  }
+
+  /**
+   * Checks if the wrist is stably at its target angle for a minimum duration. Uses position and
+   * time thresholds defined in WristConstants.
+   *
+   * @return true if the wrist has maintained its target angle within tolerance
+   */
+  public boolean isAtTargetAngle() {
+    boolean inSetPointThreshold =
+        targetAngle.minus(inputs.mechanismAngle).abs(Degrees)
+            < AT_SET_POINT_POSITION_THRESHOLD.in(Degrees);
+    if (inSetPointThreshold) {
+      if (!atSetpointTimer.isRunning()) {
+        atSetpointTimer.restart();
+      }
+      return atSetpointTimer.hasElapsed(AT_SET_POINT_TIME_THRESHOLD.in(Seconds));
+    } else {
+      atSetpointTimer.stop();
+      return false;
+    }
   }
 }
