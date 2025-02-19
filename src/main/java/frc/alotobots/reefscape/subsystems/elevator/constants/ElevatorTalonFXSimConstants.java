@@ -22,6 +22,7 @@ import lombok.experimental.UtilityClass;
  * Constants for the simulated elevator subsystem using TalonFX motors. Contains PID constants for
  * different game piece modes and physical configuration parameters.
  */
+
 @UtilityClass
 public class ElevatorTalonFXSimConstants {
   /** TalonFX-specific PID and motion control constants for no game piece (Empty mode). */

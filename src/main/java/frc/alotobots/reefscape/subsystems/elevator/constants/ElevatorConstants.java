@@ -15,6 +15,7 @@ package frc.alotobots.reefscape.subsystems.elevator.constants;
 import static edu.wpi.first.units.Units.*;
 
 import edu.wpi.first.units.measure.*;
+
 import lombok.experimental.UtilityClass;
 
 /**
@@ -31,7 +32,7 @@ public final class ElevatorConstants {
     /** How long the elevator must be "at position" to classify as "at position" */
     public static final Time AT_SET_POINT_TIME_THRESHOLD = Seconds.of(.2);
   }
-
+  
   /** Physical limits and safety thresholds */
   public static final class Limits {
     /** Maximum allowed height */
@@ -42,7 +43,7 @@ public final class ElevatorConstants {
 
     /** Maximum open loop percent output */
     public static final double MAX_OPEN_LOOP_PERCENTAGE = 0.5;
-
+    
     /** Max speed (magnitude) */
     public static final LinearVelocity MAX_SPEED = MetersPerSecond.of(0.5);
 
@@ -60,7 +61,7 @@ public final class ElevatorConstants {
 
     /** Height for L4 placement */
     public static final Distance L4_PLACE = Meters.of(1.78);
-
+    
     /** Height for L3 placement */
     public static final Distance L3_PLACE = Meters.of(1.2);
 

@@ -37,8 +37,8 @@ public class OI {
   /** The primary driver's controller. Used for main robot control functions. */
   private static final CommandXboxController driverController =
       new CommandXboxController(DRIVER_CONTROLLER_ID);
-
-  private static final CommandXboxController auxController = new CommandXboxController(1);
+  private static final CommandXboxController codriverController =
+      new CommandXboxController(CO_DRIVER_CONTROLLER_ID);
 
   /** Trigger for when the driver is using the controller sticks to control the chassis */
   public static final Trigger hasDriverInput =
@@ -93,35 +93,19 @@ public class OI {
     return driverController.getRightTriggerAxis();
   }
 
-  /**
-   * Gets the wrist axis
-   *
-   * @return Value between -1.0 and 1.0
-   */
-  public static double getWristAxis() {
-    return MathUtil.applyDeadband(auxController.getLeftY(), DEADBAND);
-  }
+  /*Intake Buttons */
+  public static Trigger intakeButton = codriverController.back();
+  public static Trigger intakeButtonNoLimits = codriverController.start();
+  
+  /* Wrist Position Buttons */
+  public static Trigger wristL4coralButton = codriverController.povUp();
+  public static Trigger wristL2and3coralButton = codriverController.povRight();
+  public static Trigger wristGroundButton = codriverController.povLeft();
 
-  public static Trigger wristL4coralButton = auxController.povUp();
-  public static Trigger wristL2and3coralButton = auxController.povRight();
-  public static Trigger wristGroundButton = auxController.povLeft();
-  public static Trigger intakeButton = auxController.back();
-  public static Trigger intakeButtonNoLimits = auxController.start();
-
-  /** The co-driver driver's controller. Used for secondary robot control functions. */
-  private static final CommandXboxController codriverController =
-      new CommandXboxController(CO_DRIVER_CONTROLLER_ID);
-
-  /** Sets the elevator to stow position */
+  /** Elevator Postition Buttons */
   public static Trigger elevatorStowButton = codriverController.a();
-
-  /** Sets the elevator to L2 position */
   public static Trigger elevatorL2Button = codriverController.b();
-
-  /** Sets the elevator to L3 position */
   public static Trigger elevatorL3Button = codriverController.x();
-
-  /** Sets the elevator to L4 position */
   public static Trigger elevatorL4Button = codriverController.y();
 
   /**
@@ -131,5 +115,14 @@ public class OI {
    */
   public static double getElevatorAxis() {
     return MathUtil.applyDeadband(codriverController.getRightY(), DEADBAND);
+  }
+  
+  /**
+   * Gets the wrist axis
+   *
+   * @return Value between -1.0 and 1.0
+   */
+  public static double getWristAxis() {
+    return MathUtil.applyDeadband(codriverController.getLeftY(), DEADBAND);
   }
 }

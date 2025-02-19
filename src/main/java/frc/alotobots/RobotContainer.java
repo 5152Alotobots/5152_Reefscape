@@ -59,14 +59,14 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 public class RobotContainer {
   private final SwerveDriveSubsystem swerveDriveSubsystem;
   private final ElevatorSubsystem elevatorSubsystem;
+  private final WristSubsystem wristSubsystem;
+  private final CoralIntakeSubsystem coralIntakeSubsystem;
   private final OculusSubsystem oculusSubsystem;
   private final AprilTagSubsystem aprilTagSubsystem;
   private final LocalizationFusion localizationFusion;
   private final OculusPoseSource oculusPoseSource;
   private final AprilTagPoseSource aprilTagPoseSource;
   private final ObjectDetectionSubsystem objectDetectionSubsystem;
-  private final WristSubsystem wristSubsystem;
-  private final CoralIntakeSubsystem coralIntakeSubsystem;
   // private final BlingSubsystem blingSubsystem;
   private final PathPlannerManager pathPlannerManager;
   private LoggedDashboardChooser<Command> autoChooser;
@@ -76,8 +76,6 @@ public class RobotContainer {
 
     switch (Constants.currentMode) {
       case REAL:
-        coralIntakeSubsystem = new CoralIntakeSubsystem(new CoralIntakeIOVortexReal());
-        wristSubsystem = new WristSubsystem(new WristIOTalonFXReal());
         // Real robot hardware initialization
 
         swerveDriveSubsystem =
@@ -88,6 +86,8 @@ public class RobotContainer {
                 new ModuleIOTalonFXReal(ModulePosition.BACK_LEFT.index),
                 new ModuleIOTalonFXReal(ModulePosition.BACK_RIGHT.index));
         elevatorSubsystem = new ElevatorSubsystem(new ElevatorIOTalonFXReal());
+        coralIntakeSubsystem = new CoralIntakeSubsystem(new CoralIntakeIOVortexReal());
+        wristSubsystem = new WristSubsystem(new WristIOTalonFXReal());
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         configureAutoChooser();
 
@@ -225,12 +225,14 @@ public class RobotContainer {
         new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L3_PLACE));
     elevatorL4Button.onTrue(
         new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L4_PLACE));
+    //Wrist
     wristL4coralButton.whileTrue(
         new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.L4_PLACE));
     wristL2and3coralButton.whileTrue(
         new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.L3_PLACE));
     wristGroundButton.whileTrue(
         new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.GROUND_INTAKE));
+    //Intake
     intakeButton.whileTrue(new DefaultCoralIntakeOpenLoop(coralIntakeSubsystem, () -> 1.0));
     intakeButtonNoLimits.whileTrue(
         new DefaultCoralIntakeOpenLoopWOLimits(coralIntakeSubsystem, () -> 1.0));
