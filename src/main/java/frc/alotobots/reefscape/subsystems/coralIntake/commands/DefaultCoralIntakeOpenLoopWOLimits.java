@@ -21,8 +21,8 @@ public class DefaultCoralIntakeOpenLoopWOLimits extends Command {
   private final CoralIntakeSubsystem coralIntakeSubsystem;
   private final DoubleSupplier input;
 
-  public DefaultCoralIntakeOpenLoopWOLimits(
-      DoubleSupplier input, CoralIntakeSubsystem coralIntakeSubsystem) {
+  public DefaultCoralIntakeOpenLoopWOLimits(CoralIntakeSubsystem coralIntakeSubsystem,
+      DoubleSupplier input) {
     this.coralIntakeSubsystem = coralIntakeSubsystem;
     this.input = input;
 

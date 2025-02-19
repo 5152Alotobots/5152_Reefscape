@@ -21,8 +21,8 @@ public class DefaultCoralIntakeOpenLoop extends Command {
   private final CoralIntakeSubsystem coralIntakeSubsystem;
   private final DoubleSupplier input;
 
-  public DefaultCoralIntakeOpenLoop(
-      DoubleSupplier input, CoralIntakeSubsystem coralIntakeSubsystem) {
+  public DefaultCoralIntakeOpenLoop(CoralIntakeSubsystem coralIntakeSubsystem,
+      DoubleSupplier input) {
     this.coralIntakeSubsystem = coralIntakeSubsystem;
     this.input = input;
 

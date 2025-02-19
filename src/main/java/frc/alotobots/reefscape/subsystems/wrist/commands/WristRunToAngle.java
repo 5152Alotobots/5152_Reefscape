@@ -20,7 +20,7 @@ public class WristRunToAngle extends Command {
   private final WristSubsystem wristSubsystem;
   private final Angle angle;
 
-  public WristRunToAngle(Angle angle, WristSubsystem wristSubsystem) {
+  public WristRunToAngle(WristSubsystem wristSubsystem, Angle angle) {
     this.wristSubsystem = wristSubsystem;
     this.angle = angle;
 

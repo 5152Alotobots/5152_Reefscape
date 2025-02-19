@@ -12,7 +12,6 @@
 */
 package frc.alotobots;
 
-import static edu.wpi.first.units.Units.Degrees;
 import static frc.alotobots.OI.*;
 import static frc.alotobots.reefscape.subsystems.wrist.constants.WristIOTalonFXConstants.WristPositions.*;
 
@@ -209,7 +208,7 @@ public class RobotContainer {
 
   private void configureDefaultCommands() {
     wristSubsystem.setDefaultCommand(
-        new DefaultWristOpenLoop(() -> OI.getWristAxis(), wristSubsystem));
+        new DefaultWristOpenLoop(wristSubsystem, () -> OI.getWristAxis()));
     swerveDriveSubsystem.setDefaultCommand(new DefaultDrive(swerveDriveSubsystem).getCommand());
     elevatorSubsystem.setDefaultCommand(
         new DefaultElevatorRunAtVelocity(elevatorSubsystem, () -> -getElevatorAxis()));
@@ -227,11 +226,11 @@ public class RobotContainer {
         new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L3_PLACE));
     elevatorL4Button.onTrue(
         new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L4_PLACE));
-    wristL4coralButton.whileTrue(new WristRunToAngle(L4_CORAL_POSITION, wristSubsystem));
-    wristL2and3coralButton.whileTrue(new WristRunToAngle(L2AND3_CORAL_POSITION, wristSubsystem));
-    wristGroundButton.whileTrue(new WristRunToAngle(GROUND_INTAKE, wristSubsystem));
-    intakeButton.whileTrue(new DefaultCoralIntakeOpenLoop(() -> 1.0, coralIntakeSubsystem));
-    intakeButtonNoLimits.whileTrue(new DefaultCoralIntakeOpenLoopWOLimits(() -> 1.0, coralIntakeSubsystem));
+    wristL4coralButton.whileTrue(new WristRunToAngle(wristSubsystem, L4_CORAL_POSITION));
+    wristL2and3coralButton.whileTrue(new WristRunToAngle(wristSubsystem, L2AND3_CORAL_POSITION));
+    wristGroundButton.whileTrue(new WristRunToAngle(wristSubsystem, GROUND_INTAKE));
+    intakeButton.whileTrue(new DefaultCoralIntakeOpenLoop(coralIntakeSubsystem, () -> 1.0));
+    intakeButtonNoLimits.whileTrue(new DefaultCoralIntakeOpenLoopWOLimits(coralIntakeSubsystem, () -> 1.0));
   }
 
   private void configureAutoChooser() {

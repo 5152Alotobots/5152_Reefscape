@@ -21,7 +21,7 @@ public class DefaultWristOpenLoop extends Command {
   private final WristSubsystem wristSubsystem;
   private final DoubleSupplier input;
 
-  public DefaultWristOpenLoop(DoubleSupplier input, WristSubsystem wristSubsystem) {
+  public DefaultWristOpenLoop(WristSubsystem wristSubsystem, DoubleSupplier input) {
     this.wristSubsystem = wristSubsystem;
     this.input = input;
 
