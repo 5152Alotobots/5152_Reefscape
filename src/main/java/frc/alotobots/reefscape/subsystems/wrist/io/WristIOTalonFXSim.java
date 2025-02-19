@@ -13,12 +13,12 @@
 package frc.alotobots.reefscape.subsystems.wrist.io;
 
 import static edu.wpi.first.units.Units.*;
-import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.*;
-import static frc.alotobots.reefscape.subsystems.wrist.constants.WristIOTalonFXConstants.*;
+import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.Limits.MAX_ANGLE;
+import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.Limits.MIN_ANGLE;
+import static frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXSimConstants.*;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.system.plant.DCMotor;
-import edu.wpi.first.units.measure.*;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.util.Color8Bit;
@@ -65,8 +65,8 @@ public class WristIOTalonFXSim implements WristIO {
 
     inputs.motorAppliedVolts = Volts.of(appliedVolts);
 
-    inputs.position = Radians.of(wristSim.getAngleRads());
-    wristArm.setAngle(Rotation2d.fromDegrees(inputs.position.in(Degree)));
+    inputs.mechanismAngle = Radians.of(wristSim.getAngleRads());
+    wristArm.setAngle(Rotation2d.fromDegrees(inputs.mechanismAngle.in(Degree)));
     inputs.pidSlot = currentPidSlot;
     inputs.motorCurrent = Amps.of(wristSim.getCurrentDrawAmps());
   }

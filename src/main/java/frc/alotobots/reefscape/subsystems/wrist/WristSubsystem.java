@@ -13,8 +13,8 @@
 package frc.alotobots.reefscape.subsystems.wrist;
 
 import static edu.wpi.first.units.Units.*;
-import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.MAX_ANGLE;
-import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.MIN_ANGLE;
+import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.Limits.MAX_ANGLE;
+import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.Limits.MIN_ANGLE;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.units.measure.Angle;
@@ -35,7 +35,6 @@ public class WristSubsystem extends SubsystemBase {
   public void periodic() {
     io.updateInputs(inputs);
     Logger.processInputs("Wrist", inputs);
-    Logger.recordOutput("Wrist/Temp", inputs.position.in(Radians));
   }
 
   public void runToTargetAngle(Angle angle) {

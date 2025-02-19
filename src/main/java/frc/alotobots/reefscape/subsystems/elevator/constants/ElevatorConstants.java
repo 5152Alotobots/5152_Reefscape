@@ -15,23 +15,22 @@ package frc.alotobots.reefscape.subsystems.elevator.constants;
 import static edu.wpi.first.units.Units.*;
 
 import edu.wpi.first.units.measure.*;
+import lombok.experimental.UtilityClass;
 
 /**
  * Constants for the Elevator subsystem. Contains all configuration values, conversion factors, and
  * physical limits. All values use WPILib's units library for type safety.
  */
+@UtilityClass
 public final class ElevatorConstants {
-  /** Prevent construction */
-  private ElevatorConstants() {}
 
-  /** Acceptable PID error that will classify as "at position" */
-  public static final Distance AT_SET_POINT_POSITION_THRESHOLD = Meters.of(.02);
+  public static final class Thresholds {
+    /** Acceptable PID error that will classify as "at position" */
+    public static final Distance AT_SET_POINT_POSITION_THRESHOLD = Meters.of(.02);
 
-  /** How long the elevator must be "at position" to classify as "at position" */
-  public static final Time AT_SET_POINT_TIME_THRESHOLD = Seconds.of(.2);
-
-  /** Maximum open loop percent output */
-  public static final double MAX_OPEN_LOOP_PERCENTAGE = 0.5;
+    /** How long the elevator must be "at position" to classify as "at position" */
+    public static final Time AT_SET_POINT_TIME_THRESHOLD = Seconds.of(.2);
+  }
 
   /** Physical limits and safety thresholds */
   public static final class Limits {
@@ -40,6 +39,9 @@ public final class ElevatorConstants {
 
     /** Minimum allowed height */
     public static final Distance MIN_HEIGHT = Meters.of(0.253311);
+
+    /** Maximum open loop percent output */
+    public static final double MAX_OPEN_LOOP_PERCENTAGE = 0.5;
 
     /** Max speed (magnitude) */
     public static final LinearVelocity MAX_SPEED = MetersPerSecond.of(0.5);

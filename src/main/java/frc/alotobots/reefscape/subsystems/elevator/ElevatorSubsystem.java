@@ -13,17 +13,18 @@
 package frc.alotobots.reefscape.subsystems.elevator;
 
 import static edu.wpi.first.units.Units.*;
-import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.*;
 import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.Limits.*;
+import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.Thresholds.AT_SET_POINT_POSITION_THRESHOLD;
+import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.Thresholds.AT_SET_POINT_TIME_THRESHOLD;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.LinearVelocity;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.alotobots.reefscape.subsystems.elevator.constants.ControlType;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIO;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIOInputsAutoLogged;
+import frc.alotobots.reefscape.util.ControlType;
 import org.littletonrobotics.junction.Logger;
 
 /**

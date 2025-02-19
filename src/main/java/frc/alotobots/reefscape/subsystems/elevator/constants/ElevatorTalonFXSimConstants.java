@@ -16,11 +16,13 @@ import static edu.wpi.first.units.Units.*;
 
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.Mass;
+import lombok.experimental.UtilityClass;
 
 /**
  * Constants for the simulated elevator subsystem using TalonFX motors. Contains PID constants for
  * different game piece modes and physical configuration parameters.
  */
+@UtilityClass
 public class ElevatorTalonFXSimConstants {
   /** TalonFX-specific PID and motion control constants for no game piece (Empty mode). */
   public static final class EmptyPIDConstants {

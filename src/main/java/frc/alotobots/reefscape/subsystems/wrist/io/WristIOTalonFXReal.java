@@ -12,12 +12,13 @@
 */
 package frc.alotobots.reefscape.subsystems.wrist.io;
 
+import static edu.wpi.first.units.Units.Amps;
+import static edu.wpi.first.units.Units.Rotations;
 import static frc.alotobots.Constants.CanId.WRIST_ENCODER_CAN_ID;
 import static frc.alotobots.Constants.CanId.WRIST_MOTOR_CAN_ID;
-import static frc.alotobots.reefscape.subsystems.wrist.constants.WristIOTalonFXConstants.ENCODER_DIRCTION_VALUE;
-import static frc.alotobots.reefscape.subsystems.wrist.constants.WristIOTalonFXConstants.ENCODER_MAGNET_OFFSET;
-import static frc.alotobots.reefscape.subsystems.wrist.constants.WristIOTalonFXConstants.MOTOR_INVERT;
-import static frc.alotobots.reefscape.subsystems.wrist.constants.WristIOTalonFXConstants.ROTOR_TO_SENSOR_RATIO;
+import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.Limits.*;
+import static frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXRealConstants.*;
+import static frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXRealConstants.MotorSafetyLimits.*;
 import static frc.alotobots.util.PhoenixUtil.tryUntilOk;
 
 import com.ctre.phoenix6.BaseStatusSignal;
@@ -30,18 +31,18 @@ import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.ParentDevice;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
-import com.ctre.phoenix6.signals.NeutralModeValue;
+import com.ctre.phoenix6.signals.GravityTypeValue;
 import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Voltage;
-import frc.alotobots.reefscape.subsystems.wrist.constants.WristIOTalonFXConstants.PositionPIDConstants;
+import frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXRealConstants;
 
 public class WristIOTalonFXReal implements WristIO {
 
   // Motors
-  private final TalonFX wristMotor;
+  private final TalonFX wristTalon;
   private final CANcoder wristEncoder;
 
   // Control Modes
@@ -66,37 +67,67 @@ public class WristIOTalonFXReal implements WristIO {
   private final Debouncer wristConnectedDebouncer = new Debouncer(0.5);
 
   public WristIOTalonFXReal() {
-    wristMotor = new TalonFX(WRIST_MOTOR_CAN_ID);
+    wristTalon = new TalonFX(WRIST_MOTOR_CAN_ID);
     wristEncoder = new CANcoder(WRIST_ENCODER_CAN_ID);
 
     var wristMotorConfig = new TalonFXConfiguration();
 
-    wristMotorConfig.MotorOutput.Inverted = MOTOR_INVERT;
-    wristMotorConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+    // PID configuration for velocity mode (Slot 0)
+    wristMotorConfig.Slot0.kP = WristTalonFXRealConstants.PIDConstants.VelocityPIDConstants.KP;
+    wristMotorConfig.Slot0.kI = WristTalonFXRealConstants.PIDConstants.VelocityPIDConstants.KI;
+    wristMotorConfig.Slot0.kD = WristTalonFXRealConstants.PIDConstants.VelocityPIDConstants.KD;
+    wristMotorConfig.Slot0.GravityType = GravityTypeValue.Arm_Cosine;
+    wristMotorConfig.Slot0.kA = WristTalonFXRealConstants.PIDConstants.VelocityPIDConstants.KA;
+    wristMotorConfig.Slot0.kG = WristTalonFXRealConstants.PIDConstants.VelocityPIDConstants.KG;
+    wristMotorConfig.Slot0.kS = WristTalonFXRealConstants.PIDConstants.VelocityPIDConstants.KS;
+    wristMotorConfig.Slot0.kV = WristTalonFXRealConstants.PIDConstants.VelocityPIDConstants.KV;
+
+    // PID configuration for position mode (Slot 1)
+    wristMotorConfig.Slot1.kP = WristTalonFXRealConstants.PIDConstants.PositionPIDConstants.KP;
+    wristMotorConfig.Slot1.kI = WristTalonFXRealConstants.PIDConstants.PositionPIDConstants.KI;
+    wristMotorConfig.Slot1.kD = WristTalonFXRealConstants.PIDConstants.PositionPIDConstants.KD;
+    wristMotorConfig.Slot1.GravityType = GravityTypeValue.Arm_Cosine;
+    wristMotorConfig.Slot1.kA = WristTalonFXRealConstants.PIDConstants.PositionPIDConstants.KA;
+    wristMotorConfig.Slot1.kG = WristTalonFXRealConstants.PIDConstants.PositionPIDConstants.KG;
+    wristMotorConfig.Slot1.kS = WristTalonFXRealConstants.PIDConstants.PositionPIDConstants.KS;
+    wristMotorConfig.Slot1.kV = WristTalonFXRealConstants.PIDConstants.PositionPIDConstants.KV;
+
+    wristMotorConfig.MotorOutput.NeutralMode = WristTalonFXRealConstants.MECHANISM_NEUTRAL_MODE;
+
+    wristMotorConfig.SoftwareLimitSwitch.ForwardSoftLimitEnable = LIMITS_ENABLED;
+    wristMotorConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = LIMITS_ENABLED;
+    wristMotorConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = MAX_ANGLE.in(Rotations);
+    wristMotorConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = MIN_ANGLE.in(Rotations);
+
+    wristMotorConfig.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.RemoteCANcoder;
     wristMotorConfig.Feedback.FeedbackRemoteSensorID = WRIST_ENCODER_CAN_ID;
     wristMotorConfig.Feedback.RotorToSensorRatio = ROTOR_TO_SENSOR_RATIO;
-    wristMotorConfig.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.RemoteCANcoder;
 
-    wristMotorConfig.Slot0.kP = PositionPIDConstants.KP;
-    wristMotorConfig.Slot0.kI = PositionPIDConstants.KI;
-    wristMotorConfig.Slot0.kD = PositionPIDConstants.KD;
+    wristMotorConfig.TorqueCurrent.PeakForwardTorqueCurrent = TORQUE_FORWARD_AMP_LIMIT.in(Amps);
+    wristMotorConfig.TorqueCurrent.PeakReverseTorqueCurrent = TORQUE_REVERSE_AMP_LIMIT.in(Amps);
+
+    wristMotorConfig.CurrentLimits.StatorCurrentLimit = STATOR_AMP_LIMIT.in(Amps);
+    wristMotorConfig.CurrentLimits.StatorCurrentLimitEnable = true; // Always should be true
+
+    wristMotorConfig.MotorOutput.Inverted = MOTOR_DIRECTION;
+
+    tryUntilOk(5, () -> wristTalon.getConfigurator().apply(wristMotorConfig, 0.25));
 
     var wristEncoderConfig = new CANcoderConfiguration();
 
     wristEncoderConfig.MagnetSensor.MagnetOffset = ENCODER_MAGNET_OFFSET;
-    wristEncoderConfig.MagnetSensor.SensorDirection = ENCODER_DIRCTION_VALUE;
+    wristEncoderConfig.MagnetSensor.SensorDirection = ENCODER_DIRECTION;
 
     // Apply config wrist
-    tryUntilOk(5, () -> wristMotor.getConfigurator().apply(wristMotorConfig, 0.25));
     tryUntilOk(5, () -> wristEncoder.getConfigurator().apply(wristEncoderConfig, 0.25));
 
-    currentPidSlot = wristMotor.getClosedLoopSlot();
-    wristAppliedVoltage = wristMotor.getMotorVoltage();
-    wristAppliedCurrent = wristMotor.getStatorCurrent();
-    wristVelocity = wristMotor.getVelocity();
-    wristPosition = wristMotor.getPosition();
-    topSoftLimit = wristMotor.getFault_ForwardSoftLimit();
-    bottomSoftLimit = wristMotor.getFault_ReverseSoftLimit();
+    currentPidSlot = wristTalon.getClosedLoopSlot();
+    wristAppliedVoltage = wristTalon.getMotorVoltage();
+    wristAppliedCurrent = wristTalon.getStatorCurrent();
+    wristVelocity = wristTalon.getVelocity();
+    wristPosition = wristTalon.getPosition();
+    topSoftLimit = wristTalon.getFault_ForwardSoftLimit();
+    bottomSoftLimit = wristTalon.getFault_ReverseSoftLimit();
 
     BaseStatusSignal.setUpdateFrequencyForAll(
         50,
@@ -108,7 +139,7 @@ public class WristIOTalonFXReal implements WristIO {
         topSoftLimit,
         bottomSoftLimit);
 
-    ParentDevice.optimizeBusUtilizationForAll(wristMotor);
+    ParentDevice.optimizeBusUtilizationForAll(wristTalon);
   }
 
   @Override
@@ -125,6 +156,7 @@ public class WristIOTalonFXReal implements WristIO {
 
     // Is connected
     inputs.motorConnected = wristConnectedDebouncer.calculate(wristSignals.isOK());
+    inputs.cancoderConnected = wristConnectedDebouncer.calculate(wristEncoder.isConnected());
 
     // PID slot
     inputs.pidSlot = currentPidSlot.getValue();
@@ -139,7 +171,7 @@ public class WristIOTalonFXReal implements WristIO {
     inputs.rotationVelocity = wristVelocity.getValue();
 
     // Position
-    inputs.position = wristPosition.getValue();
+    inputs.mechanismAngle = wristPosition.getValue();
 
     // Limits
     inputs.topLimit = topSoftLimit.getValue();
@@ -148,16 +180,16 @@ public class WristIOTalonFXReal implements WristIO {
 
   @Override
   public void setWristPosition(Angle rotation, int pidSlot) {
-    wristMotor.setControl(positionVoltage.withPosition(rotation).withSlot(pidSlot));
+    wristTalon.setControl(positionVoltage.withPosition(rotation).withSlot(pidSlot));
   }
 
   @Override
   public void setWristOpenLoop(double percentOutput) {
-    wristMotor.set(percentOutput);
+    wristTalon.set(percentOutput);
   }
 
   @Override
   public void stop() {
-    wristMotor.stopMotor();
+    wristTalon.stopMotor();
   }
 }

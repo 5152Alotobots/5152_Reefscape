@@ -14,7 +14,10 @@ package frc.alotobots.reefscape.subsystems.wrist.io;
 
 import static edu.wpi.first.units.Units.*;
 
-import edu.wpi.first.units.measure.*;
+import edu.wpi.first.units.measure.Angle;
+import edu.wpi.first.units.measure.AngularVelocity;
+import edu.wpi.first.units.measure.Current;
+import edu.wpi.first.units.measure.Voltage;
 import org.littletonrobotics.junction.AutoLog;
 
 public interface WristIO {
@@ -23,10 +26,11 @@ public interface WristIO {
 
     public int pidSlot = 0;
     public boolean motorConnected = false;
+    public boolean cancoderConnected = false;
     public boolean topLimit = false;
     public boolean bottomLimit = false;
 
-    public Angle position = Radians.zero();
+    public Angle mechanismAngle = Rotations.zero();
     public AngularVelocity rotationVelocity = RotationsPerSecond.zero();
     public Voltage motorAppliedVolts = Volts.zero();
     public Current motorCurrent = Amps.zero();

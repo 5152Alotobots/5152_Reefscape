@@ -13,7 +13,6 @@
 package frc.alotobots;
 
 import static frc.alotobots.OI.*;
-import static frc.alotobots.reefscape.subsystems.wrist.constants.WristIOTalonFXConstants.WristPositions.*;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -49,6 +48,7 @@ import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIOTalonFXSim;
 import frc.alotobots.reefscape.subsystems.wrist.WristSubsystem;
 import frc.alotobots.reefscape.subsystems.wrist.commands.DefaultWristOpenLoop;
 import frc.alotobots.reefscape.subsystems.wrist.commands.WristRunToAngle;
+import frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants;
 import frc.alotobots.reefscape.subsystems.wrist.io.WristIOTalonFXReal;
 import frc.alotobots.reefscape.subsystems.wrist.io.WristIOTalonFXSim;
 import org.ironmaple.simulation.SimulatedArena;
@@ -145,7 +145,6 @@ public class RobotContainer {
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         configureAutoChooser();
 
-
         oculusSubsystem = new OculusSubsystem(new OculusIOSim(driveSimulation));
         aprilTagSubsystem =
             new AprilTagSubsystem(
@@ -226,11 +225,15 @@ public class RobotContainer {
         new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L3_PLACE));
     elevatorL4Button.onTrue(
         new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L4_PLACE));
-    wristL4coralButton.whileTrue(new WristRunToAngle(wristSubsystem, L4_CORAL_POSITION));
-    wristL2and3coralButton.whileTrue(new WristRunToAngle(wristSubsystem, L2AND3_CORAL_POSITION));
-    wristGroundButton.whileTrue(new WristRunToAngle(wristSubsystem, GROUND_INTAKE));
+    wristL4coralButton.whileTrue(
+        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.L4_PLACE));
+    wristL2and3coralButton.whileTrue(
+        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.L3_PLACE));
+    wristGroundButton.whileTrue(
+        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.GROUND_INTAKE));
     intakeButton.whileTrue(new DefaultCoralIntakeOpenLoop(coralIntakeSubsystem, () -> 1.0));
-    intakeButtonNoLimits.whileTrue(new DefaultCoralIntakeOpenLoopWOLimits(coralIntakeSubsystem, () -> 1.0));
+    intakeButtonNoLimits.whileTrue(
+        new DefaultCoralIntakeOpenLoopWOLimits(coralIntakeSubsystem, () -> 1.0));
   }
 
   private void configureAutoChooser() {
