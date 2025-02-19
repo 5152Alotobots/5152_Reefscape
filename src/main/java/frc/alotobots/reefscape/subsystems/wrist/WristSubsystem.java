@@ -59,7 +59,8 @@ public class WristSubsystem extends SubsystemBase {
   public void runToTargetAngle(Angle angle) {
     Angle adjustedAngle =
         Degrees.of(MathUtil.clamp(angle.in(Degrees), MIN_ANGLE.in(Degrees), MAX_ANGLE.in(Degrees)));
-    io.setWristPosition(adjustedAngle, 1);
+    io.setWristPosition(adjustedAngle, ControlType.ClosedLoop.POSITION.ordinal());
+    Logger.recordOutput("Wrist/ControlType", ControlType.ClosedLoop.POSITION);
   }
 
   /**
@@ -76,6 +77,7 @@ public class WristSubsystem extends SubsystemBase {
                 -MAX_SPEED.in(DegreesPerSecond),
                 MAX_SPEED.in(DegreesPerSecond)));
     io.setWristVelocity(adjustedVelocity, ControlType.ClosedLoop.VELOCITY.ordinal());
+    Logger.recordOutput("Wrist/ControlType", ControlType.ClosedLoop.VELOCITY);
   }
 
   /**
@@ -88,6 +90,7 @@ public class WristSubsystem extends SubsystemBase {
     double adjustedSpeed =
         MathUtil.clamp(percentOutput, -MAX_OPEN_LOOP_PERCENTAGE, MAX_OPEN_LOOP_PERCENTAGE);
     io.setWristOpenLoop(adjustedSpeed);
+    Logger.recordOutput("Wrist/ControlType", ControlType.OpenLoop.OPEN_LOOP);
   }
 
   /** Stops all wrist movement. */
