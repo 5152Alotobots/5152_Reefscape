@@ -79,8 +79,11 @@ public class WristIOTalonFXReal implements WristIO {
   /** Bottom limit switch status */
   StatusSignal<Boolean> bottomSoftLimit;
 
-  /** Debouncer for filtering connection status */
-  private final Debouncer wristConnectedDebouncer = new Debouncer(0.5);
+  /** Debouncer for filtering connection status to motor */
+  private final Debouncer motorConnectedDebouncer = new Debouncer(0.5);
+
+  /** Debouncer for filtering connection status to encoder */
+  private final Debouncer encoderConnectedDebouncer = new Debouncer(0.5);
 
   /** Creates a new WristIOTalonFXReal and configures all motor controller and encoder settings. */
   public WristIOTalonFXReal() {
@@ -172,8 +175,8 @@ public class WristIOTalonFXReal implements WristIO {
             bottomSoftLimit);
 
     // Update connection status
-    inputs.motorConnected = wristConnectedDebouncer.calculate(wristSignals.isOK());
-    inputs.cancoderConnected = wristConnectedDebouncer.calculate(wristEncoder.isConnected());
+    inputs.motorConnected = motorConnectedDebouncer.calculate(wristSignals.isOK());
+    inputs.cancoderConnected = encoderConnectedDebouncer.calculate(wristEncoder.isConnected());
 
     // Update all input values
     inputs.pidSlot = currentPidSlot.getValue();
