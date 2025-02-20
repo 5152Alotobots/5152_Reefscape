@@ -18,6 +18,7 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.alotobots.library.subsystems.swervedrive.*;
 import frc.alotobots.library.subsystems.swervedrive.commands.*;
@@ -35,12 +36,10 @@ import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.Obje
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.constants.ObjectDetectionConstants;
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.io.*;
 import frc.alotobots.reefscape.subsystems.climber.ClimberSubsystem;
-import frc.alotobots.reefscape.subsystems.climber.commands.DefaultClimber;
+import frc.alotobots.reefscape.subsystems.climber.commands.Climb;
 import frc.alotobots.reefscape.subsystems.climber.io.ClimberIORevServoReal;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.commands.DefaultElevatorRunAtVelocity;
-import frc.alotobots.reefscape.subsystems.elevator.commands.ElevatorRunToHeight;
-import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIO;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIOTalonFXReal;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIOTalonFXSim;
@@ -203,7 +202,8 @@ public class RobotContainer {
   }
 
   private void configureLogicCommands() {
-    testButton.onTrue(new DefaultClimber(climberSubsystem));
+    testButton.onTrue(new Climb(climberSubsystem, elevatorSubsystem));
+    testButton2.onTrue(new InstantCommand(climberSubsystem::disableServos));
     // Elevator
     // elevatorStowButton.onTrue(
     //     new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.STOWED));

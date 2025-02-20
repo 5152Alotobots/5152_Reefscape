@@ -96,6 +96,7 @@ public class OI {
       new CommandXboxController(CO_DRIVER_CONTROLLER_ID);
 
   public static Trigger testButton = codriverController.start();
+  public static Trigger testButton2 = codriverController.back();
 
   /** Sets the elevator to stow position */
   public static Trigger elevatorStowButton = codriverController.a();

@@ -12,56 +12,71 @@
 */
 package frc.alotobots.reefscape.subsystems.climber.io;
 
+import static edu.wpi.first.units.Units.Degrees;
 import static frc.alotobots.Constants.CanId.SERVO_HUB_CAN_ID;
-import static frc.alotobots.reefscape.subsystems.climber.constants.ClimberRevServoReal.LOCKING_SERVO_ID;
-import static frc.alotobots.reefscape.subsystems.climber.constants.ClimberRevServoReal.PLUNGER_SERVO_ID;
+import static frc.alotobots.reefscape.subsystems.climber.constants.ClimberRevServoReal.*;
 
 import com.revrobotics.servohub.ServoChannel;
 import com.revrobotics.servohub.ServoHub;
+import edu.wpi.first.units.measure.Angle;
+import edu.wpi.first.wpilibj.DigitalInput;
 
 public class ClimberIORevServoReal implements ClimberIO {
   private final ServoHub servoHub = new ServoHub(SERVO_HUB_CAN_ID);
   private final ServoChannel plungerServoChannel = servoHub.getServoChannel(PLUNGER_SERVO_ID);
   private final ServoChannel lockingServoChannel = servoHub.getServoChannel(LOCKING_SERVO_ID);
+  private final DigitalInput cageSwitch1 = new DigitalInput(0);
+  private final DigitalInput cageSwitch2 = new DigitalInput(1);
 
   public ClimberIORevServoReal() {}
 
   @Override
+  public boolean getCageSwitches() {
+    return cageSwitch1.get() && cageSwitch2.get();
+  }
+
+  @Override
   public void updateInputs(ClimberIOInputs inputs) {
+    inputs.cageSwitch1 = cageSwitch1.get();
+    inputs.cageSwitch2 = cageSwitch2.get();
+
     inputs.servoHubConnected = true;
-    inputs.lockingServoPosition = lockingServoChannel.getPulseWidth();
-    inputs.plungerServoPosition = plungerServoChannel.getPulseWidth();
+    inputs.lockingServoPulseWidth = lockingServoChannel.getPulseWidth();
+    inputs.plungerServoPulseWidth = plungerServoChannel.getPulseWidth();
   }
 
   @Override
-  public void togglePlungerServoEnabled() {
-    if (!plungerServoChannel.isEnabled()) {
-      plungerServoChannel.setEnabled(true);
-      plungerServoChannel.setPowered(true);
-    } else {
-      plungerServoChannel.setEnabled(false);
-      plungerServoChannel.setPowered(false);
-    }
+  public void enablePlungerServo() {
+    plungerServoChannel.setEnabled(true);
+    plungerServoChannel.setPowered(true);
   }
 
   @Override
-  public void toggleLockingServoEnabled() {
-    if (!lockingServoChannel.isEnabled()) {
-      lockingServoChannel.setEnabled(true);
-      lockingServoChannel.setPowered(true);
-    } else {
-      lockingServoChannel.setEnabled(false);
-      lockingServoChannel.setPowered(false);
-    }
+  public void enableLockingServo() {
+    lockingServoChannel.setEnabled(true);
+    lockingServoChannel.setPowered(true);
   }
 
   @Override
-  public void setPlungerServoPosition() {
-    plungerServoChannel.setPulseWidth(1400);
+  public void disablePlungerServo() {
+    plungerServoChannel.setEnabled(false);
+    plungerServoChannel.setPowered(false);
   }
 
   @Override
-  public void setLockingServoPosition() {
-    lockingServoChannel.setPulseWidth(1600);
+  public void disableLockingServo() {
+    lockingServoChannel.setEnabled(false);
+    lockingServoChannel.setPowered(false);
+  }
+
+  @Override
+  public void setPlungerServoPosition(Angle angle) {
+    plungerServoChannel.setPulseWidth((int) (((angle.in(Degrees) / 360) * 1850) + 650));
+  }
+
+  @Override
+  public void setLockingServoLocked(boolean lockingServoLocked) {
+    if (lockingServoLocked) lockingServoChannel.setPulseWidth(LOCKING_SERVO_CLOSED_PW);
+    else lockingServoChannel.setPulseWidth(LOCKING_SERVO_OPEN_PW);
   }
 }

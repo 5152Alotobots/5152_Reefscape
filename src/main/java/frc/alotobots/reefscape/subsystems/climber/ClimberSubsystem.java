@@ -12,6 +12,9 @@
 */
 package frc.alotobots.reefscape.subsystems.climber;
 
+import static edu.wpi.first.units.Units.Degrees;
+
+import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.alotobots.reefscape.subsystems.climber.io.ClimberIO;
 import frc.alotobots.reefscape.subsystems.climber.io.ClimberIOInputsAutoLogged;
@@ -31,10 +34,37 @@ public class ClimberSubsystem extends SubsystemBase {
     Logger.processInputs("Climber", inputs);
   }
 
-  public void climb() {
-    io.toggleLockingServoEnabled();
-    io.togglePlungerServoEnabled();
-    io.setLockingServoPosition();
-    io.setPlungerServoPosition();
+  public boolean getCageSwitches() {
+    return io.getCageSwitches();
+  }
+
+  public void enableServos() {
+    io.enablePlungerServo();
+    io.enableLockingServo();
+  }
+
+  public void disableServos() {
+    io.disablePlungerServo();
+    io.disableLockingServo();
+  }
+
+  public void setPlungerToAngle(Angle angle) {
+    io.setPlungerServoPosition(angle);
+  }
+
+  public void setPlungerToPlunge() {
+    io.setPlungerServoPosition(Degrees.of(180));
+  }
+
+  public void setPlungerToReceive() {
+    io.setPlungerServoPosition(Degrees.of(0));
+  }
+
+  public void lockCage() {
+    io.setLockingServoLocked(true);
+  }
+
+  public void unlockCage() {
+    io.setLockingServoLocked(false);
   }
 }
