@@ -121,21 +121,26 @@ public class WristSubsystem extends SubsystemBase {
   }
 
   /**
-   * Checks if the wrist is stably at its target angle for a minimum duration. Uses position and
-   * time thresholds defined in WristConstants.
+   * Checks if the wrist is stably at its target angle for a minimum duration.
    *
    * @return true if the wrist has maintained its target angle within tolerance
    */
   public boolean isAtTargetAngle() {
+    // Check if current angle is within threshold of target
     boolean inSetPointThreshold =
-        targetAngle.minus(inputs.mechanismAngle).abs(Degrees)
-            < AT_SET_POINT_POSITION_THRESHOLD.in(Degrees);
+            targetAngle.minus(inputs.mechanismAngle).abs(Degrees)
+                    < AT_SET_POINT_POSITION_THRESHOLD.in(Degrees);
+
+    // Only start if in position threshold
     if (inSetPointThreshold) {
+      // Start timer if not running and check elapsed time
       if (!atSetpointTimer.isRunning()) {
         atSetpointTimer.restart();
       }
+      // Return true if wrist has been at position for minimum duration
       return atSetpointTimer.hasElapsed(AT_SET_POINT_TIME_THRESHOLD.in(Seconds));
     } else {
+      // Reset timer if outside threshold
       atSetpointTimer.stop();
       return false;
     }

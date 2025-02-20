@@ -132,21 +132,26 @@ public class ElevatorSubsystem extends SubsystemBase {
   }
 
   /**
-   * Checks if the elevator is stably at its target height for a minimum duration. Uses position and
-   * time thresholds defined in ElevatorConstants.
+   * Checks if the elevator is stably at its target height for a minimum duration.
    *
    * @return true if the elevator has maintained its target height within tolerance
    */
   public boolean isAtTargetHeight() {
+    // Check if current height is within threshold of target
     boolean inSetPointThreshold =
-        targetHeight.minus(inputs.leftHeight).abs(Meters)
-            < AT_SET_POINT_POSITION_THRESHOLD.in(Meters);
+            targetHeight.minus(inputs.leftHeight).abs(Meters)
+                    < AT_SET_POINT_POSITION_THRESHOLD.in(Meters);
+
+    // Only start if in position threshold
     if (inSetPointThreshold) {
+      // Start timer if not running and check elapsed time
       if (!atSetpointTimer.isRunning()) {
         atSetpointTimer.restart();
       }
+      // Return true if elevator has been at position for minimum duration
       return atSetpointTimer.hasElapsed(AT_SET_POINT_TIME_THRESHOLD.in(Seconds));
     } else {
+      // Reset timer if outside threshold
       atSetpointTimer.stop();
       return false;
     }
