@@ -12,6 +12,8 @@
 */
 package frc.alotobots.reefscape.subsystems.wrist.commands;
 
+import static frc.alotobots.OI.AxisLimits.MAX_AXIS_LIMIT;
+import static frc.alotobots.OI.AxisLimits.MIN_AXIS_LIMIT;
 import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.Limits.MAX_SPEED;
 
 import edu.wpi.first.math.MathUtil;
@@ -68,7 +70,7 @@ public class DefaultWristRunAtVelocity extends Command {
    */
   @Override
   public void execute() {
-    double adjustedInput = MathUtil.clamp(input.getAsDouble(), -1, 1);
+    double adjustedInput = MathUtil.clamp(input.getAsDouble(), MIN_AXIS_LIMIT, MAX_AXIS_LIMIT);
     AngularVelocity velocity = MAX_SPEED.times(adjustedInput);
     wristSubsystem.runToTargetVelocity(velocity);
   }
