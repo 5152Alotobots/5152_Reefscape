@@ -219,25 +219,25 @@ public class RobotContainer {
 
   private void configureLogicCommands() {
     // Elevator
-    elevatorStowButton.onTrue(
+    elevatorStowButton.toggleOnTrue(
         new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.STOWED));
-    elevatorL2Button.onTrue(
+    elevatorL2Button.toggleOnTrue(
         new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L2_PLACE));
-    elevatorL3Button.onTrue(
+    elevatorL3Button.toggleOnTrue(
         new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L3_PLACE));
-    elevatorL4Button.onTrue(
+    elevatorL4Button.toggleOnTrue(
         new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L4_PLACE));
     // Wrist
-    wristL4coralButton.onTrue(
+    wristL4coralButton.toggleOnTrue(
         new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.L4_PLACE));
-    wristL2and3coralButton.onTrue(
+    wristL2and3coralButton.toggleOnTrue(
         new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.L3_PLACE));
-    wristGroundButton.onTrue(
+    wristGroundButton.toggleOnTrue(
         new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.GROUND_INTAKE));
     // Coral Intake
-    coralIntakeIntakeButton.onTrue(
+    coralIntakeIntakeButton.toggleOnTrue(
         new CoralIntakeIntake(coralIntakeSubsystem, () -> INTAKE_PERCENTAGE));
-    coralIntakeOuttakeThroughButton.onTrue(
+    coralIntakeOuttakeThroughButton.toggleOnTrue(
         new CoralIntakeOuttakeThrough(coralIntakeSubsystem, () -> OUTTAKE_PERCENTAGE));
   }
 
