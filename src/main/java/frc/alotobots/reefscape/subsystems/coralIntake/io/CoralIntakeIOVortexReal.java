@@ -15,55 +15,100 @@ package frc.alotobots.reefscape.subsystems.coralIntake.io;
 import static edu.wpi.first.units.Units.*;
 import static frc.alotobots.Constants.CanId.INTAKE_CANRANGE_ID;
 import static frc.alotobots.Constants.CanId.INTAKE_MOTOR_CAN_ID;
+import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeVortexRealConstants.MECHANISM_NEUTRAL_MODE;
+import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeVortexRealConstants.MOTOR_DIRECTION;
+import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeVortexRealConstants.MotorSafetyLimits.STATOR_AMP_LIMIT;
+import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeVortexRealConstants.PIDConstants.VelocityPIDConstants.*;
+import static frc.alotobots.util.PhoenixUtil.tryUntilOk;
 
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
+import com.ctre.phoenix6.configs.CANrangeConfiguration;
 import com.ctre.phoenix6.hardware.CANrange;
 import com.ctre.phoenix6.hardware.ParentDevice;
+import com.ctre.phoenix6.signals.UpdateModeValue;
+import com.revrobotics.REVLibError;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkFlexConfig;
-import org.littletonrobotics.junction.Logger;
+import edu.wpi.first.math.filter.Debouncer;
+import edu.wpi.first.units.measure.AngularVelocity;
 
 public class CoralIntakeIOVortexReal implements CoralIntakeIO {
 
-  private final SparkFlex intakeMotor = new SparkFlex(INTAKE_MOTOR_CAN_ID, MotorType.kBrushless);
-  private final CANrange intakeSensor = new CANrange(INTAKE_CANRANGE_ID);
+  private final SparkFlex intakeMotor;
+  private final CANrange canRange;
 
-  private final StatusSignal<Boolean> intakeOccupied = intakeSensor.getIsDetected();
+  private final StatusSignal<Boolean> intakeOccupied;
+
+  // Yay! RevLib doesn't do status signals! I Hate Rev!
+
+  /** Debouncer for filtering CANrange connection status */
+  private final Debouncer canRangeConnectedDebounce = new Debouncer(0.5);
+
+  /** Debouncer for filtering motor connection status */
+  private final Debouncer motorConnectedDebounce = new Debouncer(0.5);
 
   public CoralIntakeIOVortexReal() {
-    SparkFlexConfig config = new SparkFlexConfig();
-    // SparkPIDController =
+    intakeMotor = new SparkFlex(INTAKE_MOTOR_CAN_ID, MotorType.kBrushless);
+    canRange = new CANrange(INTAKE_CANRANGE_ID);
 
-    config.inverted(false);
-    config.idleMode(IdleMode.kBrake);
-    config.smartCurrentLimit(40);
+    var motorConfig = new SparkFlexConfig();
 
-    // PID Configuration (Optional, for velocity control or precise movement)
-    // intakePID.
-    // intakePID.setI(0.0);
-    // intakePID.setD(0.0);
-    // intakePID.setFF(0.0);  //  Important:  You *must* tune this if using velocity control.
-    // intakePID.setOutputRange(-1.0, 1.0); //  Good practice to limit output.
+    motorConfig.closedLoop.pidf(KP, KI, KD, KF);
+    motorConfig.smartCurrentLimit(((int) STATOR_AMP_LIMIT.in(Amps)));
+    motorConfig.signals.primaryEncoderVelocityAlwaysOn(true);
+    motorConfig.signals.primaryEncoderPositionAlwaysOn(true);
+    motorConfig.signals.primaryEncoderPositionPeriodMs(20);
+    motorConfig.signals.primaryEncoderVelocityPeriodMs(20);
+
+    motorConfig.idleMode(MECHANISM_NEUTRAL_MODE);
+
+    motorConfig.inverted(MOTOR_DIRECTION);
+
     intakeMotor.configure(
-        config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+        motorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
+    var canRangeConfig = new CANrangeConfiguration();
+
+    canRangeConfig.ToFParams.UpdateMode = UpdateModeValue.ShortRangeUserFreq;
+    canRangeConfig.ToFParams.UpdateFrequency = 100; // Hz
+    canRangeConfig.ProximityParams.MinSignalStrengthForValidMeasurement = 5000;
+    canRangeConfig.ProximityParams.ProximityHysteresis = .03;
+    canRangeConfig.ProximityParams.ProximityThreshold = .1;
+    canRangeConfig.FovParams.FOVRangeX = 27;
+    canRangeConfig.FovParams.FOVRangeY = 13;
+
+    tryUntilOk(5, () -> canRange.getConfigurator().apply(canRangeConfig, 0.25));
+
+    intakeOccupied = canRange.getIsDetected();
 
     BaseStatusSignal.setUpdateFrequencyForAll(50.0, intakeOccupied);
-    ParentDevice.optimizeBusUtilizationForAll(intakeSensor);
+    ParentDevice.optimizeBusUtilizationForAll(canRange);
   }
 
   @Override
   public void updateInputs(CoralIntakeIOInputs inputs) {
-    BaseStatusSignal.refreshAll(intakeOccupied);
-    Logger.recordOutput("Temp/Occ", intakeOccupied.getValue());
+    var canRangeSignals = BaseStatusSignal.refreshAll(intakeOccupied);
+
+    // Connected Status
+    inputs.canRangeConnected = canRangeConnectedDebounce.calculate(canRangeSignals.isOK());
+    inputs.motorConnected =
+        motorConnectedDebounce.calculate(intakeMotor.getLastError().equals(REVLibError.kOk));
+
+    // Positions
     inputs.intakeOccupied = intakeOccupied.getValue();
-    inputs.velocity = RevolutionsPerSecond.of((intakeMotor.getEncoder().getVelocity()) / 60);
+
+    // Velocities
+    inputs.motorVelocity = RevolutionsPerSecond.of((intakeMotor.getEncoder().getVelocity()) / 60.0);
+
+    // Volts
     inputs.motorAppliedVolts =
         Volts.of(intakeMotor.getAppliedOutput() * intakeMotor.getBusVoltage());
+
+    // Amps
     inputs.motorCurrentAmps = Amps.of(intakeMotor.getOutputCurrent());
   }
 
@@ -73,16 +118,15 @@ public class CoralIntakeIOVortexReal implements CoralIntakeIO {
   }
 
   @Override
+  public void setIntakeVelocity(AngularVelocity velocity, int pidSlot) {
+    throw new UnsupportedOperationException(
+        "setIntakeVelocity of CoralIntakeIOVortexReal is not implemented yet");
+  }
+
+  @Override
   public boolean getIntakeOccupied() {
     return intakeOccupied.getValue();
   }
-
-  // @Override
-  // public void setIntakeVelocity(double velocityRPM) {
-  // Use the velocity
-  //     intakePID.setReference(velocityRPM, ControlType.kVelocity, 0, 0, ArbFFUnits.kVoltage); //
-  // kVelocity, PID Slot, Arb Feedforward, Arb FF Units
-  // }
 
   @Override
   public void stop() {

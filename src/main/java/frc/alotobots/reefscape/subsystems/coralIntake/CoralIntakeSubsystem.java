@@ -12,38 +12,92 @@
 */
 package frc.alotobots.reefscape.subsystems.coralIntake;
 
+import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeConstants.Limits.*;
+
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.alotobots.reefscape.subsystems.coralIntake.io.CoralIntakeIO;
 import frc.alotobots.reefscape.subsystems.coralIntake.io.CoralIntakeIOInputsAutoLogged;
+import frc.alotobots.reefscape.util.ControlType;
 import org.littletonrobotics.junction.Logger;
 
+/**
+ * The CoralIntake subsystem controls the robot's intake mechanism for game pieces.
+ * This subsystem manages closed-loop velocity control and open loop control.
+ */
 public class CoralIntakeSubsystem extends SubsystemBase {
-  private CoralIntakeIOInputsAutoLogged inputs = new CoralIntakeIOInputsAutoLogged();
-  private CoralIntakeIO io;
+  /** The hardware interface for controlling and monitoring the intake mechanism. */
+  private final CoralIntakeIO io;
 
+  /** Auto-logged inputs from intake sensors and motor controllers. */
+  private final CoralIntakeIOInputsAutoLogged inputs = new CoralIntakeIOInputsAutoLogged();
+
+  /**
+   * Constructs a new CoralIntakeSubsystem with the specified hardware interface.
+   *
+   * @param io The hardware interface for controlling the intake mechanism
+   */
   public CoralIntakeSubsystem(CoralIntakeIO io) {
     this.io = io;
   }
 
+  /**
+   * Updates and logs intake sensor inputs. Called periodically by the command scheduler.
+   * This method ensures that the latest sensor data is available for control decisions.
+   */
   @Override
   public void periodic() {
     io.updateInputs(inputs);
     Logger.processInputs("CoralIntake", inputs);
   }
 
+  /**
+   * [NOT YET IMPLEMENTED]
+   * Controls the intake to move at a specified velocity using closed-loop velocity control.
+   *
+   * @param velocity Target velocity in radians per second
+   */
+  public void runToTargetVelocity(AngularVelocity velocity) {
+    // TODO: Implement closed-loop velocity control
+    Logger.recordOutput("CoralIntake/ControlType", ControlType.ClosedLoop.VELOCITY);
+  }
+
+  /**
+   * Controls the intake using direct percent output (open-loop control).
+   *
+   * @param percentOutput Motor output percentage (-1.0 to 1.0)
+   */
   public void runAtPercentOutput(double percentOutput) {
-    io.setIntakeOpenLoop(percentOutput);
+    double adjustedOutput = MathUtil.clamp(percentOutput, -MAX_OPEN_LOOP_PERCENTAGE, MAX_OPEN_LOOP_PERCENTAGE);
+
+    io.setIntakeOpenLoop(adjustedOutput);
+    Logger.recordOutput("CoralIntake/ControlType", ControlType.OpenLoop.OPEN_LOOP);
   }
 
-  public void runAtPercentOutputWithLimits(double percentOutput) {
-    if (io.getIntakeOccupied()) {
-      io.setIntakeOpenLoop(Math.min(0, percentOutput));
-    } else {
-      io.setIntakeOpenLoop(percentOutput);
-    }
-  }
-
+  /**
+   * Stops intake movement.
+   * This method should be called when active control of the intake is no longer needed.
+   */
   public void stop() {
     io.stop();
+  }
+
+  /**
+   * Checks if the intake currently has a game piece.
+   *
+   * @return true if a game piece is detected in the intake
+   */
+  public boolean isIntakeOccupied() {
+    return inputs.intakeOccupied;
+  }
+
+  /**
+   * Gets the current velocity of the intake.
+   *
+   * @return The current angular velocity
+   */
+  public AngularVelocity getCurrentVelocity() {
+    return inputs.motorVelocity;
   }
 }

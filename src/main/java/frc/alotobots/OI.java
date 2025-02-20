@@ -95,8 +95,8 @@ public class OI {
   }
 
   /*Intake Buttons */
-  public static Trigger intakeButton = codriverController.back();
-  public static Trigger intakeButtonNoLimits = codriverController.start();
+  public static Trigger coralIntakeIntakeButton = codriverController.back();
+  public static Trigger coralIntakeOuttakeThroughButton = codriverController.start();
 
   /* Wrist Position Buttons */
   public static Trigger wristL4coralButton = codriverController.povUp();

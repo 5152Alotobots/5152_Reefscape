@@ -20,11 +20,20 @@ import org.littletonrobotics.junction.AutoLog;
 public interface CoralIntakeIO {
   @AutoLog
   public static class CoralIntakeIOInputs {
+    // Connections
     public boolean motorConnected = false;
+    public boolean canRangeConnected = false;
+
+    // Positions
     public boolean intakeOccupied = false;
 
-    public AngularVelocity velocity = RadiansPerSecond.zero();
+    // Velocities
+    public AngularVelocity motorVelocity = RotationsPerSecond.zero();
+
+    // Voltages
     public Voltage motorAppliedVolts = Volts.zero();
+
+    // Currents
     public Current motorCurrentAmps = Amps.zero();
   }
 

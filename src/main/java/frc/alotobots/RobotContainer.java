@@ -13,6 +13,8 @@
 package frc.alotobots;
 
 import static frc.alotobots.OI.*;
+import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeConstants.Setpoints.OpenLoop.INTAKE_PERCENTAGE;
+import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeConstants.Setpoints.OpenLoop.OUTTAKE_PERCENTAGE;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -35,8 +37,8 @@ import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.Obje
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.constants.ObjectDetectionConstants;
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.io.*;
 import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
-import frc.alotobots.reefscape.subsystems.coralIntake.commands.DefaultCoralIntakeOpenLoop;
-import frc.alotobots.reefscape.subsystems.coralIntake.commands.DefaultCoralIntakeOpenLoopWOLimits;
+import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeIntake;
+import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeOuttakeThrough;
 import frc.alotobots.reefscape.subsystems.coralIntake.io.CoralIntakeIOVortexReal;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.commands.DefaultElevatorRunAtVelocity;
@@ -232,10 +234,9 @@ public class RobotContainer {
         new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.L3_PLACE));
     wristGroundButton.onTrue(
         new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.GROUND_INTAKE));
-    // Intake
-    intakeButton.whileTrue(new DefaultCoralIntakeOpenLoop(coralIntakeSubsystem, () -> .4));
-    intakeButtonNoLimits.whileTrue(
-        new DefaultCoralIntakeOpenLoopWOLimits(coralIntakeSubsystem, () -> .4));
+    // Coral Intake
+    coralIntakeIntakeButton.onTrue(new CoralIntakeIntake(coralIntakeSubsystem, () -> INTAKE_PERCENTAGE));
+    coralIntakeOuttakeThroughButton.onTrue(new CoralIntakeOuttakeThrough(coralIntakeSubsystem, () -> OUTTAKE_PERCENTAGE));
   }
 
   private void configureAutoChooser() {
