@@ -12,7 +12,7 @@
 */
 package frc.alotobots.reefscape.commands.states;
 
-import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeConstants.Setpoints.OpenLoop.OUTTAKE_PERCENTAGE;
+import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeConstants.Setpoints.OpenLoop.EJECT_PERCENTAGE;
 
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
-import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeOuttakeThrough;
+import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEjectThrough;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.commands.ElevatorRunToHeight;
 import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants;
@@ -31,7 +31,7 @@ import org.littletonrobotics.junction.Logger;
 
 /**
  * Command sequence for placing game pieces on Level 2. The sequence: 1. Moves elevator and wrist to
- * L2 position simultaneously 2. Waits for release button confirmation 3. Runs outtake through 4.
+ * L2 position simultaneously 2. Waits for release button confirmation 3. Runs eject through 4.
  * Returns to stowed position
  */
 public class StateL2 extends SequentialCommandGroup {
@@ -54,7 +54,7 @@ public class StateL2 extends SequentialCommandGroup {
             new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L2_PLACE),
             new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.L2_PLACE)),
         Commands.waitUntil(coralIntakeReleaseTrigger),
-        new CoralIntakeOuttakeThrough(coralIntakeSubsystem, () -> OUTTAKE_PERCENTAGE),
+        new CoralIntakeEjectThrough(coralIntakeSubsystem, () -> EJECT_PERCENTAGE),
         new StateStow(elevatorSubsystem, wristSubsystem));
   }
 }

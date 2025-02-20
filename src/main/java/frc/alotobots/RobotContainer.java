@@ -13,8 +13,8 @@
 package frc.alotobots;
 
 import static frc.alotobots.OI.*;
+import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeConstants.Setpoints.OpenLoop.EJECT_PERCENTAGE;
 import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeConstants.Setpoints.OpenLoop.INTAKE_PERCENTAGE;
-import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeConstants.Setpoints.OpenLoop.OUTTAKE_PERCENTAGE;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -38,8 +38,8 @@ import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.cons
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.io.*;
 import frc.alotobots.reefscape.commands.states.*;
 import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
+import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEjectThrough;
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeIntake;
-import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeOuttakeThrough;
 import frc.alotobots.reefscape.subsystems.coralIntake.io.CoralIntakeIO;
 import frc.alotobots.reefscape.subsystems.coralIntake.io.CoralIntakeIOVortexReal;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
@@ -243,8 +243,8 @@ public class RobotContainer {
     stateStowButton.toggleOnTrue(new StateStow(elevatorSubsystem, wristSubsystem));
     // BACKUP -----------------------------------------------------------------------------
     // Coral Intake
-    coralIntakeOuttakeThroughButton.toggleOnTrue(
-        new CoralIntakeOuttakeThrough(coralIntakeSubsystem, () -> OUTTAKE_PERCENTAGE));
+    coralIntakeEjectThroughButton.toggleOnTrue(
+        new CoralIntakeEjectThrough(coralIntakeSubsystem, () -> EJECT_PERCENTAGE));
 
     // Elevator
     elevatorStowButton.toggleOnTrue(

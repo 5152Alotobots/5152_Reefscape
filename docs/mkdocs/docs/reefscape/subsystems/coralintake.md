@@ -14,8 +14,8 @@ public CoralIntakeSubsystem(CoralIntakeIO io)
 
 The following commands use this subsystem:
 - [CoralIntakeIntake](/5152_Reefscape/reefscape/commands/coralintake/coralintakeintake) - Runs intake until a game piece is detected
-- [CoralIntakeOuttake](/5152_Reefscape/reefscape/commands/coralintake/coralintakeouttake) - Ejects game piece in reverse until no piece is detected
-- [CoralIntakeOuttakeThrough](/5152_Reefscape/reefscape/commands/coralintake/coralintakeouttakethrough) - Ejects game piece forward until no piece is detected
+- [CoralIntakeEject](/5152_Reefscape/reefscape/commands/coralintake/coralintakeeject) - Ejects game piece forwards until no piece is detected
+- [CoralIntakeEjectThrough](/5152_Reefscape/reefscape/commands/coralintake/coralintakeejectthrough) - Ejects game piece backwards until no piece is detected
 
 ## Configuration Requirements
 
@@ -34,6 +34,6 @@ The following commands use this subsystem:
 4. Operation Limits in CoralIntakeConstants:
     - MAX_OPEN_LOOP_PERCENTAGE
     - MAX_OPEN_LOOP_INTAKE_PERCENTAGE
-    - MAX_OPEN_LOOP_OUTTAKE_PERCENTAGE
+    - MAX_OPEN_LOOP_EJECT_PERCENTAGE
 
 [JavaDoc Reference](/5152_Reefscape/javadoc/frc/alotobots/reefscape/subsystems/coralIntake/package-summary.html)

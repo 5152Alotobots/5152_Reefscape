@@ -143,8 +143,8 @@ public class OI {
       codriverBackupController.back().or(codriverController.leftTrigger());
 
   /* Backup control triggers */
-  /** Trigger for activating the coral outtake-through function */
-  public static Trigger coralIntakeOuttakeThroughButton = codriverBackupController.start();
+  /** Trigger for activating the coral eject-through function */
+  public static Trigger coralIntakeEjectThroughButton = codriverBackupController.start();
 
   /* Wrist position control triggers */
   /** Trigger for moving the wrist to L4 coral position using backup D-pad up. */

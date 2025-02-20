@@ -26,8 +26,8 @@ nav:
               - Wrist Run to Angle: reefscape/wristruntoangle.md
           - Coral Intake:
               - Coral Intake Intake: reefscape/coralintakeintake.md
-              - Coral Intake Outtake: reefscape/coralintakeouttake.md
-              - Coral Intake Outtake Through: reefscape/coralintakeouttakethrough.md
+              - Coral Intake Eject: reefscape/coralintakeeject.md
+              - Coral Intake Eject Through: reefscape/coralintakeejectthrough.md
   - Library:
       - Commands:
           - Swerve:

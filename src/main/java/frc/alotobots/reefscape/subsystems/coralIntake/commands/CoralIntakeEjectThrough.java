@@ -12,7 +12,7 @@
 */
 package frc.alotobots.reefscape.subsystems.coralIntake.commands;
 
-import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeConstants.Limits.MAX_OPEN_LOOP_OUTTAKE_PERCENTAGE;
+import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeConstants.Limits.MAX_OPEN_LOOP_EJECT_PERCENTAGE;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -25,25 +25,24 @@ import java.util.function.DoubleSupplier;
  * through the intake side of the robot. Automatically ends when the game piece is no longer
  * detected by the intake sensor.
  */
-public class CoralIntakeOuttakeThrough extends Command {
+public class CoralIntakeEjectThrough extends Command {
   /** The coral intake subsystem being controlled */
   private final CoralIntakeSubsystem coralIntakeSubsystem;
 
   /**
-   * The input for controlling through-outtake speed (positive values pull through in intake
+   * The input for controlling through-eject speed (positive values pull through in intake
    * direction)
    */
   private final DoubleSupplier input;
 
   /**
-   * Creates a new CoralIntakeOuttakeThrough command.
+   * Creates a new CoralIntakeEjectThrough command.
    *
    * @param coralIntakeSubsystem The intake subsystem to control
-   * @param input Supplier for the outtake speed (0.0 to MAX_OPEN_LOOP_OUTTAKE_PERCENTAGE). Positive
+   * @param input Supplier for the eject speed (0.0 to MAX_OPEN_LOOP_EJECT_PERCENTAGE). Positive
    *     values pull through in the intake direction.
    */
-  public CoralIntakeOuttakeThrough(
-      CoralIntakeSubsystem coralIntakeSubsystem, DoubleSupplier input) {
+  public CoralIntakeEjectThrough(CoralIntakeSubsystem coralIntakeSubsystem, DoubleSupplier input) {
     this.coralIntakeSubsystem = coralIntakeSubsystem;
     this.input = input;
     addRequirements(coralIntakeSubsystem);
@@ -55,8 +54,7 @@ public class CoralIntakeOuttakeThrough extends Command {
    */
   @Override
   public void execute() {
-    double adjustedOutput =
-        MathUtil.clamp(input.getAsDouble(), 0, MAX_OPEN_LOOP_OUTTAKE_PERCENTAGE);
+    double adjustedOutput = MathUtil.clamp(input.getAsDouble(), 0, MAX_OPEN_LOOP_EJECT_PERCENTAGE);
     coralIntakeSubsystem.runAtPercentOutput(adjustedOutput);
   }
 
