@@ -37,6 +37,7 @@ public class OI {
   /** The primary driver's controller. Used for main robot control functions. */
   private static final CommandXboxController driverController =
       new CommandXboxController(DRIVER_CONTROLLER_ID);
+
   private static final CommandXboxController codriverController =
       new CommandXboxController(CO_DRIVER_CONTROLLER_ID);
 
@@ -96,7 +97,7 @@ public class OI {
   /*Intake Buttons */
   public static Trigger intakeButton = codriverController.back();
   public static Trigger intakeButtonNoLimits = codriverController.start();
-  
+
   /* Wrist Position Buttons */
   public static Trigger wristL4coralButton = codriverController.povUp();
   public static Trigger wristL2and3coralButton = codriverController.povRight();
@@ -104,6 +105,7 @@ public class OI {
 
   /** Elevator Postition Buttons */
   public static Trigger elevatorStowButton = codriverController.a();
+
   public static Trigger elevatorL2Button = codriverController.b();
   public static Trigger elevatorL3Button = codriverController.x();
   public static Trigger elevatorL4Button = codriverController.y();
@@ -116,7 +118,7 @@ public class OI {
   public static double getElevatorAxis() {
     return MathUtil.applyDeadband(codriverController.getRightY(), DEADBAND);
   }
-  
+
   /**
    * Gets the wrist axis
    *

@@ -18,7 +18,6 @@ import static frc.alotobots.library.subsystems.swervedrive.constants.mk4i2023.Tu
 import static frc.alotobots.library.subsystems.swervedrive.constants.mk4i2023.TunerConstants2023.GeneratedConstants.kCANBus;
 
 import com.ctre.phoenix6.CANBus;
-
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.Pigeon2Configuration;
