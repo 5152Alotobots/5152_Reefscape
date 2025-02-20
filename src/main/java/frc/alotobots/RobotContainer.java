@@ -240,7 +240,7 @@ public class RobotContainer {
     stateL4Button.toggleOnTrue(
         new StateL4(
             elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, coralIntakeReleaseButton));
-    stateStowButton.toggleOnTrue(new StateStow(elevatorSubsystem, wristSubsystem));
+    stateStowButton.toggleOnTrue(new StateStowed(elevatorSubsystem, wristSubsystem));
     // BACKUP -----------------------------------------------------------------------------
     // Coral Intake
     coralIntakeEjectThroughButton.toggleOnTrue(

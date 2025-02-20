@@ -55,6 +55,6 @@ public class StateL1 extends ReleasingSequentialCommandGroup {
             new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.L1_PLACE)),
         Commands.waitUntil(coralIntakeReleaseTrigger),
         new CoralIntakeEject(coralIntakeSubsystem, () -> EJECT_PERCENTAGE),
-        new StateStow(elevatorSubsystem, wristSubsystem));
+        new StateStowed(elevatorSubsystem, wristSubsystem));
   }
 }

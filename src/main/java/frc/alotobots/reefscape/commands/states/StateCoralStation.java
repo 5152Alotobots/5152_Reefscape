@@ -50,6 +50,6 @@ public class StateCoralStation extends ReleasingSequentialCommandGroup {
             new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.CORAL_STATION),
             new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.CORAL_STATION)),
         new CoralIntakeIntake(coralIntakeSubsystem, () -> INTAKE_PERCENTAGE),
-        new StateStow(elevatorSubsystem, wristSubsystem));
+        new StateStowed(elevatorSubsystem, wristSubsystem));
   }
 }

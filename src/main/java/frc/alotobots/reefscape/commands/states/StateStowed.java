@@ -26,16 +26,16 @@ import org.littletonrobotics.junction.Logger;
  * Command for moving the robot's mechanisms to their stowed positions. Moves the wrist first, then
  * the elevator to their positions
  */
-public class StateStow extends ReleasingSequentialCommandGroup {
+public class StateStowed extends ReleasingSequentialCommandGroup {
   /**
-   * Creates a new StateStow command.
+   * Creates a new StateStowed command.
    *
    * @param elevatorSubsystem The elevator subsystem
    * @param wristSubsystem The wrist subsystem
    */
-  public StateStow(ElevatorSubsystem elevatorSubsystem, WristSubsystem wristSubsystem) {
+  public StateStowed(ElevatorSubsystem elevatorSubsystem, WristSubsystem wristSubsystem) {
     addCommands(
-        new InstantCommand(() -> Logger.recordOutput("State/State", "STOW")),
+        new InstantCommand(() -> Logger.recordOutput("State/State", "STOWED")),
         new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.STOWED),
         new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.STOWED));
   }
