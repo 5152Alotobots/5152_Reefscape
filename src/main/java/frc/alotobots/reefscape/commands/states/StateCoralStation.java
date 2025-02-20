@@ -16,7 +16,6 @@ import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralInta
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeIntake;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
@@ -25,6 +24,7 @@ import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants;
 import frc.alotobots.reefscape.subsystems.wrist.WristSubsystem;
 import frc.alotobots.reefscape.subsystems.wrist.commands.WristRunToAngle;
 import frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants;
+import frc.alotobots.util.commandbase.ReleasingSequentialCommandGroup;
 import org.littletonrobotics.junction.Logger;
 
 /**
@@ -32,7 +32,7 @@ import org.littletonrobotics.junction.Logger;
  * to coral station position simultaneously 2. Waits for release button confirmation 3. Runs intake
  * 4. Returns to stowed position
  */
-public class StateCoralStation extends SequentialCommandGroup {
+public class StateCoralStation extends ReleasingSequentialCommandGroup {
   /**
    * Creates a new StateCoralStation command.
    *

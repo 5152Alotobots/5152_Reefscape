@@ -13,20 +13,20 @@
 package frc.alotobots.reefscape.commands.states;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.commands.ElevatorRunToHeight;
 import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants;
 import frc.alotobots.reefscape.subsystems.wrist.WristSubsystem;
 import frc.alotobots.reefscape.subsystems.wrist.commands.WristRunToAngle;
 import frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants;
+import frc.alotobots.util.commandbase.ReleasingSequentialCommandGroup;
 import org.littletonrobotics.junction.Logger;
 
 /**
  * Command for moving the robot's mechanisms to their stowed positions. Moves the wrist first, then
  * the elevator to their positions
  */
-public class StateStow extends SequentialCommandGroup {
+public class StateStow extends ReleasingSequentialCommandGroup {
   /**
    * Creates a new StateStow command.
    *
