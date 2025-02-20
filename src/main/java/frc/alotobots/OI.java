@@ -18,30 +18,50 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /**
  * The Operator Interface (OI) class handles all driver control inputs and button mappings. This
- * class provides methods to access controller inputs and defines button bindings for commanding the
- * robot.
+ * class manages three Xbox controllers:
+ *
+ * <ul>
+ *   <li>Driver Controller: Primary robot movement and speed control
+ *   <li>Co-Driver Controller: State-based controls and shared subsystem control
+ *   <li>Co-Driver Backup Controller: Manual subsystem controls and redundant options
+ * </ul>
+ *
+ * The class provides static methods to access controller inputs and defines button bindings for
+ * commanding various robot subsystems and states.
  */
 public class OI {
   /**
-   * The minimum value that joystick inputs must exceed to be registered. Used to prevent drift and
-   * unintended movement.
+   * The minimum value that joystick inputs must exceed to be registered. This deadband prevents
+   * unintended movement from controller drift and provides a stable neutral position for the
+   * controls.
    */
   public static final double DEADBAND = 0.1;
 
-  /** Driver controller ID */
+  /** Controller port ID for the primary driver's Xbox controller. */
   private static final int DRIVER_CONTROLLER_ID = 0;
 
-  /** Co-Driver controller ID */
+  /** Controller port ID for the co-driver's primary Xbox controller. */
   private static final int CO_DRIVER_CONTROLLER_ID = 1;
 
-  /** The primary driver's controller. Used for main robot control functions. */
+  /** Controller port ID for the co-driver's backup Xbox controller. */
+  private static final int CO_DRIVER_BACKUP_CONTROLLER_ID = 2;
+
+  /** Xbox controller instance for the primary driver's control functions. */
   private static final CommandXboxController driverController =
       new CommandXboxController(DRIVER_CONTROLLER_ID);
 
+  /** Xbox controller instance for the co-driver's state-based and shared controls. */
   private static final CommandXboxController codriverController =
       new CommandXboxController(CO_DRIVER_CONTROLLER_ID);
 
-  /** Trigger for when the driver is using the controller sticks to control the chassis */
+  /** Xbox controller instance for manual and redundant control options. */
+  private static final CommandXboxController codriverBackupController =
+      new CommandXboxController(CO_DRIVER_BACKUP_CONTROLLER_ID);
+
+  /**
+   * Trigger that activates when the driver is using the chassis control sticks. Combines X/Y
+   * translation and rotation inputs with deadband application to detect intentional driver input.
+   */
   public static final Trigger hasDriverInput =
       new Trigger(
           () ->
@@ -50,7 +70,7 @@ public class OI {
                   || MathUtil.applyDeadband(driverController.getRightX(), DEADBAND) != 0);
 
   /**
-   * Gets the forward/backward translation input from the driver's controller.
+   * Gets the forward/backward translation input from the driver's left stick.
    *
    * @return Value between -1.0 (backward) and 1.0 (forward)
    */
@@ -59,7 +79,7 @@ public class OI {
   }
 
   /**
-   * Gets the left/right translation input from the driver's controller.
+   * Gets the left/right translation input from the driver's left stick.
    *
    * @return Value between -1.0 (left) and 1.0 (right)
    */
@@ -68,7 +88,7 @@ public class OI {
   }
 
   /**
-   * Gets the rotation input from the driver's controller.
+   * Gets the rotation input from the driver's right stick.
    *
    * @return Value between -1.0 (counter-clockwise) and 1.0 (clockwise)
    */
@@ -77,54 +97,101 @@ public class OI {
   }
 
   /**
-   * Gets the turtle (slow) speed control input value.
+   * Gets the turtle (slow) speed control input from the driver's left trigger. Used to enable
+   * precise, slow movement for delicate operations.
    *
-   * @return Value between 0.0 and 1.0
+   * @return Value between 0.0 (not pressed) and 1.0 (fully pressed)
    */
   public static double getTurtleSpeedTrigger() {
     return driverController.getLeftTriggerAxis();
   }
 
   /**
-   * Gets the turbo (fast) speed control input value.
+   * Gets the turbo (fast) speed control input from the driver's right trigger. Used to enable
+   * maximum speed movement for quick traversal.
    *
-   * @return Value between 0.0 and 1.0
+   * @return Value between 0.0 (not pressed) and 1.0 (fully pressed)
    */
   public static double getTurboSpeedTrigger() {
     return driverController.getRightTriggerAxis();
   }
 
-  /*Intake Buttons */
-  public static Trigger coralIntakeIntakeButton = codriverController.back();
-  public static Trigger coralIntakeOuttakeThroughButton = codriverController.start();
+  /* State-based play control triggers */
+  /** Trigger for entering the coral station state, activated by co-driver's right bumper. */
+  public static Trigger stateCoralStationButton = codriverController.rightBumper();
 
-  /* Wrist Position Buttons */
-  public static Trigger wristL4coralButton = codriverController.povUp();
-  public static Trigger wristL2and3coralButton = codriverController.povRight();
-  public static Trigger wristGroundButton = codriverController.povLeft();
+  /** Trigger for entering the stow state, activated by co-driver's left bumper. */
+  public static Trigger stateStowButton = codriverController.leftBumper();
 
-  /** Elevator Postition Buttons */
-  public static Trigger elevatorStowButton = codriverController.a();
+  /** Trigger for entering the L4 state, activated by co-driver's Y button. */
+  public static Trigger stateL4Button = codriverController.y();
 
-  public static Trigger elevatorL2Button = codriverController.b();
-  public static Trigger elevatorL3Button = codriverController.x();
-  public static Trigger elevatorL4Button = codriverController.y();
+  /** Trigger for entering the L3 state, activated by co-driver's X button. */
+  public static Trigger stateL3Button = codriverController.x();
+
+  /** Trigger for entering the L2 state, activated by co-driver's B button. */
+  public static Trigger stateL2Button = codriverController.b();
+
+  /** Trigger for entering the L1 state, activated by co-driver's A button. */
+  public static Trigger stateL1Button = codriverController.a();
+
+  /** Trigger for releasing the prepped coral */
+  public static Trigger coralIntakeReleaseButton = codriverController.rightTrigger();
+
+  /** Trigger for activating the coral intake */
+  public static Trigger coralIntakeIntakeButton =
+      codriverBackupController.back().or(codriverController.leftTrigger());
+
+  /* Backup control triggers */
+  /** Trigger for activating the coral outtake-through function */
+  public static Trigger coralIntakeOuttakeThroughButton = codriverBackupController.start();
+
+  /* Wrist position control triggers */
+  /** Trigger for moving the wrist to L4 coral position using backup D-pad up. */
+  public static Trigger wristL4coralButton = codriverBackupController.povUp();
+
+  /** Trigger for moving the wrist to L2/L3 coral position using backup D-pad right. */
+  public static Trigger wristL2and3coralButton = codriverBackupController.povRight();
+
+  /** Trigger for moving the wrist to ground position using backup D-pad left. */
+  public static Trigger wristGroundButton = codriverBackupController.povLeft();
+
+  /* Elevator position control triggers */
+  /** Trigger for moving the elevator to stow position using backup A button. */
+  public static Trigger elevatorStowButton = codriverBackupController.a();
+
+  /** Trigger for moving the elevator to L2 position using backup B button. */
+  public static Trigger elevatorL2Button = codriverBackupController.b();
+
+  /** Trigger for moving the elevator to L3 position using backup X button. */
+  public static Trigger elevatorL3Button = codriverBackupController.x();
+
+  /** Trigger for moving the elevator to L4 position using backup Y button. */
+  public static Trigger elevatorL4Button = codriverBackupController.y();
 
   /**
-   * Gets the open loop elevator input from the co-driver controller
+   * Gets the manual elevator control input by selecting the larger magnitude input between the two
+   * co-driver controllers. Applies deadband after selection.
    *
    * @return Value between -1.0 (down) and 1.0 (up)
    */
   public static double getElevatorAxis() {
-    return MathUtil.applyDeadband(codriverController.getRightY(), DEADBAND);
+    double primary = codriverController.getRightY();
+    double backup = codriverBackupController.getRightY();
+    return MathUtil.applyDeadband(
+        Math.abs(primary) >= Math.abs(backup) ? primary : backup, DEADBAND);
   }
 
   /**
-   * Gets the wrist axis
+   * Gets the manual wrist control input by selecting the larger magnitude input between the two
+   * co-driver controllers. Applies deadband after selection.
    *
    * @return Value between -1.0 and 1.0
    */
   public static double getWristAxis() {
-    return MathUtil.applyDeadband(codriverController.getLeftY(), DEADBAND);
+    double primary = codriverController.getLeftY();
+    double backup = codriverBackupController.getLeftY();
+    return MathUtil.applyDeadband(
+        Math.abs(primary) >= Math.abs(backup) ? primary : backup, DEADBAND);
   }
 }

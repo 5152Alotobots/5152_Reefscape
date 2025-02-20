@@ -36,6 +36,7 @@ import frc.alotobots.library.subsystems.vision.photonvision.apriltag.util.AprilT
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.ObjectDetectionSubsystem;
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.constants.ObjectDetectionConstants;
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.io.*;
+import frc.alotobots.reefscape.commands.states.*;
 import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeIntake;
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeOuttakeThrough;
@@ -208,6 +209,7 @@ public class RobotContainer {
     configureLogicCommands();
   }
 
+  /** Commands that run when nothing else is */
   private void configureDefaultCommands() {
     swerveDriveSubsystem.setDefaultCommand(new DefaultDrive(swerveDriveSubsystem).getCommand());
     elevatorSubsystem.setDefaultCommand(
@@ -218,7 +220,33 @@ public class RobotContainer {
     //    new NoAllianceWaiting(blingSubsystem).andThen(new SetToAllianceColor(blingSubsystem)));
   }
 
+  /** Contains button based commands */
   private void configureLogicCommands() {
+    // Coral Intake
+    coralIntakeIntakeButton.toggleOnTrue(
+        new CoralIntakeIntake(coralIntakeSubsystem, () -> INTAKE_PERCENTAGE));
+
+    stateCoralStationButton.toggleOnTrue(
+        new StateCoralStation(
+            elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, coralIntakeReleaseButton));
+    stateL1Button.toggleOnTrue(
+        new StateL1(
+            elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, coralIntakeReleaseButton));
+    stateL2Button.toggleOnTrue(
+        new StateL2(
+            elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, coralIntakeReleaseButton));
+    stateL3Button.toggleOnTrue(
+        new StateL3(
+            elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, coralIntakeReleaseButton));
+    stateL4Button.toggleOnTrue(
+        new StateL4(
+            elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, coralIntakeReleaseButton));
+    stateStowButton.toggleOnTrue(new StateStow(elevatorSubsystem, wristSubsystem));
+    // BACKUP -----------------------------------------------------------------------------
+    // Coral Intake
+    coralIntakeOuttakeThroughButton.toggleOnTrue(
+        new CoralIntakeOuttakeThrough(coralIntakeSubsystem, () -> OUTTAKE_PERCENTAGE));
+
     // Elevator
     elevatorStowButton.toggleOnTrue(
         new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.STOWED));
@@ -235,11 +263,6 @@ public class RobotContainer {
         new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.L3_PLACE));
     wristGroundButton.toggleOnTrue(
         new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.GROUND_INTAKE));
-    // Coral Intake
-    coralIntakeIntakeButton.toggleOnTrue(
-        new CoralIntakeIntake(coralIntakeSubsystem, () -> INTAKE_PERCENTAGE));
-    coralIntakeOuttakeThroughButton.toggleOnTrue(
-        new CoralIntakeOuttakeThrough(coralIntakeSubsystem, () -> OUTTAKE_PERCENTAGE));
   }
 
   private void configureAutoChooser() {
