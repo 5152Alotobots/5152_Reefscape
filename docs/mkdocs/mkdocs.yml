@@ -14,6 +14,7 @@ nav:
       - Subsystems:
           - Elevator: reefscape/elevator.md
           - Wrist: reefscape/wrist.md
+          - Coral Intake: reefscape/coralintake.md
       - Commands:
           - Elevator:
               - Default Elevator Run At Velocity: reefscape/defaultelevatorrunatvelocity.md
@@ -23,6 +24,10 @@ nav:
               - Default Wrist Run At Velocity: reefscape/defaultwristrunatvelocity.md
               - Wrist Open Loop: reefscape/wristopenloop.md
               - Wrist Run to Angle: reefscape/wristruntoangle.md
+          - Coral Intake:
+              - Coral Intake Intake: reefscape/coralintakeintake.md
+              - Coral Intake Outtake: reefscape/coralintakeouttake.md
+              - Coral Intake Outtake Through: reefscape/coralintakeouttakethrough.md
   - Library:
       - Commands:
           - Swerve:

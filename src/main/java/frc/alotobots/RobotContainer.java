@@ -235,8 +235,10 @@ public class RobotContainer {
     wristGroundButton.onTrue(
         new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.GROUND_INTAKE));
     // Coral Intake
-    coralIntakeIntakeButton.onTrue(new CoralIntakeIntake(coralIntakeSubsystem, () -> INTAKE_PERCENTAGE));
-    coralIntakeOuttakeThroughButton.onTrue(new CoralIntakeOuttakeThrough(coralIntakeSubsystem, () -> OUTTAKE_PERCENTAGE));
+    coralIntakeIntakeButton.onTrue(
+        new CoralIntakeIntake(coralIntakeSubsystem, () -> INTAKE_PERCENTAGE));
+    coralIntakeOuttakeThroughButton.onTrue(
+        new CoralIntakeOuttakeThrough(coralIntakeSubsystem, () -> OUTTAKE_PERCENTAGE));
   }
 
   private void configureAutoChooser() {

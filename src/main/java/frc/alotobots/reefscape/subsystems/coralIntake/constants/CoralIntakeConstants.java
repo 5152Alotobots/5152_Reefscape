@@ -15,35 +15,35 @@ package frc.alotobots.reefscape.subsystems.coralIntake.constants;
 import lombok.experimental.UtilityClass;
 
 /**
- * Contains all constants related to the coral intake subsystem. Organized into inner classes for different
- * categories of constants.
+ * Contains all constants related to the coral intake subsystem. Organized into inner classes for
+ * different categories of constants.
  */
 @UtilityClass
 public class CoralIntakeConstants {
 
-    /** Contains threshold values for various coral intake operations. */
-    public static final class Thresholds {
-        // Class is intentionally left empty
+  /** Contains threshold values for various coral intake operations. */
+  public static final class Thresholds {
+    // Class is intentionally left empty
+  }
+
+  /** Contains physical limits and safety thresholds for the coral intake. */
+  public static final class Limits {
+
+    /** Maximum open loop percent output (global) */
+    public static final double MAX_OPEN_LOOP_PERCENTAGE = 0.5;
+
+    /** Maximum open loop intake percent output */
+    public static final double MAX_OPEN_LOOP_INTAKE_PERCENTAGE = 0.5;
+
+    /** Maximum open loop intake percent output */
+    public static final double MAX_OPEN_LOOP_OUTTAKE_PERCENTAGE = 0.5;
+  }
+
+  /** Setpoints for different coral intake states */
+  public static final class Setpoints {
+    public static final class OpenLoop {
+      public static final double INTAKE_PERCENTAGE = 0.5;
+      public static final double OUTTAKE_PERCENTAGE = 0.5;
     }
-
-    /** Contains physical limits and safety thresholds for the coral intake. */
-    public static final class Limits {
-
-        /** Maximum open loop percent output (global) */
-        public static final double MAX_OPEN_LOOP_PERCENTAGE = 0.5;
-
-        /** Maximum open loop intake percent output */
-        public static final double MAX_OPEN_LOOP_INTAKE_PERCENTAGE = 0.5;
-
-        /** Maximum open loop intake percent output */
-        public static final double MAX_OPEN_LOOP_OUTTAKE_PERCENTAGE = 0.5;
-    }
-
-    /** Setpoints for different coral intake states */
-    public static final class Setpoints {
-        public static final class OpenLoop {
-            public static final double INTAKE_PERCENTAGE = 0.5;
-            public static final double OUTTAKE_PERCENTAGE = 0.5;
-        }
-    }
+  }
 }

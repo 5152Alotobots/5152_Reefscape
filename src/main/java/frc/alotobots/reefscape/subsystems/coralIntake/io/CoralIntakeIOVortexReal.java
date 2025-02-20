@@ -36,14 +36,21 @@ import com.revrobotics.spark.config.SparkFlexConfig;
 import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.units.measure.AngularVelocity;
 
+/**
+ * Hardware implementation of the CoralIntakeIO interface for REV Robotics SparkFlex motor
+ * controllers and CANrange sensors. This implementation provides real hardware control and sensor
+ * feedback for the coral intake mechanism.
+ */
 public class CoralIntakeIOVortexReal implements CoralIntakeIO {
 
+  /** The SparkFlex motor controller for the intake mechanism */
   private final SparkFlex intakeMotor;
+
+  /** The CANrange sensor for game piece detection */
   private final CANrange canRange;
 
+  /** Status signal for game piece detection */
   private final StatusSignal<Boolean> intakeOccupied;
-
-  // Yay! RevLib doesn't do status signals! I Hate Rev!
 
   /** Debouncer for filtering CANrange connection status */
   private final Debouncer canRangeConnectedDebounce = new Debouncer(0.5);
@@ -51,6 +58,10 @@ public class CoralIntakeIOVortexReal implements CoralIntakeIO {
   /** Debouncer for filtering motor connection status */
   private final Debouncer motorConnectedDebounce = new Debouncer(0.5);
 
+  /**
+   * Creates a new CoralIntakeIOVortexReal instance and configures all hardware devices. Sets up
+   * motor controller parameters, CANrange sensor configuration, and status signals.
+   */
   public CoralIntakeIOVortexReal() {
     intakeMotor = new SparkFlex(INTAKE_MOTOR_CAN_ID, MotorType.kBrushless);
     canRange = new CANrange(INTAKE_CANRANGE_ID);
@@ -65,14 +76,12 @@ public class CoralIntakeIOVortexReal implements CoralIntakeIO {
     motorConfig.signals.primaryEncoderVelocityPeriodMs(20);
 
     motorConfig.idleMode(MECHANISM_NEUTRAL_MODE);
-
     motorConfig.inverted(MOTOR_DIRECTION);
 
     intakeMotor.configure(
         motorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
     var canRangeConfig = new CANrangeConfiguration();
-
     canRangeConfig.ToFParams.UpdateMode = UpdateModeValue.ShortRangeUserFreq;
     canRangeConfig.ToFParams.UpdateFrequency = 100; // Hz
     canRangeConfig.ProximityParams.MinSignalStrengthForValidMeasurement = 5000;
@@ -89,6 +98,11 @@ public class CoralIntakeIOVortexReal implements CoralIntakeIO {
     ParentDevice.optimizeBusUtilizationForAll(canRange);
   }
 
+  /**
+   * Updates all input values with the latest hardware state.
+   *
+   * @param inputs The input object to update with new values
+   */
   @Override
   public void updateInputs(CoralIntakeIOInputs inputs) {
     var canRangeSignals = BaseStatusSignal.refreshAll(intakeOccupied);
@@ -112,22 +126,41 @@ public class CoralIntakeIOVortexReal implements CoralIntakeIO {
     inputs.motorCurrentAmps = Amps.of(intakeMotor.getOutputCurrent());
   }
 
+  /**
+   * Sets the intake motor to run at a specified percentage of full power.
+   *
+   * @param percent Motor output percentage (-1.0 to 1.0)
+   */
   @Override
   public void setIntakeOpenLoop(double percent) {
     intakeMotor.set(percent);
   }
 
+  /**
+   * Sets the intake motor to run at a specified velocity using closed-loop control. [NOT YET
+   * IMPLEMENTED]
+   *
+   * @param velocity Target velocity for the intake
+   * @param pidSlot PID slot to use for velocity control
+   * @throws UnsupportedOperationException This feature is not yet implemented
+   */
   @Override
   public void setIntakeVelocity(AngularVelocity velocity, int pidSlot) {
     throw new UnsupportedOperationException(
         "setIntakeVelocity of CoralIntakeIOVortexReal is not implemented yet");
   }
 
+  /**
+   * Gets the current game piece detection status from the CANrange sensor.
+   *
+   * @return true if a game piece is detected in the intake
+   */
   @Override
   public boolean getIntakeOccupied() {
     return intakeOccupied.getValue();
   }
 
+  /** Stops all intake motor movement. */
   @Override
   public void stop() {
     intakeMotor.set(0.0);

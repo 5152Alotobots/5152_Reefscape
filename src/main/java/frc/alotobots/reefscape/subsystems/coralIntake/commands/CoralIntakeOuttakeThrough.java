@@ -12,43 +12,51 @@
 */
 package frc.alotobots.reefscape.subsystems.coralIntake.commands;
 
+import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeConstants.Limits.MAX_OPEN_LOOP_OUTTAKE_PERCENTAGE;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
 import java.util.function.DoubleSupplier;
 
-import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeConstants.Limits.MAX_OPEN_LOOP_INTAKE_PERCENTAGE;
-import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeConstants.Limits.MAX_OPEN_LOOP_OUTTAKE_PERCENTAGE;
-
 /**
- * Command that runs the intake to eject game pieces at a specified speed by going through the intake. Automatically ends
- * when the game piece is no longer detected by the intake sensor.
+ * Command that runs the intake to eject game pieces by pulling them through in the intake direction
+ * (positive output). This runs the motors in the same direction as intake to push pieces out
+ * through the intake side of the robot. Automatically ends when the game piece is no longer
+ * detected by the intake sensor.
  */
 public class CoralIntakeOuttakeThrough extends Command {
-  /** The coral intake subsystem being controlled. */
+  /** The coral intake subsystem being controlled */
   private final CoralIntakeSubsystem coralIntakeSubsystem;
 
-  /** The input for controlling outtake speed. */
+  /**
+   * The input for controlling through-outtake speed (positive values pull through in intake
+   * direction)
+   */
   private final DoubleSupplier input;
 
   /**
    * Creates a new CoralIntakeOuttakeThrough command.
    *
    * @param coralIntakeSubsystem The intake subsystem to control
-   * @param input Supplier for the outtake speed (0.0 to MAX_OPEN_LOOP_OUTTAKE_PERCENTAGE)
+   * @param input Supplier for the outtake speed (0.0 to MAX_OPEN_LOOP_OUTTAKE_PERCENTAGE). Positive
+   *     values pull through in the intake direction.
    */
-  public CoralIntakeOuttakeThrough(CoralIntakeSubsystem coralIntakeSubsystem, DoubleSupplier input) {
+  public CoralIntakeOuttakeThrough(
+      CoralIntakeSubsystem coralIntakeSubsystem, DoubleSupplier input) {
     this.coralIntakeSubsystem = coralIntakeSubsystem;
     this.input = input;
     addRequirements(coralIntakeSubsystem);
   }
 
   /**
-   * Runs the outtake motors at the supplied speed.
+   * Runs the motors at the supplied speed in the intake direction, clamped to safe limits. Called
+   * repeatedly while the command is scheduled.
    */
   @Override
   public void execute() {
-    double adjustedOutput = MathUtil.clamp(input.getAsDouble(), 0, MAX_OPEN_LOOP_OUTTAKE_PERCENTAGE);
+    double adjustedOutput =
+        MathUtil.clamp(input.getAsDouble(), 0, MAX_OPEN_LOOP_OUTTAKE_PERCENTAGE);
     coralIntakeSubsystem.runAtPercentOutput(adjustedOutput);
   }
 

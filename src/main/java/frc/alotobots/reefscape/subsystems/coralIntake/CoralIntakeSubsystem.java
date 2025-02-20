@@ -23,14 +23,15 @@ import frc.alotobots.reefscape.util.ControlType;
 import org.littletonrobotics.junction.Logger;
 
 /**
- * The CoralIntake subsystem controls the robot's intake mechanism for game pieces.
- * This subsystem manages closed-loop velocity control and open loop control.
+ * The CoralIntake subsystem controls the robot's intake mechanism for game pieces. This subsystem
+ * manages both closed-loop velocity control and open loop control modes. Positive motor output
+ * pulls inward (intake direction), negative output pushes outward.
  */
 public class CoralIntakeSubsystem extends SubsystemBase {
-  /** The hardware interface for controlling and monitoring the intake mechanism. */
+  /** The hardware interface for controlling and monitoring the intake mechanism */
   private final CoralIntakeIO io;
 
-  /** Auto-logged inputs from intake sensors and motor controllers. */
+  /** Auto-logged inputs from intake sensors and motor controllers */
   private final CoralIntakeIOInputsAutoLogged inputs = new CoralIntakeIOInputsAutoLogged();
 
   /**
@@ -43,8 +44,8 @@ public class CoralIntakeSubsystem extends SubsystemBase {
   }
 
   /**
-   * Updates and logs intake sensor inputs. Called periodically by the command scheduler.
-   * This method ensures that the latest sensor data is available for control decisions.
+   * Updates and logs intake sensor inputs. Called periodically by the command scheduler. This
+   * method ensures that the latest sensor data is available for control decisions.
    */
   @Override
   public void periodic() {
@@ -53,10 +54,11 @@ public class CoralIntakeSubsystem extends SubsystemBase {
   }
 
   /**
-   * [NOT YET IMPLEMENTED]
-   * Controls the intake to move at a specified velocity using closed-loop velocity control.
+   * Controls the intake to move at a specified velocity using closed-loop velocity control. [NOT
+   * YET IMPLEMENTED]
    *
-   * @param velocity Target velocity in radians per second
+   * @param velocity Target velocity in radians per second. Positive values indicate intake
+   *     direction.
    */
   public void runToTargetVelocity(AngularVelocity velocity) {
     // TODO: Implement closed-loop velocity control
@@ -64,20 +66,22 @@ public class CoralIntakeSubsystem extends SubsystemBase {
   }
 
   /**
-   * Controls the intake using direct percent output (open-loop control).
+   * Controls the intake using direct percent output (open-loop control). Positive values pull
+   * inward (intake), negative values push outward.
    *
    * @param percentOutput Motor output percentage (-1.0 to 1.0)
    */
   public void runAtPercentOutput(double percentOutput) {
-    double adjustedOutput = MathUtil.clamp(percentOutput, -MAX_OPEN_LOOP_PERCENTAGE, MAX_OPEN_LOOP_PERCENTAGE);
+    double adjustedOutput =
+        MathUtil.clamp(percentOutput, -MAX_OPEN_LOOP_PERCENTAGE, MAX_OPEN_LOOP_PERCENTAGE);
 
     io.setIntakeOpenLoop(adjustedOutput);
     Logger.recordOutput("CoralIntake/ControlType", ControlType.OpenLoop.OPEN_LOOP);
   }
 
   /**
-   * Stops intake movement.
-   * This method should be called when active control of the intake is no longer needed.
+   * Stops intake movement. This method should be called when active control of the intake is no
+   * longer needed.
    */
   public void stop() {
     io.stop();
@@ -93,7 +97,7 @@ public class CoralIntakeSubsystem extends SubsystemBase {
   }
 
   /**
-   * Gets the current velocity of the intake.
+   * Gets the current velocity of the intake. Positive values indicate intake direction.
    *
    * @return The current angular velocity
    */
