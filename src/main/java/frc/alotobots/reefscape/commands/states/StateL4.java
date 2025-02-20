@@ -50,7 +50,7 @@ public class StateL4 extends SequentialCommandGroup {
       Trigger coralIntakeReleaseTrigger) {
     addCommands(
         new ParallelCommandGroup(
-                new InstantCommand(() -> Logger.recordOutput("State/State", "L4")),
+            new InstantCommand(() -> Logger.recordOutput("State/State", "L4")),
             new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L4_PLACE),
             new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.L4_PLACE)),
         Commands.waitUntil(coralIntakeReleaseTrigger),

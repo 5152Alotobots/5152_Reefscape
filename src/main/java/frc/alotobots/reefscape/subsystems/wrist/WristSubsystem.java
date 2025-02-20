@@ -128,8 +128,8 @@ public class WristSubsystem extends SubsystemBase {
   public boolean isAtTargetAngle() {
     // Check if current angle is within threshold of target
     boolean inSetPointThreshold =
-            targetAngle.minus(inputs.mechanismAngle).abs(Degrees)
-                    < AT_SET_POINT_POSITION_THRESHOLD.in(Degrees);
+        targetAngle.minus(inputs.mechanismAngle).abs(Degrees)
+            < AT_SET_POINT_POSITION_THRESHOLD.in(Degrees);
 
     // Only start if in position threshold
     if (inSetPointThreshold) {

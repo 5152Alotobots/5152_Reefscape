@@ -196,19 +196,17 @@ public class OI {
   }
 
   /**
-   * Groups axis-related constants together for better organization.
-   * Contains defined limits for controller axis inputs.
+   * Groups axis-related constants together for better organization. Contains defined limits for
+   * controller axis inputs.
    */
   public static final class AxisLimits {
     /**
-     * Maximum value that a controller axis can output.
-     * Represents full forward/right on the stick.
+     * Maximum value that a controller axis can output. Represents full forward/right on the stick.
      */
     public static final double MAX_AXIS_LIMIT = 1.0;
 
     /**
-     * Minimum value that a controller axis can output.
-     * Represents full backward/left on the stick.
+     * Minimum value that a controller axis can output. Represents full backward/left on the stick.
      */
     public static final double MIN_AXIS_LIMIT = -1.0;
   }

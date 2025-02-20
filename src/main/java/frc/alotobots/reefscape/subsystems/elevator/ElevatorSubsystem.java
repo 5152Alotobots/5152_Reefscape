@@ -139,8 +139,8 @@ public class ElevatorSubsystem extends SubsystemBase {
   public boolean isAtTargetHeight() {
     // Check if current height is within threshold of target
     boolean inSetPointThreshold =
-            targetHeight.minus(inputs.leftHeight).abs(Meters)
-                    < AT_SET_POINT_POSITION_THRESHOLD.in(Meters);
+        targetHeight.minus(inputs.leftHeight).abs(Meters)
+            < AT_SET_POINT_POSITION_THRESHOLD.in(Meters);
 
     // Only start if in position threshold
     if (inSetPointThreshold) {

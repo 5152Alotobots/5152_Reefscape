@@ -227,8 +227,7 @@ public class RobotContainer {
         new CoralIntakeIntake(coralIntakeSubsystem, () -> INTAKE_PERCENTAGE));
 
     stateCoralStationButton.toggleOnTrue(
-        new StateCoralStation(
-            elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, coralIntakeReleaseButton));
+        new StateCoralStation(elevatorSubsystem, wristSubsystem, coralIntakeSubsystem));
     stateL1Button.toggleOnTrue(
         new StateL1(
             elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, coralIntakeReleaseButton));

@@ -13,7 +13,7 @@
 package frc.alotobots.reefscape.commands.states;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.commands.ElevatorRunToHeight;
 import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants;
@@ -23,10 +23,10 @@ import frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants;
 import org.littletonrobotics.junction.Logger;
 
 /**
- * Command for moving the robot's mechanisms to their stowed positions. Moves the elevator and wrist
- * simultaneously to their stowed positions.
+ * Command for moving the robot's mechanisms to their stowed positions. Moves the wrist first, then
+ * the elevator to their positions
  */
-public class StateStow extends ParallelCommandGroup {
+public class StateStow extends SequentialCommandGroup {
   /**
    * Creates a new StateStow command.
    *
@@ -35,8 +35,8 @@ public class StateStow extends ParallelCommandGroup {
    */
   public StateStow(ElevatorSubsystem elevatorSubsystem, WristSubsystem wristSubsystem) {
     addCommands(
-            new InstantCommand(() -> Logger.recordOutput("State/State", "STOW")),
-        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.STOWED),
-        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.STOWED));
+        new InstantCommand(() -> Logger.recordOutput("State/State", "STOW")),
+        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.STOWED),
+        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.STOWED));
   }
 }

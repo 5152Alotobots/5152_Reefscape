@@ -14,11 +14,9 @@ package frc.alotobots.reefscape.commands.states;
 
 import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeConstants.Setpoints.OpenLoop.INTAKE_PERCENTAGE;
 
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeIntake;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
@@ -41,19 +39,16 @@ public class StateCoralStation extends SequentialCommandGroup {
    * @param elevatorSubsystem The elevator subsystem
    * @param wristSubsystem The wrist subsystem
    * @param coralIntakeSubsystem The coral intake subsystem
-   * @param coralIntakeReleaseTrigger The release button trigger
    */
   public StateCoralStation(
       ElevatorSubsystem elevatorSubsystem,
       WristSubsystem wristSubsystem,
-      CoralIntakeSubsystem coralIntakeSubsystem,
-      Trigger coralIntakeReleaseTrigger) {
+      CoralIntakeSubsystem coralIntakeSubsystem) {
     addCommands(
-            new InstantCommand(() -> Logger.recordOutput("State/State", "CORAL_STATION")),
+        new InstantCommand(() -> Logger.recordOutput("State/State", "CORAL_STATION")),
         new ParallelCommandGroup(
             new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.CORAL_STATION),
             new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.CORAL_STATION)),
-        Commands.waitUntil(coralIntakeReleaseTrigger),
         new CoralIntakeIntake(coralIntakeSubsystem, () -> INTAKE_PERCENTAGE),
         new StateStow(elevatorSubsystem, wristSubsystem));
   }

@@ -49,7 +49,7 @@ public class StateL2 extends SequentialCommandGroup {
       CoralIntakeSubsystem coralIntakeSubsystem,
       Trigger coralIntakeReleaseTrigger) {
     addCommands(
-            new InstantCommand(() -> Logger.recordOutput("State/State", "L2")),
+        new InstantCommand(() -> Logger.recordOutput("State/State", "L2")),
         new ParallelCommandGroup(
             new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L2_PLACE),
             new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.L2_PLACE)),
