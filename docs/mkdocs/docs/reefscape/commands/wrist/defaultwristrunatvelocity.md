@@ -4,7 +4,7 @@
 The `DefaultWristRunAtVelocity` command is designed to run the wrist at a specified velocity based on continuous input. This command is typically used as the default command for the wrist subsystem, allowing operator control of wrist movement through a joystick or other input device.
 
 ## Required Subsystems
-- [Wrist Subsystem](/5152_Reefscape/library/subsystems/wrist)
+- [Wrist Subsystem](/5152_Reefscape/reefscape/subsystems/wrist)
 
 ## Constructor and Parameters
 

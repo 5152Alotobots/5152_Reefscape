@@ -3,7 +3,7 @@
 Command that runs on the wrist subsystem. Provides direct operator control of the wrist using percentage output.
 
 ## Required Subsystems
-- [Wrist Subsystem](/5152_Reefscape/library/subsystems/wrist)
+- [Wrist Subsystem](/5152_Reefscape/reefscape/subsystems/wrist)
 
 ## Constructor Parameters
 ```java

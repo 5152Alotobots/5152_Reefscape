@@ -3,7 +3,7 @@
 A command that provides manual control of the elevator using percent output control. Allows direct operator control through a joystick or other input device.
 
 ## Required Subsystems
-- [Elevator Subsystem](/5152_Reefscape/library/subsystems/elevator)
+- [Elevator Subsystem](/5152_Reefscape/reefscape/subsystems/elevator)
 
 ## Constructor Parameters
 ```java

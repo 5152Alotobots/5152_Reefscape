@@ -12,8 +12,8 @@ public WristSubsystem(WristIO io)
 
 ## Commands
 The wrist subsystem is used by the following commands:
-- [DefaultWristOpenLoop](/5152_Reefscape/library/commands/wrist/defaultwristopenloop)
-- [WristRunToAngle](/5152_Reefscape/library/commands/wrist/wristruntoangle)
+- [DefaultWristOpenLoop](/5152_Reefscape/reefscape/commands/wrist/defaultwristopenloop)
+- [WristRunToAngle](/5152_Reefscape/reefscape/commands/wrist/wristruntoangle)
 
 ## Configuration Requirements
 1. Hardware Configuration:

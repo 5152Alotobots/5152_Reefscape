@@ -3,7 +3,7 @@
 Command that moves the wrist to a specific angle using closed-loop position control. Used for automatic positioning of the wrist for various game piece manipulation tasks.
 
 ## Required Subsystems
-- [Wrist Subsystem](/5152_Reefscape/library/subsystems/wrist)
+- [Wrist Subsystem](/5152_Reefscape/reefscape/subsystems/wrist)
 
 ## Constructor Parameters
 ```java
