@@ -56,7 +56,7 @@ public final class ElevatorConstants {
     public static final Distance STOWED = Meters.of(0.3);
 
     /** Height for picking up from coral station */
-    public static final Distance CORAL_STATION = Meters.of(1.0);
+    public static final Distance CORAL_STATION = Meters.of(0.80);
 
     /** Height for L4 placement */
     public static final Distance L4_PLACE = Meters.of(1.78);
