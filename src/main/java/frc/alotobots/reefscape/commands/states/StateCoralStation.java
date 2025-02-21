@@ -15,16 +15,14 @@ package frc.alotobots.reefscape.commands.states;
 import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeConstants.Setpoints.OpenLoop.INTAKE_PERCENTAGE;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.alotobots.reefscape.commands.groups.ParallelElevatorWristRun;
 import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeIntake;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
-import frc.alotobots.reefscape.subsystems.elevator.commands.ElevatorRunToHeight;
 import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants;
 import frc.alotobots.reefscape.subsystems.wrist.WristSubsystem;
-import frc.alotobots.reefscape.subsystems.wrist.commands.WristRunToAngle;
 import frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants;
-import frc.alotobots.util.commandbase.ReleasingSequentialCommandGroup;
 import org.littletonrobotics.junction.Logger;
 
 /**
@@ -32,7 +30,7 @@ import org.littletonrobotics.junction.Logger;
  * to coral station position simultaneously 2. Waits for release button confirmation 3. Runs intake
  * 4. Returns to stowed position
  */
-public class StateCoralStation extends ReleasingSequentialCommandGroup {
+public class StateCoralStation extends SequentialCommandGroup {
   /**
    * Creates a new StateCoralStation command.
    *
@@ -46,10 +44,12 @@ public class StateCoralStation extends ReleasingSequentialCommandGroup {
       CoralIntakeSubsystem coralIntakeSubsystem) {
     addCommands(
         new InstantCommand(() -> Logger.recordOutput("State/State", "CORAL_STATION")),
-        new ParallelCommandGroup(
-            new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.CORAL_STATION),
-            new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.CORAL_STATION)),
+        new ParallelElevatorWristRun(
+            elevatorSubsystem,
+            wristSubsystem,
+            ElevatorConstants.Setpoints.CORAL_STATION,
+            WristConstants.Setpoints.CORAL_STATION),
         new CoralIntakeIntake(coralIntakeSubsystem, () -> INTAKE_PERCENTAGE),
-        new StateStowed(elevatorSubsystem, wristSubsystem));
+        new StateStowed(elevatorSubsystem, wristSubsystem).asProxy());
   }
 }

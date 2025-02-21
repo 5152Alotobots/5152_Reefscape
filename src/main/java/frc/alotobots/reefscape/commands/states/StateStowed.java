@@ -13,22 +13,22 @@
 package frc.alotobots.reefscape.commands.states;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.alotobots.reefscape.commands.groups.SequentialWristElevatorRun;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
-import frc.alotobots.reefscape.subsystems.elevator.commands.ElevatorRunToHeight;
 import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants;
 import frc.alotobots.reefscape.subsystems.wrist.WristSubsystem;
-import frc.alotobots.reefscape.subsystems.wrist.commands.WristRunToAngle;
 import frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants;
-import frc.alotobots.util.commandbase.ReleasingSequentialCommandGroup;
 import org.littletonrobotics.junction.Logger;
 
 /**
  * Command for moving the robot's mechanisms to their stowed positions. Moves the wrist first, then
  * the elevator to their positions
  */
-public class StateStowed extends ReleasingSequentialCommandGroup {
+public class StateStowed extends SequentialCommandGroup {
   /**
-   * Creates a new StateStowed command.
+   * Creates a new StateStowed command. Runs both elevator and wrist to stowed position. Wrist moves
+   * first, then elevator. Cedes control back to the default command via usage of ProxyCommand
    *
    * @param elevatorSubsystem The elevator subsystem
    * @param wristSubsystem The wrist subsystem
@@ -36,7 +36,10 @@ public class StateStowed extends ReleasingSequentialCommandGroup {
   public StateStowed(ElevatorSubsystem elevatorSubsystem, WristSubsystem wristSubsystem) {
     addCommands(
         new InstantCommand(() -> Logger.recordOutput("State/State", "STOWED")),
-        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.STOWED),
-        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.STOWED));
+        new SequentialWristElevatorRun(
+            wristSubsystem,
+            elevatorSubsystem,
+            ElevatorConstants.Setpoints.STOWED,
+            WristConstants.Setpoints.STOWED));
   }
 }

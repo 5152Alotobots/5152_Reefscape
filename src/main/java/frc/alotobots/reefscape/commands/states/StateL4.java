@@ -16,17 +16,15 @@ import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralInta
 
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.alotobots.reefscape.commands.groups.ParallelElevatorWristRun;
 import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEjectThrough;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
-import frc.alotobots.reefscape.subsystems.elevator.commands.ElevatorRunToHeight;
 import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants;
 import frc.alotobots.reefscape.subsystems.wrist.WristSubsystem;
-import frc.alotobots.reefscape.subsystems.wrist.commands.WristRunToAngle;
 import frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants;
-import frc.alotobots.util.commandbase.ReleasingSequentialCommandGroup;
 import org.littletonrobotics.junction.Logger;
 
 /**
@@ -34,7 +32,7 @@ import org.littletonrobotics.junction.Logger;
  * L4 position simultaneously 2. Waits for release button confirmation 3. Runs eject through 4.
  * Returns to stowed position
  */
-public class StateL4 extends ReleasingSequentialCommandGroup {
+public class StateL4 extends SequentialCommandGroup {
   /**
    * Creates a new StateL4 command.
    *
@@ -49,10 +47,12 @@ public class StateL4 extends ReleasingSequentialCommandGroup {
       CoralIntakeSubsystem coralIntakeSubsystem,
       Trigger coralIntakeReleaseTrigger) {
     addCommands(
-        new ParallelCommandGroup(
-            new InstantCommand(() -> Logger.recordOutput("State/State", "L4")),
-            new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L4_PLACE),
-            new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.L4_PLACE)),
+        new InstantCommand(() -> Logger.recordOutput("State/State", "L4")),
+        new ParallelElevatorWristRun(
+            elevatorSubsystem,
+            wristSubsystem,
+            ElevatorConstants.Setpoints.L4_PLACE,
+            WristConstants.Setpoints.L4_PLACE),
         Commands.waitUntil(coralIntakeReleaseTrigger),
         new CoralIntakeEjectThrough(coralIntakeSubsystem, () -> EJECT_PERCENTAGE),
         new StateStowed(elevatorSubsystem, wristSubsystem));
