@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.6068256578947366,
-        "y": 0.6381578947368428
+        "x": 1.5307499999999998,
+        "y": 0.6319999999999993
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.241858552631579,
-        "y": 1.6195723684210532
+        "x": 2.165782894736842,
+        "y": 1.6134144736842098
       },
       "isLocked": false,
       "linkedName": "South Left Station"
     },
     {
       "anchor": {
-        "x": 3.6757500000000003,
-        "y": 3.0012499999999993
+        "x": 3.6855,
+        "y": 3.0499999999999994
       },
       "prevControl": {
-        "x": 2.7614309210526313,
-        "y": 2.302713815789474
+        "x": 2.7711809210526313,
+        "y": 2.351463815789474
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,8 +33,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 1.5,
+    "maxVelocity": 5.0,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 460.0,
     "nominalVoltage": 12.0,
@@ -48,7 +48,7 @@
   "folder": "Test2025",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -125.36246188706906
+    "rotation": -130.0
   },
   "useDefaultConstraints": true
 }

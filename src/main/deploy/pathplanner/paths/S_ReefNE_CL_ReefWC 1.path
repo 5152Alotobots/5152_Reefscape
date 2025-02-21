@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.245148026315788,
+        "x": 7.22475,
         "y": 1.8889802631578947
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.245148026315788,
-        "y": 1.8889802631578945
+        "x": 6.193151537017758,
+        "y": 2.002304418495176
       },
       "isLocked": false,
       "linkedName": "Start South"
     },
     {
       "anchor": {
-        "x": 4.953,
-        "y": 5.22425
+        "x": 4.9725,
+        "y": 5.204749999999999
       },
       "prevControl": {
-        "x": 7.043,
-        "y": 5.532
+        "x": 5.267999067375252,
+        "y": 5.107477433107381
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,8 +33,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 1.5,
+    "maxVelocity": 5.0,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 460.0,
     "nominalVoltage": 12.0,

@@ -5,9 +5,28 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "StartN_ReefNW"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "StartN_ReefNW"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "RaiseElevatorToL4"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "EjectCoral"
           }
         }
       ]

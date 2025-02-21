@@ -33,8 +33,20 @@ public class AutoNamedCommands {
   private static final Map<String, Command> commands =
       new HashMap<>() {
         {
-          // put("SOME_COMMAND_NAME", new Command() {});
-        }
+          //put("SOME_COMMAND_NAME", new Command() {});
+        
+         /*
+         All elevator raises include proper intake/eject angles
+           put("RaiseElevatorToL4", new Command() {});
+           put("RaiseElevatorToL3", new Command() {});
+           put("RaiseElevatorToL2", new Command() {});
+           put("RaiseElevatorToL1", new Command() {});
+           put("RaiseElevatorToCoralStation", new Command() {});
+           put("EjectCoral", new Command() {});
+           put("IntakeCoral", new Command() {});
+           put("ElevatorDownIntakeIn", new Command() {});
+           */
+          }
       };
 
   /**

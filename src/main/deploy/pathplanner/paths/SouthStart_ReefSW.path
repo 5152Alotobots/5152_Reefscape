@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.2455,
-        "y": 5.029249999999999
+        "x": 0.7215,
+        "y": 1.24625
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.579805921052631,
-        "y": 5.747286184210526
+        "x": -0.775228581106135,
+        "y": 0.9657112706333097
       },
       "isLocked": false,
-      "linkedName": "Reef_NE_L"
+      "linkedName": "South Right Station"
     },
     {
       "anchor": {
-        "x": 0.78,
-        "y": 6.823249999999999
+        "x": 3.812090163928191,
+        "y": 2.4126536885288137
       },
       "prevControl": {
-        "x": 2.0693092105263156,
-        "y": 6.7270328947368405
+        "x": 4.829012615360639,
+        "y": 2.431156816711112
       },
       "nextControl": null,
-      "isLocked": false,
-      "linkedName": "North Left Station"
+      "isLocked": true,
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 125.00000000000001
+    "rotation": 59.99999999999999
   },
   "reversed": false,
-  "folder": "Test2025",
+  "folder": "BenAutos",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -119.99999999999999
+    "rotation": -125.00000000000001
   },
   "useDefaultConstraints": true
 }

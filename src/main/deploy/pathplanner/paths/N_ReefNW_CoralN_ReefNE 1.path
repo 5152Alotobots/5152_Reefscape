@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.245148026315788,
-        "y": 6.199506578947369
+        "x": 7.245,
+        "y": 6.176793032786884
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.214651639344262,
-        "y": 6.11685450819672
+        "x": 6.083735821944825,
+        "y": 6.30645367726543
       },
       "isLocked": false,
       "linkedName": "Start North"
     },
     {
       "anchor": {
-        "x": 3.6855,
-        "y": 5.077999999999999
+        "x": 3.705,
+        "y": 5.0097499999999995
       },
       "prevControl": {
-        "x": 3.217979508196721,
-        "y": 5.99632128990509
+        "x": 3.8684586109242787,
+        "y": 5.1989094103255376
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,8 +33,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 1.5,
+    "maxVelocity": 5.0,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 460.0,
     "nominalVoltage": 12.0,

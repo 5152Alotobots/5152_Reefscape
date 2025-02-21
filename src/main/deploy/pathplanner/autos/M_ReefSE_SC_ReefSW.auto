@@ -5,21 +5,84 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "M_ReefSE_SC_ReefSW 1"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "M_ReefSE_SC_ReefSW 1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "RaiseElevatorToL4"
+                }
+              }
+            ]
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "M_ReefSE_SC_ReefSW Part2"
+            "name": "EjectCoral"
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "M_ReefSE_SC_ReefSW Part 3"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "M_ReefSE_SC_ReefSW Part2"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "RaiseElevatorToCoralStation"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "IntakeCoral"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "M_ReefSE_SC_ReefSW Part 3"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "RaiseElevatorToL4"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "EjectCoral"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ElevatorDownIntakeIn"
           }
         }
       ]

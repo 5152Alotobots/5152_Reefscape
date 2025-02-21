@@ -11,7 +11,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Alan First Part 1"
+                  "pathName": "S_ReefSE_SC_ReefSW 1"
                 }
               },
               {
@@ -36,7 +36,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Alan First Part 2"
+                  "pathName": "S_ReefSE_SC_ReefSW 2"
                 }
               },
               {
@@ -49,19 +49,13 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "IntakeCoral"
-          }
-        },
-        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Alan First Part 3"
+                  "pathName": "S_ReefSE_SC_ReefSW 3"
                 }
               },
               {

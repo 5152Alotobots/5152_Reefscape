@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.625,
-        "y": 6.709
+        "x": 0.78,
+        "y": 6.823249999999999
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.107,
-        "y": 6.17275
+        "x": 2.262,
+        "y": 6.286999999999999
       },
       "isLocked": false,
       "linkedName": "North Left Station"
     },
     {
       "anchor": {
-        "x": 4.02675,
-        "y": 5.22425
+        "x": 4.017,
+        "y": 5.195
       },
       "prevControl": {
-        "x": 3.075864011966717,
-        "y": 5.592624754856169
+        "x": 3.0661140119667176,
+        "y": 5.56337475485617
       },
       "nextControl": null,
       "isLocked": false,
@@ -48,7 +48,7 @@
   "folder": "Test2025",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 127.56859202882754
+    "rotation": 125.00000000000001
   },
   "useDefaultConstraints": false
 }

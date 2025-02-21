@@ -1,0 +1,43 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SouthStart_ReefSW"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ReefSW_CSL"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "CSL_ReefSW"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ReefSW_CL"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "New Path"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Bens Things",
+  "choreoAuto": false
+}
