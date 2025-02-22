@@ -13,25 +13,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "ReefSW_CSL"
+            "pathName": null
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "CSL_ReefSW"
+            "pathName": null
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "ReefSW_CL"
+            "pathName": null
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "New Path"
+            "pathName": null
           }
         }
       ]

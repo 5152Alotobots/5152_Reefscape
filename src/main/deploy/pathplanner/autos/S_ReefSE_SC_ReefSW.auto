@@ -5,21 +5,78 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "S_ReefSE_SC_ReefSW 1"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "S_ReefSE_SC_ReefSW 1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "RaiseElevatorToL4"
+                }
+              }
+            ]
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "S_ReefSE_SC_ReefSW 2"
+            "name": "EjectCoral"
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "S_ReefSE_SC_ReefSW 3"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "S_ReefSE_SC_ReefSW 2"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "RaiseElevatorToCoralStation"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "S_ReefSE_SC_ReefSW 3"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "RaiseElevatorToL4"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "EjectCoral"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ElevatorDownIntakeIn"
           }
         }
       ]
