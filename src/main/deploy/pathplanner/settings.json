@@ -4,18 +4,21 @@
   "holonomicMode": true,
   "pathFolders": [
     "Battle Creek",
+    "BenAutos",
+    "Three Piece",
     "Positions",
     "Test2025"
   ],
   "autoFolders": [
     "2025Test",
-    "Just Leave",
     "Bens Things",
+    "Just Leave",
+    "Three Piece",
     "One Piece",
     "Two Piece"
   ],
-  "defaultMaxVel": 3.0,
-  "defaultMaxAccel": 1.5,
+  "defaultMaxVel": 5.0,
+  "defaultMaxAccel": 3.0,
   "defaultMaxAngVel": 540.0,
   "defaultMaxAngAccel": 460.0,
   "defaultNominalVoltage": 12.0,

@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.2521381578947364,
-        "y": 4.025
+        "x": 1.5307499999999998,
+        "y": 0.6319999999999993
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.252138157894738,
-        "y": 4.025
+        "x": 3.1785000000000005,
+        "y": 1.9482499999999998
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "South Left Station"
     },
     {
       "anchor": {
-        "x": 3.8871710526315786,
-        "y": 5.102631578947368
+        "x": 3.2565,
+        "y": 4.181
       },
       "prevControl": {
-        "x": 2.8871710526315786,
-        "y": 5.102631578947368
+        "x": 1.9207500000000002,
+        "y": 3.498499999999999
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Reef_W_L"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -59.99999999999999
+    "rotation": 0.0
   },
   "reversed": false,
-  "folder": "Positions",
+  "folder": "Three Piece",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -130.0
   },
   "useDefaultConstraints": true
 }
