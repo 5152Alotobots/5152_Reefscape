@@ -21,13 +21,13 @@ import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
  * input (normalized between -1.0 and 1.0) and applies it to the elevator, scaled by the maximum
  * speed constant.
  */
-public class Climb extends SequentialCommandGroup {
+public class UnClimb extends SequentialCommandGroup {
   /** The elevator subsystem this command controls. */
   private final ClimberSubsystem climberSubsystem;
 
   private final ElevatorSubsystem elevatorSubsystem;
 
-  public Climb(ClimberSubsystem climberSubsystem, ElevatorSubsystem elevatorSubsystem) {
+  public UnClimb(ClimberSubsystem climberSubsystem, ElevatorSubsystem elevatorSubsystem) {
     this.climberSubsystem = climberSubsystem;
     this.elevatorSubsystem = elevatorSubsystem;
 
@@ -36,9 +36,9 @@ public class Climb extends SequentialCommandGroup {
         // new ElevatorRunToHeight(elevatorSubsystem, Meters.of(0.8)),
         new InstantCommand(climberSubsystem::setPlungerToReceive),
         new InstantCommand(climberSubsystem::unlockCage),
-        new WaitUntilCommand(climberSubsystem::getCageSwitches),
-        new InstantCommand(climberSubsystem::lockCage),
-        new InstantCommand(climberSubsystem::setPlungerToPlunge),
+        // new WaitUntilCommand(climberSubsystem::getCageSwitches),
+        // new InstantCommand(climberSubsystem::lockCage),
+        // new InstantCommand(climberSubsystem::setPlungerToPlunge)
         new WaitCommand(10),
         new InstantCommand(climberSubsystem::disableServos)
         // new ElevatorRunToHeight(elevatorSubsystem, MIN_HEIGHT)

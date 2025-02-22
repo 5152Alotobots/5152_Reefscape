@@ -21,6 +21,9 @@ public interface ClimberIO {
   public static class ClimberIOInputs {
     public boolean servoHubConnected = false;
 
+    public boolean lockingServoEnabled = false;
+    public boolean plungerServoEnabled = false;
+
     public boolean cageSwitch1 = false;
     public boolean cageSwitch2 = false;
 

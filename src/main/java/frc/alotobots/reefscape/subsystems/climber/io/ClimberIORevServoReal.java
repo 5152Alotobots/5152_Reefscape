@@ -28,7 +28,13 @@ public class ClimberIORevServoReal implements ClimberIO {
   private final DigitalInput cageSwitch1 = new DigitalInput(0);
   private final DigitalInput cageSwitch2 = new DigitalInput(1);
 
-  public ClimberIORevServoReal() {}
+  public ClimberIORevServoReal() {
+    enablePlungerServo();
+    enableLockingServo();
+
+    disablePlungerServo();
+    disableLockingServo();
+  }
 
   @Override
   public boolean getCageSwitches() {
@@ -37,6 +43,9 @@ public class ClimberIORevServoReal implements ClimberIO {
 
   @Override
   public void updateInputs(ClimberIOInputs inputs) {
+    inputs.plungerServoEnabled = plungerServoChannel.isEnabled();
+    inputs.lockingServoEnabled = lockingServoChannel.isEnabled();
+
     inputs.cageSwitch1 = cageSwitch1.get();
     inputs.cageSwitch2 = cageSwitch2.get();
 

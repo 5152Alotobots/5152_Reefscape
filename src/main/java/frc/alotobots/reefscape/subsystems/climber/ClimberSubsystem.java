@@ -53,11 +53,11 @@ public class ClimberSubsystem extends SubsystemBase {
   }
 
   public void setPlungerToPlunge() {
-    io.setPlungerServoPosition(Degrees.of(180));
+    io.setPlungerServoPosition(Degrees.of(0));
   }
 
   public void setPlungerToReceive() {
-    io.setPlungerServoPosition(Degrees.of(0));
+    io.setPlungerServoPosition(Degrees.of(180));
   }
 
   public void lockCage() {
