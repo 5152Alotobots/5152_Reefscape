@@ -16,6 +16,16 @@ nav:
           - Wrist: reefscape/wrist.md
           - Coral Intake: reefscape/coralintake.md
       - Commands:
+          - Groups:
+              - Parallel Elevator Wrist Run: reefscape/commands/groups/parallelelevatorwristrun.md
+              - Sequential Wrist Elevator Run: reefscape/commands/groups/sequentialwristelevatorrun.md
+          - States:
+              - State Coral Station: reefscape/commands/states/statecoralstation.md
+              - State L1: reefscape/commands/states/statel1.md
+              - State L2: reefscape/commands/states/statel2.md
+              - State L3: reefscape/commands/states/statel3.md
+              - State L4: reefscape/commands/states/statel4.md
+              - State Stowed: reefscape/commands/states/statestowed.md
           - Elevator:
               - Default Elevator Run At Velocity: reefscape/defaultelevatorrunatvelocity.md
               - Elevator Run to Height: reefscape/elevatorruntoheight.md
@@ -30,6 +40,8 @@ nav:
               - Coral Intake Eject Through: reefscape/coralintakeejectthrough.md
   - Library:
       - Commands:
+          - Util:
+              - Log Command: library/commands/util/logcommand.md
           - Swerve:
               - Default Drive: library/commands/swerve/defaultdrive.md
               - Drive Facing Angle: library/commands/swerve/drivefacingangle.md
