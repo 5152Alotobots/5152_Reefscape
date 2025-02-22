@@ -8,7 +8,7 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.5688232556653239,
+        "x": 1.5688232556653237,
         "y": 6.70973444739085
       },
       "isLocked": false,
@@ -45,7 +45,7 @@
     "rotation": 125.00000000000001
   },
   "reversed": false,
-  "folder": "CoralStationApproach",
+  "folder": "AutoDrive",
   "idealStartingState": {
     "velocity": 4.5,
     "rotation": 125.00000000000001

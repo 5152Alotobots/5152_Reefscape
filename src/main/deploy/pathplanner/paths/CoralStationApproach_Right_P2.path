@@ -45,7 +45,7 @@
     "rotation": -125.00000000000001
   },
   "reversed": false,
-  "folder": "CoralStationApproach",
+  "folder": "AutoDrive",
   "idealStartingState": {
     "velocity": 4.5,
     "rotation": -125.00000000000001
