@@ -5,8 +5,8 @@ The ParallelElevatorWristRun command group coordinates the simultaneous movement
 ## Subsystem Requirements
 
 This command group requires:
-- [Elevator Subsystem](/5152_Reefscape/game/subsystems/elevator)
-- [Wrist Subsystem](/5152_Reefscape/game/subsystems/wrist)
+- [Elevator Subsystem](/5152_Reefscape/reefscape/subsystems/elevator)
+- [Wrist Subsystem](/5152_Reefscape/reefscape/subsystems/wrist)
 
 ## Constructor Parameters
 

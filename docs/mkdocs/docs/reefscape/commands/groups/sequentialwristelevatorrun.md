@@ -5,8 +5,8 @@ The SequentialWristElevatorRun command group coordinates the movement of both th
 ## Subsystem Requirements
 
 This command group requires:
-- [Wrist Subsystem](/5152_Reefscape/game/subsystems/wrist)
-- [Elevator Subsystem](/5152_Reefscape/game/subsystems/elevator)
+- [Wrist Subsystem](/5152_Reefscape/reefscape/subsystems/wrist)
+- [Elevator Subsystem](/5152_Reefscape/reefscape/subsystems/elevator)
 
 ## Constructor Parameters
 

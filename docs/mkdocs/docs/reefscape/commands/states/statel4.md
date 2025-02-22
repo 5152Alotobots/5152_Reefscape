@@ -4,9 +4,9 @@ A command sequence that automates the process of placing game pieces at Level 4 
 
 ## Subsystem Requirements
 
-- [Elevator Subsystem](/5152_Reefscape/game/subsystems/elevator)
-- [Wrist Subsystem](/5152_Reefscape/game/subsystems/wrist)
-- [Coral Intake Subsystem](/5152_Reefscape/game/subsystems/coralintake)
+- [Elevator Subsystem](/5152_Reefscape/reefscape/subsystems/elevator)
+- [Wrist Subsystem](/5152_Reefscape/reefscape/subsystems/wrist)
+- [Coral Intake Subsystem](/5152_Reefscape/reefscape/subsystems/coralintake)
 
 ## Constructor Parameters
 
