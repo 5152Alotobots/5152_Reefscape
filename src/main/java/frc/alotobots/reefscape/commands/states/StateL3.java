@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.alotobots.library.commands.util.LogCommand;
 import frc.alotobots.reefscape.commands.groups.ParallelElevatorWristRun;
 import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEjectThrough;
@@ -47,7 +48,7 @@ public class StateL3 extends SequentialCommandGroup {
       CoralIntakeSubsystem coralIntakeSubsystem,
       Trigger coralIntakeReleaseTrigger) {
     addCommands(
-        new InstantCommand(() -> Logger.recordOutput("State/State", "L3")),
+            new LogCommand("State/State", "L3"),
         new ParallelElevatorWristRun(
             elevatorSubsystem,
             wristSubsystem,

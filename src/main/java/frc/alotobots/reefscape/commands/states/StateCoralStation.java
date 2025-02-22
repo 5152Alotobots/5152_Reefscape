@@ -16,6 +16,7 @@ import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralInta
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.alotobots.library.commands.util.LogCommand;
 import frc.alotobots.reefscape.commands.groups.ParallelElevatorWristRun;
 import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeIntake;
@@ -43,7 +44,7 @@ public class StateCoralStation extends SequentialCommandGroup {
       WristSubsystem wristSubsystem,
       CoralIntakeSubsystem coralIntakeSubsystem) {
     addCommands(
-        new InstantCommand(() -> Logger.recordOutput("State/State", "CORAL_STATION")),
+        new LogCommand("State/State", "CORAL_STATION"),
         new ParallelElevatorWristRun(
             elevatorSubsystem,
             wristSubsystem,

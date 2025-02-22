@@ -14,6 +14,7 @@ package frc.alotobots.reefscape.commands.states;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.alotobots.library.commands.util.LogCommand;
 import frc.alotobots.reefscape.commands.groups.SequentialWristElevatorRun;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants;
@@ -35,7 +36,7 @@ public class StateStowed extends SequentialCommandGroup {
    */
   public StateStowed(ElevatorSubsystem elevatorSubsystem, WristSubsystem wristSubsystem) {
     addCommands(
-        new InstantCommand(() -> Logger.recordOutput("State/State", "STOWED")),
+            new LogCommand("State/State", "STOWED"),
         new SequentialWristElevatorRun(
             wristSubsystem,
             elevatorSubsystem,
