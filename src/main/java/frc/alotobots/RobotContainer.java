@@ -73,6 +73,7 @@ public class RobotContainer {
   private final ObjectDetectionSubsystem objectDetectionSubsystem;
   // private final BlingSubsystem blingSubsystem;
   private final PathPlannerManager pathPlannerManager;
+  private final AutoNamedCommands autoNamedCommands;
   private LoggedDashboardChooser<Command> autoChooser;
   private SwerveDriveSimulation driveSimulation;
 
@@ -93,6 +94,8 @@ public class RobotContainer {
         coralIntakeSubsystem = new CoralIntakeSubsystem(new CoralIntakeIOVortexReal());
         wristSubsystem = new WristSubsystem(new WristIOTalonFXReal());
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
+        autoNamedCommands =
+            new AutoNamedCommands(elevatorSubsystem, wristSubsystem, coralIntakeSubsystem);
         configureAutoChooser();
 
         oculusSubsystem = new OculusSubsystem(new OculusIOReal());
@@ -147,6 +150,8 @@ public class RobotContainer {
         swerveDriveSubsystem.setPose(simStartPose);
         elevatorSubsystem = new ElevatorSubsystem(new ElevatorIOTalonFXSim());
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
+        autoNamedCommands =
+            new AutoNamedCommands(elevatorSubsystem, wristSubsystem, coralIntakeSubsystem);
         configureAutoChooser();
 
         oculusSubsystem = new OculusSubsystem(new OculusIOSim(driveSimulation));
@@ -185,6 +190,8 @@ public class RobotContainer {
                 new ModuleIO() {});
         elevatorSubsystem = new ElevatorSubsystem(new ElevatorIO() {});
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
+        autoNamedCommands =
+            new AutoNamedCommands(elevatorSubsystem, wristSubsystem, coralIntakeSubsystem);
         configureAutoChooser();
 
         oculusSubsystem = new OculusSubsystem(new OculusIO() {});
