@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.245148026315788,
-        "y": 4.0
+        "x": 7.22475,
+        "y": 1.8889802631578947
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.225246710526315,
-        "y": 2.4509046052631587
+        "x": 6.2048486842105275,
+        "y": 0.33988486842105337
       },
       "isLocked": false,
-      "linkedName": "Start Center"
+      "linkedName": "Start South"
     },
     {
       "anchor": {

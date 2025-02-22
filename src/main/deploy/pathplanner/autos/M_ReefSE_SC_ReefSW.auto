@@ -17,7 +17,13 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "RaiseElevatorToL4"
+                  "name": "ElevatorRunToL4"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "WristRunToL4"
                 }
               }
             ]
@@ -26,7 +32,7 @@
         {
           "type": "named",
           "data": {
-            "name": "EjectCoral"
+            "name": "CoralIntakeEjectThrough"
           }
         },
         {
@@ -44,6 +50,12 @@
                 "data": {
                   "name": "RaiseElevatorToCoralStation"
                 }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "WristRunToCoralStation"
+                }
               }
             ]
           }
@@ -51,7 +63,7 @@
         {
           "type": "named",
           "data": {
-            "name": "IntakeCoral"
+            "name": "CoralIntakeIntake"
           }
         },
         {
@@ -67,7 +79,13 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "RaiseElevatorToL4"
+                  "name": "ElevatorRunToL4"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "WristRunToL4"
                 }
               }
             ]
@@ -76,19 +94,32 @@
         {
           "type": "named",
           "data": {
-            "name": "EjectCoral"
+            "name": "CoralIntakeEjectThrough"
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "ElevatorDownIntakeIn"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "WristRunToStowed"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "ElevatorRunToStowed"
+                }
+              }
+            ]
           }
         }
       ]
     }
   },
-  "resetOdom": true,
+  "resetOdom": false,
   "folder": "Two Piece",
   "choreoAuto": false
 }

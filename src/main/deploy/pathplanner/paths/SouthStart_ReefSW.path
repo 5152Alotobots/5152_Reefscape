@@ -8,7 +8,7 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": -0.7752285811061348,
+        "x": -0.775228581106135,
         "y": 0.9657112706333097
       },
       "isLocked": false,
@@ -45,7 +45,7 @@
     "rotation": 59.99999999999999
   },
   "reversed": false,
-  "folder": "Battle Creek",
+  "folder": "BenAutos",
   "idealStartingState": {
     "velocity": 0,
     "rotation": -125.00000000000001

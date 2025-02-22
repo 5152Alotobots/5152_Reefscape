@@ -5,34 +5,27 @@
     "data": {
       "commands": [
         {
-          "type": "parallel",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "S_ReefSE 1"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "RaiseElevatorToL4"
-                }
-              }
-            ]
+            "pathName": "S_ReefSE 1"
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "EjectCoral"
+            "pathName": "S_ReefSE 2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "S_ReefSE 3"
           }
         }
       ]
     }
   },
   "resetOdom": false,
-  "folder": "One Piece",
+  "folder": "Bens Things",
   "choreoAuto": false
 }

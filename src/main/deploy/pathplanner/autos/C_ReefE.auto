@@ -17,7 +17,13 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "RaiseElevatorToL4"
+                  "name": "ElevatorRunToL4"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "WristRunToL4"
                 }
               }
             ]
@@ -26,13 +32,26 @@
         {
           "type": "named",
           "data": {
-            "name": "EjectCoral"
+            "name": "CoralIntakeEjectThrough"
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "ElevatorDownIntakeIn"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "WristRunToStowed"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "ElevatorRunToStowed"
+                }
+              }
+            ]
           }
         }
       ]

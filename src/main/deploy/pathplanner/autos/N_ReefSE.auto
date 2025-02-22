@@ -11,7 +11,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "StartN_ReefNW"
+                  "pathName": "N_ReefSE"
                 }
               },
               {
@@ -42,13 +42,13 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "ElevatorRunToStowed"
+                  "name": "WristRunToStowed"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "WristRunToStowed"
+                  "name": "ElevatorRunToStowed"
                 }
               }
             ]
@@ -57,7 +57,7 @@
       ]
     }
   },
-  "resetOdom": true,
+  "resetOdom": false,
   "folder": "One Piece",
   "choreoAuto": false
 }

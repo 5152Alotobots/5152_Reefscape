@@ -17,7 +17,13 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "RaiseElevatorToL4"
+                  "name": "ElevatorRunToL4"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "WristRunToL4"
                 }
               }
             ]
@@ -26,7 +32,7 @@
         {
           "type": "named",
           "data": {
-            "name": "EjectCoral"
+            "name": "CoralIntakeEjectThrough"
           }
         },
         {
@@ -44,8 +50,20 @@
                 "data": {
                   "name": "RaiseElevatorToCoralStation"
                 }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "WristRunToCoralStation"
+                }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "CoralIntakeIntake"
           }
         },
         {
@@ -61,7 +79,13 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "RaiseElevatorToL4"
+                  "name": "ElevatorRunToL4"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "WristRunToL4"
                 }
               }
             ]
@@ -70,19 +94,32 @@
         {
           "type": "named",
           "data": {
-            "name": "EjectCoral"
+            "name": "CoralIntakeEjectThrough"
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "ElevatorDownIntakeIn"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "ElevatorRunToStowed"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "WristRunToStowed"
+                }
+              }
+            ]
           }
         }
       ]
     }
   },
-  "resetOdom": true,
+  "resetOdom": false,
   "folder": "Two Piece",
   "choreoAuto": false
 }
