@@ -12,7 +12,6 @@
 */
 package frc.alotobots.reefscape.commands.states;
 
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.alotobots.library.commands.util.LogCommand;
 import frc.alotobots.reefscape.commands.groups.SequentialWristElevatorRun;
@@ -20,7 +19,6 @@ import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants;
 import frc.alotobots.reefscape.subsystems.wrist.WristSubsystem;
 import frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants;
-import org.littletonrobotics.junction.Logger;
 
 /**
  * Command for moving the robot's mechanisms to their stowed positions. Moves the wrist first, then
@@ -36,7 +34,7 @@ public class StateStowed extends SequentialCommandGroup {
    */
   public StateStowed(ElevatorSubsystem elevatorSubsystem, WristSubsystem wristSubsystem) {
     addCommands(
-            new LogCommand("State/State", "STOWED"),
+        new LogCommand("State/State", "STOWED"),
         new SequentialWristElevatorRun(
             wristSubsystem,
             elevatorSubsystem,

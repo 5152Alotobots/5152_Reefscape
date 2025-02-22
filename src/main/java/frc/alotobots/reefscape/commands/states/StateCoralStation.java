@@ -14,7 +14,6 @@ package frc.alotobots.reefscape.commands.states;
 
 import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeConstants.Setpoints.OpenLoop.INTAKE_PERCENTAGE;
 
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.alotobots.library.commands.util.LogCommand;
 import frc.alotobots.reefscape.commands.groups.ParallelElevatorWristRun;
@@ -24,7 +23,6 @@ import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants;
 import frc.alotobots.reefscape.subsystems.wrist.WristSubsystem;
 import frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants;
-import org.littletonrobotics.junction.Logger;
 
 /**
  * Command sequence for intaking from the coral station. The sequence: 1. Moves elevator and wrist

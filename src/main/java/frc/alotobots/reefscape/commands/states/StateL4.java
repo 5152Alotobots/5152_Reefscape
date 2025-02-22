@@ -15,7 +15,6 @@ package frc.alotobots.reefscape.commands.states;
 import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeConstants.Setpoints.OpenLoop.EJECT_PERCENTAGE;
 
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.alotobots.library.commands.util.LogCommand;
@@ -26,7 +25,6 @@ import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants;
 import frc.alotobots.reefscape.subsystems.wrist.WristSubsystem;
 import frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants;
-import org.littletonrobotics.junction.Logger;
 
 /**
  * Command sequence for placing game pieces on Level 4. The sequence: 1. Moves elevator and wrist to
@@ -48,7 +46,7 @@ public class StateL4 extends SequentialCommandGroup {
       CoralIntakeSubsystem coralIntakeSubsystem,
       Trigger coralIntakeReleaseTrigger) {
     addCommands(
-            new LogCommand("State/State", "L4"),
+        new LogCommand("State/State", "L4"),
         new ParallelElevatorWristRun(
             elevatorSubsystem,
             wristSubsystem,
