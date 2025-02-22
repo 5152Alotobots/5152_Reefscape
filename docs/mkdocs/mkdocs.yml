@@ -12,9 +12,9 @@ nav:
   - Reefscape:
       - Field Constants: reefscape/fieldconstants.md
       - Subsystems:
-          - Elevator: reefscape/elevator.md
-          - Wrist: reefscape/wrist.md
-          - Coral Intake: reefscape/coralintake.md
+          - Elevator: reefscape/subsystems/elevator.md
+          - Wrist: reefscape/subsystems/wrist.md
+          - Coral Intake: reefscape/subsystems/coralintake.md
       - Commands:
           - Groups:
               - Parallel Elevator Wrist Run: reefscape/commands/groups/parallelelevatorwristrun.md
@@ -27,17 +27,17 @@ nav:
               - State L4: reefscape/commands/states/statel4.md
               - State Stowed: reefscape/commands/states/statestowed.md
           - Elevator:
-              - Default Elevator Run At Velocity: reefscape/defaultelevatorrunatvelocity.md
-              - Elevator Run to Height: reefscape/elevatorruntoheight.md
-              - Elevator Open Loop: reefscape/elevatoropenloop.md
+              - Default Elevator Run At Velocity: reefscape/commands/elevator/defaultelevatorrunatvelocity.md
+              - Elevator Run to Height: reefscape/commands/elevator/elevatorruntoheight.md
+              - Elevator Open Loop: reefscape/commands/elevator/elevatoropenloop.md
           - Wrist:
-              - Default Wrist Run At Velocity: reefscape/defaultwristrunatvelocity.md
-              - Wrist Open Loop: reefscape/wristopenloop.md
-              - Wrist Run to Angle: reefscape/wristruntoangle.md
+              - Default Wrist Run At Velocity: reefscape/commands/wrist/defaultwristrunatvelocity.md
+              - Wrist Open Loop: reefscape/commands/wrist/wristopenloop.md
+              - Wrist Run to Angle: reefscape/commands/wrist/wristruntoangle.md
           - Coral Intake:
-              - Coral Intake Intake: reefscape/coralintakeintake.md
-              - Coral Intake Eject: reefscape/coralintakeeject.md
-              - Coral Intake Eject Through: reefscape/coralintakeejectthrough.md
+              - Coral Intake Intake: reefscape/commands/coralintake/coralintakeintake.md
+              - Coral Intake Eject: reefscape/commands/coralintake/coralintakeeject.md
+              - Coral Intake Eject Through: reefscape/commands/coralintake/coralintakeejectthrough.md
   - Library:
       - Commands:
           - Util:
