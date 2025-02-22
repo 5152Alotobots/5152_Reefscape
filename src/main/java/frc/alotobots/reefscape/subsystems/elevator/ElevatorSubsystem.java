@@ -67,6 +67,11 @@ public class ElevatorSubsystem extends SubsystemBase {
     io.updateInputs(inputs);
     Logger.processInputs("Elevator", inputs);
     Logger.recordOutput("Elevator/TargetHeight", targetHeight);
+
+    // Automatically check every loop to see if the sensor should reset the position of the elevator
+    if (inputs.canrangeInProximity) {
+      io.resetRotorPositions(MIN_HEIGHT);
+    }
   }
 
   /**

@@ -94,6 +94,9 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
   /** Status signal for the CANRange's absolute position measurement */
   private final StatusSignal<Distance> canRangeDistance;
 
+  /** Status signal for the CANRange's proximity sensor */
+  private final StatusSignal<Boolean> canRangeInProximity;
+
   /** Status signal indicating if the top soft limit is reached */
   private final StatusSignal<Boolean> topSoftLimit;
 
@@ -195,6 +198,8 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
     topSoftLimit = leftTalon.getFault_ForwardSoftLimit();
     bottomSoftLimit = leftTalon.getFault_ReverseSoftLimit();
 
+    canRangeInProximity = canRange.getIsDetected();
+
     BaseStatusSignal.setUpdateFrequencyForAll(
         50.0,
         leftPosition,
@@ -208,7 +213,8 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
         rightAppliedCurrent,
         topSoftLimit,
         bottomSoftLimit,
-        currentPidSlot);
+        currentPidSlot,
+            canRangeInProximity);
     ParentDevice.optimizeBusUtilizationForAll(leftTalon, rightTalon, canRange);
   }
 
@@ -231,7 +237,7 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
     var rightSignals =
         BaseStatusSignal.refreshAll(
             rightPosition, rightVelocity, rightAppliedVoltage, rightAppliedCurrent);
-    var canRangeSignals = BaseStatusSignal.refreshAll(canRangeDistance);
+    var canRangeSignals = BaseStatusSignal.refreshAll(canRangeDistance, canRangeInProximity);
 
     // Current slot
     inputs.currentPidSlot = currentPidSlot.getValue();
@@ -263,6 +269,8 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
     // Amps
     inputs.leftCurrentAmps = leftAppliedCurrent.getValue();
     inputs.rightCurrentAmps = rightAppliedCurrent.getValue();
+
+    inputs.canrangeInProximity = canRangeInProximity.getValue();
   }
 
   /**
@@ -306,6 +314,17 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
   @Override
   public void setElevatorBrakeMode(boolean brake) {
     leftTalon.setNeutralMode(brake ? NeutralModeValue.Brake : NeutralModeValue.Coast);
+  }
+
+  /**
+   * Resets the rotor sensors of both motors to be equal to the given height
+   *
+   * @param height The height off the floor the elevator is at
+   */
+  @Override
+  public void resetRotorPositions(Distance height) {
+    leftTalon.setPosition(heightToTalonFX(height));
+    rightTalon.setPosition(heightToTalonFX(height));
   }
 
   /** Stops all elevator motor movement. */
