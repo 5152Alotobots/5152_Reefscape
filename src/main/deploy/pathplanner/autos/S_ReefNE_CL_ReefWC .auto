@@ -7,19 +7,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "HoloTest1"
+            "pathName": "S_ReefNE_CL_ReefWC 1"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "HoloTest2"
+            "pathName": "S_ReefNE_CL_ReefWC 2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "S_ReefNE_CL_ReefWC 3"
           }
         }
       ]
     }
   },
   "resetOdom": false,
-  "folder": "Tests",
+  "folder": "Bens Things",
   "choreoAuto": false
 }

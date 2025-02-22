@@ -1,20 +1,21 @@
 {
-  "robotWidth": 0.75,
-  "robotLength": 0.75,
+  "robotWidth": 0.74,
+  "robotLength": 0.74,
   "holonomicMode": true,
   "pathFolders": [
-    "BranchApproach",
-    "CoralStationApproach",
-    "HoloTest",
-    "BranchRetreat",
-    "RotationTest",
-    "StraightTest"
+    "Battle Creek",
+    "Positions",
+    "Test2025"
   ],
   "autoFolders": [
-    "Tests"
+    "2025Test",
+    "Just Leave",
+    "Bens Things",
+    "One Piece",
+    "Two Piece"
   ],
-  "defaultMaxVel": 5.2,
-  "defaultMaxAccel": 3.5,
+  "defaultMaxVel": 3.0,
+  "defaultMaxAccel": 1.5,
   "defaultMaxAngVel": 540.0,
   "defaultMaxAngAccel": 460.0,
   "defaultNominalVoltage": 12.0,

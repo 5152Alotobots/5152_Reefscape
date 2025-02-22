@@ -7,43 +7,37 @@
         {
           "type": "path",
           "data": {
-            "pathName": "RotationTest1"
+            "pathName": "SouthStart_ReefSW"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "RotationTest2"
+            "pathName": null
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "HoloTest1"
+            "pathName": null
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "HoloTest2"
+            "pathName": null
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "StraightTest1"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "StraightTest2"
+            "pathName": null
           }
         }
       ]
     }
   },
-  "resetOdom": false,
-  "folder": "Tests",
+  "resetOdom": true,
+  "folder": "Bens Things",
   "choreoAuto": false
 }

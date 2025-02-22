@@ -7,19 +7,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "RotationTest1"
+            "pathName": "Alans Basic"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "RotationTest2"
+            "pathName": "Alans basic 2"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "Tests",
+  "folder": "2025Test",
   "choreoAuto": false
 }

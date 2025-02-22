@@ -7,19 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "StraightTest1"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "StraightTest2"
+            "pathName": "Whose Problem"
           }
         }
       ]
     }
   },
-  "resetOdom": false,
-  "folder": "Tests",
+  "resetOdom": true,
+  "folder": "2025Test",
   "choreoAuto": false
 }

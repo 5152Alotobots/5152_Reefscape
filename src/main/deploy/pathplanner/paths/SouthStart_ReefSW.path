@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 0.7215,
+        "y": 1.24625
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": -0.7752285811061348,
+        "y": 0.9657112706333097
+      },
+      "isLocked": false,
+      "linkedName": "South Right Station"
+    },
+    {
+      "anchor": {
+        "x": 3.812090163928191,
+        "y": 2.4126536885288137
+      },
+      "prevControl": {
+        "x": 4.829012615360639,
+        "y": 2.431156816711112
+      },
+      "nextControl": null,
+      "isLocked": true,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 460.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 59.99999999999999
+  },
+  "reversed": false,
+  "folder": "Battle Creek",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -125.00000000000001
+  },
+  "useDefaultConstraints": true
+}
