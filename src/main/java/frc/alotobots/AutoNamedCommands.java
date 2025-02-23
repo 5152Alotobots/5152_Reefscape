@@ -21,9 +21,11 @@ import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEjectT
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeIntake;
 import frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeConstants;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
+import frc.alotobots.reefscape.subsystems.elevator.commands.ElevatorHoldHeight;
 import frc.alotobots.reefscape.subsystems.elevator.commands.ElevatorRunToHeight;
 import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants;
 import frc.alotobots.reefscape.subsystems.wrist.WristSubsystem;
+import frc.alotobots.reefscape.subsystems.wrist.commands.WristHoldAngle;
 import frc.alotobots.reefscape.subsystems.wrist.commands.WristRunToAngle;
 import frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants;
 import java.util.HashMap;
@@ -53,43 +55,66 @@ public class AutoNamedCommands {
     // Elevator Commands
     commands.put(
         "ElevatorRunToCoralStation",
-        new ElevatorRunToHeight(
-            elevatorSubsystem, ElevatorConstants.Setpoints.CORAL_STATION, true));
+        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.CORAL_STATION)
+            .asProxy()
+            .andThen(new ElevatorHoldHeight(elevatorSubsystem)));
     commands.put(
         "ElevatorRunToL1",
-        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L1_PLACE, true));
+        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L1_PLACE)
+            .asProxy()
+            .andThen(new ElevatorHoldHeight(elevatorSubsystem)));
     commands.put(
         "ElevatorRunToL2",
-        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L2_PLACE, true));
+        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L2_PLACE)
+            .asProxy()
+            .andThen(new ElevatorHoldHeight(elevatorSubsystem)));
     commands.put(
         "ElevatorRunToL3",
-        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L3_PLACE, true));
+        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L3_PLACE)
+            .asProxy()
+            .andThen(new ElevatorHoldHeight(elevatorSubsystem)));
     commands.put(
         "ElevatorRunToL4",
-        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L4_PLACE, true));
+        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L4_PLACE)
+            .asProxy()
+            .andThen(new ElevatorHoldHeight(elevatorSubsystem)));
     commands.put(
         "ElevatorRunToStowed",
-        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.STOWED, true));
+        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.STOWED)
+            .asProxy()
+            .andThen(new ElevatorHoldHeight(elevatorSubsystem)));
 
     // Wrist Commands
     commands.put(
         "WristRunToCoralStation",
-        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.CORAL_STATION, true));
+        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.CORAL_STATION)
+            .asProxy()
+            .andThen(new WristHoldAngle(wristSubsystem)));
     commands.put(
         "WristRunToL1",
-        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.L1_PLACE, true));
+        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.L1_PLACE)
+            .asProxy()
+            .andThen(new WristHoldAngle(wristSubsystem)));
     commands.put(
         "WristRunToL2",
-        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.L2_PLACE, true));
+        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.L2_PLACE)
+            .asProxy()
+            .andThen(new WristHoldAngle(wristSubsystem)));
     commands.put(
         "WristRunToL3",
-        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.L3_PLACE, true));
+        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.L3_PLACE)
+            .asProxy()
+            .andThen(new WristHoldAngle(wristSubsystem)));
     commands.put(
         "WristRunToL4",
-        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.L4_PLACE, true));
+        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.L4_PLACE)
+            .asProxy()
+            .andThen(new WristHoldAngle(wristSubsystem)));
     commands.put(
         "WristRunToStowed",
-        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.STOWED, true));
+        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.STOWED)
+            .asProxy()
+            .andThen(new WristHoldAngle(wristSubsystem)));
 
     // Coral Intake Commands
     commands.put(
