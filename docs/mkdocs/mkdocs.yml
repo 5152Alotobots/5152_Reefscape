@@ -12,14 +12,36 @@ nav:
   - Reefscape:
       - Field Constants: reefscape/fieldconstants.md
       - Subsystems:
-          - Auto Cycle: reefscape/subsystems/autocycle.md
+          - Elevator: reefscape/subsystems/elevator.md
+          - Wrist: reefscape/subsystems/wrist.md
+          - Coral Intake: reefscape/subsystems/coralintake.md
       - Commands:
-          - Auto Cycle:
-            - Pathfind to Selected Coral Station: reefscape/commands/autocycle/pathfindtoselectedcoralstation.md
-            - Pathfind to Selected Reef Branch: reefscape/commands/autocycle/pathfindtoselectedcoralstation.md
-            - Stop Pathfinding: reefscape/commands/autocycle/stoppathfinding.md
+          - Groups:
+              - Parallel Elevator Wrist Run: reefscape/commands/groups/parallelelevatorwristrun.md
+              - Sequential Wrist Elevator Run: reefscape/commands/groups/sequentialwristelevatorrun.md
+          - States:
+              - State Coral Station: reefscape/commands/states/statecoralstation.md
+              - State L1: reefscape/commands/states/statel1.md
+              - State L2: reefscape/commands/states/statel2.md
+              - State L3: reefscape/commands/states/statel3.md
+              - State L4: reefscape/commands/states/statel4.md
+              - State Stowed: reefscape/commands/states/statestowed.md
+          - Elevator:
+              - Default Elevator Run At Velocity: reefscape/commands/elevator/defaultelevatorrunatvelocity.md
+              - Elevator Run to Height: reefscape/commands/elevator/elevatorruntoheight.md
+              - Elevator Open Loop: reefscape/commands/elevator/elevatoropenloop.md
+          - Wrist:
+              - Default Wrist Run At Velocity: reefscape/commands/wrist/defaultwristrunatvelocity.md
+              - Wrist Open Loop: reefscape/commands/wrist/wristopenloop.md
+              - Wrist Run to Angle: reefscape/commands/wrist/wristruntoangle.md
+          - Coral Intake:
+              - Coral Intake Intake: reefscape/commands/coralintake/coralintakeintake.md
+              - Coral Intake Eject: reefscape/commands/coralintake/coralintakeeject.md
+              - Coral Intake Eject Through: reefscape/commands/coralintake/coralintakeejectthrough.md
   - Library:
       - Commands:
+          - Util:
+              - Log Command: library/commands/util/logcommand.md
           - Swerve:
               - Default Drive: library/commands/swerve/defaultdrive.md
               - Drive Facing Angle: library/commands/swerve/drivefacingangle.md
@@ -47,6 +69,7 @@ nav:
               - AprilTag: library/subsystems/vision/apriltag.md
               - Oculus: library/subsystems/vision/oculus.md
   - Core:
+      - CAN IDs: core/canids.md
       - Controller Bindings: core/bindings.md
       - Auto Named Commands: core/autonamedcommands.md
       - Robot: core/robot.md

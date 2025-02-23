@@ -135,7 +135,7 @@ public class PathPlannerManager {
       }
       return Optional.empty();
     } catch (Exception e) {
-      System.err.println("Failed to load path end pose: " + pathName);
+      System.err.println("Failed to load path start pose: " + pathName);
       e.printStackTrace();
       return Optional.empty();
     }
