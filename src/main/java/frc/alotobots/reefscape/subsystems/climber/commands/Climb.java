@@ -13,25 +13,15 @@
 package frc.alotobots.reefscape.subsystems.climber.commands;
 
 import static edu.wpi.first.units.Units.Meters;
+
 import edu.wpi.first.wpilibj2.command.*;
 import frc.alotobots.reefscape.subsystems.climber.ClimberSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.commands.ElevatorRunToHeight;
 
-/**
- * Default command that runs the elevator at a specified velocity. This command takes a velocity
- * input (normalized between -1.0 and 1.0) and applies it to the elevator, scaled by the maximum
- * speed constant.
- */
 public class Climb extends SequentialCommandGroup {
-  /** The elevator subsystem this command controls. */
-  private final ClimberSubsystem climberSubsystem;
-
-  private final ElevatorSubsystem elevatorSubsystem;
 
   public Climb(ClimberSubsystem climberSubsystem, ElevatorSubsystem elevatorSubsystem) {
-    this.climberSubsystem = climberSubsystem;
-    this.elevatorSubsystem = elevatorSubsystem;
 
     addCommands(
         new InstantCommand(climberSubsystem::enableServos),

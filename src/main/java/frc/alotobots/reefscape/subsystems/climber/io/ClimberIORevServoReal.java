@@ -85,18 +85,18 @@ public class ClimberIORevServoReal implements ClimberIO {
   /**
    * Sets the plunger servo position based on an angle.
    *
-   * @param angle The desired angle, where:
-   *              - 0 degrees = down/plunge position (PLUNGER_SERVO_0_PW)
-   *              - 180 degrees = up/receive position (PLUNGER_SERVO_180_PW)
-   * The angle is mapped to pulse width:
-   * - Maps 0° → PLUNGER_SERVO_0_PW (plunge/down position)
-   * - Maps 180° → PLUNGER_SERVO_180_PW (receive/up position)
+   * @param angle The desired angle, where: - 0 degrees = down/plunge position (PLUNGER_SERVO_0_PW)
+   *     - 180 degrees = up/receive position (PLUNGER_SERVO_180_PW) The angle is mapped to pulse
+   *     width: - Maps 0° → PLUNGER_SERVO_0_PW (plunge/down position) - Maps 180° →
+   *     PLUNGER_SERVO_180_PW (receive/up position)
    */
   @Override
   public void setPlungerServoPosition(Angle angle) {
-    plungerServoChannel.setPulseWidth((int) ((angle.in(Rotations) * (PLUNGER_SERVO_180_PW - PLUNGER_SERVO_0_PW)) + PLUNGER_SERVO_0_PW));
+    plungerServoChannel.setPulseWidth(
+        (int)
+            ((angle.in(Rotations) * (PLUNGER_SERVO_180_PW - PLUNGER_SERVO_0_PW))
+                + PLUNGER_SERVO_0_PW));
   }
-
 
   @Override
   public void setLockingServoLocked(boolean lockingServoLocked) {

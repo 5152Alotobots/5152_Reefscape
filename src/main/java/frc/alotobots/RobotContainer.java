@@ -37,17 +37,19 @@ import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.Obje
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.constants.ObjectDetectionConstants;
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.io.*;
 import frc.alotobots.reefscape.commands.states.*;
+import frc.alotobots.reefscape.subsystems.climber.ClimberSubsystem;
+import frc.alotobots.reefscape.subsystems.climber.commands.Climb;
+import frc.alotobots.reefscape.subsystems.climber.commands.UnClimb;
+import frc.alotobots.reefscape.subsystems.climber.io.ClimberIORevServoReal;
 import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEjectThrough;
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeIntake;
 import frc.alotobots.reefscape.subsystems.coralIntake.io.CoralIntakeIO;
 import frc.alotobots.reefscape.subsystems.coralIntake.io.CoralIntakeIOVortexReal;
-import frc.alotobots.reefscape.subsystems.climber.ClimberSubsystem;
-import frc.alotobots.reefscape.subsystems.climber.commands.Climb;
-import frc.alotobots.reefscape.subsystems.climber.commands.UnClimb;
-import frc.alotobots.reefscape.subsystems.climber.io.ClimberIORevServoReal;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.commands.DefaultElevatorRunAtVelocity;
+import frc.alotobots.reefscape.subsystems.elevator.commands.ElevatorRunToHeight;
+import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIO;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIOTalonFXReal;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIOTalonFXSim;
@@ -66,6 +68,7 @@ public class RobotContainer {
   private final SwerveDriveSubsystem swerveDriveSubsystem;
   private final ElevatorSubsystem elevatorSubsystem;
   private final WristSubsystem wristSubsystem;
+  private final ClimberSubsystem climberSubsystem;
   private final CoralIntakeSubsystem coralIntakeSubsystem;
   private final OculusSubsystem oculusSubsystem;
   private final AprilTagSubsystem aprilTagSubsystem;
@@ -77,7 +80,6 @@ public class RobotContainer {
   private final PathPlannerManager pathPlannerManager;
   private LoggedDashboardChooser<Command> autoChooser;
   private SwerveDriveSimulation driveSimulation;
-  private ClimberSubsystem climberSubsystem;
 
   public RobotContainer() {
 
@@ -181,7 +183,7 @@ public class RobotContainer {
         wristSubsystem = new WristSubsystem(new WristIOTalonFXSim());
         coralIntakeSubsystem = new CoralIntakeSubsystem(new CoralIntakeIOVortexReal());
         climberSubsystem = new ClimberSubsystem(new ClimberIORevServoReal());
-        
+
         // Replay mode initialization
         swerveDriveSubsystem =
             new SwerveDriveSubsystem(
@@ -222,7 +224,7 @@ public class RobotContainer {
     elevatorSubsystem.setDefaultCommand(
         new DefaultElevatorRunAtVelocity(elevatorSubsystem, () -> -getElevatorAxis()));
     wristSubsystem.setDefaultCommand(
-        new DefaultWristRunAtVelocity(wristSubsystem, () -> getWristAxis()));
+        new DefaultWristRunAtVelocity(wristSubsystem, OI::getWristAxis));
     // blingSubsystem.setDefaultCommand(
     //    new NoAllianceWaiting(blingSubsystem).andThen(new SetToAllianceColor(blingSubsystem)));
   }
@@ -270,8 +272,8 @@ public class RobotContainer {
     wristGroundButton.toggleOnTrue(
         new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.GROUND_INTAKE));
 
-    testButton.onTrue(new Climb(climberSubsystem, elevatorSubsystem));
-    testButton2.onTrue(new UnClimb(climberSubsystem, elevatorSubsystem));
+    climbButton.onTrue(new Climb(climberSubsystem, elevatorSubsystem));
+    unClimbButton.onTrue(new UnClimb(climberSubsystem));
   }
 
   private void configureAutoChooser() {

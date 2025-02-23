@@ -33,8 +33,21 @@
   "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx10G -Xms100m -Xlog:disable",
   "cSpell.words": [
     "alotobots",
+    "Brushless",
+    "CANFD",
     "CANRANGE",
+    "codriver",
+    "deadband",
     "Debouncer",
-    "reefscape"
+    "dtheta",
+    "feedforward",
+    "Feedforwards",
+    "kpis",
+    "odometry",
+    "quasistatic",
+    "reefscape",
+    "Setpoint",
+    "setpoints",
+    "swervedrive"
   ]
 }

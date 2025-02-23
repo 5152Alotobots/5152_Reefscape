@@ -51,12 +51,10 @@ public class ClimberSubsystem extends SubsystemBase {
   /**
    * Sets the plunger servo position based on an angle.
    *
-   * @param angle The desired angle, where:
-   *              - 0 degrees = down/plunge position (PLUNGER_SERVO_0_PW)
-   *              - 180 degrees = up/receive position (PLUNGER_SERVO_180_PW)
-   * The angle is mapped to pulse width:
-   * - Maps 0° → PLUNGER_SERVO_0_PW (plunge/down position)
-   * - Maps 180° → PLUNGER_SERVO_180_PW (receive/up position)
+   * @param angle The desired angle, where: - 0 degrees = down/plunge position (PLUNGER_SERVO_0_PW)
+   *     - 180 degrees = up/receive position (PLUNGER_SERVO_180_PW) The angle is mapped to pulse
+   *     width: - Maps 0° → PLUNGER_SERVO_0_PW (plunge/down position) - Maps 180° →
+   *     PLUNGER_SERVO_180_PW (receive/up position)
    */
   public void setPlungerToAngle(Angle angle) {
     io.setPlungerServoPosition(angle);
@@ -73,6 +71,7 @@ public class ClimberSubsystem extends SubsystemBase {
   public void enablePlungerServo() {
     io.enablePlungerServo();
   }
+
   public void enableLockingServo() {
     io.enableLockingServo();
   }
@@ -80,6 +79,7 @@ public class ClimberSubsystem extends SubsystemBase {
   public void disablePlungerServo() {
     io.disablePlungerServo();
   }
+
   public void disableLockingServo() {
     io.disableLockingServo();
   }

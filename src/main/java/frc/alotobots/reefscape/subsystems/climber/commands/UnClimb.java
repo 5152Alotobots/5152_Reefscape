@@ -14,7 +14,6 @@ package frc.alotobots.reefscape.subsystems.climber.commands;
 
 import edu.wpi.first.wpilibj2.command.*;
 import frc.alotobots.reefscape.subsystems.climber.ClimberSubsystem;
-import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 
 /**
  * Default command that runs the elevator at a specified velocity. This command takes a velocity
@@ -22,14 +21,8 @@ import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
  * speed constant.
  */
 public class UnClimb extends SequentialCommandGroup {
-  /** The elevator subsystem this command controls. */
-  private final ClimberSubsystem climberSubsystem;
 
-  private final ElevatorSubsystem elevatorSubsystem;
-
-  public UnClimb(ClimberSubsystem climberSubsystem, ElevatorSubsystem elevatorSubsystem) {
-    this.climberSubsystem = climberSubsystem;
-    this.elevatorSubsystem = elevatorSubsystem;
+  public UnClimb(ClimberSubsystem climberSubsystem) {
 
     addCommands(
         new InstantCommand(climberSubsystem::enableServos),

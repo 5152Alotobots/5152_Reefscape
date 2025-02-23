@@ -118,59 +118,59 @@ public class OI {
 
   /* State-based play control triggers */
   /** Trigger for entering the coral station state, activated by co-driver's right bumper. */
-  public static Trigger stateCoralStationButton = codriverController.rightBumper();
+  public static final Trigger stateCoralStationButton = codriverController.rightBumper();
 
   /** Trigger for entering the stow state, activated by co-driver's left bumper. */
-  public static Trigger stateStowButton = codriverController.leftBumper();
+  public static final Trigger stateStowButton = codriverController.leftBumper();
 
   /** Trigger for entering the L4 state, activated by co-driver's Y button. */
-  public static Trigger stateL4Button = codriverController.y();
+  public static final Trigger stateL4Button = codriverController.y();
 
   /** Trigger for entering the L3 state, activated by co-driver's X button. */
-  public static Trigger stateL3Button = codriverController.x();
+  public static final Trigger stateL3Button = codriverController.x();
 
   /** Trigger for entering the L2 state, activated by co-driver's B button. */
-  public static Trigger stateL2Button = codriverController.b();
+  public static final Trigger stateL2Button = codriverController.b();
 
   /** Trigger for entering the L1 state, activated by co-driver's A button. */
-  public static Trigger stateL1Button = codriverController.a();
+  public static final Trigger stateL1Button = codriverController.a();
 
   /** Trigger for releasing the prepped coral */
-  public static Trigger coralIntakeReleaseButton = codriverController.rightTrigger();
+  public static final Trigger coralIntakeReleaseButton = codriverController.rightTrigger();
 
   /** Trigger for activating the coral intake */
-  public static Trigger coralIntakeIntakeButton =
+  public static final Trigger coralIntakeIntakeButton =
       codriverBackupController.back().or(codriverController.leftTrigger());
-  
-  public static Trigger testButton = codriverController.start();
-  public static Trigger testButton2 = codriverController.back();
+
+  public static final Trigger climbButton = codriverController.start();
+  public static final Trigger unClimbButton = codriverController.back();
 
   /* Backup control triggers */
   /** Trigger for activating the coral eject-through function */
-  public static Trigger coralIntakeEjectThroughButton = codriverBackupController.start();
+  public static final Trigger coralIntakeEjectThroughButton = codriverBackupController.start();
 
   /* Wrist position control triggers */
   /** Trigger for moving the wrist to L4 coral position using backup D-pad up. */
-  public static Trigger wristL4coralButton = codriverBackupController.povUp();
+  public static final Trigger wristL4coralButton = codriverBackupController.povUp();
 
   /** Trigger for moving the wrist to L2/L3 coral position using backup D-pad right. */
-  public static Trigger wristL2and3coralButton = codriverBackupController.povRight();
+  public static final Trigger wristL2and3coralButton = codriverBackupController.povRight();
 
   /** Trigger for moving the wrist to ground position using backup D-pad left. */
-  public static Trigger wristGroundButton = codriverBackupController.povLeft();
+  public static final Trigger wristGroundButton = codriverBackupController.povLeft();
 
   /* Elevator position control triggers */
   /** Trigger for moving the elevator to stow position using backup A button. */
-  public static Trigger elevatorStowButton = codriverBackupController.a();
+  public static final Trigger elevatorStowButton = codriverBackupController.a();
 
   /** Trigger for moving the elevator to L2 position using backup B button. */
-  public static Trigger elevatorL2Button = codriverBackupController.b();
+  public static final Trigger elevatorL2Button = codriverBackupController.b();
 
   /** Trigger for moving the elevator to L3 position using backup X button. */
-  public static Trigger elevatorL3Button = codriverBackupController.x();
+  public static final Trigger elevatorL3Button = codriverBackupController.x();
 
   /** Trigger for moving the elevator to L4 position using backup Y button. */
-  public static Trigger elevatorL4Button = codriverBackupController.y();
+  public static final Trigger elevatorL4Button = codriverBackupController.y();
 
   /**
    * Gets the manual elevator control input by selecting the larger magnitude input between the two
