@@ -13,13 +13,22 @@
 package frc.alotobots.reefscape.subsystems.climber.io;
 
 import edu.wpi.first.units.measure.Angle;
+import edu.wpi.first.units.measure.Current;
+import edu.wpi.first.units.measure.Voltage;
 import org.littletonrobotics.junction.AutoLog;
+
+import static edu.wpi.first.units.Units.Volts;
+import static edu.wpi.first.units.Units.Amps;
 
 public interface ClimberIO {
 
   @AutoLog
   public static class ClimberIOInputs {
     public boolean servoHubConnected = false;
+    public Voltage servoHubVoltage = Volts.zero();
+    public Current servoHubCurrent = Amps.zero();
+
+    public Voltage servoHubServoVoltage = Volts.zero();
 
     public boolean lockingServoEnabled = false;
     public boolean plungerServoEnabled = false;

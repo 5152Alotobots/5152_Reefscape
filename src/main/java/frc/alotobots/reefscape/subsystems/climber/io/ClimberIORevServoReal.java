@@ -12,7 +12,7 @@
 */
 package frc.alotobots.reefscape.subsystems.climber.io;
 
-import static edu.wpi.first.units.Units.Degrees;
+import static edu.wpi.first.units.Units.*;
 import static frc.alotobots.Constants.CanId.SERVO_HUB_CAN_ID;
 import static frc.alotobots.reefscape.subsystems.climber.constants.ClimberRevServoReal.*;
 
@@ -25,8 +25,8 @@ public class ClimberIORevServoReal implements ClimberIO {
   private final ServoHub servoHub = new ServoHub(SERVO_HUB_CAN_ID);
   private final ServoChannel plungerServoChannel = servoHub.getServoChannel(PLUNGER_SERVO_ID);
   private final ServoChannel lockingServoChannel = servoHub.getServoChannel(LOCKING_SERVO_ID);
-  private final DigitalInput cageSwitch1 = new DigitalInput(0);
-  private final DigitalInput cageSwitch2 = new DigitalInput(1);
+  private final DigitalInput cageSwitch1 = new DigitalInput(CAGE_SWITCH_1_ID);
+  private final DigitalInput cageSwitch2 = new DigitalInput(CAGE_SWITCH_2_ID);
 
   public ClimberIORevServoReal() {
     enablePlungerServo();
@@ -45,6 +45,10 @@ public class ClimberIORevServoReal implements ClimberIO {
   public void updateInputs(ClimberIOInputs inputs) {
     inputs.plungerServoEnabled = plungerServoChannel.isEnabled();
     inputs.lockingServoEnabled = lockingServoChannel.isEnabled();
+    inputs.servoHubVoltage = Volts.of(servoHub.getDeviceVoltage());
+    inputs.servoHubCurrent = Amps.of(servoHub.getDeviceCurrent());
+
+    inputs.servoHubServoVoltage = Volts.of(servoHub.getServoVoltage());
 
     inputs.cageSwitch1 = cageSwitch1.get();
     inputs.cageSwitch2 = cageSwitch2.get();
@@ -78,10 +82,21 @@ public class ClimberIORevServoReal implements ClimberIO {
     lockingServoChannel.setPowered(false);
   }
 
+  /**
+   * Sets the plunger servo position based on an angle.
+   *
+   * @param angle The desired angle, where:
+   *              - 0 degrees = down/plunge position (PLUNGER_SERVO_0_PW)
+   *              - 180 degrees = up/receive position (PLUNGER_SERVO_180_PW)
+   * The angle is mapped to pulse width:
+   * - Maps 0° → PLUNGER_SERVO_0_PW (plunge/down position)
+   * - Maps 180° → PLUNGER_SERVO_180_PW (receive/up position)
+   */
   @Override
   public void setPlungerServoPosition(Angle angle) {
-    plungerServoChannel.setPulseWidth((int) (((angle.in(Degrees) / 360) * 1850) + 650));
+    plungerServoChannel.setPulseWidth((int) ((angle.in(Rotations) * (PLUNGER_SERVO_180_PW - PLUNGER_SERVO_0_PW)) + PLUNGER_SERVO_0_PW));
   }
+
 
   @Override
   public void setLockingServoLocked(boolean lockingServoLocked) {

@@ -12,9 +12,11 @@
 */
 package frc.alotobots.reefscape.subsystems.climber.commands;
 
+import static edu.wpi.first.units.Units.Meters;
 import edu.wpi.first.wpilibj2.command.*;
 import frc.alotobots.reefscape.subsystems.climber.ClimberSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
+import frc.alotobots.reefscape.subsystems.elevator.commands.ElevatorRunToHeight;
 
 /**
  * Default command that runs the elevator at a specified velocity. This command takes a velocity
@@ -33,13 +35,13 @@ public class Climb extends SequentialCommandGroup {
 
     addCommands(
         new InstantCommand(climberSubsystem::enableServos),
-        // new ElevatorRunToHeight(elevatorSubsystem, Meters.of(0.8)),
+        new ElevatorRunToHeight(elevatorSubsystem, Meters.of(0.8)),
         new InstantCommand(climberSubsystem::setPlungerToReceive),
         new InstantCommand(climberSubsystem::unlockCage),
         new WaitUntilCommand(climberSubsystem::getCageSwitches),
         new InstantCommand(climberSubsystem::lockCage),
         new InstantCommand(climberSubsystem::setPlungerToPlunge),
-        new WaitCommand(10),
+        new WaitCommand(1),
         new InstantCommand(climberSubsystem::disableServos)
         // new ElevatorRunToHeight(elevatorSubsystem, MIN_HEIGHT)
         );

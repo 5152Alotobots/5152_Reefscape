@@ -18,7 +18,10 @@ public final class ClimberRevServoReal {
   public static final ChannelId PLUNGER_SERVO_ID = ChannelId.kChannelId2;
   public static final ChannelId LOCKING_SERVO_ID = ChannelId.kChannelId0;
 
-  public static final int PLUNGER_SERVO_0_PW = 0;
+  public static final int CAGE_SWITCH_1_ID = 0;
+  public static final int CAGE_SWITCH_2_ID = 1;
+
+  public static final int PLUNGER_SERVO_0_PW = 650;
   public static final int PLUNGER_SERVO_180_PW = 2500;
   public static final int LOCKING_SERVO_OPEN_PW = 1773;
   public static final int LOCKING_SERVO_CLOSED_PW = 1446;
