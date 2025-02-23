@@ -27,12 +27,9 @@ import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.controls.MotionMagicVelocityTorqueCurrentFOC;
-import com.ctre.phoenix6.controls.MotionMagicVelocityVoltage;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.PositionTorqueCurrentFOC;
 import com.ctre.phoenix6.controls.PositionVoltage;
-import com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.ParentDevice;
@@ -65,15 +62,11 @@ public class WristIOTalonFXReal implements WristIO {
 
   /** Control mode for position control using direct voltage */
   private final PositionVoltage positionVoltage = new PositionVoltage(0);
-  private final MotionMagicVoltage magicPositionVoltage = new MotionMagicVoltage(0);
 
-  /** Control mode for velocity control using torque-based Field-Oriented Control */
-  private final VelocityTorqueCurrentFOC velocityTorqueCurrentFOC = new VelocityTorqueCurrentFOC(0);
-  private final MotionMagicVelocityTorqueCurrentFOC magicVelocityTorqueCurrentFOC = new MotionMagicVelocityTorqueCurrentFOC(0);
+  private final MotionMagicVoltage magicPositionVoltage = new MotionMagicVoltage(0);
 
   /** Control mode for velocity control using direct voltage */
   private final VelocityVoltage velocityVoltage = new VelocityVoltage(0);
-  private final MotionMagicVelocityVoltage magicVelocityVoltage = new MotionMagicVelocityVoltage(0);
 
   // Status Signals for monitoring hardware state
   /** Current active PID slot being used for control */
@@ -87,6 +80,7 @@ public class WristIOTalonFXReal implements WristIO {
 
   /** Current angular velocity of the wrist */
   StatusSignal<AngularVelocity> wristVelocity;
+
   StatusSignal<AngularAcceleration> wristAcceleration;
 
   /** Current angular position of the wrist */
@@ -154,11 +148,11 @@ public class WristIOTalonFXReal implements WristIO {
 
     wristMotorConfig.MotorOutput.Inverted = MOTOR_DIRECTION;
 
-    var wristMotionMagicConstants = wristMotorConfig.MotionMagic;
-
-    wristMotionMagicConstants.MotionMagicCruiseVelocity = MotionMagicConstants.CRUSE_VELOCITY.in(RotationsPerSecond);
-    wristMotionMagicConstants.MotionMagicAcceleration = MotionMagicConstants.ACCELERATION.in(RotationsPerSecondPerSecond);
-    wristMotionMagicConstants.MotionMagicJerk = MotionMagicConstants.JERK;
+    wristMotorConfig.MotionMagic.MotionMagicCruiseVelocity =
+        MotionMagicConstants.CRUSE_VELOCITY.in(RotationsPerSecond);
+    wristMotorConfig.MotionMagic.MotionMagicAcceleration =
+        MotionMagicConstants.ACCELERATION.in(RotationsPerSecondPerSecond);
+    wristMotorConfig.MotionMagic.MotionMagicJerk = MotionMagicConstants.JERK;
 
     tryUntilOk(5, () -> wristTalon.getConfigurator().apply(wristMotorConfig, 0.25));
 
@@ -226,6 +220,28 @@ public class WristIOTalonFXReal implements WristIO {
   }
 
   /**
+   * Sets the wrist to a target position using closed-loop control.
+   *
+   * @param rotation The target angle to move to
+   * @param pidSlot The PID slot to use (0 for velocity, 1 for position)
+   */
+  @Override
+  public void setWristPosition(Angle rotation, int pidSlot) {
+    wristTalon.setControl(positionVoltage.withPosition(rotation).withSlot(pidSlot));
+  }
+
+  /**
+   * Sets the wrist to a target position using closed-loop control & motion magic.
+   *
+   * @param rotation The target angle to move to
+   * @param pidSlot The PID slot to use (0 for velocity, 1 for position)
+   */
+  @Override
+  public void setWristPositionMotionMagic(Angle rotation, int pidSlot) {
+    wristTalon.setControl(positionVoltage.withPosition(rotation).withSlot(pidSlot));
+  }
+
+  /**
    * Sets the wrist to run at a target velocity using closed-loop control.
    *
    * @param velocity The target velocity to move at
@@ -234,18 +250,6 @@ public class WristIOTalonFXReal implements WristIO {
   @Override
   public void setWristVelocity(AngularVelocity velocity, int pidSlot) {
     wristTalon.setControl(velocityVoltage.withVelocity(velocity).withSlot(pidSlot));
-  }
-
-
-  /**
-   * Sets the wrist to run at a target velocity using closed-loop control & motion magic.
-   *
-   * @param velocity The target velocity to move at
-   * @param pidSlot The PID slot to use (0 for velocity, 1 for position)
-   */
-  @Override
-  public void setWristVelocityMotionMagic(AngularVelocity velocity, int pidSlot) {
-    wristTalon.setControl(magicVelocityVoltage.withVelocity(velocity).withSlot(pidSlot));
   }
 
   /**

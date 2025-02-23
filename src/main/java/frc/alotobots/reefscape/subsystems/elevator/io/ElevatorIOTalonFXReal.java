@@ -12,26 +12,52 @@
 */
 package frc.alotobots.reefscape.subsystems.elevator.io;
 
-import static edu.wpi.first.units.Units.*;
-import static frc.alotobots.Constants.CanId.*;
-import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.Limits.*;
+import static edu.wpi.first.units.Units.Amps;
+import static edu.wpi.first.units.Units.Meters;
+import static edu.wpi.first.units.Units.MetersPerSecond;
+import static edu.wpi.first.units.Units.MetersPerSecondPerSecond;
+import static edu.wpi.first.units.Units.Rotations;
+import static edu.wpi.first.units.Units.RotationsPerSecond;
+import static edu.wpi.first.units.Units.RotationsPerSecondPerSecond;
+import static frc.alotobots.Constants.CanId.ELEVATOR_CANRANGE_ID;
+import static frc.alotobots.Constants.CanId.LEFT_ELEVATOR_CAN_ID;
+import static frc.alotobots.Constants.CanId.RIGHT_ELEVATOR_CAN_ID;
+import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.Limits.LIMITS_ENABLED;
+import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.Limits.MAX_HEIGHT;
+import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.Limits.MIN_HEIGHT;
 import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorTalonFXRealConstants.LEFT_MOTOR_DIRECTION;
 import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorTalonFXRealConstants.MECHANISM_NEUTRAL_MODE;
-import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorTalonFXRealConstants.MotorSafetyLimits.*;
+import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorTalonFXRealConstants.MotorSafetyLimits.STATOR_AMP_LIMIT;
+import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorTalonFXRealConstants.MotorSafetyLimits.TORQUE_FORWARD_AMP_LIMIT;
+import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorTalonFXRealConstants.MotorSafetyLimits.TORQUE_REVERSE_AMP_LIMIT;
 import static frc.alotobots.util.PhoenixUtil.tryUntilOk;
 
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.CANrangeConfiguration;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.controls.*;
+import com.ctre.phoenix6.controls.Follower;
+import com.ctre.phoenix6.controls.MotionMagicVoltage;
+import com.ctre.phoenix6.controls.PositionVoltage;
+import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.CANrange;
 import com.ctre.phoenix6.hardware.ParentDevice;
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.ctre.phoenix6.signals.*;
+import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
+import com.ctre.phoenix6.signals.GravityTypeValue;
+import com.ctre.phoenix6.signals.NeutralModeValue;
+import com.ctre.phoenix6.signals.UpdateModeValue;
 import edu.wpi.first.math.filter.Debouncer;
-import edu.wpi.first.units.measure.*;
+import edu.wpi.first.units.measure.Angle;
+import edu.wpi.first.units.measure.AngularAcceleration;
+import edu.wpi.first.units.measure.AngularVelocity;
+import edu.wpi.first.units.measure.Current;
+import edu.wpi.first.units.measure.Distance;
+import edu.wpi.first.units.measure.LinearAcceleration;
+import edu.wpi.first.units.measure.LinearVelocity;
+import edu.wpi.first.units.measure.Voltage;
 import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorTalonFXRealConstants;
+import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorTalonFXRealConstants.MotionMagicConstants;
 
 /**
  * Hardware implementation of the Elevator subsystem using TalonFX motors and a CANRange sensor.
@@ -53,16 +79,10 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
   /** Position voltage control request for standard position-based control */
   private final PositionVoltage positionVoltage = new PositionVoltage(0.0);
 
-  /** Position torque current FOC control request for position control with torque management */
-  private final PositionTorqueCurrentFOC positionTorqueCurrentFOC =
-      new PositionTorqueCurrentFOC(0.0);
+  private final MotionMagicVoltage magicPositionVoltage = new MotionMagicVoltage(0.0);
 
   /** Velocity voltage control request for standard velocity-based control */
   private final VelocityVoltage velocityVoltage = new VelocityVoltage(0.0);
-
-  /** Velocity torque current FOC control request for velocity control with torque management */
-  private final VelocityTorqueCurrentFOC velocityTorqueCurrentFOC =
-      new VelocityTorqueCurrentFOC(0.0);
 
   /** Status signal for the current PID slot */
   private final StatusSignal<Integer> currentPidSlot;
@@ -160,6 +180,13 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
     leftConfig.CurrentLimits.StatorCurrentLimitEnable = true; // Always should be true
 
     leftConfig.MotorOutput.Inverted = LEFT_MOTOR_DIRECTION;
+
+    leftConfig.MotionMagic.MotionMagicCruiseVelocity =
+        linearVelocityToTalonFX(MotionMagicConstants.CRUSE_VELOCITY).in(RotationsPerSecond);
+    leftConfig.MotionMagic.MotionMagicAcceleration =
+        linearAccelerationToTalonFX(MotionMagicConstants.ACCELERATION)
+            .in(RotationsPerSecondPerSecond);
+    leftConfig.MotionMagic.MotionMagicJerk = MotionMagicConstants.JERK;
 
     // Apply config to left motor
     tryUntilOk(5, () -> leftTalon.getConfigurator().apply(leftConfig, 0.25));
@@ -277,6 +304,18 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
   }
 
   /**
+   * Sets the elevator to a specific position using closed-loop control.
+   *
+   * @param position The target position as a Distance unit
+   * @param pidSlot The PID slot to use (0 for velocity mode, 1 for position mode)
+   */
+  @Override
+  public void setElevatorPositionMotionMagic(Distance position, int pidSlot) {
+    leftTalon.setControl(
+        magicPositionVoltage.withPosition(heightToTalonFX(position)).withSlot(pidSlot));
+  }
+
+  /**
    * Sets the elevator to a specific velocity using closed-loop control.
    *
    * @param velocity The target velocity as a LinearVelocity unit
@@ -357,5 +396,18 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
    */
   private AngularVelocity linearVelocityToTalonFX(LinearVelocity linearVelocity) {
     return RotationsPerSecond.of(linearVelocity.in(MetersPerSecond) / 0.00942151);
+  }
+
+  /**
+   * Converts linear acceleration to TalonFX rotational acceleration. TalonFX expects acceleration
+   * in rotations per second squared in Phoenix 6. Uses the same conversion factor as velocity since
+   * acceleration is the time derivative of velocity.
+   *
+   * @param linearAcceleration Linear acceleration as a LinearAcceleration unit
+   * @return TalonFX motor rotational acceleration as an AngularAcceleration unit
+   */
+  private AngularAcceleration linearAccelerationToTalonFX(LinearAcceleration linearAcceleration) {
+    return RotationsPerSecondPerSecond.of(
+        linearAcceleration.in(MetersPerSecondPerSecond) / 0.00942151);
   }
 }

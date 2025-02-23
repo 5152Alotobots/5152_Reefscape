@@ -89,7 +89,8 @@ public interface WristIO {
    * @param velocity The target velocity to move at
    * @param pidSlot The PID slot to use (0 for velocity, 1 for position)
    */
-  public default void setWristVelocityMotionMagic(AngularVelocity velocity, int pidSlot) {}
+  public default void setWristPositionMotionMagic(Angle position, int pidSlot) {}
+
   /**
    * Runs the wrist using direct percentage output (open-loop control).
    *

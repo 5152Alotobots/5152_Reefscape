@@ -13,17 +13,13 @@
 package frc.alotobots.reefscape.subsystems.wrist.constants;
 
 import static edu.wpi.first.units.Units.Amps;
-import static edu.wpi.first.units.Units.DegreesPerSecond;
-import static edu.wpi.first.units.Units.DegreesPerSecondPerSecond;
-import static edu.wpi.first.units.Units.MetersPerSecond;
+import static edu.wpi.first.units.Units.RotationsPerSecond;
+import static edu.wpi.first.units.Units.RotationsPerSecondPerSecond;
 
-import com.ctre.phoenix6.configs.MotionMagicConfigs;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
-
 import edu.wpi.first.units.measure.AngularAcceleration;
-import edu.wpi.first.units.measure.AngularMomentum;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
 import lombok.experimental.UtilityClass;
@@ -87,9 +83,9 @@ public class WristTalonFXRealConstants {
   }
 
   public static final class MotionMagicConstants {
-    public static final AngularVelocity CRUSE_VELOCITY = DegreesPerSecond.of(5);
-    public static final AngularAcceleration ACCELERATION = DegreesPerSecondPerSecond.of(2);
-    public static final double JERK = 1;
+    public static final AngularVelocity CRUSE_VELOCITY = RotationsPerSecond.of(.5);
+    public static final AngularAcceleration ACCELERATION = RotationsPerSecondPerSecond.of(.1);
+    public static final double JERK = 0;
   }
 
   /** Contains safety limit constants for the wrist motors. */
