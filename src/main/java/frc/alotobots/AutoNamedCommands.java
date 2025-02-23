@@ -46,6 +46,8 @@ public class AutoNamedCommands {
     this.elevatorSubsystem = elevatorSubsystem;
     this.wristSubsystem = wristSubsystem;
     this.coralIntakeSubsystem = coralIntakeSubsystem;
+
+    registerCommands();
   }
 
   /** Registers all available autonomous commands with PathPlanner. */
