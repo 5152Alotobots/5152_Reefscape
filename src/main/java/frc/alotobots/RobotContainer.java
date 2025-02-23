@@ -21,6 +21,12 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import frc.alotobots.library.subsystems.bling.BlingSubsystem;
+import frc.alotobots.library.subsystems.bling.commands.NoAllianceWaiting;
+import frc.alotobots.library.subsystems.bling.commands.SetToAllianceColor;
+import frc.alotobots.library.subsystems.bling.io.BlingIO;
+import frc.alotobots.library.subsystems.bling.io.BlingIOReal;
+import frc.alotobots.library.subsystems.bling.io.BlingIOSim;
 import frc.alotobots.library.subsystems.swervedrive.*;
 import frc.alotobots.library.subsystems.swervedrive.commands.*;
 import frc.alotobots.library.subsystems.swervedrive.io.*;
@@ -76,7 +82,7 @@ public class RobotContainer {
   private final OculusPoseSource oculusPoseSource;
   private final AprilTagPoseSource aprilTagPoseSource;
   private final ObjectDetectionSubsystem objectDetectionSubsystem;
-  // private final BlingSubsystem blingSubsystem;
+   private final BlingSubsystem blingSubsystem;
   private final PathPlannerManager pathPlannerManager;
   private LoggedDashboardChooser<Command> autoChooser;
   private SwerveDriveSimulation driveSimulation;
@@ -122,7 +128,7 @@ public class RobotContainer {
             new ObjectDetectionSubsystem(
                 swerveDriveSubsystem::getPose,
                 new ObjectDetectionIOPhotonVision(ObjectDetectionConstants.CAMERA_CONFIGS[0]));
-        // blingSubsystem = new BlingSubsystem(new BlingIOReal());
+         blingSubsystem = new BlingSubsystem(new BlingIOReal());
         break;
 
       case SIM:
@@ -176,7 +182,7 @@ public class RobotContainer {
 
         objectDetectionSubsystem =
             new ObjectDetectionSubsystem(swerveDriveSubsystem::getPose, new ObjectDetectionIO() {});
-        // blingSubsystem = new BlingSubsystem(new BlingIOSim());
+         blingSubsystem = new BlingSubsystem(new BlingIOSim());
         break;
 
       default:
@@ -211,7 +217,7 @@ public class RobotContainer {
 
         objectDetectionSubsystem =
             new ObjectDetectionSubsystem(swerveDriveSubsystem::getPose, new ObjectDetectionIO() {});
-        // blingSubsystem = new BlingSubsystem(new BlingIO() {});
+         blingSubsystem = new BlingSubsystem(new BlingIO() {});
         break;
     }
     configureDefaultCommands();
@@ -225,8 +231,8 @@ public class RobotContainer {
         new DefaultElevatorRunAtVelocity(elevatorSubsystem, () -> -getElevatorAxis()));
     wristSubsystem.setDefaultCommand(
         new DefaultWristRunAtVelocity(wristSubsystem, OI::getWristAxis));
-    // blingSubsystem.setDefaultCommand(
-    //    new NoAllianceWaiting(blingSubsystem).andThen(new SetToAllianceColor(blingSubsystem)));
+     blingSubsystem.setDefaultCommand(
+        new NoAllianceWaiting(blingSubsystem).andThen(new SetToAllianceColor(blingSubsystem)));
   }
 
   /** Contains button based commands */

@@ -14,6 +14,7 @@ package frc.alotobots.library.subsystems.bling.io;
 
 import static frc.alotobots.Constants.CanId.CANDLE_CAN_ID;
 import static frc.alotobots.library.subsystems.bling.constants.BlingConstants.*;
+import static frc.alotobots.library.subsystems.bling.constants.BlingConstants.Colors.OFF_COLOR;
 
 import com.ctre.phoenix.led.Animation;
 import com.ctre.phoenix.led.CANdle;
@@ -74,7 +75,7 @@ public class BlingIOReal implements BlingIO {
 
   @Override
   public void clearSolidColor() {
-    currentColor = null;
+    currentColor = OFF_COLOR;
     candle.setLEDs(0, 0, 0);
   }
 }

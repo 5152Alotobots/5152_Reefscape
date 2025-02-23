@@ -34,11 +34,6 @@ public class BlingConstants {
 
   /** Pre-configured animation patterns. */
   public static final class Animations {
-    /** Animation pattern for shooting state */
-    public static final ColorFlowAnimation SHOOTING_ANIMATION =
-        new ColorFlowAnimation(
-            255, 145, 0, 0, 1, NUM_LEDS, ColorFlowAnimation.Direction.Forward, LED_OFFSET);
-
     /** Animation pattern for no alliance selected state */
     public static final ColorFlowAnimation NO_ALLIANCE_ANIMATION =
         new ColorFlowAnimation(
