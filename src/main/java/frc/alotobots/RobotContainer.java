@@ -42,10 +42,12 @@ import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEjectT
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeIntake;
 import frc.alotobots.reefscape.subsystems.coralIntake.io.CoralIntakeIO;
 import frc.alotobots.reefscape.subsystems.coralIntake.io.CoralIntakeIOVortexReal;
+import frc.alotobots.reefscape.subsystems.climber.ClimberSubsystem;
+import frc.alotobots.reefscape.subsystems.climber.commands.Climb;
+import frc.alotobots.reefscape.subsystems.climber.commands.UnClimb;
+import frc.alotobots.reefscape.subsystems.climber.io.ClimberIORevServoReal;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.commands.DefaultElevatorRunAtVelocity;
-import frc.alotobots.reefscape.subsystems.elevator.commands.ElevatorRunToHeight;
-import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIO;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIOTalonFXReal;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIOTalonFXSim;
@@ -75,6 +77,7 @@ public class RobotContainer {
   private final PathPlannerManager pathPlannerManager;
   private LoggedDashboardChooser<Command> autoChooser;
   private SwerveDriveSimulation driveSimulation;
+  private ClimberSubsystem climberSubsystem;
 
   public RobotContainer() {
 
@@ -92,6 +95,7 @@ public class RobotContainer {
         elevatorSubsystem = new ElevatorSubsystem(new ElevatorIOTalonFXReal());
         coralIntakeSubsystem = new CoralIntakeSubsystem(new CoralIntakeIOVortexReal());
         wristSubsystem = new WristSubsystem(new WristIOTalonFXReal());
+        climberSubsystem = new ClimberSubsystem(new ClimberIORevServoReal());
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         configureAutoChooser();
 
@@ -128,6 +132,7 @@ public class RobotContainer {
                 Constants.tunerConstants.getDriveTrainSimulationConfig(), simStartPose);
         SimulatedArena.getInstance().addDriveTrainSimulation(driveSimulation);
 
+        climberSubsystem = new ClimberSubsystem(new ClimberIORevServoReal());
         // Simulation hardware initialization
         swerveDriveSubsystem =
             new SwerveDriveSubsystem(
@@ -175,6 +180,8 @@ public class RobotContainer {
       default:
         wristSubsystem = new WristSubsystem(new WristIOTalonFXSim());
         coralIntakeSubsystem = new CoralIntakeSubsystem(new CoralIntakeIOVortexReal());
+        climberSubsystem = new ClimberSubsystem(new ClimberIORevServoReal());
+        
         // Replay mode initialization
         swerveDriveSubsystem =
             new SwerveDriveSubsystem(
@@ -262,6 +269,9 @@ public class RobotContainer {
         new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.L3_PLACE));
     wristGroundButton.toggleOnTrue(
         new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.GROUND_INTAKE));
+
+    testButton.onTrue(new Climb(climberSubsystem, elevatorSubsystem));
+    testButton2.onTrue(new UnClimb(climberSubsystem, elevatorSubsystem));
   }
 
   private void configureAutoChooser() {

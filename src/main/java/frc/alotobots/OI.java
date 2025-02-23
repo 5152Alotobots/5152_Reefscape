@@ -141,6 +141,9 @@ public class OI {
   /** Trigger for activating the coral intake */
   public static Trigger coralIntakeIntakeButton =
       codriverBackupController.back().or(codriverController.leftTrigger());
+  
+  public static Trigger testButton = codriverController.start();
+  public static Trigger testButton2 = codriverController.back();
 
   /* Backup control triggers */
   /** Trigger for activating the coral eject-through function */
