@@ -10,7 +10,7 @@
 *
 * Source code must be publicly available on GitHub or an alternative web accessible site
 */
-package frc.alotobots.reefscape.subsystems.elevator.constants;
+package frc.alotobots.reefscape.util;
 
 public class ControlType {
   public enum ClosedLoop {

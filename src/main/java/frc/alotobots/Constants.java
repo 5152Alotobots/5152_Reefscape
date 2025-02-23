@@ -29,7 +29,7 @@ public final class Constants {
   public static final Mode currentMode = RobotBase.isReal() ? Mode.REAL : simMode;
 
   /** Defines the possible runtime modes for the robot code. */
-  public static enum Mode {
+  public enum Mode {
     /** Running on a real robot. */
     REAL,
 
@@ -66,7 +66,19 @@ public final class Constants {
     /** Right Elevator CAN ID */
     public static final int RIGHT_ELEVATOR_CAN_ID = 31;
 
-    /** Elevator canCoder ID */
+    /** Elevator CANrange CAN ID */
     public static final int ELEVATOR_CANRANGE_ID = 32;
+
+    /** Wrist Motor CAN ID */
+    public static final int WRIST_MOTOR_CAN_ID = 33;
+
+    /** Wrist Encoder CAN ID */
+    public static final int WRIST_ENCODER_CAN_ID = 34;
+
+    /** Intake Motor CAN ID */
+    public static final int INTAKE_MOTOR_CAN_ID = 35;
+
+    /** Intake CANrange CAN ID */
+    public static final int INTAKE_CANRANGE_ID = 36;
   }
 }

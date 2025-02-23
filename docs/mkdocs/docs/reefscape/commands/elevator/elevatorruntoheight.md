@@ -3,7 +3,7 @@
 A command that moves the elevator to a specified target height and ends, handing off holding using closed-loop control to the velocity controller.
 
 ## Required Subsystems
-- [Elevator Subsystem](/5152_Reefscape/library/subsystems/elevator)
+- [Elevator Subsystem](/5152_Reefscape/reefscape/subsystems/elevator)
 
 ## Constructor Parameters
 ```java

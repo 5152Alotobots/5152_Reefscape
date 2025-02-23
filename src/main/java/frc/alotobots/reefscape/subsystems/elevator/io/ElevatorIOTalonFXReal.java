@@ -193,7 +193,7 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
     rightAppliedCurrent = rightTalon.getStatorCurrent();
 
     topSoftLimit = leftTalon.getFault_ForwardSoftLimit();
-    bottomSoftLimit = rightTalon.getFault_ReverseSoftLimit();
+    bottomSoftLimit = leftTalon.getFault_ReverseSoftLimit();
 
     BaseStatusSignal.setUpdateFrequencyForAll(
         50.0,
