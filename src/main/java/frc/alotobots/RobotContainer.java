@@ -34,10 +34,12 @@ import frc.alotobots.library.subsystems.vision.photonvision.apriltag.util.AprilT
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.ObjectDetectionSubsystem;
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.constants.ObjectDetectionConstants;
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.io.*;
+import frc.alotobots.reefscape.subsystems.climber.ClimberSubsystem;
+import frc.alotobots.reefscape.subsystems.climber.commands.Climb;
+import frc.alotobots.reefscape.subsystems.climber.commands.UnClimb;
+import frc.alotobots.reefscape.subsystems.climber.io.ClimberIORevServoReal;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.commands.DefaultElevatorRunAtVelocity;
-import frc.alotobots.reefscape.subsystems.elevator.commands.ElevatorRunToHeight;
-import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIO;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIOTalonFXReal;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIOTalonFXSim;
@@ -59,6 +61,7 @@ public class RobotContainer {
   private final PathPlannerManager pathPlannerManager;
   private LoggedDashboardChooser<Command> autoChooser;
   private SwerveDriveSimulation driveSimulation;
+  private ClimberSubsystem climberSubsystem;
 
   public RobotContainer() {
 
@@ -73,6 +76,8 @@ public class RobotContainer {
                 new ModuleIOTalonFXReal(ModulePosition.BACK_LEFT.index),
                 new ModuleIOTalonFXReal(ModulePosition.BACK_RIGHT.index));
         elevatorSubsystem = new ElevatorSubsystem(new ElevatorIOTalonFXReal());
+        climberSubsystem = new ClimberSubsystem(new ClimberIORevServoReal());
+
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         configureAutoChooser();
 
@@ -107,6 +112,7 @@ public class RobotContainer {
                 Constants.tunerConstants.getDriveTrainSimulationConfig(), simStartPose);
         SimulatedArena.getInstance().addDriveTrainSimulation(driveSimulation);
 
+        climberSubsystem = new ClimberSubsystem(new ClimberIORevServoReal());
         // Simulation hardware initialization
         swerveDriveSubsystem =
             new SwerveDriveSubsystem(
@@ -152,6 +158,7 @@ public class RobotContainer {
         break;
 
       default:
+        climberSubsystem = new ClimberSubsystem(new ClimberIORevServoReal());
         // Replay mode initialization
         swerveDriveSubsystem =
             new SwerveDriveSubsystem(
@@ -195,15 +202,17 @@ public class RobotContainer {
   }
 
   private void configureLogicCommands() {
+    testButton.onTrue(new Climb(climberSubsystem, elevatorSubsystem));
+    testButton2.onTrue(new UnClimb(climberSubsystem, elevatorSubsystem));
     // Elevator
-    elevatorStowButton.onTrue(
-        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.STOWED));
-    elevatorL2Button.onTrue(
-        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L2_PLACE));
-    elevatorL3Button.onTrue(
-        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L3_PLACE));
-    elevatorL4Button.onTrue(
-        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L4_PLACE));
+    // elevatorStowButton.onTrue(
+    //     new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.STOWED));
+    // elevatorL2Button.onTrue(
+    //     new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L2_PLACE));
+    // elevatorL3Button.onTrue(
+    //     new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L3_PLACE));
+    // elevatorL4Button.onTrue(
+    //     new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L4_PLACE));
   }
 
   private void configureAutoChooser() {
