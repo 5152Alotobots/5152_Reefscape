@@ -11,7 +11,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "N_ReefSW"
+                  "pathName": "S_ReefSE 1"
                 }
               },
               {
@@ -42,13 +42,13 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "ElevatorRunToStowed"
+                  "name": "WristRunToStowed"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "WristRunToStowed"
+                  "name": "ElevatorRunToStowed"
                 }
               }
             ]
