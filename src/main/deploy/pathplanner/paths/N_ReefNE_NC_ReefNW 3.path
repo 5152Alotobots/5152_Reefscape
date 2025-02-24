@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 5.2455,
-        "y": 5.029249999999999
+        "x": 4.017,
+        "y": 5.195
       },
       "prevControl": {
-        "x": 4.81072697368421,
-        "y": 5.978207236842105
+        "x": 3.582226973684211,
+        "y": 6.143957236842106
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Reef_NE_L"
+      "linkedName": "Reef_NW_L"
     }
   ],
   "rotationTargets": [],
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -119.99999999999999
+    "rotation": -59.99999999999999
   },
   "reversed": false,
   "folder": "Test2025",
