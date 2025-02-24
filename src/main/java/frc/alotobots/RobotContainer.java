@@ -47,6 +47,7 @@ import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeIntake
 import frc.alotobots.reefscape.subsystems.coralIntake.io.CoralIntakeIO;
 import frc.alotobots.reefscape.subsystems.coralIntake.io.CoralIntakeIOVortexReal;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
+import frc.alotobots.reefscape.subsystems.elevator.commands.ClimbingElevatorRunAtVelocity;
 import frc.alotobots.reefscape.subsystems.elevator.commands.DefaultElevatorRunAtVelocity;
 import frc.alotobots.reefscape.subsystems.elevator.commands.ElevatorRunToHeight;
 import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants;
@@ -272,7 +273,9 @@ public class RobotContainer {
     wristGroundButton.toggleOnTrue(
         new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.GROUND_INTAKE));
 
-    climbButton.onTrue(new Climb(climberSubsystem, elevatorSubsystem));
+    climbButton.toggleOnTrue(
+        new Climb(climberSubsystem, elevatorSubsystem).alongWith(
+            new ClimbingElevatorRunAtVelocity(elevatorSubsystem, () -> -getElevatorAxis())));
     unClimbButton.onTrue(new UnClimb(climberSubsystem));
   }
 
