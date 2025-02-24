@@ -15,6 +15,7 @@ package frc.alotobots.reefscape.subsystems.autocycle;
 import static frc.alotobots.reefscape.subsystems.autocycle.constants.AutoCycleConstants.*;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -25,6 +26,7 @@ import frc.alotobots.reefscape.subsystems.autocycle.commands.PathfindToCoralStat
 import frc.alotobots.reefscape.subsystems.autocycle.commands.PathfindToReef;
 import frc.alotobots.reefscape.subsystems.autocycle.util.AutoCycleState;
 import java.util.Optional;
+import java.util.function.Supplier;
 import lombok.Getter;
 
 public class AutoCycleSubsystem extends SubsystemBase {
@@ -32,12 +34,16 @@ public class AutoCycleSubsystem extends SubsystemBase {
   @Getter private final AutoCycleState state;
   @Getter private final PathPlannerManager pathPlannerManager;
   private final SwerveDriveSubsystem swerveDriveSubsystem;
+  private final Supplier<ChassisSpeeds> manualControlChassisSpeeds;
 
   public AutoCycleSubsystem(
-      PathPlannerManager pathPlannerManager, SwerveDriveSubsystem swerveDriveSubsystem) {
+      PathPlannerManager pathPlannerManager,
+      SwerveDriveSubsystem swerveDriveSubsystem,
+      Supplier<ChassisSpeeds> manualControlChassisSpeeds) {
     this.state = AutoCycleState.createDefault();
     this.pathPlannerManager = pathPlannerManager;
     this.swerveDriveSubsystem = swerveDriveSubsystem;
+    this.manualControlChassisSpeeds = manualControlChassisSpeeds;
   }
 
   @Override
@@ -101,7 +107,7 @@ public class AutoCycleSubsystem extends SubsystemBase {
 
           // Schedule new pathfinding if needed
           if (replan && state.shouldRerunReefPathfinding()) {
-            new PathfindToReef(this).schedule();
+            new PathfindToReef(this, manualControlChassisSpeeds).schedule();
           }
         });
   }
@@ -156,7 +162,7 @@ public class AutoCycleSubsystem extends SubsystemBase {
 
           // Schedule new pathfinding if needed
           if (replan && state.shouldRerunCoralStationPathfinding()) {
-            new PathfindToCoralStation(this).schedule();
+            new PathfindToCoralStation(this, manualControlChassisSpeeds).schedule();
           }
         });
   }

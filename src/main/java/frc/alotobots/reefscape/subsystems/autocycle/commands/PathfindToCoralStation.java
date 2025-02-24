@@ -12,19 +12,26 @@
 */
 package frc.alotobots.reefscape.subsystems.autocycle.commands;
 
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.alotobots.library.subsystems.swervedrive.util.PathPlannerManager;
 import frc.alotobots.reefscape.subsystems.autocycle.AutoCycleSubsystem;
 import frc.alotobots.reefscape.subsystems.autocycle.util.AutoCycleState;
+import java.util.function.Supplier;
 
 public class PathfindToCoralStation extends Command {
   private final AutoCycleSubsystem autoCycleSubsystem;
   private final PathPlannerManager pathPlannerManager;
   private Command activePathCommand;
 
-  public PathfindToCoralStation(AutoCycleSubsystem autoCycleSubsystem) {
+  private final Supplier<ChassisSpeeds> chassisSpeedsSupplier;
+
+  public PathfindToCoralStation(
+      AutoCycleSubsystem autoCycleSubsystem, Supplier<ChassisSpeeds> chassisSpeedsSupplier) {
     this.autoCycleSubsystem = autoCycleSubsystem;
     this.pathPlannerManager = autoCycleSubsystem.getPathPlannerManager();
+
+    this.chassisSpeedsSupplier = chassisSpeedsSupplier;
     addRequirements(autoCycleSubsystem);
   }
 
@@ -35,8 +42,10 @@ public class PathfindToCoralStation extends Command {
           .getState()
           .setActivePathfinding(AutoCycleState.ActivePathfindingType.CORAL_STATION);
       activePathCommand =
-          pathPlannerManager.getPathfindThenFollowPathCommand(
-              autoCycleSubsystem.getState().getSelectedCoralStationPathName());
+          pathPlannerManager.getPathfindThenFollowPathCommandWithOverride(
+              autoCycleSubsystem.getState().getSelectedCoralStationPathName(),
+              chassisSpeedsSupplier,
+              true);
       autoCycleSubsystem.getState().setActivePathfindingCommand(activePathCommand);
       activePathCommand.schedule();
     }

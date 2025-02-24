@@ -12,26 +12,24 @@
 */
 package frc.alotobots.reefscape.commands.groups;
 
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.alotobots.reefscape.subsystems.autocycle.AutoCycleSubsystem;
-import frc.alotobots.reefscape.subsystems.autocycle.commands.PathfindToCoralStation;
-import frc.alotobots.reefscape.subsystems.autocycle.commands.PathfindToReef;
 
 public class FullAutoCycle extends SequentialCommandGroup {
   public FullAutoCycle(AutoCycleSubsystem autoCycleSubsystem) {
 
     addRequirements(autoCycleSubsystem);
     addCommands(
-        new ParallelCommandGroup(
-            // Some logic to set arm to pickup position
-            new PathfindToCoralStation(autoCycleSubsystem)),
-        new ParallelCommandGroup(
-            // Some logic to set arm to reef level position
-            new PathfindToReef(autoCycleSubsystem)),
-        autoCycleSubsystem.cycleReefBranchRight(false),
-        new ParallelCommandGroup(
-            // Some logic to set arm to pickup position
-            new PathfindToCoralStation(autoCycleSubsystem)));
+        //        new ParallelCommandGroup(
+        //            // Some logic to set arm to pickup position
+        //            new PathfindToCoralStation(autoCycleSubsystem)),
+        //        new ParallelCommandGroup(
+        //            // Some logic to set arm to reef level position
+        //            new PathfindToReef(autoCycleSubsystem)),
+        //        autoCycleSubsystem.cycleReefBranchRight(false),
+        //        new ParallelCommandGroup(
+        //            // Some logic to set arm to pickup position
+        //            new PathfindToCoralStation(autoCycleSubsystem))
+        );
   }
 }

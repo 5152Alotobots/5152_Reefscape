@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.alotobots.library.subsystems.swervedrive.*;
 import frc.alotobots.library.subsystems.swervedrive.commands.*;
 import frc.alotobots.library.subsystems.swervedrive.io.*;
+import frc.alotobots.library.subsystems.swervedrive.util.DriveCalculator;
 import frc.alotobots.library.subsystems.swervedrive.util.PathPlannerManager;
 import frc.alotobots.library.subsystems.vision.localizationfusion.LocalizationFusion;
 import frc.alotobots.library.subsystems.vision.oculus.OculusSubsystem;
@@ -39,7 +40,6 @@ import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.io.*
 import frc.alotobots.reefscape.commands.groups.FullAutoCycle;
 import frc.alotobots.reefscape.commands.states.*;
 import frc.alotobots.reefscape.subsystems.autocycle.AutoCycleSubsystem;
-import frc.alotobots.reefscape.subsystems.autocycle.commands.DriverInterruptCommand;
 import frc.alotobots.reefscape.subsystems.autocycle.commands.PathfindToCoralStation;
 import frc.alotobots.reefscape.subsystems.autocycle.commands.PathfindToReef;
 import frc.alotobots.reefscape.subsystems.climber.ClimberSubsystem;
@@ -106,7 +106,11 @@ public class RobotContainer {
         climberSubsystem = new ClimberSubsystem(new ClimberIORevServoReal());
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         configureAutoChooser();
-        autoCycleSubsystem = new AutoCycleSubsystem(pathPlannerManager, swerveDriveSubsystem);
+        autoCycleSubsystem =
+            new AutoCycleSubsystem(
+                pathPlannerManager,
+                swerveDriveSubsystem,
+                () -> DriveCalculator.getChassisSpeeds(swerveDriveSubsystem));
         oculusSubsystem = new OculusSubsystem(new OculusIOReal());
         aprilTagSubsystem =
             new AprilTagSubsystem(
@@ -161,7 +165,11 @@ public class RobotContainer {
         elevatorSubsystem = new ElevatorSubsystem(new ElevatorIOTalonFXSim());
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         configureAutoChooser();
-        autoCycleSubsystem = new AutoCycleSubsystem(pathPlannerManager, swerveDriveSubsystem);
+        autoCycleSubsystem =
+            new AutoCycleSubsystem(
+                pathPlannerManager,
+                swerveDriveSubsystem,
+                () -> DriveCalculator.getChassisSpeeds(swerveDriveSubsystem));
 
         oculusSubsystem = new OculusSubsystem(new OculusIOSim(driveSimulation));
         aprilTagSubsystem =
@@ -202,7 +210,11 @@ public class RobotContainer {
         elevatorSubsystem = new ElevatorSubsystem(new ElevatorIO() {});
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         configureAutoChooser();
-        autoCycleSubsystem = new AutoCycleSubsystem(pathPlannerManager, swerveDriveSubsystem);
+        autoCycleSubsystem =
+            new AutoCycleSubsystem(
+                pathPlannerManager,
+                swerveDriveSubsystem,
+                () -> DriveCalculator.getChassisSpeeds(swerveDriveSubsystem));
 
         oculusSubsystem = new OculusSubsystem(new OculusIO() {});
         aprilTagSubsystem = new AprilTagSubsystem(new AprilTagIO() {}, new AprilTagIO() {});
@@ -248,7 +260,9 @@ public class RobotContainer {
     cycleSelectedBranchLeftButton.onTrue(autoCycleSubsystem.cycleReefBranchLeft());
     cycleLevelUpButton.onTrue(autoCycleSubsystem.cycleReefLevelUp());
     cycleLevelDownButton.onTrue(autoCycleSubsystem.cycleReefLevelDown());
-    pathfindToSelectedReefBranchButton.toggleOnTrue(new PathfindToReef(autoCycleSubsystem));
+    pathfindToSelectedReefBranchButton.toggleOnTrue(
+        new PathfindToReef(
+            autoCycleSubsystem, () -> DriveCalculator.getChassisSpeeds(swerveDriveSubsystem)));
 
     // Auto Cycle Coral Station Controls
     cycleCoralStationSideLeftButton.onTrue(autoCycleSubsystem.cycleCoralStationSideLeft());
@@ -258,9 +272,8 @@ public class RobotContainer {
     cycleCoralStationPickupPositionRightButton.onTrue(
         autoCycleSubsystem.cycleCoralStationPositionRight());
     pathfindToSelectedCoralStationButton.toggleOnTrue(
-        new PathfindToCoralStation(autoCycleSubsystem));
-
-    hasDriverInput.whileTrue(new DriverInterruptCommand(autoCycleSubsystem));
+        new PathfindToCoralStation(
+            autoCycleSubsystem, () -> DriveCalculator.getChassisSpeeds(swerveDriveSubsystem)));
 
     // Coral Intake
     coralIntakeIntakeButton.toggleOnTrue(
