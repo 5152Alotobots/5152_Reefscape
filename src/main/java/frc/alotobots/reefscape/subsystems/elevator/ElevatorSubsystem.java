@@ -101,7 +101,8 @@ public class ElevatorSubsystem extends SubsystemBase {
   }
 
   /**
-   * Controls the elevator to move to a specified velocity using closed-loop climbing velocity control.
+   * Controls the elevator to move to a specified velocity using closed-loop climbing velocity
+   * control.
    *
    * @param velocity Target velocity in meters per second, automatically constrained between
    *     -MAX_SPEED and MAX_SPEED

@@ -12,21 +12,31 @@
 */
 package frc.alotobots.reefscape.commands.groups;
 
-import static edu.wpi.first.units.Units.Meters;
-
 import edu.wpi.first.wpilibj2.command.*;
 import frc.alotobots.reefscape.subsystems.climber.ClimberSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.commands.ElevatorRunAtClimbVelocity;
 import frc.alotobots.reefscape.subsystems.elevator.commands.ElevatorRunToHeight;
 import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants;
-
 import java.util.function.DoubleSupplier;
 
+/**
+ * A sequential command group that handles the climbing sequence. This command coordinates the
+ * elevator and climber subsystems to perform a climbing operation.
+ */
 public class Climb extends SequentialCommandGroup {
 
-  public Climb(ClimberSubsystem climberSubsystem, ElevatorSubsystem elevatorSubsystem, DoubleSupplier input) {
-
+  /**
+   * Creates a new Climb command.
+   *
+   * @param climberSubsystem The climber subsystem to control
+   * @param elevatorSubsystem The elevator subsystem to control
+   * @param input The input supplier for controlling climb velocity
+   */
+  public Climb(
+      ClimberSubsystem climberSubsystem,
+      ElevatorSubsystem elevatorSubsystem,
+      DoubleSupplier input) {
     addCommands(
         new InstantCommand(climberSubsystem::enableServos),
         new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.CLIMB),
@@ -35,8 +45,7 @@ public class Climb extends SequentialCommandGroup {
         new WaitUntilCommand(climberSubsystem::getCageSwitches),
         new InstantCommand(climberSubsystem::lockCage),
         new InstantCommand(climberSubsystem::setPlungerToPlunge),
-            new ElevatorRunAtClimbVelocity(elevatorSubsystem, input)
-        );
+        new ElevatorRunAtClimbVelocity(elevatorSubsystem, input));
     addRequirements(climberSubsystem, elevatorSubsystem);
   }
 }

@@ -23,9 +23,9 @@ import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 import java.util.function.DoubleSupplier;
 
 /**
- * Command that runs the elevator at a specified velocity for climbing. This command takes a velocity
- * input (normalized between -1.0 and 1.0) and applies it to the elevator, scaled by the maximum
- * speed constant.
+ * Command that runs the elevator at a specified velocity for climbing. This command takes a
+ * velocity input (normalized between -1.0 and 1.0) and applies it to the elevator, scaled by the
+ * maximum speed constant.
  */
 public class ElevatorRunAtClimbVelocity extends Command {
   /** The elevator subsystem this command controls. */

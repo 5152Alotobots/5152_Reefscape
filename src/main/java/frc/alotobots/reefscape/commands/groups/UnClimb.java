@@ -16,21 +16,24 @@ import edu.wpi.first.wpilibj2.command.*;
 import frc.alotobots.reefscape.subsystems.climber.ClimberSubsystem;
 
 /**
- * Default command that runs the elevator at a specified velocity. This command takes a velocity
- * input (normalized between -1.0 and 1.0) and applies it to the elevator, scaled by the maximum
- * speed constant.
+ * A sequential command group that handles the unclimbing sequence. This command executes a series
+ * of steps to safely disengage the climbing mechanism: 1. Enables the servos 2. Sets the plunger to
+ * receive position 3. Unlocks the cage 4. Waits for 1 second 5. Disables the servos
  */
 public class UnClimb extends SequentialCommandGroup {
 
+  /**
+   * Creates a new UnClimb command.
+   *
+   * @param climberSubsystem The climber subsystem to control
+   */
   public UnClimb(ClimberSubsystem climberSubsystem) {
-
     addCommands(
         new InstantCommand(climberSubsystem::enableServos),
         new InstantCommand(climberSubsystem::setPlungerToReceive),
         new InstantCommand(climberSubsystem::unlockCage),
         new WaitCommand(1),
-        new InstantCommand(climberSubsystem::disableServos)
-        );
+        new InstantCommand(climberSubsystem::disableServos));
     addRequirements(climberSubsystem);
   }
 }
