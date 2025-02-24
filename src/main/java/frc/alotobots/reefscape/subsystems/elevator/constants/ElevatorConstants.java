@@ -44,7 +44,7 @@ public final class ElevatorConstants {
     public static final double MAX_OPEN_LOOP_PERCENTAGE = 0.5;
 
     /** Max speed (magnitude) */
-    public static final LinearVelocity MAX_SPEED = MetersPerSecond.of(0.5);
+    public static final LinearVelocity MAX_VELOCITY = MetersPerSecond.of(0.5);
 
     /** Enable Limits */
     public static final boolean LIMITS_ENABLED = true;

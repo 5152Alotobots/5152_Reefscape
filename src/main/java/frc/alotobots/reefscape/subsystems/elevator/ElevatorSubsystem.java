@@ -87,7 +87,7 @@ public class ElevatorSubsystem extends SubsystemBase {
    * Controls the elevator to move to a specified velocity using closed-loop velocity control.
    *
    * @param velocity Target velocity in meters per second, automatically constrained between
-   *     -MAX_SPEED and MAX_SPEED
+   *     -MAX_VELOCITY and MAX_VELOCITY
    */
   public void runToTargetVelocity(LinearVelocity velocity) {
     LinearVelocity adjustedVelocity = applyVelocityLimitIfNeeded(velocity);
@@ -176,7 +176,12 @@ public class ElevatorSubsystem extends SubsystemBase {
               velocity.in(MetersPerSecond),
               -MAX_VELOCITY_NEAR_LIMIT.in(MetersPerSecond),
               MAX_VELOCITY_NEAR_LIMIT.in(MetersPerSecond)));
+    } else {
+      return MetersPerSecond.of(
+          MathUtil.clamp(
+              velocity.in(MetersPerSecond),
+              -MAX_VELOCITY.in(MetersPerSecond),
+              MAX_VELOCITY.in(MetersPerSecond)));
     }
-    return velocity;
   }
 }
