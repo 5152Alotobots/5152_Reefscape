@@ -14,6 +14,7 @@ package frc.alotobots.reefscape.subsystems.autocycle;
 
 import static frc.alotobots.reefscape.subsystems.autocycle.constants.AutoCycleConstants.*;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.alotobots.library.subsystems.swervedrive.SwerveDriveSubsystem;
@@ -23,6 +24,8 @@ import frc.alotobots.reefscape.subsystems.autocycle.commands.PathfindToCoralStat
 import frc.alotobots.reefscape.subsystems.autocycle.commands.PathfindToReef;
 import frc.alotobots.reefscape.subsystems.autocycle.util.AutoCycleState;
 import lombok.Getter;
+
+import java.util.Optional;
 
 public class AutoCycleSubsystem extends SubsystemBase {
 
@@ -40,6 +43,13 @@ public class AutoCycleSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     state.logState();
+    // Get end poses for currently selected paths
+    Optional<Pose2d> reefPose = pathPlannerManager.getPathEndPose(state.getSelectedReefBranchPathName());
+
+    Optional<Pose2d> coralStationPose = pathPlannerManager.getPathEndPose(state.getSelectedCoralStationPathName());
+
+    // Log the poses using existing method
+    state.logTargetPoses(reefPose, coralStationPose);
   }
 
   /** Command to toggle pathfinding enabled state */
