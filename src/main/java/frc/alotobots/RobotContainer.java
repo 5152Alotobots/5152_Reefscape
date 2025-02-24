@@ -82,7 +82,7 @@ public class RobotContainer {
   private final OculusPoseSource oculusPoseSource;
   private final AprilTagPoseSource aprilTagPoseSource;
   private final ObjectDetectionSubsystem objectDetectionSubsystem;
-   private final BlingSubsystem blingSubsystem;
+  private final BlingSubsystem blingSubsystem;
   private final PathPlannerManager pathPlannerManager;
   private LoggedDashboardChooser<Command> autoChooser;
   private SwerveDriveSimulation driveSimulation;
@@ -128,7 +128,7 @@ public class RobotContainer {
             new ObjectDetectionSubsystem(
                 swerveDriveSubsystem::getPose,
                 new ObjectDetectionIOPhotonVision(ObjectDetectionConstants.CAMERA_CONFIGS[0]));
-         blingSubsystem = new BlingSubsystem(new BlingIOReal());
+        blingSubsystem = new BlingSubsystem(new BlingIOReal());
         break;
 
       case SIM:
@@ -182,7 +182,7 @@ public class RobotContainer {
 
         objectDetectionSubsystem =
             new ObjectDetectionSubsystem(swerveDriveSubsystem::getPose, new ObjectDetectionIO() {});
-         blingSubsystem = new BlingSubsystem(new BlingIOSim());
+        blingSubsystem = new BlingSubsystem(new BlingIOSim());
         break;
 
       default:
@@ -217,7 +217,7 @@ public class RobotContainer {
 
         objectDetectionSubsystem =
             new ObjectDetectionSubsystem(swerveDriveSubsystem::getPose, new ObjectDetectionIO() {});
-         blingSubsystem = new BlingSubsystem(new BlingIO() {});
+        blingSubsystem = new BlingSubsystem(new BlingIO() {});
         break;
     }
     configureDefaultCommands();
@@ -231,7 +231,7 @@ public class RobotContainer {
         new DefaultElevatorRunAtVelocity(elevatorSubsystem, () -> -getElevatorAxis()));
     wristSubsystem.setDefaultCommand(
         new DefaultWristRunAtVelocity(wristSubsystem, OI::getWristAxis));
-     blingSubsystem.setDefaultCommand(
+    blingSubsystem.setDefaultCommand(
         new NoAllianceWaiting(blingSubsystem).andThen(new SetToAllianceColor(blingSubsystem)));
   }
 

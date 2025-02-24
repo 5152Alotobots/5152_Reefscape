@@ -23,6 +23,7 @@ import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.LinearVelocity;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.alotobots.library.subsystems.bling.util.BlingDiagnosticManager;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIO;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIOInputsAutoLogged;
 import frc.alotobots.reefscape.util.ControlType;
@@ -67,6 +68,11 @@ public class ElevatorSubsystem extends SubsystemBase {
     io.updateInputs(inputs);
     Logger.processInputs("Elevator", inputs);
     Logger.recordOutput("Elevator/TargetHeight", targetHeight);
+
+    // Apply diagnostics
+    boolean elevatorZeroed = inputs.leftHeight.abs(Meters)
+            < AT_SET_POINT_POSITION_THRESHOLD.in(Meters);
+      BlingDiagnosticManager.setElevatorZeroed(elevatorZeroed);
   }
 
   /**

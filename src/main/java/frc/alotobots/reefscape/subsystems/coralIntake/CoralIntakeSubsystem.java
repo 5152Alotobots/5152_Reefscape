@@ -17,6 +17,7 @@ import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralInta
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.alotobots.library.subsystems.bling.util.BlingDiagnosticManager;
 import frc.alotobots.reefscape.subsystems.coralIntake.io.CoralIntakeIO;
 import frc.alotobots.reefscape.subsystems.coralIntake.io.CoralIntakeIOInputsAutoLogged;
 import frc.alotobots.reefscape.util.ControlType;
@@ -51,6 +52,9 @@ public class CoralIntakeSubsystem extends SubsystemBase {
   public void periodic() {
     io.updateInputs(inputs);
     Logger.processInputs("CoralIntake", inputs);
+
+    // Apply diagnostics
+    BlingDiagnosticManager.setPreloadDetected(inputs.intakeOccupied);
   }
 
   /**

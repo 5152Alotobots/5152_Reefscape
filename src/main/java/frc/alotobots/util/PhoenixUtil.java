@@ -26,17 +26,30 @@ import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.Timer;
 import java.util.function.Supplier;
+
+import frc.alotobots.library.subsystems.bling.util.BlingDiagnosticManager;
 import org.ironmaple.simulation.SimulatedArena;
 import org.ironmaple.simulation.motorsims.SimulatedBattery;
 import org.ironmaple.simulation.motorsims.SimulatedMotorController;
 
 public final class PhoenixUtil {
   /** Attempts to run the command until no error is produced. */
-  public static void tryUntilOk(int maxAttempts, Supplier<StatusCode> command) {
+  public static StatusCode tryUntilOk(int maxAttempts, Supplier<StatusCode> command) {
+    BlingDiagnosticManager.setPhoenixConfigStatus(BlingDiagnosticManager.ConfigStatus.IN_PROGRESS);
+
+    StatusCode lastStatus = StatusCode.GeneralError;
     for (int i = 0; i < maxAttempts; i++) {
-      var error = command.get();
-      if (error.isOK()) break;
+      lastStatus = command.get();
+      if (lastStatus.isOK()) break;
     }
+
+    if (lastStatus.isOK()) {
+      BlingDiagnosticManager.setPhoenixConfigStatus(BlingDiagnosticManager.ConfigStatus.COMPLETE);
+    } else {
+      BlingDiagnosticManager.setPhoenixConfigStatus(BlingDiagnosticManager.ConfigStatus.ERROR);
+    }
+
+    return lastStatus;
   }
 
   public static class TalonFXMotorControllerSim implements SimulatedMotorController {

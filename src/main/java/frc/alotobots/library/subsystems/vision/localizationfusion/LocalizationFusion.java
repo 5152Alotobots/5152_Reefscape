@@ -26,6 +26,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.alotobots.library.subsystems.bling.util.BlingDiagnosticManager;
 import frc.alotobots.library.subsystems.vision.localizationfusion.constants.LocalizationFusionConstants;
 import frc.alotobots.library.subsystems.vision.localizationfusion.util.LocalizationState;
 import frc.alotobots.library.subsystems.vision.localizationfusion.util.PoseVisionConsumer;
@@ -1080,6 +1081,7 @@ public class LocalizationFusion extends SubsystemBase implements StateTransition
 
       Pose2d autoPose = getAutoStartingPose();
       if (autoPose != null) {
+        BlingDiagnosticManager.setAutoStatus(BlingDiagnosticManager.AutoStatus.SELECTED);
         Logger.recordOutput(
             "LocalizationFusion/Event", "Updating pose to new auto starting position");
         Elastic.sendAlert(
@@ -1144,6 +1146,11 @@ public class LocalizationFusion extends SubsystemBase implements StateTransition
     Logger.recordOutput("LocalizationFusion/State", state.getCurrentState().getDescription());
     Logger.recordOutput("LocalizationFusion/OculusConnected", oculusSource.isConnected());
     Logger.recordOutput("LocalizationFusion/AprilTagConnected", tagSource.isConnected());
+
+    BlingDiagnosticManager.setLocalizationState(BlingDiagnosticManager.LocalizationState.valueOf(
+            state.getCurrentState().name()));
+    BlingDiagnosticManager.setQuestStatus(oculusSource.isConnected(), questInitialized);
+    BlingDiagnosticManager.setAprilTagStatus(tagSource.isConnected(), tagInitialized);
   }
 
   /** Logs detailed system status including initialization states and update counts. */
