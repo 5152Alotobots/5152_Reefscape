@@ -16,6 +16,7 @@ import static frc.alotobots.reefscape.subsystems.autocycle.constants.AutoCycleCo
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.alotobots.library.subsystems.swervedrive.SwerveDriveSubsystem;
 import frc.alotobots.library.subsystems.swervedrive.util.PathPlannerManager;
@@ -23,9 +24,8 @@ import frc.alotobots.reefscape.FieldConstants;
 import frc.alotobots.reefscape.subsystems.autocycle.commands.PathfindToCoralStation;
 import frc.alotobots.reefscape.subsystems.autocycle.commands.PathfindToReef;
 import frc.alotobots.reefscape.subsystems.autocycle.util.AutoCycleState;
-import lombok.Getter;
-
 import java.util.Optional;
+import lombok.Getter;
 
 public class AutoCycleSubsystem extends SubsystemBase {
 
@@ -44,9 +44,11 @@ public class AutoCycleSubsystem extends SubsystemBase {
   public void periodic() {
     state.logState();
     // Get end poses for currently selected paths
-    Optional<Pose2d> reefPose = pathPlannerManager.getPathEndPose(state.getSelectedReefBranchPathName());
+    Optional<Pose2d> reefPose =
+        pathPlannerManager.getPathEndPose(state.getSelectedReefBranchPathName());
 
-    Optional<Pose2d> coralStationPose = pathPlannerManager.getPathEndPose(state.getSelectedCoralStationPathName());
+    Optional<Pose2d> coralStationPose =
+        pathPlannerManager.getPathEndPose(state.getSelectedCoralStationPathName());
 
     // Log the poses using existing method
     state.logTargetPoses(reefPose, coralStationPose);
@@ -54,7 +56,7 @@ public class AutoCycleSubsystem extends SubsystemBase {
 
   /** Command to toggle pathfinding enabled state */
   public Command togglePathfinding() {
-    return runOnce(
+    return Commands.runOnce(
             () -> {
               state.setPathfindingEnabled(!state.isPathfindingEnabled());
               if (!state.isPathfindingEnabled()) {
@@ -83,9 +85,9 @@ public class AutoCycleSubsystem extends SubsystemBase {
   }
 
   private Command handleReefBranchChange(Runnable changeAction, boolean replan) {
-    return runOnce(
+    return Commands.runOnce(
         () -> {
-          if (replan) {
+          if (replan && state.getLastActiveType() == AutoCycleState.ActivePathfindingType.REEF) {
             // Cancel any existing pathfinding command
             Command currentCommand = state.getActivePathfindingCommand();
             if (currentCommand != null) {
@@ -106,33 +108,16 @@ public class AutoCycleSubsystem extends SubsystemBase {
 
   // Reef level selection commands
   public Command cycleReefLevelUp(boolean replan) {
-    return handleReefLevelChange(() -> state.cycleReefLevelUp(), replan);
+    return handleReefLevelChange(() -> state.cycleReefLevelUp());
   }
 
   public Command cycleReefLevelDown(boolean replan) {
-    return handleReefLevelChange(() -> state.cycleReefLevelDown(), replan);
+    return handleReefLevelChange(() -> state.cycleReefLevelDown());
   }
 
-  private Command handleReefLevelChange(Runnable changeAction, boolean replan) {
-    return runOnce(
-        () -> {
-          if (replan) {
-            // Cancel any existing pathfinding command
-            Command currentCommand = state.getActivePathfindingCommand();
-            if (currentCommand != null) {
-              currentCommand.cancel();
-              state.setActivePathfindingCommand(null);
-            }
-          }
-
-          // Run the state change action
-          changeAction.run();
-
-          // Schedule new pathfinding if needed
-          if (replan && state.shouldRerunReefPathfinding()) {
-            new PathfindToReef(this).schedule();
-          }
-        });
+  private Command handleReefLevelChange(Runnable changeAction) {
+    // Run the state change action
+    return runOnce(changeAction::run);
   }
 
   // Coral station side selection commands
@@ -154,9 +139,10 @@ public class AutoCycleSubsystem extends SubsystemBase {
   }
 
   private Command handleCoralStationChange(Runnable changeAction, boolean replan) {
-    return runOnce(
+    return Commands.runOnce(
         () -> {
-          if (replan) {
+          if (replan
+              && state.getLastActiveType() == AutoCycleState.ActivePathfindingType.CORAL_STATION) {
             // Cancel any existing pathfinding command
             Command currentCommand = state.getActivePathfindingCommand();
             if (currentCommand != null) {
@@ -180,8 +166,8 @@ public class AutoCycleSubsystem extends SubsystemBase {
     return handleReefBranchChange(() -> state.setReefBranch(branch), replan);
   }
 
-  public Command setReefLevel(FieldConstants.Level level, boolean replan) {
-    return handleReefLevelChange(() -> state.setReefLevel(level), replan);
+  public Command setReefLevel(FieldConstants.Level level) {
+    return handleReefLevelChange(() -> state.setReefLevel(level));
   }
 
   public Command setCoralStationSide(FieldConstants.CoralStationSide side, boolean replan) {
@@ -228,10 +214,6 @@ public class AutoCycleSubsystem extends SubsystemBase {
 
   public Command setReefBranch(FieldConstants.ReefBranch branch) {
     return setReefBranch(branch, true);
-  }
-
-  public Command setReefLevel(FieldConstants.Level level) {
-    return setReefLevel(level, true);
   }
 
   public Command setCoralStationSide(FieldConstants.CoralStationSide side) {
