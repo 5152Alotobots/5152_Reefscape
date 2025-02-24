@@ -13,10 +13,14 @@
 package frc.alotobots.reefscape.subsystems.elevator.constants;
 
 import static edu.wpi.first.units.Units.Amps;
+import static edu.wpi.first.units.Units.MetersPerSecond;
+import static edu.wpi.first.units.Units.MetersPerSecondPerSecond;
 
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.units.measure.Current;
+import edu.wpi.first.units.measure.LinearAcceleration;
+import edu.wpi.first.units.measure.LinearVelocity;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -75,6 +79,12 @@ public final class ElevatorTalonFXRealConstants {
       /** Velocity feedforward gain */
       public static final double KV = 0.0;
     }
+  }
+
+  public static final class MotionMagicConstants {
+    public static final LinearVelocity CRUSE_VELOCITY = MetersPerSecond.of(.8);
+    public static final LinearAcceleration ACCELERATION = MetersPerSecondPerSecond.of(.4);
+    public static final double JERK = 0;
   }
 
   /** Contains safety limit constants for the elevator motors. */

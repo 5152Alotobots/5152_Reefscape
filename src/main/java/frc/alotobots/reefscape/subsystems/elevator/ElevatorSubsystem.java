@@ -79,7 +79,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     Distance adjustedHeight =
         Meters.of(MathUtil.clamp(height.in(Meters), MIN_HEIGHT.in(Meters), MAX_HEIGHT.in(Meters)));
     targetHeight = adjustedHeight;
-    io.setElevatorPosition(adjustedHeight, ControlType.ClosedLoop.POSITION.ordinal());
+    io.setElevatorPositionMotionMagic(adjustedHeight, ControlType.ClosedLoop.POSITION.ordinal());
     Logger.recordOutput("Elevator/ControlType", ControlType.ClosedLoop.POSITION);
   }
 
