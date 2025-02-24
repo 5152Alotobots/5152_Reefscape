@@ -14,7 +14,7 @@ package frc.alotobots.reefscape.subsystems.climber.io;
 
 import static edu.wpi.first.units.Units.*;
 import static frc.alotobots.Constants.CanId.SERVO_HUB_CAN_ID;
-import static frc.alotobots.reefscape.subsystems.climber.constants.ClimberRevServoReal.*;
+import static frc.alotobots.reefscape.subsystems.climber.constants.ClimberRevServoRealConstants.*;
 
 import com.revrobotics.servohub.ServoChannel;
 import com.revrobotics.servohub.ServoHub;

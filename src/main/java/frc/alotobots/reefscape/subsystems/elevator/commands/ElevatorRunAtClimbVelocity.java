@@ -27,7 +27,7 @@ import java.util.function.DoubleSupplier;
  * input (normalized between -1.0 and 1.0) and applies it to the elevator, scaled by the maximum
  * speed constant.
  */
-public class ClimbingElevatorRunAtVelocity extends Command {
+public class ElevatorRunAtClimbVelocity extends Command {
   /** The elevator subsystem this command controls. */
   private final ElevatorSubsystem elevatorSubsystem;
 
@@ -49,7 +49,7 @@ public class ClimbingElevatorRunAtVelocity extends Command {
    * @param elevatorSubsystem The elevator subsystem this command will run on
    * @param input A supplier that provides the normalized velocity input (-1.0 to 1.0)
    */
-  public ClimbingElevatorRunAtVelocity(ElevatorSubsystem elevatorSubsystem, DoubleSupplier input) {
+  public ElevatorRunAtClimbVelocity(ElevatorSubsystem elevatorSubsystem, DoubleSupplier input) {
     this.elevatorSubsystem = elevatorSubsystem;
     this.input = input;
 
