@@ -1147,8 +1147,8 @@ public class LocalizationFusion extends SubsystemBase implements StateTransition
     Logger.recordOutput("LocalizationFusion/OculusConnected", oculusSource.isConnected());
     Logger.recordOutput("LocalizationFusion/AprilTagConnected", tagSource.isConnected());
 
-    BlingDiagnosticManager.setLocalizationState(BlingDiagnosticManager.LocalizationState.valueOf(
-            state.getCurrentState().name()));
+    BlingDiagnosticManager.setLocalizationState(
+        BlingDiagnosticManager.LocalizationState.valueOf(state.getCurrentState().name()));
     BlingDiagnosticManager.setQuestStatus(oculusSource.isConnected(), questInitialized);
     BlingDiagnosticManager.setAprilTagStatus(tagSource.isConnected(), tagInitialized);
   }

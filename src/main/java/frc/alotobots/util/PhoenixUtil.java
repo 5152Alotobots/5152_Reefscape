@@ -25,30 +25,60 @@ import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.Timer;
-import java.util.function.Supplier;
-
 import frc.alotobots.library.subsystems.bling.util.BlingDiagnosticManager;
+import java.util.function.Supplier;
 import org.ironmaple.simulation.SimulatedArena;
 import org.ironmaple.simulation.motorsims.SimulatedBattery;
 import org.ironmaple.simulation.motorsims.SimulatedMotorController;
 
 public final class PhoenixUtil {
-  /** Attempts to run the command until no error is produced. */
-  public static StatusCode tryUntilOk(int maxAttempts, Supplier<StatusCode> command) {
-    BlingDiagnosticManager.setPhoenixConfigStatus(BlingDiagnosticManager.ConfigStatus.IN_PROGRESS);
+  // In PhoenixUtil.java
+  public static class ConfigStatus {
+    // Track if any configuration has failed
+    private static boolean anyConfigError = false;
 
+    /** Reset configuration error status (call at robot startup) */
+    public static void reset() {
+      anyConfigError = false;
+      BlingDiagnosticManager.setPhoenixConfigStatus(
+          BlingDiagnosticManager.ConfigStatus.IN_PROGRESS);
+    }
+
+    /** Record a successful configuration */
+    private static void recordSuccess() {
+      // Only update status if we haven't seen any errors
+      if (!anyConfigError) {
+        BlingDiagnosticManager.setPhoenixConfigStatus(BlingDiagnosticManager.ConfigStatus.COMPLETE);
+      }
+    }
+
+    /** Record a configuration error */
+    private static void recordError() {
+      anyConfigError = true;
+      BlingDiagnosticManager.setPhoenixConfigStatus(BlingDiagnosticManager.ConfigStatus.ERROR);
+    }
+  }
+
+  /**
+   * Attempts to run the command until no error is produced or max attempts are reached. Records the
+   * result for diagnostic tracking.
+   *
+   * @param maxAttempts Maximum number of attempts to try the command
+   * @param command The command to execute
+   * @return The final status code
+   */
+  public static StatusCode tryUntilOk(int maxAttempts, Supplier<StatusCode> command) {
     StatusCode lastStatus = StatusCode.GeneralError;
     for (int i = 0; i < maxAttempts; i++) {
       lastStatus = command.get();
-      if (lastStatus.isOK()) break;
+      if (lastStatus.isOK()) {
+        ConfigStatus.recordSuccess();
+        return lastStatus;
+      }
     }
 
-    if (lastStatus.isOK()) {
-      BlingDiagnosticManager.setPhoenixConfigStatus(BlingDiagnosticManager.ConfigStatus.COMPLETE);
-    } else {
-      BlingDiagnosticManager.setPhoenixConfigStatus(BlingDiagnosticManager.ConfigStatus.ERROR);
-    }
-
+    // If we exit the loop without success, record the error
+    ConfigStatus.recordError();
     return lastStatus;
   }
 

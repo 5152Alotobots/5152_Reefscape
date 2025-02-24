@@ -70,9 +70,9 @@ public class ElevatorSubsystem extends SubsystemBase {
     Logger.recordOutput("Elevator/TargetHeight", targetHeight);
 
     // Apply diagnostics
-    boolean elevatorZeroed = inputs.leftHeight.abs(Meters)
-            < AT_SET_POINT_POSITION_THRESHOLD.in(Meters);
-      BlingDiagnosticManager.setElevatorZeroed(elevatorZeroed);
+    boolean elevatorZeroed =
+        inputs.leftHeight.abs(Meters) < AT_SET_POINT_POSITION_THRESHOLD.in(Meters);
+    BlingDiagnosticManager.setElevatorZeroed(elevatorZeroed);
   }
 
   /**

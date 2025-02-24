@@ -68,14 +68,14 @@ public class BlingIOReal implements BlingIO {
   }
 
   @Override
-  public void setSolidColor(LoggedColor color) {
+  public void setSolidColor(LoggedColor color, int from, int to) {
     currentColor = color;
-    candle.setLEDs(color.red(), color.green(), color.blue());
+    candle.setLEDs(color.red(), color.green(), color.blue(), 0, from, to);
   }
 
   @Override
-  public void clearSolidColor() {
+  public void clearSolidColor(int from, int to) {
     currentColor = OFF_COLOR;
-    candle.setLEDs(0, 0, 0);
+    candle.setLEDs(0, 0, 0, 0, from, to);
   }
 }

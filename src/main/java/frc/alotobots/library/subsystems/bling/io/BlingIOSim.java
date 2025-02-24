@@ -13,7 +13,6 @@
 package frc.alotobots.library.subsystems.bling.io;
 
 import static frc.alotobots.library.subsystems.bling.constants.BlingConstants.*;
-import static frc.alotobots.library.subsystems.bling.constants.BlingConstants.Colors.OFF_COLOR;
 
 import com.ctre.phoenix.led.Animation;
 
@@ -51,15 +50,5 @@ public class BlingIOSim implements BlingIO {
   @Override
   public void clearAnimation() {
     currentAnimation = null;
-  }
-
-  @Override
-  public void setSolidColor(LoggedColor color) {
-    currentColor = color;
-  }
-
-  @Override
-  public void clearSolidColor() {
-    currentColor = OFF_COLOR;
   }
 }
