@@ -90,12 +90,7 @@ public class ElevatorSubsystem extends SubsystemBase {
    *     -MAX_SPEED and MAX_SPEED
    */
   public void runToTargetVelocity(LinearVelocity velocity) {
-    LinearVelocity adjustedVelocity =
-        MetersPerSecond.of(
-            MathUtil.clamp(
-                velocity.in(MetersPerSecond),
-                -MAX_SPEED.in(MetersPerSecond),
-                MAX_SPEED.in(MetersPerSecond)));
+    LinearVelocity adjustedVelocity = applyVelocityLimitIfNeeded(velocity);
     io.setElevatorVelocity(adjustedVelocity, ControlType.ClosedLoop.VELOCITY.ordinal());
     Logger.recordOutput("Elevator/ControlType", ControlType.ClosedLoop.VELOCITY);
   }
@@ -155,5 +150,33 @@ public class ElevatorSubsystem extends SubsystemBase {
       atSetpointTimer.stop();
       return false;
     }
+  }
+
+  /**
+   * Checks if the elevator is within the velocity limit distance from the top or bottom limits.
+   *
+   * @return true if the elevator is within the velocity limit distance, false otherwise
+   */
+  private boolean isVelocityLimitNeeded() {
+    return inputs.leftHeight.minus(MIN_HEIGHT).abs(Meters) < DISTANCE_FROM_LIMIT.in(Meters)
+        || inputs.leftHeight.minus(MAX_HEIGHT).abs(Meters) < DISTANCE_FROM_LIMIT.in(Meters);
+  }
+
+  /**
+   * Applies the velocity limit if the elevator is within the velocity limit distance from the top
+   * or bottom limits.
+   *
+   * @param velocity The target velocity
+   * @return The adjusted velocity if the limit is needed, otherwise the original velocity
+   */
+  private LinearVelocity applyVelocityLimitIfNeeded(LinearVelocity velocity) {
+    if (isVelocityLimitNeeded()) {
+      return MetersPerSecond.of(
+          MathUtil.clamp(
+              velocity.in(MetersPerSecond),
+              -MAX_VELOCITY_NEAR_LIMIT.in(MetersPerSecond),
+              MAX_VELOCITY_NEAR_LIMIT.in(MetersPerSecond)));
+    }
+    return velocity;
   }
 }

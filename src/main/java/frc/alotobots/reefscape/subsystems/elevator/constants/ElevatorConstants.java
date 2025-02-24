@@ -48,6 +48,12 @@ public final class ElevatorConstants {
 
     /** Enable Limits */
     public static final boolean LIMITS_ENABLED = true;
+
+    /** Maximum velocity near the top or bottom limit */
+    public static final LinearVelocity MAX_VELOCITY_NEAR_LIMIT = MetersPerSecond.of(0.2);
+
+    /** Distance from the top or bottom limit where the velocity limit applies */
+    public static final Distance DISTANCE_FROM_LIMIT = Meters.of(0.1);
   }
 
   /** Position setpoints for different elevator states */
