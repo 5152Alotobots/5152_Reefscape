@@ -54,11 +54,11 @@ public class BlingSubsystem extends SubsystemBase {
 
   private void updateDiagnosticLEDs() {
     // Check each LED for status changes
-    for (int i = 0; i < 7; i++) {
+    for (int i = 0; i < 8; i++) {
       // Only update LEDs that have changed status for efficiency
       if (BlingDiagnosticManager.hasColorChanged(i)) {
         BlingIO.LoggedColor color = BlingDiagnosticManager.getLEDColor(i);
-
+        System.out.println("LED " + i + " color: " + color);
         // Set the LED to the appropriate color
         io.setSolidColor(color, i, i);
       }
