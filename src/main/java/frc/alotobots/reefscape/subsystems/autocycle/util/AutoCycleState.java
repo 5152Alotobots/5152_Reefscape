@@ -38,23 +38,40 @@ public class AutoCycleState {
    * pathfinding on selection changes.
    */
   public enum ActivePathfindingType {
+    /** No pathfinding is active */
     NONE,
+
+    /** Pathfinding to a reef target is active */
     REEF,
+
+    /** Pathfinding to a coral station is active */
     CORAL_STATION
   }
 
   // Selection state
+  /** The currently selected reef branch */
   @Getter @Setter private FieldConstants.ReefBranch reefBranch;
+
+  /** The currently selected reef level */
   @Getter @Setter private FieldConstants.Level reefLevel;
+
+  /** The currently selected coral station side */
   @Getter @Setter private FieldConstants.CoralStationSide coralStationSide;
+
+  /** The currently selected coral station pickup position */
   @Getter @Setter private FieldConstants.CoralStationPickupPosition coralStationPickupPosition;
 
   // Pathfinding control state
   /** Currently running pathfinding command */
   @Getter private Command activePathfindingCommand;
 
+  /** Whether pathfinding is currently enabled */
   @Getter private boolean pathfindingEnabled = false;
+
+  /** Last type of pathfinding that was activated */
   @Getter private ActivePathfindingType lastActiveType = ActivePathfindingType.NONE;
+
+  /** Whether pathfinding is currently paused */
   @Getter private boolean isPaused = false;
 
   /**
@@ -91,11 +108,15 @@ public class AutoCycleState {
     Logger.recordOutput(PATHFINDING_KEY + "/ActiveType", type.toString());
   }
 
-  /** Sets the active pathfinding command and logs the change */
+  /**
+   * Sets the active pathfinding command and logs the change.
+   *
+   * @param command The command to set as active pathfinding command
+   */
   public void setActivePathfindingCommand(Command command) {
     this.activePathfindingCommand = command;
     Logger.recordOutput(
-        PATHFINDING_KEY + "/ActiveCommandName", command != null ? command.getName() : "none");
+            PATHFINDING_KEY + "/ActiveCommandName", command != null ? command.getName() : "none");
   }
 
   /**
@@ -124,13 +145,13 @@ public class AutoCycleState {
    */
   public String getSelectedCoralStationPathName() {
     return String.format(
-        "CoralStationApproach_%s_%s", coralStationSide, coralStationPickupPosition);
+            "CoralStationApproach_%s_%s", coralStationSide, coralStationPickupPosition);
   }
 
   /**
    * Checks if a change in reef selections should trigger a pathfinding rerun.
    *
-   * @return true if reef pathfinding was last active
+   * @return true if reef pathfinding was last active and not paused
    */
   public boolean shouldRerunReefPathfinding() {
     return lastActiveType == ActivePathfindingType.REEF && !isPaused;
@@ -139,13 +160,16 @@ public class AutoCycleState {
   /**
    * Checks if a change in coral station selections should trigger a pathfinding rerun.
    *
-   * @return true if coral station pathfinding was last active
+   * @return true if coral station pathfinding was last active and not paused
    */
   public boolean shouldRerunCoralStationPathfinding() {
     return lastActiveType == ActivePathfindingType.CORAL_STATION && !isPaused;
   }
 
-  /** Logs all state information to AdvantageKit for debugging and monitoring. */
+  /**
+   * Logs all state information to AdvantageKit for debugging and monitoring.
+   * This method should be called periodically to update telemetry.
+   */
   public void logState() {
     // Log selection state
     Logger.recordOutput(REEF_KEY + "/Branch", reefBranch.name());
@@ -171,9 +195,13 @@ public class AutoCycleState {
     reefBranchPose.ifPresent(pose -> Logger.recordOutput(REEF_KEY + "/TargetPose", pose));
 
     coralStationPose.ifPresent(
-        pose -> Logger.recordOutput(CORAL_STATION_KEY + "/TargetPose", pose));
+            pose -> Logger.recordOutput(CORAL_STATION_KEY + "/TargetPose", pose));
   }
 
+  /**
+   * Cycles the reef branch selection to the next branch to the right.
+   * Wraps around to the first branch if at the end.
+   */
   public void cycleReefBranchRight() {
     int nextOrdinal = reefBranch.ordinal() + 1;
     if (nextOrdinal >= FieldConstants.ReefBranch.values().length) {
@@ -182,6 +210,10 @@ public class AutoCycleState {
     setReefBranch(FieldConstants.ReefBranch.values()[nextOrdinal]);
   }
 
+  /**
+   * Cycles the reef branch selection to the next branch to the left.
+   * Wraps around to the last branch if at the beginning.
+   */
   public void cycleReefBranchLeft() {
     int nextOrdinal = reefBranch.ordinal() - 1;
     if (nextOrdinal < 0) {
@@ -190,6 +222,10 @@ public class AutoCycleState {
     setReefBranch(FieldConstants.ReefBranch.values()[nextOrdinal]);
   }
 
+  /**
+   * Cycles the reef level selection up.
+   * Does not wrap; stops at the highest level.
+   */
   public void cycleReefLevelUp() {
     int nextOrdinal = reefLevel.ordinal() + 1;
     if (nextOrdinal < FieldConstants.Level.values().length) {
@@ -197,6 +233,10 @@ public class AutoCycleState {
     }
   }
 
+  /**
+   * Cycles the reef level selection down.
+   * Does not wrap; stops at the lowest level.
+   */
   public void cycleReefLevelDown() {
     int nextOrdinal = reefLevel.ordinal() - 1;
     if (nextOrdinal >= 0) {
@@ -204,6 +244,10 @@ public class AutoCycleState {
     }
   }
 
+  /**
+   * Cycles the coral station side selection to the right.
+   * Does not wrap; stops at the rightmost side.
+   */
   public void cycleCoralStationSideRight() {
     int nextOrdinal = coralStationSide.ordinal() + 1;
     if (nextOrdinal < FieldConstants.CoralStationSide.values().length) {
@@ -211,6 +255,10 @@ public class AutoCycleState {
     }
   }
 
+  /**
+   * Cycles the coral station side selection to the left.
+   * Does not wrap; stops at the leftmost side.
+   */
   public void cycleCoralStationSideLeft() {
     int nextOrdinal = coralStationSide.ordinal() - 1;
     if (nextOrdinal >= 0) {
@@ -218,19 +266,27 @@ public class AutoCycleState {
     }
   }
 
+  /**
+   * Cycles the coral station position selection to the right.
+   * Does not wrap; stops at the rightmost position.
+   */
   public void cycleCoralStationPositionRight() {
     int nextOrdinal = coralStationPickupPosition.ordinal() + 1;
     if (nextOrdinal < FieldConstants.CoralStationPickupPosition.values().length) {
       setCoralStationPickupPosition(
-          FieldConstants.CoralStationPickupPosition.values()[nextOrdinal]);
+              FieldConstants.CoralStationPickupPosition.values()[nextOrdinal]);
     }
   }
 
+  /**
+   * Cycles the coral station position selection to the left.
+   * Does not wrap; stops at the leftmost position.
+   */
   public void cycleCoralStationPositionLeft() {
     int nextOrdinal = coralStationPickupPosition.ordinal() - 1;
     if (nextOrdinal >= 0) {
       setCoralStationPickupPosition(
-          FieldConstants.CoralStationPickupPosition.values()[nextOrdinal]);
+              FieldConstants.CoralStationPickupPosition.values()[nextOrdinal]);
     }
   }
 }
