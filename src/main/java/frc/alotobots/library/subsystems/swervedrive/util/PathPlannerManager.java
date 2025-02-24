@@ -144,7 +144,7 @@ public class PathPlannerManager {
           driverInput,
           0.1, // deadband - now applies to chassis speeds magnitudes
           smoothTransition,
-          0.5,
+          0.2,
           driveSubsystem);
     } catch (Exception e) {
       String errorMessage = "Failed to load path: " + pathName;
