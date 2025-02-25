@@ -688,6 +688,9 @@ public class LocalizationFusion extends SubsystemBase implements StateTransition
 
     if (!wasConnected && isConnected) {
       if (!hadInitialConnection) {
+        // Apply Diagnostics
+        BlingDiagnosticManager.setDriverStationConnected(true);
+
         Elastic.sendAlert(
             new Elastic.ElasticNotification()
                 .withLevel(Elastic.ElasticNotification.NotificationLevel.INFO)
