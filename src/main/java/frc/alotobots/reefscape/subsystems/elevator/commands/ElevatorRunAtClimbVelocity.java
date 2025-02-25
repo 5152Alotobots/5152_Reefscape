@@ -14,7 +14,7 @@ package frc.alotobots.reefscape.subsystems.elevator.commands;
 
 import static frc.alotobots.OI.AxisLimits.MAX_AXIS_LIMIT;
 import static frc.alotobots.OI.AxisLimits.MIN_AXIS_LIMIT;
-import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.Limits.MAX_SPEED;
+import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.Limits.MAX_OPERATOR_VELOCITY;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.units.measure.LinearVelocity;
@@ -71,7 +71,7 @@ public class ElevatorRunAtClimbVelocity extends Command {
   @Override
   public void execute() {
     double adjustedInput = MathUtil.clamp(input.getAsDouble(), MIN_AXIS_LIMIT, MAX_AXIS_LIMIT);
-    LinearVelocity velocity = MAX_SPEED.times(adjustedInput);
+    LinearVelocity velocity = MAX_OPERATOR_VELOCITY.times(adjustedInput);
     elevatorSubsystem.runToClimbingVelocity(velocity);
   }
 

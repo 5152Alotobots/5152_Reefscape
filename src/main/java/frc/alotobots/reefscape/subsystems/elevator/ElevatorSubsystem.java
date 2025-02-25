@@ -99,15 +99,15 @@ public class ElevatorSubsystem extends SubsystemBase {
    * control.
    *
    * @param velocity Target velocity in meters per second, automatically constrained between
-   *     -MAX_SPEED and MAX_SPEED
+   *     -MAX_OPERATOR_VELOCITY and MAX_OPERATOR_VELOCITY
    */
   public void runToClimbingVelocity(LinearVelocity velocity) {
     LinearVelocity adjustedVelocity =
         MetersPerSecond.of(
             MathUtil.clamp(
                 velocity.in(MetersPerSecond),
-                -MAX_SPEED.in(MetersPerSecond),
-                MAX_SPEED.in(MetersPerSecond)));
+                -MAX_OPERATOR_VELOCITY.in(MetersPerSecond),
+                MAX_OPERATOR_VELOCITY.in(MetersPerSecond)));
     io.setElevatorVelocity(adjustedVelocity, ControlType.ClosedLoop.VELOCITY_CLIMB.ordinal());
     Logger.recordOutput("Elevator/ControlType", ControlType.ClosedLoop.VELOCITY_CLIMB);
   }

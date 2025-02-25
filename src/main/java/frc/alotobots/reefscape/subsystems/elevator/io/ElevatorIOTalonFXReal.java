@@ -113,7 +113,6 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
   /** Status signal for the right motor's acceleration */
   private final StatusSignal<AngularAcceleration> rightAcceleration;
 
-
   /** Status signal for the right motor's position */
   private final StatusSignal<Angle> rightPosition;
 
@@ -279,7 +278,11 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
             bottomSoftLimit);
     var rightSignals =
         BaseStatusSignal.refreshAll(
-            rightPosition, rightVelocity, rightAcceleration, rightAppliedVoltage, rightAppliedCurrent);
+            rightPosition,
+            rightVelocity,
+            rightAcceleration,
+            rightAppliedVoltage,
+            rightAppliedCurrent);
     var canRangeSignals = BaseStatusSignal.refreshAll(canRangeDistance);
 
     // Current slot
@@ -381,7 +384,8 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
 
   /**
    * Converts TalonFX rotations to elevator height. TalonFX reports position in rotations in Phoenix
-   * 6. Uses regression formula y = HEIGHT_PER_ROTATION + MIN_HEIGHT where x is rotations and y is meters.
+   * 6. Uses regression formula y = HEIGHT_PER_ROTATION + MIN_HEIGHT where x is rotations and y is
+   * meters.
    *
    * @param rotations TalonFX motor rotations
    * @return Height as a Distance unit
@@ -392,7 +396,8 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
 
   /**
    * Converts TalonFX rotational velocity to linear velocity. TalonFX reports velocity in rotations
-   * per second in Phoenix 6. Uses slope from regression formula y = HEIGHT_PER_ROTATION + MIN_HEIGHT.
+   * per second in Phoenix 6. Uses slope from regression formula y = HEIGHT_PER_ROTATION +
+   * MIN_HEIGHT.
    *
    * @param rotationsPerSecond TalonFX motor rotational velocity
    * @return Linear velocity as a LinearVelocity unit
@@ -403,8 +408,8 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
 
   /**
    * Converts elevator height to TalonFX rotations. TalonFX expects position in rotations in Phoenix
-   * 6. Uses inverse of regression formula y = HEIGHT_PER_ROTATION + MIN_HEIGHT, solving for x: x = (y - MIN_HEIGHT) /
-   * HEIGHT_PER_ROTATION where y is meters and x is rotations.
+   * 6. Uses inverse of regression formula y = HEIGHT_PER_ROTATION + MIN_HEIGHT, solving for x: x =
+   * (y - MIN_HEIGHT) / HEIGHT_PER_ROTATION where y is meters and x is rotations.
    *
    * @param height Height as a Distance unit
    * @return TalonFX motor rotations as an Angle unit
@@ -415,7 +420,8 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
 
   /**
    * Converts linear velocity to TalonFX rotational velocity. TalonFX expects velocity in rotations
-   * per second in Phoenix 6. Uses inverse slope from regression formula y = HEIGHT_PER_ROTATION + MIN_HEIGHT.
+   * per second in Phoenix 6. Uses inverse slope from regression formula y = HEIGHT_PER_ROTATION +
+   * MIN_HEIGHT.
    *
    * @param linearVelocity Linear velocity as a LinearVelocity unit
    * @return TalonFX motor rotational velocity as an AngularVelocity unit
@@ -442,10 +448,12 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
    * in rotations per second squared in Phoenix 6. Uses the same conversion factor as velocity since
    * acceleration is the time derivative of velocity.
    *
-   * @param rotationalAcceleration TalonFX motor rotational acceleration as an AngularAcceleration unit
+   * @param rotationalAcceleration TalonFX motor rotational acceleration as an AngularAcceleration
+   *     unit
    * @return Linear acceleration as a LinearAcceleration unit
    */
-  private LinearAcceleration talonFXToLinearAcceleration(AngularAcceleration rotationalAcceleration) {
+  private LinearAcceleration talonFXToLinearAcceleration(
+      AngularAcceleration rotationalAcceleration) {
     return MetersPerSecondPerSecond.of(
         rotationalAcceleration.in(RotationsPerSecondPerSecond) * HEIGHT_PER_ROTATION);
   }
