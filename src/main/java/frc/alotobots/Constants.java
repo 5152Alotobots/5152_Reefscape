@@ -80,5 +80,14 @@ public final class Constants {
 
     /** Intake CANrange CAN ID */
     public static final int INTAKE_CANRANGE_ID = 36;
+
+    /** Algae intake left CAN ID */
+    public static final int ALGAE_INTAKE_LEFT_MOTOR_CAN_ID = 37;
+
+    /** Algae intake right CAN ID */
+    public static final int ALGAE_INTAKE_RIGHT_MOTOR_CAN_ID = 38;
+
+    /** Algae intake CANrange CAN ID */
+    public static final int ALGAE_INTAKE_CANRANGE_ID = 39;
   }
 }
