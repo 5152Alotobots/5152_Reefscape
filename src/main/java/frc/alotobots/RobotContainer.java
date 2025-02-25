@@ -36,10 +36,11 @@ import frc.alotobots.library.subsystems.vision.photonvision.apriltag.util.AprilT
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.ObjectDetectionSubsystem;
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.constants.ObjectDetectionConstants;
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.io.*;
+import frc.alotobots.reefscape.commands.groups.Climb;
+import frc.alotobots.reefscape.commands.groups.UnClimb;
 import frc.alotobots.reefscape.commands.states.*;
 import frc.alotobots.reefscape.subsystems.climber.ClimberSubsystem;
-import frc.alotobots.reefscape.subsystems.climber.commands.Climb;
-import frc.alotobots.reefscape.subsystems.climber.commands.UnClimb;
+import frc.alotobots.reefscape.subsystems.climber.commands.ClimberDisableServos;
 import frc.alotobots.reefscape.subsystems.climber.io.ClimberIORevServoReal;
 import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEjectThrough;
@@ -227,6 +228,7 @@ public class RobotContainer {
         new DefaultWristRunAtVelocity(wristSubsystem, OI::getWristAxis));
     // blingSubsystem.setDefaultCommand(
     //    new NoAllianceWaiting(blingSubsystem).andThen(new SetToAllianceColor(blingSubsystem)));
+    climberSubsystem.setDefaultCommand(new ClimberDisableServos(climberSubsystem));
   }
 
   /** Contains button based commands */
@@ -272,7 +274,8 @@ public class RobotContainer {
     wristGroundButton.toggleOnTrue(
         new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.GROUND_INTAKE));
 
-    climbButton.onTrue(new Climb(climberSubsystem, elevatorSubsystem));
+    climbButton.toggleOnTrue(
+        new Climb(climberSubsystem, elevatorSubsystem, () -> -getElevatorAxis()));
     unClimbButton.onTrue(new UnClimb(climberSubsystem));
   }
 

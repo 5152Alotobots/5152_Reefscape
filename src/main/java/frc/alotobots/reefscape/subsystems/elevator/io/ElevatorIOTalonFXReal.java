@@ -168,6 +168,16 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
     leftConfig.Slot1.kS = ElevatorTalonFXRealConstants.PIDConstants.PositionPIDConstants.KS;
     leftConfig.Slot1.kV = ElevatorTalonFXRealConstants.PIDConstants.PositionPIDConstants.KV;
 
+    // PID configuration for climbing mode (Slot 2)
+    leftConfig.Slot2.kP = ElevatorTalonFXRealConstants.PIDConstants.ClimbingPIDConstants.KP;
+    leftConfig.Slot2.kI = ElevatorTalonFXRealConstants.PIDConstants.ClimbingPIDConstants.KI;
+    leftConfig.Slot2.kD = ElevatorTalonFXRealConstants.PIDConstants.ClimbingPIDConstants.KD;
+    leftConfig.Slot2.GravityType = GravityTypeValue.Elevator_Static;
+    leftConfig.Slot2.kA = ElevatorTalonFXRealConstants.PIDConstants.ClimbingPIDConstants.KA;
+    leftConfig.Slot2.kG = ElevatorTalonFXRealConstants.PIDConstants.ClimbingPIDConstants.KG;
+    leftConfig.Slot2.kS = ElevatorTalonFXRealConstants.PIDConstants.ClimbingPIDConstants.KS;
+    leftConfig.Slot2.kV = ElevatorTalonFXRealConstants.PIDConstants.ClimbingPIDConstants.KV;
+
     leftConfig.MotorOutput.NeutralMode = MECHANISM_NEUTRAL_MODE;
 
     leftConfig.SoftwareLimitSwitch.ForwardSoftLimitEnable = LIMITS_ENABLED;

@@ -79,6 +79,30 @@ public final class ElevatorTalonFXRealConstants {
       /** Velocity feedforward gain */
       public static final double KV = 0.0;
     }
+
+    /** TalonFX-specific PID and motion control constants for climbing mode. */
+    public static final class ClimbingPIDConstants {
+      /** Climbing control proportional gain */
+      public static final double KP = 0.2;
+
+      /** Climbing control integral gain */
+      public static final double KI = 0.0;
+
+      /** Climbing control derivative gain */
+      public static final double KD = 0.0;
+
+      /** Acceleration feedforward gain */
+      public static final double KA = 0.0;
+
+      /** Gravity compensation gain */
+      public static final double KG = 0.15;
+
+      /** Static friction compensation */
+      public static final double KS = 0.0;
+
+      /** Velocity feedforward gain */
+      public static final double KV = 0.12;
+    }
   }
 
   public static final class MotionMagicConstants {

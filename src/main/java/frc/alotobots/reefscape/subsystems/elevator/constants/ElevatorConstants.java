@@ -61,6 +61,8 @@ public final class ElevatorConstants {
     /** Height when elevator is fully retracted/stowed */
     public static final Distance STOWED = Meters.of(0.1);
 
+    public static final Distance CLIMB = Meters.of(0.8);
+
     /** Height for picking up from coral station */
     public static final Distance CORAL_STATION = Meters.of(0.80);
 

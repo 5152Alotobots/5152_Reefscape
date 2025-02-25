@@ -95,6 +95,24 @@ public class ElevatorSubsystem extends SubsystemBase {
   }
 
   /**
+   * Controls the elevator to move to a specified velocity using closed-loop climbing velocity
+   * control.
+   *
+   * @param velocity Target velocity in meters per second, automatically constrained between
+   *     -MAX_SPEED and MAX_SPEED
+   */
+  public void runToClimbingVelocity(LinearVelocity velocity) {
+    LinearVelocity adjustedVelocity =
+        MetersPerSecond.of(
+            MathUtil.clamp(
+                velocity.in(MetersPerSecond),
+                -MAX_SPEED.in(MetersPerSecond),
+                MAX_SPEED.in(MetersPerSecond)));
+    io.setElevatorVelocity(adjustedVelocity, ControlType.ClosedLoop.VELOCITY_CLIMB.ordinal());
+    Logger.recordOutput("Elevator/ControlType", ControlType.ClosedLoop.VELOCITY_CLIMB);
+  }
+
+  /**
    * Controls the elevator using direct percent output (open-loop control). The output is clamped to
    * prevent excessive speed.
    *
