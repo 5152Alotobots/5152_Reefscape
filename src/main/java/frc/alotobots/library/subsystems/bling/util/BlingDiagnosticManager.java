@@ -228,7 +228,7 @@ public class BlingDiagnosticManager {
    * @return true if the color has changed
    */
   public static boolean hasColorChanged(int ledIndex) {
-    if (ledIndex < 0 || ledIndex >= 8) {
+    if (ledIndex < 0 || ledIndex > 7) {
       return false;
     }
 
@@ -251,7 +251,7 @@ public class BlingDiagnosticManager {
    */
   public static LoggedColor[] getAllLEDColors() {
     LoggedColor[] colors = new LoggedColor[8];
-    for (int i = 0; i < 7; i++) {
+    for (int i = 0; i < 8; i++) {
       colors[i] = getLEDColor(i);
     }
     return colors;
