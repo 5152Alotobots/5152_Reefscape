@@ -38,7 +38,7 @@ public final class ElevatorConstants {
     public static final Distance MAX_HEIGHT = Meters.of(1.80);
 
     /** Minimum allowed height */
-    public static final Distance MIN_HEIGHT = Meters.of(0.253311);
+    public static final Distance MIN_HEIGHT = Meters.of(0.23);
 
     /** Maximum open loop percent output */
     public static final double MAX_OPEN_LOOP_PERCENTAGE = 0.5;
@@ -50,16 +50,16 @@ public final class ElevatorConstants {
     public static final boolean LIMITS_ENABLED = true;
 
     /** Maximum velocity near the top or bottom limit */
-    public static final LinearVelocity MAX_VELOCITY_NEAR_LIMIT = MetersPerSecond.of(0.2);
+    public static final LinearVelocity MAX_VELOCITY_NEAR_LIMIT = MetersPerSecond.of(0.1);
 
     /** Distance from the top or bottom limit where the velocity limit applies */
-    public static final Distance DISTANCE_FROM_LIMIT = Meters.of(0.1);
+    public static final Distance DISTANCE_FROM_LIMIT = Meters.of(0.2);
   }
 
   /** Position setpoints for different elevator states */
   public static final class Setpoints {
     /** Height when elevator is fully retracted/stowed */
-    public static final Distance STOWED = Meters.of(0.3);
+    public static final Distance STOWED = Meters.of(0.1);
 
     /** Height for picking up from coral station */
     public static final Distance CORAL_STATION = Meters.of(0.80);

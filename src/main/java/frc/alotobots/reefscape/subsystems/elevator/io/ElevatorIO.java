@@ -14,6 +14,7 @@ package frc.alotobots.reefscape.subsystems.elevator.io;
 
 import static edu.wpi.first.units.Units.*;
 
+import com.ctre.phoenix6.StatusSignal;
 import edu.wpi.first.units.measure.*;
 import org.littletonrobotics.junction.AutoLog;
 
@@ -66,6 +67,13 @@ public interface ElevatorIO {
 
     /** Current velocity of the right elevator motor in meters per second */
     public LinearVelocity rightVelocity = MetersPerSecond.zero();
+
+    /** Current acceleration of the left elevator motor in meters per second per second */
+    public LinearAcceleration leftAcceleration;
+
+    /** Current acceleration of the right elevator motor in meters per second per second */
+    public LinearAcceleration rightAcceleration;
+
 
     /** Applied voltage to the left elevator motor */
     public Voltage leftAppliedVolts = Volts.zero();

@@ -82,8 +82,8 @@ public final class ElevatorTalonFXRealConstants {
   }
 
   public static final class MotionMagicConstants {
-    public static final LinearVelocity CRUSE_VELOCITY = MetersPerSecond.of(.8);
-    public static final LinearAcceleration ACCELERATION = MetersPerSecondPerSecond.of(.4);
+    public static final LinearVelocity CRUSE_VELOCITY = MetersPerSecond.of(1.0);
+    public static final LinearAcceleration ACCELERATION = MetersPerSecondPerSecond.of(0.8);
     public static final double JERK = 0;
   }
 
@@ -104,4 +104,7 @@ public final class ElevatorTalonFXRealConstants {
 
   /** Neutral mode (brake/coast) setting for the mechanism */
   public static final NeutralModeValue MECHANISM_NEUTRAL_MODE = NeutralModeValue.Brake;
+
+  /** Regression used to calculate height of motor. (Should be linear) Rotations:Meters */
+  public static final double HEIGHT_PER_ROTATION = 0.00977762;
 }
