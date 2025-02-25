@@ -30,6 +30,7 @@ public class ClimberDisableServos extends InstantCommand {
    */
   public ClimberDisableServos(ClimberSubsystem climberSubsystem) {
     this.climberSubsystem = climberSubsystem;
+    addRequirements(climberSubsystem);
   }
 
   /**
