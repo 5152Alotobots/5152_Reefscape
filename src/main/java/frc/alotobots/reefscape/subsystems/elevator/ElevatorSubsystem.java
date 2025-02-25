@@ -13,7 +13,6 @@
 package frc.alotobots.reefscape.subsystems.elevator;
 
 import static edu.wpi.first.units.Units.*;
-import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.*;
 import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.Limits.*;
 import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.Thresholds.AT_SET_POINT_POSITION_THRESHOLD;
 import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.Thresholds.AT_SET_POINT_TIME_THRESHOLD;
@@ -87,7 +86,7 @@ public class ElevatorSubsystem extends SubsystemBase {
    * Controls the elevator to move to a specified velocity using closed-loop velocity control.
    *
    * @param velocity Target velocity in meters per second, automatically constrained between
-   *     -MAX_VELOCITY and MAX_VELOCITY
+   *     -MAX_OPERATOR_VELOCITY and MAX_OPERATOR_VELOCITY
    */
   public void runToTargetVelocity(LinearVelocity velocity) {
     LinearVelocity adjustedVelocity = applyVelocityLimitIfNeeded(velocity);
@@ -180,8 +179,8 @@ public class ElevatorSubsystem extends SubsystemBase {
       return MetersPerSecond.of(
           MathUtil.clamp(
               velocity.in(MetersPerSecond),
-              -MAX_VELOCITY.in(MetersPerSecond),
-              MAX_VELOCITY.in(MetersPerSecond)));
+              -MAX_OPERATOR_VELOCITY.in(MetersPerSecond),
+              MAX_OPERATOR_VELOCITY.in(MetersPerSecond)));
     }
   }
 }
