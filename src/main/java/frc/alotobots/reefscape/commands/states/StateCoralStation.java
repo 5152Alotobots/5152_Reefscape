@@ -14,8 +14,13 @@ package frc.alotobots.reefscape.commands.states;
 
 import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeConstants.Setpoints.OpenLoop.INTAKE_PERCENTAGE;
 
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
+import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.alotobots.library.commands.util.LogCommand;
+import frc.alotobots.library.subsystems.bling.BlingSubsystem;
+import frc.alotobots.library.subsystems.bling.commands.BlingCoralHasPiece;
+import frc.alotobots.library.subsystems.bling.commands.BlingCoralWantsPiece;
 import frc.alotobots.reefscape.commands.groups.ParallelElevatorWristRun;
 import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeIntake;
@@ -36,11 +41,13 @@ public class StateCoralStation extends SequentialCommandGroup {
    * @param elevatorSubsystem The elevator subsystem
    * @param wristSubsystem The wrist subsystem
    * @param coralIntakeSubsystem The coral intake subsystem
+   * @param blingSubsystem The bling subsystem
    */
   public StateCoralStation(
       ElevatorSubsystem elevatorSubsystem,
       WristSubsystem wristSubsystem,
-      CoralIntakeSubsystem coralIntakeSubsystem) {
+      CoralIntakeSubsystem coralIntakeSubsystem,
+      BlingSubsystem blingSubsystem) {
     addCommands(
         new LogCommand("State/State", "CORAL_STATION"),
         new ParallelElevatorWristRun(
@@ -48,7 +55,10 @@ public class StateCoralStation extends SequentialCommandGroup {
             wristSubsystem,
             ElevatorConstants.Setpoints.CORAL_STATION,
             WristConstants.Setpoints.CORAL_STATION),
-        new CoralIntakeIntake(coralIntakeSubsystem, () -> INTAKE_PERCENTAGE),
+        new ParallelRaceGroup(
+                new BlingCoralWantsPiece(blingSubsystem).asProxy(),
+        new CoralIntakeIntake(coralIntakeSubsystem, () -> INTAKE_PERCENTAGE)
+                ),
         new StateStowed(elevatorSubsystem, wristSubsystem).asProxy());
   }
 }

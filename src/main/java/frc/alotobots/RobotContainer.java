@@ -12,6 +12,7 @@
 */
 package frc.alotobots;
 
+import static edu.wpi.first.units.Units.Seconds;
 import static frc.alotobots.OI.*;
 import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeConstants.Setpoints.OpenLoop.EJECT_PERCENTAGE;
 import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeConstants.Setpoints.OpenLoop.INTAKE_PERCENTAGE;
@@ -20,13 +21,14 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.alotobots.library.subsystems.bling.BlingSubsystem;
-import frc.alotobots.library.subsystems.bling.commands.NoAllianceWaiting;
-import frc.alotobots.library.subsystems.bling.commands.SetToAllianceColor;
+import frc.alotobots.library.subsystems.bling.commands.*;
 import frc.alotobots.library.subsystems.bling.io.BlingIO;
 import frc.alotobots.library.subsystems.bling.io.BlingIOReal;
 import frc.alotobots.library.subsystems.bling.io.BlingIOSim;
+import frc.alotobots.library.subsystems.bling.util.BlingUtil;
 import frc.alotobots.library.subsystems.swervedrive.*;
 import frc.alotobots.library.subsystems.swervedrive.commands.*;
 import frc.alotobots.library.subsystems.swervedrive.io.*;
@@ -237,12 +239,19 @@ public class RobotContainer {
 
   /** Contains button based commands */
   private void configureLogicCommands() {
+    // Bling
+    BlingUtil.scheduleAtMatchTime(
+        new BlingEndgameCountdown(blingSubsystem).andThen(new BlingTimeToClimb(blingSubsystem)),
+        Seconds.of(30));
+    new Trigger(coralIntakeSubsystem::isIntakeOccupied).onTrue(new BlingCoralHasPiece(blingSubsystem));
+//    new Trigger(algaeIntakeSubsystem::isIntakeOccupied).onTrue(new BlingAlgaeHasPiece(blingSubsystem));
+
     // Coral Intake
     coralIntakeIntakeButton.toggleOnTrue(
         new CoralIntakeIntake(coralIntakeSubsystem, () -> INTAKE_PERCENTAGE));
 
     stateCoralStationButton.toggleOnTrue(
-        new StateCoralStation(elevatorSubsystem, wristSubsystem, coralIntakeSubsystem));
+        new StateCoralStation(elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, blingSubsystem));
     stateL1Button.toggleOnTrue(
         new StateL1(
             elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, coralIntakeReleaseButton));
