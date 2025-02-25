@@ -10,7 +10,7 @@
 *
 * Source code must be publicly available on GitHub or an alternative web accessible site
 */
-package frc.alotobots.reefscape.commands.states;
+package frc.alotobots.reefscape.commands.states.coral;
 
 import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeConstants.Setpoints.OpenLoop.EJECT_PERCENTAGE;
 
@@ -31,7 +31,7 @@ import frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants;
  * L2 position simultaneously 2. Waits for release button confirmation 3. Runs eject through 4.
  * Returns to stowed position
  */
-public class StateL2 extends SequentialCommandGroup {
+public class StateCoralL2 extends SequentialCommandGroup {
   /**
    * Creates a new StateL2 command.
    *
@@ -40,20 +40,20 @@ public class StateL2 extends SequentialCommandGroup {
    * @param coralIntakeSubsystem The coral intake subsystem
    * @param coralIntakeReleaseTrigger The release button trigger
    */
-  public StateL2(
+  public StateCoralL2(
       ElevatorSubsystem elevatorSubsystem,
       WristSubsystem wristSubsystem,
       CoralIntakeSubsystem coralIntakeSubsystem,
       Trigger coralIntakeReleaseTrigger) {
     addCommands(
-        new LogCommand("State/State", "L2"),
+        new LogCommand("State/State", "CORAL_L2"),
         new ParallelElevatorWristRun(
             elevatorSubsystem,
             wristSubsystem,
-            ElevatorConstants.Setpoints.L2_PLACE,
-            WristConstants.Setpoints.L2_PLACE),
+            ElevatorConstants.Setpoints.CORAL_L2_PLACE,
+            WristConstants.Setpoints.CORAL_L2_PLACE),
         Commands.waitUntil(coralIntakeReleaseTrigger),
         new CoralIntakeEjectThrough(coralIntakeSubsystem, () -> EJECT_PERCENTAGE),
-        new StateStowed(elevatorSubsystem, wristSubsystem).asProxy());
+        new StateCoralStowed(elevatorSubsystem, wristSubsystem).asProxy());
   }
 }

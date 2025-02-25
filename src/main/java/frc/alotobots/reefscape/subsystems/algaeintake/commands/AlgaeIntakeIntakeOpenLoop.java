@@ -12,18 +12,16 @@
 */
 package frc.alotobots.reefscape.subsystems.algaeintake.commands;
 
+import static frc.alotobots.reefscape.subsystems.algaeintake.constants.AlgaeIntakeConstants.Limits.MAX_OPEN_LOOP_INTAKE_PERCENTAGE;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.alotobots.reefscape.subsystems.algaeintake.AlgaeIntakeSubsystem;
-
 import java.util.function.DoubleSupplier;
 
-import static frc.alotobots.reefscape.subsystems.algaeintake.constants.AlgaeIntakeConstants.Limits.MAX_OPEN_LOOP_INTAKE_PERCENTAGE;
-
 /**
- * Command that runs the algae intake to collect game pieces by pulling them inward using positive motor
- * output. Automatically ends when a game piece is detected by the intake sensor. The speed is
+ * Command that runs the algae intake to collect game pieces by pulling them inward using positive
+ * motor output. Automatically ends when a game piece is detected by the intake sensor. The speed is
  * clamped to the maximum allowed intake percentage.
  */
 public class AlgaeIntakeIntakeOpenLoop extends Command {
@@ -37,18 +35,19 @@ public class AlgaeIntakeIntakeOpenLoop extends Command {
    * Creates a new AlgaeIntakeIntakeOpenLoop command.
    *
    * @param algaeIntakeSubsystem The intake subsystem to control
-   * @param input Supplier for the intake speed (0.0 to MAX_OPEN_LOOP_INTAKE_PERCENTAGE)
-   *     Positive values pull inward.
+   * @param input Supplier for the intake speed (0.0 to MAX_OPEN_LOOP_INTAKE_PERCENTAGE) Positive
+   *     values pull inward.
    */
-  public AlgaeIntakeIntakeOpenLoop(AlgaeIntakeSubsystem algaeIntakeSubsystem, DoubleSupplier input) {
+  public AlgaeIntakeIntakeOpenLoop(
+      AlgaeIntakeSubsystem algaeIntakeSubsystem, DoubleSupplier input) {
     this.algaeIntakeSubsystem = algaeIntakeSubsystem;
     this.input = input;
     addRequirements(algaeIntakeSubsystem);
   }
 
   /**
-   * Runs the intake motors at the supplied speed to pull inward, clamped to safe limits.
-   * Called repeatedly while the command is scheduled.
+   * Runs the intake motors at the supplied speed to pull inward, clamped to safe limits. Called
+   * repeatedly while the command is scheduled.
    */
   @Override
   public void execute() {

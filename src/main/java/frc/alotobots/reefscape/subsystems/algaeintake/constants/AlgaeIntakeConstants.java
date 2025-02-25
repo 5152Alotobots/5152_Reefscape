@@ -46,8 +46,8 @@ public class AlgaeIntakeConstants {
       /** Default percent output for intake operation */
       public static final double INTAKE_PERCENTAGE = 0.5;
 
-      /** Default percent output for outtake operation */
-      public static final double OUTTAKE_PERCENTAGE = 0.5;
+      /** Default percent output for eject operation */
+      public static final double EJECT_PERCENTAGE = 0.5;
     }
   }
 }

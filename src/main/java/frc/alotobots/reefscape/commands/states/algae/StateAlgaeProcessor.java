@@ -10,50 +10,50 @@
 *
 * Source code must be publicly available on GitHub or an alternative web accessible site
 */
-package frc.alotobots.reefscape.commands.states;
+package frc.alotobots.reefscape.commands.states.algae;
 
-import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeConstants.Setpoints.OpenLoop.EJECT_PERCENTAGE;
+import static frc.alotobots.reefscape.subsystems.algaeintake.constants.AlgaeIntakeConstants.Setpoints.OpenLoop.EJECT_PERCENTAGE;
 
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.alotobots.library.commands.util.LogCommand;
 import frc.alotobots.reefscape.commands.groups.ParallelElevatorWristRun;
-import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
-import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEjectThrough;
+import frc.alotobots.reefscape.subsystems.algaeintake.AlgaeIntakeSubsystem;
+import frc.alotobots.reefscape.subsystems.algaeintake.commands.AlgaeIntakeEjectOpenLoop;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants;
 import frc.alotobots.reefscape.subsystems.wrist.WristSubsystem;
 import frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants;
 
 /**
- * Command sequence for placing game pieces on Level 4. The sequence: 1. Moves elevator and wrist to
- * L4 position simultaneously 2. Waits for release button confirmation 3. Runs eject through 4.
+ * Command sequence for scoring algae in the processor. The sequence: 1. Moves elevator and wrist to
+ * processor position simultaneously 2. Waits for release button confirmation 3. Runs eject 4.
  * Returns to stowed position
  */
-public class StateL4 extends SequentialCommandGroup {
+public class StateAlgaeProcessor extends SequentialCommandGroup {
   /**
-   * Creates a new StateL4 command.
+   * Creates a new StateAlgaeProcessor command.
    *
    * @param elevatorSubsystem The elevator subsystem
    * @param wristSubsystem The wrist subsystem
-   * @param coralIntakeSubsystem The coral intake subsystem
-   * @param coralIntakeReleaseTrigger The release button trigger
+   * @param algaeIntakeSubsystem The algae intake subsystem
+   * @param algaeIntakeReleaseTrigger The release button trigger
    */
-  public StateL4(
+  public StateAlgaeProcessor(
       ElevatorSubsystem elevatorSubsystem,
       WristSubsystem wristSubsystem,
-      CoralIntakeSubsystem coralIntakeSubsystem,
-      Trigger coralIntakeReleaseTrigger) {
+      AlgaeIntakeSubsystem algaeIntakeSubsystem,
+      Trigger algaeIntakeReleaseTrigger) {
     addCommands(
-        new LogCommand("State/State", "L4"),
+        new LogCommand("State/State", "ALGAE_PROCESSOR"),
         new ParallelElevatorWristRun(
             elevatorSubsystem,
             wristSubsystem,
-            ElevatorConstants.Setpoints.L4_PLACE,
-            WristConstants.Setpoints.L4_PLACE),
-        Commands.waitUntil(coralIntakeReleaseTrigger),
-        new CoralIntakeEjectThrough(coralIntakeSubsystem, () -> EJECT_PERCENTAGE),
-        new StateStowed(elevatorSubsystem, wristSubsystem));
+            ElevatorConstants.Setpoints.ALGAE_PROCESSOR,
+            WristConstants.Setpoints.ALGAE_PROCESSOR),
+        Commands.waitUntil(algaeIntakeReleaseTrigger),
+        new AlgaeIntakeEjectOpenLoop(algaeIntakeSubsystem, () -> EJECT_PERCENTAGE),
+        new StateAlgaeStowed(elevatorSubsystem, wristSubsystem).asProxy());
   }
 }

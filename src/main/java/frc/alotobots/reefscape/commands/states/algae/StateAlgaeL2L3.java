@@ -10,45 +10,44 @@
 *
 * Source code must be publicly available on GitHub or an alternative web accessible site
 */
-package frc.alotobots.reefscape.commands.states;
+package frc.alotobots.reefscape.commands.states.algae;
 
-import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeConstants.Setpoints.OpenLoop.INTAKE_PERCENTAGE;
+import static frc.alotobots.reefscape.subsystems.algaeintake.constants.AlgaeIntakeConstants.Setpoints.OpenLoop.INTAKE_PERCENTAGE;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.alotobots.library.commands.util.LogCommand;
 import frc.alotobots.reefscape.commands.groups.ParallelElevatorWristRun;
-import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
-import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeIntake;
+import frc.alotobots.reefscape.subsystems.algaeintake.AlgaeIntakeSubsystem;
+import frc.alotobots.reefscape.subsystems.algaeintake.commands.AlgaeIntakeIntakeOpenLoop;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants;
 import frc.alotobots.reefscape.subsystems.wrist.WristSubsystem;
 import frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants;
 
 /**
- * Command sequence for intaking from the coral station. The sequence: 1. Moves elevator and wrist
- * to coral station position simultaneously 2. Waits for release button confirmation 3. Runs intake
- * 4. Returns to stowed position
+ * Command sequence for grabbing algae on Level 2/3. The sequence: 1. Moves elevator and wrist to
+ * L2L3 position simultaneously 2. Runs intake
  */
-public class StateCoralStation extends SequentialCommandGroup {
+public class StateAlgaeL2L3 extends SequentialCommandGroup {
   /**
-   * Creates a new StateCoralStation command.
+   * Creates a new StateAlgaeL2L3 command.
    *
    * @param elevatorSubsystem The elevator subsystem
    * @param wristSubsystem The wrist subsystem
-   * @param coralIntakeSubsystem The coral intake subsystem
+   * @param algaeIntakeSubsystem The algae intake subsystem
    */
-  public StateCoralStation(
+  public StateAlgaeL2L3(
       ElevatorSubsystem elevatorSubsystem,
       WristSubsystem wristSubsystem,
-      CoralIntakeSubsystem coralIntakeSubsystem) {
+      AlgaeIntakeSubsystem algaeIntakeSubsystem) {
     addCommands(
-        new LogCommand("State/State", "CORAL_STATION"),
+        new LogCommand("State/State", "ALGAE_L2L3"),
         new ParallelElevatorWristRun(
             elevatorSubsystem,
             wristSubsystem,
-            ElevatorConstants.Setpoints.CORAL_STATION,
-            WristConstants.Setpoints.CORAL_STATION),
-        new CoralIntakeIntake(coralIntakeSubsystem, () -> INTAKE_PERCENTAGE),
-        new StateStowed(elevatorSubsystem, wristSubsystem).asProxy());
+            ElevatorConstants.Setpoints.ALGAE_L2L3_PICKUP,
+            WristConstants.Setpoints.ALGAE_L2L3_PICKUP),
+        new AlgaeIntakeIntakeOpenLoop(algaeIntakeSubsystem, () -> INTAKE_PERCENTAGE),
+        new StateAlgaeStowed(elevatorSubsystem, wristSubsystem).asProxy());
   }
 }

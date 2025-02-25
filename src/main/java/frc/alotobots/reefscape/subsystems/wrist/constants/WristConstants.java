@@ -57,21 +57,33 @@ public class WristConstants {
     public static final Angle STOWED = Degrees.of(125);
 
     /** Angle for picking up from coral station */
-    public static final Angle CORAL_STATION = Degrees.of(45);
+    public static final Angle CORAL_CORAL_STATION = Degrees.of(45);
 
     /** Angle for L4 placement */
-    public static final Angle L4_PLACE = Degrees.of(90);
+    public static final Angle CORAL_L4_PLACE = Degrees.of(90);
 
     /** Angle for L3 placement (Equal to the angle for L2 placement) */
-    public static final Angle L3_PLACE = Degrees.of(125);
+    public static final Angle CORAL_L3_PLACE = Degrees.of(125);
 
     /** Angle for L2 placement (Equal to the angle for L3 placement) */
-    public static final Angle L2_PLACE = Degrees.of(125);
+    public static final Angle CORAL_L2_PLACE = Degrees.of(125);
 
     /** Angle for L1 placement */
-    public static final Angle L1_PLACE = Degrees.of(105);
+    public static final Angle CORAL_L1_PLACE = Degrees.of(105);
 
     /** Angle for ground intake */
-    public static final Angle GROUND_INTAKE = Degrees.of(-7);
+    public static final Angle CORAL_GROUND_INTAKE = Degrees.of(-7);
+
+    /** Height for L2/L3 algae pickup */
+    public static final Angle ALGAE_L2L3_PICKUP = Degrees.of(90);
+
+    /** Height for L3/L4 algae pickup */
+    public static final Angle ALGAE_L3L4_PICKUP = Degrees.of(90);
+
+    /** Height for stowed algae */
+    public static final Angle ALGAE_STOWED = Degrees.of(0);
+
+    /** Height for algae processor */
+    public static final Angle ALGAE_PROCESSOR = Degrees.of(90);
   }
 }
