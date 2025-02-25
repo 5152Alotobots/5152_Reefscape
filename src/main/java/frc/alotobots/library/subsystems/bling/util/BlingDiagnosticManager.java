@@ -251,7 +251,7 @@ public class BlingDiagnosticManager {
    */
   public static LoggedColor[] getAllLEDColors() {
     LoggedColor[] colors = new LoggedColor[8];
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < 7; i++) {
       colors[i] = getLEDColor(i);
     }
     return colors;
