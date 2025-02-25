@@ -69,10 +69,10 @@ public interface ElevatorIO {
     public LinearVelocity rightVelocity = MetersPerSecond.zero();
 
     /** Current acceleration of the left elevator motor in meters per second per second */
-    public LinearAcceleration leftAcceleration;
+    public LinearAcceleration leftAcceleration = MetersPerSecondPerSecond.zero();
 
     /** Current acceleration of the right elevator motor in meters per second per second */
-    public LinearAcceleration rightAcceleration;
+    public LinearAcceleration rightAcceleration = MetersPerSecondPerSecond.zero();
 
 
     /** Applied voltage to the left elevator motor */
