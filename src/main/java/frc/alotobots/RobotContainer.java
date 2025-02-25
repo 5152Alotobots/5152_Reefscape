@@ -33,8 +33,6 @@ import frc.alotobots.library.subsystems.vision.photonvision.apriltag.AprilTagSub
 import frc.alotobots.library.subsystems.vision.photonvision.apriltag.constants.AprilTagConstants;
 import frc.alotobots.library.subsystems.vision.photonvision.apriltag.io.*;
 import frc.alotobots.library.subsystems.vision.photonvision.apriltag.util.AprilTagPoseSource;
-import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.ObjectDetectionSubsystem;
-import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.constants.ObjectDetectionConstants;
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.io.*;
 import frc.alotobots.reefscape.commands.groups.Climb;
 import frc.alotobots.reefscape.commands.groups.UnClimb;
@@ -76,7 +74,6 @@ public class RobotContainer {
   private final LocalizationFusion localizationFusion;
   private final OculusPoseSource oculusPoseSource;
   private final AprilTagPoseSource aprilTagPoseSource;
-  private final ObjectDetectionSubsystem objectDetectionSubsystem;
   // private final BlingSubsystem blingSubsystem;
   private final PathPlannerManager pathPlannerManager;
   private LoggedDashboardChooser<Command> autoChooser;
@@ -119,10 +116,6 @@ public class RobotContainer {
                 aprilTagPoseSource,
                 autoChooser);
 
-        objectDetectionSubsystem =
-            new ObjectDetectionSubsystem(
-                swerveDriveSubsystem::getPose,
-                new ObjectDetectionIOPhotonVision(ObjectDetectionConstants.CAMERA_CONFIGS[0]));
         // blingSubsystem = new BlingSubsystem(new BlingIOReal());
         break;
 
@@ -175,8 +168,6 @@ public class RobotContainer {
                 aprilTagPoseSource,
                 autoChooser);
 
-        objectDetectionSubsystem =
-            new ObjectDetectionSubsystem(swerveDriveSubsystem::getPose, new ObjectDetectionIO() {});
         // blingSubsystem = new BlingSubsystem(new BlingIOSim());
         break;
 
@@ -210,8 +201,6 @@ public class RobotContainer {
                 aprilTagPoseSource,
                 autoChooser);
 
-        objectDetectionSubsystem =
-            new ObjectDetectionSubsystem(swerveDriveSubsystem::getPose, new ObjectDetectionIO() {});
         // blingSubsystem = new BlingSubsystem(new BlingIO() {});
         break;
     }
