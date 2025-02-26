@@ -105,7 +105,7 @@ public interface ElevatorIO {
   public default void setElevatorPosition(Distance position, int pidSlot) {}
 
   /**
-   * Sets the target position for the elevator using closed-loop control & motion magic.
+   * Sets the target position for the elevator using closed-loop control and motion magic.
    *
    * @param position The desired position for the elevator
    */
