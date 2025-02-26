@@ -275,6 +275,10 @@ public class RobotContainer {
             blingSubsystem,
             coralIntakeReleaseButton));
     stateStowButton.toggleOnTrue(new StateStowed(elevatorSubsystem, wristSubsystem));
+
+    climbButton.toggleOnTrue(
+            new Climb(climberSubsystem, elevatorSubsystem, blingSubsystem, () -> -getElevatorAxis()));
+    unClimbButton.onTrue(new UnClimb(climberSubsystem));
     // BACKUP -----------------------------------------------------------------------------
     // Coral Intake
     coralIntakeEjectThroughButton.toggleOnTrue(
@@ -296,10 +300,6 @@ public class RobotContainer {
         new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.L3_PLACE));
     wristGroundButton.toggleOnTrue(
         new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.GROUND_INTAKE));
-
-    climbButton.toggleOnTrue(
-        new Climb(climberSubsystem, elevatorSubsystem, blingSubsystem, () -> -getElevatorAxis()));
-    unClimbButton.onTrue(new UnClimb(climberSubsystem));
   }
 
   private void configureAutoChooser() {
