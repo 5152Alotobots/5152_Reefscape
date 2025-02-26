@@ -100,31 +100,40 @@ public class WristLimitZones {
   static {
     // Initialize zones - these should cover the entire range of elevator heights
 
-    // Zone 1: Bottom zone - limited downward movement to prevent floor collision
+    // Zone 1: Bottom zone
     zones.add(
         new WristLimitZone(
             MIN_HEIGHT, // Min elevator height
-            Meters.of(0.4), // Max elevator height
-            Degrees.of(0), // Min wrist angle (restricted)
-            MAX_ANGLE // Max wrist angle
-            ));
-
-    // Zone 2: Middle zone - full wrist range of motion
-    zones.add(
-        new WristLimitZone(
-            Meters.of(0.4), // Min elevator height
-            Meters.of(1.2), // Max elevator height
-            MIN_ANGLE, // Min wrist angle (full range)
-            MAX_ANGLE // Max wrist angle
-            ));
-
-    // Zone 3: Upper zone - restricted upward wrist movement
-    zones.add(
-        new WristLimitZone(
-            Meters.of(1.2), // Min elevator height
-            MAX_HEIGHT, // Max elevator height
+            Meters.of(0.55), // Max elevator height
             MIN_ANGLE, // Min wrist angle
-            Degrees.of(90) // Max wrist angle (restricted)
+            Degrees.of(95) // Max wrist angle
+            ));
+
+    // Zone 2: Middle zone
+    zones.add(
+        new WristLimitZone(
+            Meters.of(0.55), // Min elevator height
+            Meters.of(1.4), // Max elevator height
+            MIN_ANGLE, // Min wrist angle (full range)
+            Degrees.of(105) // Max wrist angle
+            ));
+
+    // Zone 3: Mid-Top zone
+    zones.add(
+        new WristLimitZone(
+            Meters.of(1.1), // Min elevator height
+            Meters.of(1.6), // Max elevator height
+            MIN_ANGLE, // Min wrist angle (full range)
+            Degrees.of(110) // Max wrist angle
+            ));
+
+    // Zone 4: Mid-Top zone
+    zones.add(
+            new WristLimitZone(
+                    Meters.of(1.6), // Min elevator height
+                    MAX_HEIGHT, // Max elevator height
+                    MIN_ANGLE, // Min wrist angle (full range)
+                    MAX_ANGLE // Max wrist angle
             ));
   }
 
