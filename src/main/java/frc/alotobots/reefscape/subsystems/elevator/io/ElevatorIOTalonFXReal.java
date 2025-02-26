@@ -197,7 +197,7 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
     leftConfig.MotorOutput.Inverted = LEFT_MOTOR_DIRECTION;
 
     leftConfig.MotionMagic.MotionMagicCruiseVelocity =
-        linearVelocityToTalonFX(MotionMagicConstants.CRUSE_VELOCITY).in(RotationsPerSecond);
+        linearVelocityToTalonFX(MotionMagicConstants.CRUISE_VELOCITY).in(RotationsPerSecond);
     leftConfig.MotionMagic.MotionMagicAcceleration =
         linearAccelerationToTalonFX(MotionMagicConstants.ACCELERATION)
             .in(RotationsPerSecondPerSecond);

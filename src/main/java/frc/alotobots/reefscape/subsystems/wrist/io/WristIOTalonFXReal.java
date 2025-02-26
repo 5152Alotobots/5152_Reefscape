@@ -149,7 +149,7 @@ public class WristIOTalonFXReal implements WristIO {
     wristMotorConfig.MotorOutput.Inverted = MOTOR_DIRECTION;
 
     wristMotorConfig.MotionMagic.MotionMagicCruiseVelocity =
-        MotionMagicConstants.CRUSE_VELOCITY.in(RotationsPerSecond);
+        MotionMagicConstants.CRUISE_VELOCITY.in(RotationsPerSecond);
     wristMotorConfig.MotionMagic.MotionMagicAcceleration =
         MotionMagicConstants.ACCELERATION.in(RotationsPerSecondPerSecond);
     wristMotorConfig.MotionMagic.MotionMagicJerk = MotionMagicConstants.JERK;
