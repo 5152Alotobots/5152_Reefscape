@@ -4,7 +4,7 @@
 The `DefaultElevatorRunAtVelocity` command is designed to run the elevator at a specified velocity based on continuous input. This command is typically used as the default command for the elevator subsystem, allowing operator control of elevator movement through a joystick or other input device.
 
 ## Required Subsystems
-- [Elevator Subsystem](/5152_Reefscape/library/subsystems/elevator)
+- [Elevator Subsystem](/5152_Reefscape/reefscape/subsystems/elevator)
 
 ## Constructor and Parameters
 

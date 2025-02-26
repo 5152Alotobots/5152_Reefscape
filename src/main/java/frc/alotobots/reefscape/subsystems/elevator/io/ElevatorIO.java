@@ -67,6 +67,12 @@ public interface ElevatorIO {
     /** Current velocity of the right elevator motor in meters per second */
     public LinearVelocity rightVelocity = MetersPerSecond.zero();
 
+    /** Current acceleration of the left elevator motor in meters per second per second */
+    public LinearAcceleration leftAcceleration = MetersPerSecondPerSecond.zero();
+
+    /** Current acceleration of the right elevator motor in meters per second per second */
+    public LinearAcceleration rightAcceleration = MetersPerSecondPerSecond.zero();
+
     /** Applied voltage to the left elevator motor */
     public Voltage leftAppliedVolts = Volts.zero();
 
@@ -94,6 +100,13 @@ public interface ElevatorIO {
    * @param position The desired position for the elevator
    */
   public default void setElevatorPosition(Distance position, int pidSlot) {}
+
+  /**
+   * Sets the target position for the elevator using closed-loop control & motion magic.
+   *
+   * @param position The desired position for the elevator
+   */
+  public default void setElevatorPositionMotionMagic(Distance position, int pidSlot) {}
 
   /**
    * Sets the target velocity for the elevator using closed-loop control.

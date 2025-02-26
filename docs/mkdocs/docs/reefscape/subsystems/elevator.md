@@ -13,9 +13,9 @@ public ElevatorSubsystem(ElevatorIO io)
 
 The Elevator subsystem is used by the following commands:
 
-- [DefaultElevatorRunAtVelocity](/5152_Reefscape/library/commands/elevator/defaultelevatorrunatvelocity)
-- [ElevatorOpenLoop](/5152_Reefscape/library/commands/elevator/elevatoropenloop) - Command for manual control using percent output
-- [ElevatorRunToHeight](/5152_Reefscape/library/commands/elevator/elevatorruntoheight) - Moves the elevator to a specified target height and maintains it
+- [DefaultElevatorRunAtVelocity](/5152_Reefscape/reefscape/commands/elevator/defaultelevatorrunatvelocity)
+- [ElevatorOpenLoop](/5152_Reefscape/reefscape/commands/elevator/elevatoropenloop) - Command for manual control using percent output
+- [ElevatorRunToHeight](/5152_Reefscape/reefscape/commands/elevator/elevatorruntoheight) - Moves the elevator to a specified target height and maintains it
 
 ## Configuration Requirements
 
