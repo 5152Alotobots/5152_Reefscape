@@ -10,31 +10,45 @@
 *
 * Source code must be publicly available on GitHub or an alternative web accessible site
 */
-package frc.alotobots.reefscape.subsystems.climber.commands;
+package frc.alotobots.reefscape.commands.groups;
 
 import static edu.wpi.first.units.Units.Meters;
 
 import edu.wpi.first.wpilibj2.command.*;
 import frc.alotobots.reefscape.subsystems.climber.ClimberSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
+import frc.alotobots.reefscape.subsystems.elevator.commands.ElevatorRunAtClimbVelocity;
 import frc.alotobots.reefscape.subsystems.elevator.commands.ElevatorRunToHeight;
+import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants;
+import java.util.function.DoubleSupplier;
 
+/**
+ * A sequential command group that handles the climbing sequence. This command coordinates the
+ * elevator and climber subsystems to perform a climbing operation.
+ */
 public class Climb extends SequentialCommandGroup {
 
-  public Climb(ClimberSubsystem climberSubsystem, ElevatorSubsystem elevatorSubsystem) {
-
+  /**
+   * Creates a new Climb command.
+   *
+   * @param climberSubsystem The climber subsystem to control
+   * @param elevatorSubsystem The elevator subsystem to control
+   * @param input The input supplier for controlling climb velocity
+   */
+  public Climb(
+      ClimberSubsystem climberSubsystem,
+      ElevatorSubsystem elevatorSubsystem,
+      DoubleSupplier input) {
     addCommands(
+        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.CLIMB).asProxy(),
         new InstantCommand(climberSubsystem::enableServos),
-        new ElevatorRunToHeight(elevatorSubsystem, Meters.of(0.8)),
         new InstantCommand(climberSubsystem::setPlungerToReceive),
         new InstantCommand(climberSubsystem::unlockCage),
         new WaitUntilCommand(climberSubsystem::getCageSwitches),
         new InstantCommand(climberSubsystem::lockCage),
+        new ElevatorRunToHeight(elevatorSubsystem, Meters.of(1.2)).asProxy(),
         new InstantCommand(climberSubsystem::setPlungerToPlunge),
-        new WaitCommand(1),
-        new InstantCommand(climberSubsystem::disableServos)
-        // new ElevatorRunToHeight(elevatorSubsystem, MIN_HEIGHT)
-        );
+        new ElevatorRunAtClimbVelocity(elevatorSubsystem, input).asProxy());
     addRequirements(climberSubsystem);
   }
 }

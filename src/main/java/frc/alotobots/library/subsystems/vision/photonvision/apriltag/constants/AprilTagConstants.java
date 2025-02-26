@@ -33,18 +33,18 @@ public class AprilTagConstants {
       new Transform3d[] {
         // Front Left
         new Transform3d(
-            new Translation3d(0.245, 0.21, 0.17),
-            new Rotation3d(0, Math.toRadians(-35), Math.toRadians(45))),
-        // Front Middle
+            new Translation3d(0.29, 0.24, 0.225),
+            new Rotation3d(0, Math.toRadians(-10), Math.toRadians(45))),
+        // Front Right
         new Transform3d(
-            new Translation3d(0.275, 0.0, 0.189),
-            new Rotation3d(0, Math.toRadians(-35), Math.toRadians(0)))
+            new Translation3d(0.29, -0.24, 0.225),
+            new Rotation3d(0, Math.toRadians(-10), Math.toRadians(-45)))
       };
 
   // CAMERAS
   public static final CameraConfig[] CAMERA_CONFIGS = {
     new CameraConfig("FL_AprilTag", CAMERA_OFFSETS[0], new SimCameraProperties()),
-    new CameraConfig("FM_AprilTag", CAMERA_OFFSETS[1], new SimCameraProperties())
+    new CameraConfig("FR_AprilTag", CAMERA_OFFSETS[1], new SimCameraProperties())
   };
 
   /*

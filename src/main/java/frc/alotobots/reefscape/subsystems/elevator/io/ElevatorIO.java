@@ -46,6 +46,9 @@ public interface ElevatorIO {
     /** Bottom Software Limit */
     public boolean bottomLimit = false;
 
+    /** Detection status of CANrange */
+    public boolean canrangeInProximity = false;
+
     /** Current position of the left elevator motor */
     public Distance leftHeight = Meters.zero();
 
@@ -66,6 +69,12 @@ public interface ElevatorIO {
 
     /** Current velocity of the right elevator motor in meters per second */
     public LinearVelocity rightVelocity = MetersPerSecond.zero();
+
+    /** Current acceleration of the left elevator motor in meters per second per second */
+    public LinearAcceleration leftAcceleration = MetersPerSecondPerSecond.zero();
+
+    /** Current acceleration of the right elevator motor in meters per second per second */
+    public LinearAcceleration rightAcceleration = MetersPerSecondPerSecond.zero();
 
     /** Applied voltage to the left elevator motor */
     public Voltage leftAppliedVolts = Volts.zero();
@@ -96,6 +105,13 @@ public interface ElevatorIO {
   public default void setElevatorPosition(Distance position, int pidSlot) {}
 
   /**
+   * Sets the target position for the elevator using closed-loop control & motion magic.
+   *
+   * @param position The desired position for the elevator
+   */
+  public default void setElevatorPositionMotionMagic(Distance position, int pidSlot) {}
+
+  /**
    * Sets the target velocity for the elevator using closed-loop control.
    *
    * @param velocity The desired velocity for the elevator
@@ -116,6 +132,14 @@ public interface ElevatorIO {
    * @param brake true to enable brake mode, false for coast mode
    */
   public default void setElevatorBrakeMode(boolean brake) {}
+
+  /**
+   * Resets both motors' (left and right) dead-reckoning position to the rotor count consistent with
+   * the input height
+   *
+   * @param height The height that the elevator should reference as zero
+   */
+  public default void resetRotorPositions(Distance height) {}
 
   /** Stops all motors */
   public default void stop() {}
