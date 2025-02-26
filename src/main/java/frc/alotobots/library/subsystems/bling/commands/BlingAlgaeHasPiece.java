@@ -12,10 +12,10 @@
 */
 package frc.alotobots.library.subsystems.bling.commands;
 
+import static frc.alotobots.library.subsystems.bling.constants.BlingConstants.Animations.*;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.alotobots.library.subsystems.bling.BlingSubsystem;
-
-import static frc.alotobots.library.subsystems.bling.constants.BlingConstants.Animations.*;
 
 /** Command that displays the Algae Has Piece animation for 2 seconds. */
 public class BlingAlgaeHasPiece extends Command {

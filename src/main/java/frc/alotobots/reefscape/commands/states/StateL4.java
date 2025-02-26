@@ -15,9 +15,12 @@ package frc.alotobots.reefscape.commands.states;
 import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeConstants.Setpoints.OpenLoop.EJECT_PERCENTAGE;
 
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.alotobots.library.commands.util.LogCommand;
+import frc.alotobots.library.subsystems.bling.BlingSubsystem;
+import frc.alotobots.library.subsystems.bling.commands.BlingCoralEjectedDrive;
 import frc.alotobots.reefscape.commands.groups.ParallelElevatorWristRun;
 import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEjectThrough;
@@ -38,12 +41,14 @@ public class StateL4 extends SequentialCommandGroup {
    * @param elevatorSubsystem The elevator subsystem
    * @param wristSubsystem The wrist subsystem
    * @param coralIntakeSubsystem The coral intake subsystem
+   * @param blingSubsystem The bling subsystem
    * @param coralIntakeReleaseTrigger The release button trigger
    */
   public StateL4(
       ElevatorSubsystem elevatorSubsystem,
       WristSubsystem wristSubsystem,
       CoralIntakeSubsystem coralIntakeSubsystem,
+      BlingSubsystem blingSubsystem,
       Trigger coralIntakeReleaseTrigger) {
     addCommands(
         new LogCommand("State/State", "L4"),
@@ -54,6 +59,7 @@ public class StateL4 extends SequentialCommandGroup {
             WristConstants.Setpoints.L4_PLACE),
         Commands.waitUntil(coralIntakeReleaseTrigger),
         new CoralIntakeEjectThrough(coralIntakeSubsystem, () -> EJECT_PERCENTAGE),
+        new ScheduleCommand(new BlingCoralEjectedDrive(blingSubsystem)),
         new StateStowed(elevatorSubsystem, wristSubsystem));
   }
 }

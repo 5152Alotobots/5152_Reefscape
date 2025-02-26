@@ -234,27 +234,46 @@ public class RobotContainer {
     BlingUtil.scheduleAtMatchTime(
         new BlingEndgameCountdown(blingSubsystem).andThen(new BlingTimeToClimb(blingSubsystem)),
         Seconds.of(30));
-    new Trigger(coralIntakeSubsystem::isIntakeOccupied).onTrue(new BlingCoralHasPiece(blingSubsystem));
-//    new Trigger(algaeIntakeSubsystem::isIntakeOccupied).onTrue(new BlingAlgaeHasPiece(blingSubsystem));
+    new Trigger(coralIntakeSubsystem::isIntakeOccupied)
+        .onTrue(new BlingCoralHasPiece(blingSubsystem));
+    //    new Trigger(algaeIntakeSubsystem::isIntakeOccupied).onTrue(new
+    // BlingAlgaeHasPiece(blingSubsystem));
 
     // Coral Intake
     coralIntakeIntakeButton.toggleOnTrue(
         new CoralIntakeIntake(coralIntakeSubsystem, () -> INTAKE_PERCENTAGE));
 
     stateCoralStationButton.toggleOnTrue(
-        new StateCoralStation(elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, blingSubsystem));
+        new StateCoralStation(
+            elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, blingSubsystem));
     stateL1Button.toggleOnTrue(
         new StateL1(
-            elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, coralIntakeReleaseButton));
+            elevatorSubsystem,
+            wristSubsystem,
+            coralIntakeSubsystem,
+            blingSubsystem,
+            coralIntakeReleaseButton));
     stateL2Button.toggleOnTrue(
         new StateL2(
-            elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, coralIntakeReleaseButton));
+            elevatorSubsystem,
+            wristSubsystem,
+            coralIntakeSubsystem,
+            blingSubsystem,
+            coralIntakeIntakeButton));
     stateL3Button.toggleOnTrue(
         new StateL3(
-            elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, coralIntakeReleaseButton));
+            elevatorSubsystem,
+            wristSubsystem,
+            coralIntakeSubsystem,
+            blingSubsystem,
+            coralIntakeReleaseButton));
     stateL4Button.toggleOnTrue(
         new StateL4(
-            elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, coralIntakeReleaseButton));
+            elevatorSubsystem,
+            wristSubsystem,
+            coralIntakeSubsystem,
+            blingSubsystem,
+            coralIntakeReleaseButton));
     stateStowButton.toggleOnTrue(new StateStowed(elevatorSubsystem, wristSubsystem));
     // BACKUP -----------------------------------------------------------------------------
     // Coral Intake
