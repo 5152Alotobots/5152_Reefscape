@@ -16,27 +16,34 @@ import static edu.wpi.first.units.Units.*;
 import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.Limits.*;
 import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.Thresholds.AT_TARGET_ANGLE_POSITION_THRESHOLD;
 import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.Thresholds.AT_TARGET_ANGLE_TIME_THRESHOLD;
+import static frc.alotobots.reefscape.subsystems.wrist.util.WristLimitZones.DEFAULT_ZONE;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
+import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.alotobots.reefscape.subsystems.wrist.io.WristIO;
 import frc.alotobots.reefscape.subsystems.wrist.io.WristIOInputsAutoLogged;
+import frc.alotobots.reefscape.subsystems.wrist.util.WristLimitZones;
 import frc.alotobots.reefscape.util.ControlType;
+import java.util.function.Supplier;
 import org.littletonrobotics.junction.Logger;
 
 /**
  * Subsystem for controlling the robot's wrist mechanism. Handles both position and velocity control
- * of the wrist joint.
+ * of the wrist joint with dynamic limits based on elevator height zones.
  */
 public class WristSubsystem extends SubsystemBase {
   /** Hardware abstraction for the wrist */
-  private WristIO io;
+  private final WristIO io;
+
+  /** Supplier for the current elevator height */
+  private final Supplier<Distance> elevatorHeightSupplier;
 
   /** Latest inputs from the wrist hardware */
-  private WristIOInputsAutoLogged inputs = new WristIOInputsAutoLogged();
+  private final WristIOInputsAutoLogged inputs = new WristIOInputsAutoLogged();
 
   /** Debouncer for ensuring stability at a position */
   private final Debouncer atTargetAngleDebounce =
@@ -48,62 +55,103 @@ public class WristSubsystem extends SubsystemBase {
    */
   private Angle targetAngle = Degrees.zero();
 
+  /** The current limit zone based on elevator height */
+  private WristLimitZones.WristLimitZone currentZone = DEFAULT_ZONE;
+
   /**
    * Creates a new WristSubsystem.
    *
    * @param io The hardware abstraction interface for the wrist
+   * @param elevatorHeightSupplier Supplier function that provides the current elevator height
    */
-  public WristSubsystem(WristIO io) {
+  public WristSubsystem(WristIO io, Supplier<Distance> elevatorHeightSupplier) {
     this.io = io;
+    this.elevatorHeightSupplier = elevatorHeightSupplier;
   }
 
   @Override
   public void periodic() {
+    // Update hardware inputs
     io.updateInputs(inputs);
     Logger.processInputs("Wrist", inputs);
+
+    // Get current elevator height
+    Distance elevatorHeight = elevatorHeightSupplier.get();
+
+    // Update current zone
+    currentZone = WristLimitZones.findZone(elevatorHeight);
+
+    // Log current zone information for debugging
+    Logger.recordOutput("Wrist/CurrentZoneMin", currentZone.getMinWristAngle().in(Degrees));
+    Logger.recordOutput("Wrist/CurrentZoneMax", currentZone.getMaxWristAngle().in(Degrees));
+    Logger.recordOutput("Wrist/TargetAngle", targetAngle.in(Degrees));
   }
 
   /**
-   * Commands the wrist to move to a target angle using closed-loop control. Target angle is clamped
-   * within the allowed range.
+   * Commands the wrist to move to a target angle using closed-loop control. Target angle is
+   * dynamically clamped based on current elevator height zone.
    *
    * @param angle The target angle for the wrist
    */
   public void runToTargetAngle(Angle angle) {
+    // Get min and max angle limits from current zone
+    Angle minAngle = WristLimitZones.getMinAngle(elevatorHeightSupplier.get());
+    Angle maxAngle = WristLimitZones.getMaxAngle(elevatorHeightSupplier.get());
+
+    // Clamp target angle within zone limits
     Angle adjustedAngle =
-        Degrees.of(MathUtil.clamp(angle.in(Degrees), MIN_ANGLE.in(Degrees), MAX_ANGLE.in(Degrees)));
+        Degrees.of(MathUtil.clamp(angle.in(Degrees), minAngle.in(Degrees), maxAngle.in(Degrees)));
+
     targetAngle = adjustedAngle;
-    io.setWristPositionMotionMagic(adjustedAngle, ControlType.ClosedLoop.POSITION.ordinal());
+
+    // Command the wrist to the adjusted angle with dynamic limits
+    io.setWristPositionMotionMagic(
+        adjustedAngle, ControlType.ClosedLoop.POSITION.ordinal(), minAngle, maxAngle);
     Logger.recordOutput("Wrist/ControlType", ControlType.ClosedLoop.POSITION);
   }
 
   /**
-   * Controls the wrist to move to a specified velocity using closed-loop velocity control.
+   * Controls the wrist to move to a specified velocity using closed-loop velocity control. Dynamic
+   * limits based on current elevator height are passed to the IO layer.
    *
-   * @param velocity Target velocity in degrees per second, automatically constrained between
-   *     -MAX_SPEED and MAX_SPEED
+   * @param velocity Target velocity in degrees per second
    */
   public void runToTargetVelocity(AngularVelocity velocity) {
+    // Get min and max angle limits from current zone
+    Angle minAngle = WristLimitZones.getMinAngle(elevatorHeightSupplier.get());
+    Angle maxAngle = WristLimitZones.getMaxAngle(elevatorHeightSupplier.get());
+
+    // Clamp velocity magnitude
     AngularVelocity adjustedVelocity =
         DegreesPerSecond.of(
             MathUtil.clamp(
                 velocity.in(DegreesPerSecond),
                 -MAX_SPEED.in(DegreesPerSecond),
                 MAX_SPEED.in(DegreesPerSecond)));
-    io.setWristVelocity(adjustedVelocity, ControlType.ClosedLoop.VELOCITY.ordinal());
+
+    // Command the wrist to the adjusted velocity with dynamic limits
+    io.setWristVelocity(
+        adjustedVelocity, ControlType.ClosedLoop.VELOCITY.ordinal(), minAngle, maxAngle);
     Logger.recordOutput("Wrist/ControlType", ControlType.ClosedLoop.VELOCITY);
   }
 
   /**
-   * Runs the wrist using direct percent output (open-loop control). Output is clamped within the
-   * allowed range.
+   * Runs the wrist using direct percent output (open-loop control). Dynamic limits based on current
+   * elevator height are passed to the IO layer.
    *
    * @param percentOutput The motor output as a percentage (-1.0 to 1.0)
    */
   public void runAtPercentOutput(double percentOutput) {
+    // Get min and max angle limits from current zone
+    Angle minAngle = WristLimitZones.getMinAngle(elevatorHeightSupplier.get());
+    Angle maxAngle = WristLimitZones.getMaxAngle(elevatorHeightSupplier.get());
+
+    // Clamp percent output
     double adjustedSpeed =
         MathUtil.clamp(percentOutput, -MAX_OPEN_LOOP_PERCENTAGE, MAX_OPEN_LOOP_PERCENTAGE);
-    io.setWristOpenLoop(adjustedSpeed);
+
+    // Command the wrist with the adjusted output and dynamic limits
+    io.setWristOpenLoop(adjustedSpeed, minAngle, maxAngle);
     Logger.recordOutput("Wrist/ControlType", ControlType.OpenLoop.OPEN_LOOP);
   }
 

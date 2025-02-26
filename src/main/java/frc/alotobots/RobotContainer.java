@@ -94,7 +94,8 @@ public class RobotContainer {
                 new ModuleIOTalonFXReal(ModulePosition.BACK_RIGHT.index));
         elevatorSubsystem = new ElevatorSubsystem(new ElevatorIOTalonFXReal());
         coralIntakeSubsystem = new CoralIntakeSubsystem(new CoralIntakeIOVortexReal());
-        wristSubsystem = new WristSubsystem(new WristIOTalonFXReal());
+        wristSubsystem =
+            new WristSubsystem(new WristIOTalonFXReal(), elevatorSubsystem::getCurrentHeight);
         climberSubsystem = new ClimberSubsystem(new ClimberIORevServoReal());
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         configureAutoChooser();
@@ -120,7 +121,6 @@ public class RobotContainer {
         break;
 
       case SIM:
-        wristSubsystem = new WristSubsystem(new WristIOTalonFXSim());
         coralIntakeSubsystem = new CoralIntakeSubsystem(new CoralIntakeIO() {});
         Pose2d simStartPose = new Pose2d(3, 3, new Rotation2d(0));
         driveSimulation =
@@ -147,6 +147,8 @@ public class RobotContainer {
                     driveSimulation.getModules()[ModulePosition.BACK_RIGHT.index]));
         swerveDriveSubsystem.setPose(simStartPose);
         elevatorSubsystem = new ElevatorSubsystem(new ElevatorIOTalonFXSim());
+        wristSubsystem =
+            new WristSubsystem(new WristIOTalonFXSim(), elevatorSubsystem::getCurrentHeight);
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         configureAutoChooser();
 
@@ -172,7 +174,6 @@ public class RobotContainer {
         break;
 
       default:
-        wristSubsystem = new WristSubsystem(new WristIOTalonFXSim());
         coralIntakeSubsystem = new CoralIntakeSubsystem(new CoralIntakeIOVortexReal());
         climberSubsystem = new ClimberSubsystem(new ClimberIORevServoReal());
 
@@ -185,6 +186,8 @@ public class RobotContainer {
                 new ModuleIO() {},
                 new ModuleIO() {});
         elevatorSubsystem = new ElevatorSubsystem(new ElevatorIO() {});
+        wristSubsystem =
+            new WristSubsystem(new WristIOTalonFXSim(), elevatorSubsystem::getCurrentHeight);
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         configureAutoChooser();
 
