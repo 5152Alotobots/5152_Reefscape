@@ -58,6 +58,32 @@ public class WristSubsystem extends SubsystemBase {
   /** The current limit zone based on elevator height */
   private WristLimitZones.WristLimitZone currentZone = DEFAULT_ZONE;
 
+  /** Flag indicating if automatic recovery is in progress */
+  private boolean inAutoRecovery = false;
+
+  /** Target angle for recovery motion */
+  private Angle recoveryTargetAngle = Degrees.zero();
+
+  /** Enum to track the type of pending command */
+  private enum PendingCommandType {
+    NONE,
+    POSITION,
+    VELOCITY,
+    PERCENT_OUTPUT
+  }
+
+  /** The type of command pending execution after recovery */
+  private PendingCommandType pendingCommandType = PendingCommandType.NONE;
+
+  /** Parameters for pending position command */
+  private Angle pendingTargetAngle = Degrees.zero();
+
+  /** Parameters for pending velocity command */
+  private AngularVelocity pendingVelocity = DegreesPerSecond.zero();
+
+  /** Parameters for pending percent output command */
+  private double pendingPercentOutput = 0.0;
+
   /**
    * Creates a new WristSubsystem.
    *
@@ -78,13 +104,91 @@ public class WristSubsystem extends SubsystemBase {
     // Get current elevator height
     Distance elevatorHeight = elevatorHeightSupplier.get();
 
+    // Store previous zone for change detection
+    WristLimitZones.WristLimitZone previousZone = currentZone;
+
     // Update current zone
     currentZone = WristLimitZones.findZone(elevatorHeight);
+
+    // Check for zone change and if we need to recover
+    if (!currentZone.equals(previousZone) && !inAutoRecovery) {
+      Angle currentAngle = inputs.mechanismAngle;
+      Angle minAngle = currentZone.getMinWristAngle();
+      Angle maxAngle = currentZone.getMaxWristAngle();
+
+      // Check if current position is outside new zone limits
+      if (currentAngle.lt(minAngle) || currentAngle.gt(maxAngle)) {
+        // Start automatic recovery
+        startAutoRecovery(currentAngle, minAngle, maxAngle);
+      }
+    }
+
+    // If in auto recovery, check if complete
+    if (inAutoRecovery && isAtTargetAngle()) {
+      inAutoRecovery = false;
+      Logger.recordOutput("Wrist/AutoRecoveryComplete", true);
+
+      // Execute any pending command
+      executePendingCommand();
+    }
 
     // Log current zone information for debugging
     Logger.recordOutput("Wrist/CurrentZoneMin", currentZone.getMinWristAngle().in(Degrees));
     Logger.recordOutput("Wrist/CurrentZoneMax", currentZone.getMaxWristAngle().in(Degrees));
     Logger.recordOutput("Wrist/TargetAngle", targetAngle.in(Degrees));
+    Logger.recordOutput("Wrist/InAutoRecovery", inAutoRecovery);
+  }
+
+  /**
+   * Starts automatic recovery motion to bring the wrist within the new zone limits.
+   *
+   * @param currentAngle Current wrist angle
+   * @param minAngle Minimum allowed angle in the new zone
+   * @param maxAngle Maximum allowed angle in the new zone
+   */
+  private void startAutoRecovery(Angle currentAngle, Angle minAngle, Angle maxAngle) {
+    // Determine target angle (closest valid position)
+    if (currentAngle.lt(minAngle)) {
+      recoveryTargetAngle = minAngle;
+    } else {
+      recoveryTargetAngle = maxAngle;
+    }
+
+    // Set recovery flag
+    inAutoRecovery = true;
+    targetAngle = recoveryTargetAngle;
+
+    // Command wrist to move to recovery target using motion magic
+    io.setWristPositionMotionMagic(
+        recoveryTargetAngle, ControlType.ClosedLoop.POSITION.ordinal(), minAngle, maxAngle);
+
+    Logger.recordOutput("Wrist/AutoRecoveryTarget", recoveryTargetAngle.in(Degrees));
+    Logger.recordOutput("Wrist/ControlType", ControlType.ClosedLoop.POSITION);
+  }
+
+  /** Executes any pending command after auto recovery is complete. */
+  private void executePendingCommand() {
+    switch (pendingCommandType) {
+      case POSITION:
+        runToTargetAngle(pendingTargetAngle);
+        Logger.recordOutput("Wrist/ExecutingQueuedPositionCommand", true);
+        break;
+      case VELOCITY:
+        runToTargetVelocity(pendingVelocity);
+        Logger.recordOutput("Wrist/ExecutingQueuedVelocityCommand", true);
+        break;
+      case PERCENT_OUTPUT:
+        runAtPercentOutput(pendingPercentOutput);
+        Logger.recordOutput("Wrist/ExecutingQueuedPercentOutputCommand", true);
+        break;
+      case NONE:
+      default:
+        // No pending command to execute
+        break;
+    }
+
+    // Clear pending command
+    pendingCommandType = PendingCommandType.NONE;
   }
 
   /**
@@ -94,6 +198,14 @@ public class WristSubsystem extends SubsystemBase {
    * @param angle The target angle for the wrist
    */
   public void runToTargetAngle(Angle angle) {
+    // If in auto recovery, store command for later execution
+    if (inAutoRecovery) {
+      pendingCommandType = PendingCommandType.POSITION;
+      pendingTargetAngle = angle;
+      Logger.recordOutput("Wrist/CommandQueuedDuringRecovery", true);
+      return;
+    }
+
     // Get min and max angle limits from current zone
     Angle minAngle = WristLimitZones.getMinAngle(elevatorHeightSupplier.get());
     Angle maxAngle = WristLimitZones.getMaxAngle(elevatorHeightSupplier.get());
@@ -117,6 +229,14 @@ public class WristSubsystem extends SubsystemBase {
    * @param velocity Target velocity in degrees per second
    */
   public void runToTargetVelocity(AngularVelocity velocity) {
+    // If in auto recovery, store command for later execution
+    if (inAutoRecovery) {
+      pendingCommandType = PendingCommandType.VELOCITY;
+      pendingVelocity = velocity;
+      Logger.recordOutput("Wrist/CommandQueuedDuringRecovery", true);
+      return;
+    }
+
     // Get min and max angle limits from current zone
     Angle minAngle = WristLimitZones.getMinAngle(elevatorHeightSupplier.get());
     Angle maxAngle = WristLimitZones.getMaxAngle(elevatorHeightSupplier.get());
@@ -142,6 +262,14 @@ public class WristSubsystem extends SubsystemBase {
    * @param percentOutput The motor output as a percentage (-1.0 to 1.0)
    */
   public void runAtPercentOutput(double percentOutput) {
+    // If in auto recovery, store command for later execution
+    if (inAutoRecovery) {
+      pendingCommandType = PendingCommandType.PERCENT_OUTPUT;
+      pendingPercentOutput = percentOutput;
+      Logger.recordOutput("Wrist/CommandQueuedDuringRecovery", true);
+      return;
+    }
+
     // Get min and max angle limits from current zone
     Angle minAngle = WristLimitZones.getMinAngle(elevatorHeightSupplier.get());
     Angle maxAngle = WristLimitZones.getMaxAngle(elevatorHeightSupplier.get());
@@ -157,6 +285,12 @@ public class WristSubsystem extends SubsystemBase {
 
   /** Stops all wrist movement. */
   public void stop() {
+    // If in auto recovery, clear pending commands and don't stop
+    if (inAutoRecovery) {
+      pendingCommandType = PendingCommandType.NONE;
+      return;
+    }
+
     io.stop();
   }
 

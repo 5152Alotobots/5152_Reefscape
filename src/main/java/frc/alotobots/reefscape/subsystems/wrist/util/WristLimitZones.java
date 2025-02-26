@@ -129,11 +129,11 @@ public class WristLimitZones {
 
     // Zone 4: Mid-Top zone
     zones.add(
-            new WristLimitZone(
-                    Meters.of(1.6), // Min elevator height
-                    MAX_HEIGHT, // Max elevator height
-                    MIN_ANGLE, // Min wrist angle (full range)
-                    MAX_ANGLE // Max wrist angle
+        new WristLimitZone(
+            Meters.of(1.6), // Min elevator height
+            MAX_HEIGHT, // Max elevator height
+            MIN_ANGLE, // Min wrist angle (full range)
+            MAX_ANGLE // Max wrist angle
             ));
   }
 
