@@ -43,6 +43,9 @@ public class ElevatorSubsystem extends SubsystemBase {
   private final Debouncer atTargetHeightDebounce =
       new Debouncer(AT_TARGET_HEIGHT_TIME_THRESHOLD.in(Seconds));
 
+  /** Debouncer for bottom resetting logic */
+  private final Debouncer atBottomDebounce = new Debouncer(AT_TARGET_HEIGHT_TIME_THRESHOLD.in(Seconds));
+
   /** Boolean tracking if the elevator has reset from the CANrange in its current position */
   private boolean hasReset = false;
 
@@ -172,7 +175,7 @@ public class ElevatorSubsystem extends SubsystemBase {
    * moves away from the bottom and returns.
    */
   private void handleBottomReset() {
-    if (atTargetHeightDebounce.calculate(inputs.canrangeInProximity) && !hasReset) {
+    if (atBottomDebounce.calculate(inputs.canrangeInProximity) && !hasReset) {
       io.resetRotorPositions(MIN_HEIGHT);
       hasReset = true;
       Logger.recordOutput("Elevator/PositionReset", true);
