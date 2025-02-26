@@ -25,7 +25,6 @@ import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.Timer;
-import frc.alotobots.library.subsystems.bling.util.BlingDiagnosticManager;
 import java.util.function.Supplier;
 import org.ironmaple.simulation.SimulatedArena;
 import org.ironmaple.simulation.motorsims.SimulatedBattery;
@@ -40,22 +39,16 @@ public final class PhoenixUtil {
     /** Reset configuration error status (call at robot startup) */
     public static void reset() {
       anyConfigError = false;
-      BlingDiagnosticManager.setPhoenixConfigStatus(
-          BlingDiagnosticManager.ConfigStatus.IN_PROGRESS);
     }
 
     /** Record a successful configuration */
     private static void recordSuccess() {
       // Only update status if we haven't seen any errors
-      if (!anyConfigError) {
-        BlingDiagnosticManager.setPhoenixConfigStatus(BlingDiagnosticManager.ConfigStatus.COMPLETE);
-      }
     }
 
     /** Record a configuration error */
     private static void recordError() {
       anyConfigError = true;
-      BlingDiagnosticManager.setPhoenixConfigStatus(BlingDiagnosticManager.ConfigStatus.ERROR);
     }
   }
 

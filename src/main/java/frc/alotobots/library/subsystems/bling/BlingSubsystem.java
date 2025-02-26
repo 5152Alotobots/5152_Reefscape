@@ -19,7 +19,6 @@ import com.ctre.phoenix.led.Animation;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.alotobots.library.subsystems.bling.io.BlingIO;
 import frc.alotobots.library.subsystems.bling.io.BlingIOInputsAutoLogged;
-import frc.alotobots.library.subsystems.bling.util.BlingDiagnosticManager;
 import org.littletonrobotics.junction.Logger;
 
 /**
@@ -47,22 +46,6 @@ public class BlingSubsystem extends SubsystemBase {
     // Update inputs
     io.updateInputs(inputs);
     Logger.processInputs("Bling", inputs);
-
-    // Update Diagnostic Status
-    updateDiagnosticLEDs();
-  }
-
-  private void updateDiagnosticLEDs() {
-    // Check each LED for status changes
-    for (int i = 0; i < 8; i++) {
-      System.out.println("LED " + i + " color: " + BlingDiagnosticManager.getLEDColor(i));
-      // Only update LEDs that have changed status for efficiency
-      if (BlingDiagnosticManager.hasColorChanged(i)) {
-        BlingIO.LoggedColor color = BlingDiagnosticManager.getLEDColor(i);
-        // Set the LED to the appropriate color
-        io.setSolidColor(color, i, i);
-      }
-    }
   }
 
   /**

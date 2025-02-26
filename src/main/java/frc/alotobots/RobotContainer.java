@@ -277,7 +277,7 @@ public class RobotContainer {
     stateStowButton.toggleOnTrue(new StateStowed(elevatorSubsystem, wristSubsystem));
 
     climbButton.toggleOnTrue(
-            new Climb(climberSubsystem, elevatorSubsystem, blingSubsystem, () -> -getElevatorAxis()));
+        new Climb(climberSubsystem, elevatorSubsystem, blingSubsystem, () -> -getElevatorAxis()));
     unClimbButton.onTrue(new UnClimb(climberSubsystem));
     // BACKUP -----------------------------------------------------------------------------
     // Coral Intake
