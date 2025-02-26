@@ -214,10 +214,12 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
 
     // CANRange config
     var canRangeConfig = new CANrangeConfiguration();
-    canRangeConfig.ToFParams.UpdateMode = UpdateModeValue.LongRangeUserFreq;
+    canRangeConfig.ToFParams.UpdateMode = UpdateModeValue.ShortRangeUserFreq;
     canRangeConfig.ToFParams.UpdateFrequency = 50; // Hz
     canRangeConfig.FovParams.FOVRangeX = 6.75;
     canRangeConfig.FovParams.FOVRangeY = 6.75;
+    canRangeConfig.ProximityParams.ProximityThreshold = .154;
+    canRangeConfig.ProximityParams.ProximityHysteresis = .001;
 
     // Apply config to CANRange
     tryUntilOk(5, () -> canRange.getConfigurator().apply(canRangeConfig, 0.25));
