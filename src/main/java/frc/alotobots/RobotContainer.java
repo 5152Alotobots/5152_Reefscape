@@ -298,7 +298,7 @@ public class RobotContainer {
         new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.GROUND_INTAKE));
 
     climbButton.toggleOnTrue(
-        new Climb(climberSubsystem, elevatorSubsystem, () -> -getElevatorAxis()));
+        new Climb(climberSubsystem, elevatorSubsystem, blingSubsystem, () -> -getElevatorAxis()));
     unClimbButton.onTrue(new UnClimb(climberSubsystem));
   }
 
