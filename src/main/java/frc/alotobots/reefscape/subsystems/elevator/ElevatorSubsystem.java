@@ -85,7 +85,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     Distance adjustedHeight =
         Meters.of(MathUtil.clamp(height.in(Meters), MIN_HEIGHT.in(Meters), MAX_HEIGHT.in(Meters)));
     targetHeight = adjustedHeight;
-    io.setElevatorPosition(adjustedHeight, ControlType.ClosedLoop.POSITION.ordinal());
+    io.setElevatorPositionMotionMagic(adjustedHeight, ControlType.ClosedLoop.POSITION.ordinal());
     Logger.recordOutput("Elevator/ControlType", ControlType.ClosedLoop.POSITION);
   }
 
@@ -93,17 +93,30 @@ public class ElevatorSubsystem extends SubsystemBase {
    * Controls the elevator to move to a specified velocity using closed-loop velocity control.
    *
    * @param velocity Target velocity in meters per second, automatically constrained between
-   *     -MAX_SPEED and MAX_SPEED
+   *     -MAX_OPERATOR_VELOCITY and MAX_OPERATOR_VELOCITY
    */
   public void runToTargetVelocity(LinearVelocity velocity) {
+    LinearVelocity adjustedVelocity = applyVelocityLimitIfNeeded(velocity);
+    io.setElevatorVelocity(adjustedVelocity, ControlType.ClosedLoop.VELOCITY.ordinal());
+    Logger.recordOutput("Elevator/ControlType", ControlType.ClosedLoop.VELOCITY);
+  }
+
+  /**
+   * Controls the elevator to move to a specified velocity using closed-loop climbing velocity
+   * control.
+   *
+   * @param velocity Target velocity in meters per second, automatically constrained between
+   *     -MAX_OPERATOR_VELOCITY and MAX_OPERATOR_VELOCITY
+   */
+  public void runToClimbingVelocity(LinearVelocity velocity) {
     LinearVelocity adjustedVelocity =
         MetersPerSecond.of(
             MathUtil.clamp(
                 velocity.in(MetersPerSecond),
-                -MAX_SPEED.in(MetersPerSecond),
-                MAX_SPEED.in(MetersPerSecond)));
-    io.setElevatorVelocity(adjustedVelocity, ControlType.ClosedLoop.VELOCITY.ordinal());
-    Logger.recordOutput("Elevator/ControlType", ControlType.ClosedLoop.VELOCITY);
+                -MAX_OPERATOR_VELOCITY.in(MetersPerSecond),
+                MAX_OPERATOR_VELOCITY.in(MetersPerSecond)));
+    io.setElevatorVelocity(adjustedVelocity, ControlType.ClosedLoop.VELOCITY_CLIMB.ordinal());
+    Logger.recordOutput("Elevator/ControlType", ControlType.ClosedLoop.VELOCITY_CLIMB);
   }
 
   /**
@@ -166,6 +179,39 @@ public class ElevatorSubsystem extends SubsystemBase {
     } else if (!inputs.canrangeInProximity) {
       hasReset = false;
       Logger.recordOutput("Elevator/PositionReset", false);
+    }
+  }
+
+  /**
+   * Checks if the elevator is within the velocity limit distance from the top or bottom limits.
+   *
+   * @return true if the elevator is within the velocity limit distance, false otherwise
+   */
+  private boolean isVelocityLimitNeeded() {
+    return inputs.leftHeight.minus(MIN_HEIGHT).abs(Meters) < DISTANCE_FROM_LIMIT.in(Meters)
+        || inputs.leftHeight.minus(MAX_HEIGHT).abs(Meters) < DISTANCE_FROM_LIMIT.in(Meters);
+  }
+
+  /**
+   * Applies the velocity limit if the elevator is within the velocity limit distance from the top
+   * or bottom limits.
+   *
+   * @param velocity The target velocity
+   * @return The adjusted velocity if the limit is needed, otherwise the original velocity
+   */
+  private LinearVelocity applyVelocityLimitIfNeeded(LinearVelocity velocity) {
+    if (isVelocityLimitNeeded()) {
+      return MetersPerSecond.of(
+          MathUtil.clamp(
+              velocity.in(MetersPerSecond),
+              -MAX_VELOCITY_NEAR_LIMIT.in(MetersPerSecond),
+              MAX_VELOCITY_NEAR_LIMIT.in(MetersPerSecond)));
+    } else {
+      return MetersPerSecond.of(
+          MathUtil.clamp(
+              velocity.in(MetersPerSecond),
+              -MAX_OPERATOR_VELOCITY.in(MetersPerSecond),
+              MAX_OPERATOR_VELOCITY.in(MetersPerSecond)));
     }
   }
 }

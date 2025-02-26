@@ -13,10 +13,14 @@
 package frc.alotobots.reefscape.subsystems.elevator.constants;
 
 import static edu.wpi.first.units.Units.Amps;
+import static edu.wpi.first.units.Units.MetersPerSecond;
+import static edu.wpi.first.units.Units.MetersPerSecondPerSecond;
 
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.units.measure.Current;
+import edu.wpi.first.units.measure.LinearAcceleration;
+import edu.wpi.first.units.measure.LinearVelocity;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -75,6 +79,36 @@ public final class ElevatorTalonFXRealConstants {
       /** Velocity feedforward gain */
       public static final double KV = 0.0;
     }
+
+    /** TalonFX-specific PID and motion control constants for climbing mode. */
+    public static final class ClimbingPIDConstants {
+      /** Climbing control proportional gain */
+      public static final double KP = 0.2;
+
+      /** Climbing control integral gain */
+      public static final double KI = 0.0;
+
+      /** Climbing control derivative gain */
+      public static final double KD = 0.0;
+
+      /** Acceleration feedforward gain */
+      public static final double KA = 0.0;
+
+      /** Gravity compensation gain */
+      public static final double KG = 0.15;
+
+      /** Static friction compensation */
+      public static final double KS = 0.0;
+
+      /** Velocity feedforward gain */
+      public static final double KV = 0.12;
+    }
+  }
+
+  public static final class MotionMagicConstants {
+    public static final LinearVelocity CRUISE_VELOCITY = MetersPerSecond.of(1.0);
+    public static final LinearAcceleration ACCELERATION = MetersPerSecondPerSecond.of(0.8);
+    public static final double JERK = 0;
   }
 
   /** Contains safety limit constants for the elevator motors. */
@@ -94,4 +128,7 @@ public final class ElevatorTalonFXRealConstants {
 
   /** Neutral mode (brake/coast) setting for the mechanism */
   public static final NeutralModeValue MECHANISM_NEUTRAL_MODE = NeutralModeValue.Brake;
+
+  /** Regression used to calculate height of motor. (Should be linear) Rotations:Meters */
+  public static final double HEIGHT_PER_ROTATION = 0.00977762;
 }

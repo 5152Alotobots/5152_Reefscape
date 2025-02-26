@@ -15,6 +15,7 @@ package frc.alotobots.reefscape.subsystems.wrist.io;
 import static edu.wpi.first.units.Units.*;
 
 import edu.wpi.first.units.measure.Angle;
+import edu.wpi.first.units.measure.AngularAcceleration;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Voltage;
@@ -50,6 +51,8 @@ public interface WristIO {
     /** Current angular velocity of the wrist */
     public AngularVelocity rotationVelocity = RotationsPerSecond.zero();
 
+    public AngularAcceleration rotationAcceleration = RotationsPerSecondPerSecond.zero();
+
     /** Current voltage being applied to the motor */
     public Voltage motorAppliedVolts = Volts.zero();
 
@@ -79,6 +82,14 @@ public interface WristIO {
    * @param pidSlot The PID slot to use (0 for velocity, 1 for position)
    */
   public default void setWristVelocity(AngularVelocity velocity, int pidSlot) {}
+
+  /**
+   * Sets the wrist to run at a target velocity using closed-loop control.
+   *
+   * @param velocity The target velocity to move at
+   * @param pidSlot The PID slot to use (0 for velocity, 1 for position)
+   */
+  public default void setWristPositionMotionMagic(Angle position, int pidSlot) {}
 
   /**
    * Runs the wrist using direct percentage output (open-loop control).

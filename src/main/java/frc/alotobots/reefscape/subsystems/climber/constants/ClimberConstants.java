@@ -10,16 +10,6 @@
 *
 * Source code must be publicly available on GitHub or an alternative web accessible site
 */
-package frc.alotobots.reefscape.util;
+package frc.alotobots.reefscape.subsystems.climber.constants;
 
-public class ControlType {
-  public enum ClosedLoop {
-    VELOCITY,
-    POSITION,
-    VELOCITY_CLIMB
-  }
-
-  public enum OpenLoop {
-    OPEN_LOOP
-  }
-}
+public class ClimberConstants {}

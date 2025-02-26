@@ -23,11 +23,11 @@ import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 import java.util.function.DoubleSupplier;
 
 /**
- * Default command that runs the elevator at a specified velocity. This command takes a velocity
- * input (normalized between -1.0 and 1.0) and applies it to the elevator, scaled by the maximum
- * speed constant.
+ * Command that runs the elevator at a specified velocity for climbing. This command takes a
+ * velocity input (normalized between -1.0 and 1.0) and applies it to the elevator, scaled by the
+ * maximum speed constant.
  */
-public class DefaultElevatorRunAtVelocity extends Command {
+public class ElevatorRunAtClimbVelocity extends Command {
   /** The elevator subsystem this command controls. */
   private final ElevatorSubsystem elevatorSubsystem;
 
@@ -44,12 +44,12 @@ public class DefaultElevatorRunAtVelocity extends Command {
   private final DoubleSupplier input;
 
   /**
-   * Creates a new DefaultElevatorRunAtVelocity command.
+   * Creates a new ClimbingElevatorRunAtVelocity command.
    *
    * @param elevatorSubsystem The elevator subsystem this command will run on
    * @param input A supplier that provides the normalized velocity input (-1.0 to 1.0)
    */
-  public DefaultElevatorRunAtVelocity(ElevatorSubsystem elevatorSubsystem, DoubleSupplier input) {
+  public ElevatorRunAtClimbVelocity(ElevatorSubsystem elevatorSubsystem, DoubleSupplier input) {
     this.elevatorSubsystem = elevatorSubsystem;
     this.input = input;
 
@@ -72,7 +72,7 @@ public class DefaultElevatorRunAtVelocity extends Command {
   public void execute() {
     double adjustedInput = MathUtil.clamp(input.getAsDouble(), MIN_AXIS_LIMIT, MAX_AXIS_LIMIT);
     LinearVelocity velocity = MAX_OPERATOR_VELOCITY.times(adjustedInput);
-    elevatorSubsystem.runToTargetVelocity(velocity);
+    elevatorSubsystem.runToClimbingVelocity(velocity);
   }
 
   /**
