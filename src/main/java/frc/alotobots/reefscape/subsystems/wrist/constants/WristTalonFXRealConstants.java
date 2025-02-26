@@ -48,13 +48,13 @@ public class WristTalonFXRealConstants {
       public static final double KA = 0.0;
 
       /** Gravity compensation gain */
-      public static final double KG = 0.0;
+      public static final double KG = 0.18;
 
       /** Static friction compensation */
       public static final double KS = 0.0;
 
       /** Velocity feedforward gain */
-      public static final double KV = 22;
+      public static final double KV = 32;
     }
 
     /** TalonFX-specific PID and motion control constants for Position mode. */
