@@ -26,10 +26,10 @@ public final class ElevatorConstants {
 
   public static final class Thresholds {
     /** Acceptable PID error that will classify as "at position" */
-    public static final Distance AT_SET_POINT_POSITION_THRESHOLD = Meters.of(.02);
+    public static final Distance AT_TARGET_HEIGHT_POSITION_THRESHOLD = Meters.of(.02);
 
     /** How long the elevator must be "at position" to classify as "at position" */
-    public static final Time AT_SET_POINT_TIME_THRESHOLD = Seconds.of(.2);
+    public static final Time AT_TARGET_HEIGHT_TIME_THRESHOLD = Seconds.of(.2);
   }
 
   /** Physical limits and safety thresholds */
