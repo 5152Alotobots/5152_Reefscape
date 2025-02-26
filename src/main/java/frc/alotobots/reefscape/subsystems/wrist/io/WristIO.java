@@ -84,9 +84,9 @@ public interface WristIO {
   public default void setWristVelocity(AngularVelocity velocity, int pidSlot) {}
 
   /**
-   * Sets the wrist to run at a target velocity using closed-loop control.
+   * Sets the wrist to run at a target position using motion magic control.
    *
-   * @param velocity The target velocity to move at
+   * @param position The target position to move to
    * @param pidSlot The PID slot to use (0 for velocity, 1 for position)
    */
   public default void setWristPositionMotionMagic(Angle position, int pidSlot) {}
