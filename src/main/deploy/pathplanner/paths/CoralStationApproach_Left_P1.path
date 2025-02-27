@@ -8,7 +8,7 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 0.8877805939108592,
+        "x": 0.887780593910859,
         "y": 6.24288020317436
       },
       "isLocked": false,
@@ -20,7 +20,7 @@
         "y": 6.678
       },
       "prevControl": {
-        "x": 0.7285847841121507,
+        "x": 0.7285847841121508,
         "y": 6.473211988927752
       },
       "nextControl": null,
@@ -34,7 +34,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 5.2,
-    "maxAcceleration": 3.5,
+    "maxAcceleration": 3.2,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 460.0,
     "nominalVoltage": 12.0,
@@ -45,7 +45,7 @@
     "rotation": 125.00000000000001
   },
   "reversed": false,
-  "folder": "CoralStationApproach",
+  "folder": "AutoDrive",
   "idealStartingState": {
     "velocity": 4.5,
     "rotation": 125.00000000000001

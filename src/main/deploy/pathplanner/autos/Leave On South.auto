@@ -7,19 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "StraightTest1"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "StraightTest2"
+            "pathName": "Leave On South"
           }
         }
       ]
     }
   },
   "resetOdom": false,
-  "folder": "Tests",
+  "folder": "Just Leave",
   "choreoAuto": false
 }

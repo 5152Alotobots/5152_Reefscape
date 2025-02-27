@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 4.9822500000000005,
+        "y": 2.8744999999999994
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 4.0755,
+        "y": 1.6654999999999995
+      },
+      "isLocked": false,
+      "linkedName": "Reef_SE_L"
+    },
+    {
+      "anchor": {
+        "x": 1.5307499999999998,
+        "y": 0.6319999999999993
+      },
+      "prevControl": {
+        "x": 2.62275,
+        "y": 0.9829999999999994
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "South Left Station"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 460.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -130.0
+  },
+  "reversed": false,
+  "folder": "Three Piece",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 119.99999999999999
+  },
+  "useDefaultConstraints": true
+}

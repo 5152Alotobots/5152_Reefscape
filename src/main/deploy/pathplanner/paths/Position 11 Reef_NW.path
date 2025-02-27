@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.3542201424191584,
-        "y": 5.569024212825211
+        "x": 4.017,
+        "y": 5.195
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.3542201424191584,
-        "y": 5.569024212825211
+        "x": 5.017000000000001,
+        "y": 5.195
       },
       "isLocked": false,
-      "linkedName": "HoloTest1_Start"
+      "linkedName": "Reef_NW_L"
     },
     {
       "anchor": {
-        "x": 2.9368221808626718,
-        "y": 5.916973695743167
+        "x": 3.705,
+        "y": 5.0097499999999995
       },
       "prevControl": {
-        "x": 1.9118769780704805,
-        "y": 5.921641238560395
+        "x": 2.705,
+        "y": 5.0097499999999995
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "HoloTest1_End"
+      "linkedName": "Reef_NW_R"
     }
   ],
   "rotationTargets": [],
@@ -33,8 +33,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 5.2,
-    "maxAcceleration": 3.5,
+    "maxVelocity": 5.0,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 460.0,
     "nominalVoltage": 12.0,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -59.99999999999999
   },
   "reversed": false,
-  "folder": "HoloTest",
+  "folder": "Positions",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": -59.99999999999999
   },
   "useDefaultConstraints": true
 }

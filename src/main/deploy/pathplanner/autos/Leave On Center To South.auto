@@ -7,19 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "HoloTest1"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "HoloTest2"
+            "pathName": "Leave On Center To South"
           }
         }
       ]
     }
   },
   "resetOdom": false,
-  "folder": "Tests",
+  "folder": "Just Leave",
   "choreoAuto": false
 }

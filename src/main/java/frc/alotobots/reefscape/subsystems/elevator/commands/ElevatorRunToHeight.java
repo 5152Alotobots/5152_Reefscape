@@ -18,60 +18,51 @@ import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 
 /**
  * Command that moves the elevator to a specified target height. Uses closed-loop control to
- * accurately position the elevator and ends when the target height is reached within tolerance.
+ * accurately position the elevator. Can either end when reaching target or continuously hold
+ * position.
  */
 public class ElevatorRunToHeight extends Command {
-  /** The elevator subsystem being controlled. */
   private final ElevatorSubsystem elevatorSubsystem;
-
-  /** The target height for the elevator to reach. */
   private final Distance targetHeight;
+  private final boolean holdPosition;
 
   /**
    * Creates a new ElevatorRunToHeight command.
    *
    * @param elevatorSubsystem The elevator subsystem to control
    * @param targetHeight The desired height for the elevator to reach
+   * @param holdPosition If true, command will continue running to maintain position
    */
-  public ElevatorRunToHeight(ElevatorSubsystem elevatorSubsystem, Distance targetHeight) {
+  public ElevatorRunToHeight(
+      ElevatorSubsystem elevatorSubsystem, Distance targetHeight, boolean holdPosition) {
     this.elevatorSubsystem = elevatorSubsystem;
     this.targetHeight = targetHeight;
+    this.holdPosition = holdPosition;
     addRequirements(elevatorSubsystem);
   }
 
-  /**
-   * Initializes the command by setting the elevator's target position. Called when the command is
-   * initially scheduled.
-   */
+  // Constructor overload for backward compatibility
+  public ElevatorRunToHeight(ElevatorSubsystem elevatorSubsystem, Distance targetHeight) {
+    this(elevatorSubsystem, targetHeight, false);
+  }
+
   @Override
   public void initialize() {
     elevatorSubsystem.runToTargetPosition(targetHeight);
   }
 
-  /** Executes the position control loop. The PID control is handled internally by the subsystem. */
   @Override
   public void execute() {
-    // Position control is handled by the subsystem's internal PID loop
+    // Position control handled by subsystem
   }
 
-  /**
-   * Called when the command ends or is interrupted. Stops the elevator to ensure safe operation.
-   *
-   * @param interrupted true if the command was interrupted, false if it completed normally
-   */
   @Override
   public void end(boolean interrupted) {
     elevatorSubsystem.stop();
   }
 
-  /**
-   * Determines if the command has finished. Returns true once height is reached, then other
-   * controller takes over
-   *
-   * @return true if at position
-   */
   @Override
   public boolean isFinished() {
-    return elevatorSubsystem.isAtTargetHeight();
+    return !holdPosition && elevatorSubsystem.isAtTargetHeight();
   }
 }

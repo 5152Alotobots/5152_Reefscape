@@ -76,6 +76,7 @@ public class RobotContainer {
   private final AprilTagPoseSource aprilTagPoseSource;
   // private final BlingSubsystem blingSubsystem;
   private final PathPlannerManager pathPlannerManager;
+  private final AutoNamedCommands autoNamedCommands;
   private LoggedDashboardChooser<Command> autoChooser;
   private SwerveDriveSimulation driveSimulation;
 
@@ -98,6 +99,8 @@ public class RobotContainer {
             new WristSubsystem(new WristIOTalonFXReal(), elevatorSubsystem::getCurrentHeight);
         climberSubsystem = new ClimberSubsystem(new ClimberIORevServoReal());
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
+        autoNamedCommands =
+            new AutoNamedCommands(elevatorSubsystem, wristSubsystem, coralIntakeSubsystem);
         configureAutoChooser();
 
         oculusSubsystem = new OculusSubsystem(new OculusIOReal());
@@ -150,6 +153,8 @@ public class RobotContainer {
         wristSubsystem =
             new WristSubsystem(new WristIOTalonFXSim(), elevatorSubsystem::getCurrentHeight);
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
+        autoNamedCommands =
+            new AutoNamedCommands(elevatorSubsystem, wristSubsystem, coralIntakeSubsystem);
         configureAutoChooser();
 
         oculusSubsystem = new OculusSubsystem(new OculusIOSim(driveSimulation));
@@ -189,6 +194,8 @@ public class RobotContainer {
         wristSubsystem =
             new WristSubsystem(new WristIOTalonFXSim(), elevatorSubsystem::getCurrentHeight);
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
+        autoNamedCommands =
+            new AutoNamedCommands(elevatorSubsystem, wristSubsystem, coralIntakeSubsystem);
         configureAutoChooser();
 
         oculusSubsystem = new OculusSubsystem(new OculusIO() {});

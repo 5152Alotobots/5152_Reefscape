@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 0.78,
+        "y": 6.823249999999999
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.7800000000000007,
+        "y": 6.823249999999999
+      },
+      "isLocked": false,
+      "linkedName": "North Left Station"
+    },
+    {
+      "anchor": {
+        "x": 4.017,
+        "y": 5.195
+      },
+      "prevControl": {
+        "x": 3.582226973684211,
+        "y": 6.143957236842106
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Reef_NW_L"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 460.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -59.99999999999999
+  },
+  "reversed": false,
+  "folder": "Test2025",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 125.00000000000001
+  },
+  "useDefaultConstraints": true
+}
