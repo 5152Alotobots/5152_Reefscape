@@ -12,20 +12,13 @@
 */
 package frc.alotobots.reefscape.commands.auto;
 
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.alotobots.library.commands.util.LogCommand;
 import frc.alotobots.reefscape.commands.groups.ElevatorWristRun;
-import frc.alotobots.reefscape.commands.states.StateStowed;
-import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
-import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEjectThrough;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants;
 import frc.alotobots.reefscape.subsystems.wrist.WristSubsystem;
 import frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants;
-
-import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeConstants.Setpoints.OpenLoop.EJECT_PERCENTAGE;
 
 /**
  * Command sequence for placing game pieces on Level 4. The sequence: 1. Moves elevator and wrist to
@@ -38,23 +31,14 @@ public class AutoStateL4 extends SequentialCommandGroup {
    *
    * @param elevatorSubsystem The elevator subsystem
    * @param wristSubsystem The wrist subsystem
-   * @param coralIntakeSubsystem The coral intake subsystem
-   * @param coralIntakeReleaseTrigger The release button trigger
    */
-  public AutoStateL4(
-      ElevatorSubsystem elevatorSubsystem,
-      WristSubsystem wristSubsystem,
-      CoralIntakeSubsystem coralIntakeSubsystem,
-      Trigger coralIntakeReleaseTrigger) {
+  public AutoStateL4(ElevatorSubsystem elevatorSubsystem, WristSubsystem wristSubsystem) {
     addCommands(
         new LogCommand("State/State", "AUTO_L4"),
         new ElevatorWristRun(
             elevatorSubsystem,
             wristSubsystem,
             ElevatorConstants.Setpoints.L4_PLACE,
-            WristConstants.Setpoints.L4_PLACE),
-        Commands.waitUntil(coralIntakeReleaseTrigger),
-        new CoralIntakeEjectThrough(coralIntakeSubsystem, () -> EJECT_PERCENTAGE),
-        new StateStowed(elevatorSubsystem, wristSubsystem));
+            WristConstants.Setpoints.L4_PLACE));
   }
 }
