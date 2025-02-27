@@ -46,7 +46,6 @@ public class Climb extends SequentialCommandGroup {
         new InstantCommand(climberSubsystem::unlockCage),
         new WaitUntilCommand(climberSubsystem::getCageSwitches),
         new InstantCommand(climberSubsystem::lockCage),
-        new ElevatorRunToHeight(elevatorSubsystem, Meters.of(1.2)).asProxy(),
         new InstantCommand(climberSubsystem::setPlungerToPlunge),
         new ElevatorRunAtClimbVelocity(elevatorSubsystem, input).asProxy());
     addRequirements(climberSubsystem);
