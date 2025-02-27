@@ -21,7 +21,7 @@ The Elevator subsystem is used by the following commands:
 
 1. PID Configuration:
     - Separate PID slots must be configured for each control type (VELOCITY, POSITION)
-    - AT_SET_POINT_THRESHOLD must be set in ElevatorConstants
+    - AT_TARGET_HEIGHT_POSITION_THRESHOLD must be set in ElevatorConstants
 
 2. Hardware Limits:
     - MAX_HEIGHT and MIN_HEIGHT must be set in ElevatorConstants

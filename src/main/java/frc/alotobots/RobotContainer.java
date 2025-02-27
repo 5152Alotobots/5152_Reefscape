@@ -33,10 +33,13 @@ import frc.alotobots.library.subsystems.vision.photonvision.apriltag.AprilTagSub
 import frc.alotobots.library.subsystems.vision.photonvision.apriltag.constants.AprilTagConstants;
 import frc.alotobots.library.subsystems.vision.photonvision.apriltag.io.*;
 import frc.alotobots.library.subsystems.vision.photonvision.apriltag.util.AprilTagPoseSource;
-import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.ObjectDetectionSubsystem;
-import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.constants.ObjectDetectionConstants;
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.io.*;
+import frc.alotobots.reefscape.commands.groups.Climb;
+import frc.alotobots.reefscape.commands.groups.UnClimb;
 import frc.alotobots.reefscape.commands.states.*;
+import frc.alotobots.reefscape.subsystems.climber.ClimberSubsystem;
+import frc.alotobots.reefscape.subsystems.climber.commands.ClimberDisableServos;
+import frc.alotobots.reefscape.subsystems.climber.io.ClimberIORevServoReal;
 import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEjectThrough;
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeIntake;
@@ -64,13 +67,13 @@ public class RobotContainer {
   private final SwerveDriveSubsystem swerveDriveSubsystem;
   private final ElevatorSubsystem elevatorSubsystem;
   private final WristSubsystem wristSubsystem;
+  private final ClimberSubsystem climberSubsystem;
   private final CoralIntakeSubsystem coralIntakeSubsystem;
   private final OculusSubsystem oculusSubsystem;
   private final AprilTagSubsystem aprilTagSubsystem;
   private final LocalizationFusion localizationFusion;
   private final OculusPoseSource oculusPoseSource;
   private final AprilTagPoseSource aprilTagPoseSource;
-  private final ObjectDetectionSubsystem objectDetectionSubsystem;
   // private final BlingSubsystem blingSubsystem;
   private final PathPlannerManager pathPlannerManager;
   private final AutoNamedCommands autoNamedCommands;
@@ -92,7 +95,9 @@ public class RobotContainer {
                 new ModuleIOTalonFXReal(ModulePosition.BACK_RIGHT.index));
         elevatorSubsystem = new ElevatorSubsystem(new ElevatorIOTalonFXReal());
         coralIntakeSubsystem = new CoralIntakeSubsystem(new CoralIntakeIOVortexReal());
-        wristSubsystem = new WristSubsystem(new WristIOTalonFXReal());
+        wristSubsystem =
+            new WristSubsystem(new WristIOTalonFXReal(), elevatorSubsystem::getCurrentHeight);
+        climberSubsystem = new ClimberSubsystem(new ClimberIORevServoReal());
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         autoNamedCommands =
             new AutoNamedCommands(elevatorSubsystem, wristSubsystem, coralIntakeSubsystem);
@@ -115,15 +120,10 @@ public class RobotContainer {
                 aprilTagPoseSource,
                 autoChooser);
 
-        objectDetectionSubsystem =
-            new ObjectDetectionSubsystem(
-                swerveDriveSubsystem::getPose,
-                new ObjectDetectionIOPhotonVision(ObjectDetectionConstants.CAMERA_CONFIGS[0]));
         // blingSubsystem = new BlingSubsystem(new BlingIOReal());
         break;
 
       case SIM:
-        wristSubsystem = new WristSubsystem(new WristIOTalonFXSim());
         coralIntakeSubsystem = new CoralIntakeSubsystem(new CoralIntakeIO() {});
         Pose2d simStartPose = new Pose2d(3, 3, new Rotation2d(0));
         driveSimulation =
@@ -131,6 +131,7 @@ public class RobotContainer {
                 Constants.tunerConstants.getDriveTrainSimulationConfig(), simStartPose);
         SimulatedArena.getInstance().addDriveTrainSimulation(driveSimulation);
 
+        climberSubsystem = new ClimberSubsystem(new ClimberIORevServoReal());
         // Simulation hardware initialization
         swerveDriveSubsystem =
             new SwerveDriveSubsystem(
@@ -149,6 +150,8 @@ public class RobotContainer {
                     driveSimulation.getModules()[ModulePosition.BACK_RIGHT.index]));
         swerveDriveSubsystem.setPose(simStartPose);
         elevatorSubsystem = new ElevatorSubsystem(new ElevatorIOTalonFXSim());
+        wristSubsystem =
+            new WristSubsystem(new WristIOTalonFXSim(), elevatorSubsystem::getCurrentHeight);
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         autoNamedCommands =
             new AutoNamedCommands(elevatorSubsystem, wristSubsystem, coralIntakeSubsystem);
@@ -172,14 +175,13 @@ public class RobotContainer {
                 aprilTagPoseSource,
                 autoChooser);
 
-        objectDetectionSubsystem =
-            new ObjectDetectionSubsystem(swerveDriveSubsystem::getPose, new ObjectDetectionIO() {});
         // blingSubsystem = new BlingSubsystem(new BlingIOSim());
         break;
 
       default:
-        wristSubsystem = new WristSubsystem(new WristIOTalonFXSim());
         coralIntakeSubsystem = new CoralIntakeSubsystem(new CoralIntakeIOVortexReal());
+        climberSubsystem = new ClimberSubsystem(new ClimberIORevServoReal());
+
         // Replay mode initialization
         swerveDriveSubsystem =
             new SwerveDriveSubsystem(
@@ -189,6 +191,8 @@ public class RobotContainer {
                 new ModuleIO() {},
                 new ModuleIO() {});
         elevatorSubsystem = new ElevatorSubsystem(new ElevatorIO() {});
+        wristSubsystem =
+            new WristSubsystem(new WristIOTalonFXSim(), elevatorSubsystem::getCurrentHeight);
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         autoNamedCommands =
             new AutoNamedCommands(elevatorSubsystem, wristSubsystem, coralIntakeSubsystem);
@@ -207,8 +211,6 @@ public class RobotContainer {
                 aprilTagPoseSource,
                 autoChooser);
 
-        objectDetectionSubsystem =
-            new ObjectDetectionSubsystem(swerveDriveSubsystem::getPose, new ObjectDetectionIO() {});
         // blingSubsystem = new BlingSubsystem(new BlingIO() {});
         break;
     }
@@ -222,9 +224,10 @@ public class RobotContainer {
     elevatorSubsystem.setDefaultCommand(
         new DefaultElevatorRunAtVelocity(elevatorSubsystem, () -> -getElevatorAxis()));
     wristSubsystem.setDefaultCommand(
-        new DefaultWristRunAtVelocity(wristSubsystem, () -> getWristAxis()));
+        new DefaultWristRunAtVelocity(wristSubsystem, OI::getWristAxis));
     // blingSubsystem.setDefaultCommand(
     //    new NoAllianceWaiting(blingSubsystem).andThen(new SetToAllianceColor(blingSubsystem)));
+    climberSubsystem.setDefaultCommand(new ClimberDisableServos(climberSubsystem));
   }
 
   /** Contains button based commands */
@@ -269,6 +272,10 @@ public class RobotContainer {
         new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.L3_PLACE));
     wristGroundButton.toggleOnTrue(
         new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.GROUND_INTAKE));
+
+    climbButton.toggleOnTrue(
+        new Climb(climberSubsystem, elevatorSubsystem, () -> -getElevatorAxis()));
+    unClimbButton.onTrue(new UnClimb(climberSubsystem));
   }
 
   private void configureAutoChooser() {

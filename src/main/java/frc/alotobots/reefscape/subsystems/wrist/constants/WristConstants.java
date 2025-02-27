@@ -27,10 +27,10 @@ public class WristConstants {
   /** Contains threshold values for various wrist operations. */
   public static final class Thresholds {
     /** Acceptable PID error that will classify as "at position" */
-    public static final Angle AT_SET_POINT_POSITION_THRESHOLD = Degrees.of(3);
+    public static final Angle AT_TARGET_ANGLE_POSITION_THRESHOLD = Degrees.of(3);
 
     /** How long the wrist must be "at position" to classify as "at position" */
-    public static final Time AT_SET_POINT_TIME_THRESHOLD = Seconds.of(.2);
+    public static final Time AT_TARGET_ANGLE_TIME_THRESHOLD = Seconds.of(.2);
   }
 
   /** Contains physical limits and safety thresholds for the wrist. */
@@ -54,19 +54,22 @@ public class WristConstants {
   /** Contains position setpoints for different wrist states. */
   public static final class Setpoints {
     /** Angle when wrist is fully retracted/stowed */
-    public static final Angle STOWED = Degrees.of(125);
+    public static final Angle STOWED = Degrees.of(115);
+
+    /** Angle when wrist is moving to a position. Safe position */
+    public static final Angle CRUISE = Degrees.of(90);
 
     /** Angle for picking up from coral station */
-    public static final Angle CORAL_STATION = Degrees.of(45);
+    public static final Angle CORAL_STATION = Degrees.of(33);
 
     /** Angle for L4 placement */
-    public static final Angle L4_PLACE = Degrees.of(90);
+    public static final Angle L4_PLACE = Degrees.of(110);
 
     /** Angle for L3 placement (Equal to the angle for L2 placement) */
-    public static final Angle L3_PLACE = Degrees.of(125);
+    public static final Angle L3_PLACE = Degrees.of(120);
 
     /** Angle for L2 placement (Equal to the angle for L3 placement) */
-    public static final Angle L2_PLACE = Degrees.of(125);
+    public static final Angle L2_PLACE = Degrees.of(115);
 
     /** Angle for L1 placement */
     public static final Angle L1_PLACE = Degrees.of(105);

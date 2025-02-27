@@ -13,10 +13,13 @@ public ElevatorRunToHeight(ElevatorSubsystem elevatorSubsystem, Distance targetH
 - `targetHeight`: The desired height for the elevator to reach (automatically clamped between MIN_HEIGHT and MAX_HEIGHT)
 - `holdPosition`: Optional parameter to maintain position after reaching target
 
-## Configuration Requirements
-1. PID Configuration
-    - Position mode PID gains must be properly tuned
-    - AT_SET_POINT_THRESHOLD must be set to an appropriate value
+## Configuration
+- Ensure PID constants are properly tuned
+- Configure MAX_HEIGHT and MIN_HEIGHT in ElevatorConstants
+- AT_TARGET_HEIGHT_POSITION_THRESHOLD must be set appropriately for position tolerance
+- Soft limits should be enabled to prevent mechanical damage
+- The command will use the appropriate PID slot based on the current game element
+- Brake mode should be properly configured in the motor controller for position holding
 
 2. Hardware Limits
     - MAX_HEIGHT and MIN_HEIGHT must be configured in ElevatorConstants

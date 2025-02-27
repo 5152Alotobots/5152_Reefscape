@@ -13,15 +13,14 @@
 package frc.alotobots.reefscape.subsystems.elevator;
 
 import static edu.wpi.first.units.Units.*;
-import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.*;
 import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.Limits.*;
-import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.Thresholds.AT_SET_POINT_POSITION_THRESHOLD;
-import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.Thresholds.AT_SET_POINT_TIME_THRESHOLD;
+import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.Thresholds.AT_TARGET_HEIGHT_POSITION_THRESHOLD;
+import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.Thresholds.AT_TARGET_HEIGHT_TIME_THRESHOLD;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.LinearVelocity;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIO;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIOInputsAutoLogged;
@@ -40,8 +39,16 @@ public class ElevatorSubsystem extends SubsystemBase {
   /** Auto-logged inputs from elevator sensors and motor controllers. */
   private final ElevatorIOInputsAutoLogged inputs = new ElevatorIOInputsAutoLogged();
 
-  /** Timer that handles the checking for at position */
-  private final Timer atSetpointTimer = new Timer();
+  /** Debouncer for ensuring stability at a position */
+  private final Debouncer atTargetHeightDebounce =
+      new Debouncer(AT_TARGET_HEIGHT_TIME_THRESHOLD.in(Seconds));
+
+  /** Debouncer for bottom resetting logic */
+  private final Debouncer atBottomDebounce =
+      new Debouncer(AT_TARGET_HEIGHT_TIME_THRESHOLD.in(Seconds));
+
+  /** Boolean tracking if the elevator has reset from the CANrange in its current position */
+  private boolean hasReset = false;
 
   /**
    * Distance object that tracks the currently selected position (maintains last position if not in
@@ -67,6 +74,9 @@ public class ElevatorSubsystem extends SubsystemBase {
     io.updateInputs(inputs);
     Logger.processInputs("Elevator", inputs);
     Logger.recordOutput("Elevator/TargetHeight", targetHeight);
+
+    // Automatically check every loop to see if the sensor should reset the position of the elevator
+    handleBottomReset();
   }
 
   /**
@@ -79,7 +89,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     Distance adjustedHeight =
         Meters.of(MathUtil.clamp(height.in(Meters), MIN_HEIGHT.in(Meters), MAX_HEIGHT.in(Meters)));
     targetHeight = adjustedHeight;
-    io.setElevatorPosition(adjustedHeight, ControlType.ClosedLoop.POSITION.ordinal());
+    io.setElevatorPositionMotionMagic(adjustedHeight, ControlType.ClosedLoop.POSITION.ordinal());
     Logger.recordOutput("Elevator/ControlType", ControlType.ClosedLoop.POSITION);
   }
 
@@ -87,17 +97,30 @@ public class ElevatorSubsystem extends SubsystemBase {
    * Controls the elevator to move to a specified velocity using closed-loop velocity control.
    *
    * @param velocity Target velocity in meters per second, automatically constrained between
-   *     -MAX_SPEED and MAX_SPEED
+   *     -MAX_OPERATOR_VELOCITY and MAX_OPERATOR_VELOCITY
    */
   public void runToTargetVelocity(LinearVelocity velocity) {
+    LinearVelocity adjustedVelocity = applyVelocityLimitIfNeeded(velocity);
+    io.setElevatorVelocity(adjustedVelocity, ControlType.ClosedLoop.VELOCITY.ordinal());
+    Logger.recordOutput("Elevator/ControlType", ControlType.ClosedLoop.VELOCITY);
+  }
+
+  /**
+   * Controls the elevator to move to a specified velocity using closed-loop climbing velocity
+   * control.
+   *
+   * @param velocity Target velocity in meters per second, automatically constrained between
+   *     -MAX_OPERATOR_VELOCITY and MAX_OPERATOR_VELOCITY
+   */
+  public void runToClimbingVelocity(LinearVelocity velocity) {
     LinearVelocity adjustedVelocity =
         MetersPerSecond.of(
             MathUtil.clamp(
                 velocity.in(MetersPerSecond),
-                -MAX_SPEED.in(MetersPerSecond),
-                MAX_SPEED.in(MetersPerSecond)));
-    io.setElevatorVelocity(adjustedVelocity, ControlType.ClosedLoop.VELOCITY.ordinal());
-    Logger.recordOutput("Elevator/ControlType", ControlType.ClosedLoop.VELOCITY);
+                -MAX_OPERATOR_VELOCITY.in(MetersPerSecond),
+                MAX_OPERATOR_VELOCITY.in(MetersPerSecond)));
+    io.setElevatorVelocity(adjustedVelocity, ControlType.ClosedLoop.VELOCITY_CLIMB.ordinal());
+    Logger.recordOutput("Elevator/ControlType", ControlType.ClosedLoop.VELOCITY_CLIMB);
   }
 
   /**
@@ -140,20 +163,59 @@ public class ElevatorSubsystem extends SubsystemBase {
     // Check if current height is within threshold of target
     boolean inSetPointThreshold =
         targetHeight.minus(inputs.leftHeight).abs(Meters)
-            < AT_SET_POINT_POSITION_THRESHOLD.in(Meters);
+            < AT_TARGET_HEIGHT_POSITION_THRESHOLD.in(Meters);
 
-    // Only start if in position threshold
-    if (inSetPointThreshold) {
-      // Start timer if not running and check elapsed time
-      if (!atSetpointTimer.isRunning()) {
-        atSetpointTimer.restart();
-      }
-      // Return true if elevator has been at position for minimum duration
-      return atSetpointTimer.hasElapsed(AT_SET_POINT_TIME_THRESHOLD.in(Seconds));
+    // Use debouncer to check if we've been at setpoint for the required duration
+    return atTargetHeightDebounce.calculate(inSetPointThreshold);
+  }
+
+  /**
+   * Handles resetting the elevator's position when it reaches the bottom. Uses a debounced bottom
+   * detection to ensure the elevator is stable before resetting. Will only reset once per bottom
+   * detection to prevent multiple resets. The position will not reset again until the elevator
+   * moves away from the bottom and returns.
+   */
+  private void handleBottomReset() {
+    if (atBottomDebounce.calculate(inputs.canrangeInProximity) && !hasReset) {
+      io.resetRotorPositions(MIN_HEIGHT);
+      hasReset = true;
+      Logger.recordOutput("Elevator/PositionReset", true);
+    } else if (!inputs.canrangeInProximity) {
+      hasReset = false;
+      Logger.recordOutput("Elevator/PositionReset", false);
+    }
+  }
+
+  /**
+   * Checks if the elevator is within the velocity limit distance from the top or bottom limits.
+   *
+   * @return true if the elevator is within the velocity limit distance, false otherwise
+   */
+  private boolean isVelocityLimitNeeded() {
+    return inputs.leftHeight.minus(MIN_HEIGHT).abs(Meters) < DISTANCE_FROM_LIMIT.in(Meters)
+        || inputs.leftHeight.minus(MAX_HEIGHT).abs(Meters) < DISTANCE_FROM_LIMIT.in(Meters);
+  }
+
+  /**
+   * Applies the velocity limit if the elevator is within the velocity limit distance from the top
+   * or bottom limits.
+   *
+   * @param velocity The target velocity
+   * @return The adjusted velocity if the limit is needed, otherwise the original velocity
+   */
+  private LinearVelocity applyVelocityLimitIfNeeded(LinearVelocity velocity) {
+    if (isVelocityLimitNeeded()) {
+      return MetersPerSecond.of(
+          MathUtil.clamp(
+              velocity.in(MetersPerSecond),
+              -MAX_VELOCITY_NEAR_LIMIT.in(MetersPerSecond),
+              MAX_VELOCITY_NEAR_LIMIT.in(MetersPerSecond)));
     } else {
-      // Reset timer if outside threshold
-      atSetpointTimer.stop();
-      return false;
+      return MetersPerSecond.of(
+          MathUtil.clamp(
+              velocity.in(MetersPerSecond),
+              -MAX_OPERATOR_VELOCITY.in(MetersPerSecond),
+              MAX_OPERATOR_VELOCITY.in(MetersPerSecond)));
     }
   }
 }

@@ -15,8 +15,9 @@ public WristRunToAngle(WristSubsystem wristSubsystem, Angle angle, boolean holdP
 
 ## Configuration Requirements
 1. PID Configuration
-   - Position mode PID gains must be properly tuned
-   - AT_SET_POINT_THRESHOLD must be set to an appropriate value
+    - Position mode PID gains must be properly tuned in WristTalonFXRealConstants
+    - AT_TARGET_ANGLE_POSITION_THRESHOLD must be set to an appropriate value
+    - AT_TARGET_ANGLE_TIME_THRESHOLD must be set to an appropriate value
 
 2. Hardware Limits
    - MAX_ANGLE and MIN_ANGLE must be configured in WristConstants

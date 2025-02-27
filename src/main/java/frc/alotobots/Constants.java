@@ -29,7 +29,7 @@ public final class Constants {
   public static final Mode currentMode = RobotBase.isReal() ? Mode.REAL : simMode;
 
   /** Defines the possible runtime modes for the robot code. */
-  public static enum Mode {
+  public enum Mode {
     /** Running on a real robot. */
     REAL,
 
@@ -55,6 +55,11 @@ public final class Constants {
     /** Pneumatic Control Module CAN ID */
     public static final int PCM_CAN_ID = 2;
 
+    /** CANdle LED controller CAN ID */
+    public static final int CANDLE_CAN_ID = 40;
+
+    public static final int SERVO_HUB_CAN_ID = 4;
+
     /** Left Elevator CAN ID */
     public static final int LEFT_ELEVATOR_CAN_ID = 30;
 
@@ -75,8 +80,5 @@ public final class Constants {
 
     /** Intake CANrange CAN ID */
     public static final int INTAKE_CANRANGE_ID = 36;
-
-    /** CANdle LED controller CAN ID */
-    public static final int CANDLE_CAN_ID = 40;
   }
 }

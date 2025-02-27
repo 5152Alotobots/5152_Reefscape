@@ -16,8 +16,8 @@
     "Three Piece",
     "Two Piece"
   ],
-  "defaultMaxVel": 5.0,
-  "defaultMaxAccel": 3.0,
+  "defaultMaxVel": 5.2,
+  "defaultMaxAccel": 3.2,
   "defaultMaxAngVel": 540.0,
   "defaultMaxAngAccel": 460.0,
   "defaultNominalVoltage": 12.0,
