@@ -31,7 +31,8 @@ public class OculusConstants {
    * Transform from the robot center to the headset. Coordinate system: - X: Positive is forwards -
    * Y: Positive is left - Rotation: Positive is counter-clockwise
    */
-  public static final Transform2d ROBOT_TO_OCULUS = new Transform2d(0.075, 0.0, new Rotation2d());
+  public static final Transform2d ROBOT_TO_OCULUS =
+      new Transform2d(0.16, -0.21, Rotation2d.fromDegrees(-90));
 
   /**
    * Timeout duration in seconds for reset operations (pose reset, heading reset, ping). If a reset
