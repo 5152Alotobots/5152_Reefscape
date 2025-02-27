@@ -12,33 +12,38 @@
 */
 package frc.alotobots.reefscape.commands.groups;
 
+import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.Setpoints.CRUISE;
+
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.commands.ElevatorRunToHeight;
 import frc.alotobots.reefscape.subsystems.wrist.WristSubsystem;
 import frc.alotobots.reefscape.subsystems.wrist.commands.WristRunToAngle;
 
-public class ParallelElevatorWristRun extends ParallelCommandGroup {
+public class WristElevatorRun extends SequentialCommandGroup {
   /**
-   * Creates a new ParallelElevatorWristRun command group that moves both the elevator and wrist to
-   * specified positions simultaneously. Proxies the commands to cede back to default command after
-   * runtime automatically.
+   * Creates a new WristElevatorRun command group that moves both the elevator and wrist to
+   * specified positions one after the other. Runs the wrist first, then the elevator. Proxies the
+   * commands to cede back to default command after runtime automatically.
    *
    * @param elevatorSubsystem The elevator subsystem
-   * @param wristSubsystem The wrist subsystem
    * @param elevatorHeight Target height for the elevator
+   * @param wristSubsystem The wrist subsystem
    * @param wristAngle Target angle for the wrist
    */
-  public ParallelElevatorWristRun(
+  public WristElevatorRun(
       ElevatorSubsystem elevatorSubsystem,
       WristSubsystem wristSubsystem,
       Distance elevatorHeight,
       Angle wristAngle) {
 
     addCommands(
-        new ElevatorRunToHeight(elevatorSubsystem, elevatorHeight).asProxy(),
+        new ParallelCommandGroup(
+            new WristRunToAngle(wristSubsystem, CRUISE).asProxy(),
+            new ElevatorRunToHeight(elevatorSubsystem, elevatorHeight).asProxy()),
         new WristRunToAngle(wristSubsystem, wristAngle).asProxy());
   }
 }
