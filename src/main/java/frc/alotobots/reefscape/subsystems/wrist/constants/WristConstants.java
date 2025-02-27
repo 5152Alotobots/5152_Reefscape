@@ -56,6 +56,9 @@ public class WristConstants {
     /** Angle when wrist is fully retracted/stowed */
     public static final Angle STOWED = Degrees.of(115);
 
+    /** Angle when wrist is moving to a position. Safe position */
+    public static final Angle CRUISE = Degrees.of(90);
+
     /** Angle for picking up from coral station */
     public static final Angle CORAL_STATION = Degrees.of(33);
 
