@@ -34,17 +34,16 @@ import frc.alotobots.library.subsystems.vision.photonvision.apriltag.AprilTagSub
 import frc.alotobots.library.subsystems.vision.photonvision.apriltag.constants.AprilTagConstants;
 import frc.alotobots.library.subsystems.vision.photonvision.apriltag.io.*;
 import frc.alotobots.library.subsystems.vision.photonvision.apriltag.util.AprilTagPoseSource;
-import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.ObjectDetectionSubsystem;
-import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.constants.ObjectDetectionConstants;
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.io.*;
+import frc.alotobots.reefscape.commands.groups.Climb;
 import frc.alotobots.reefscape.commands.groups.FullAutoCycle;
+import frc.alotobots.reefscape.commands.groups.UnClimb;
 import frc.alotobots.reefscape.commands.states.*;
 import frc.alotobots.reefscape.subsystems.autocycle.AutoCycleSubsystem;
 import frc.alotobots.reefscape.subsystems.autocycle.commands.PathfindToCoralStation;
 import frc.alotobots.reefscape.subsystems.autocycle.commands.PathfindToReef;
 import frc.alotobots.reefscape.subsystems.climber.ClimberSubsystem;
-import frc.alotobots.reefscape.subsystems.climber.commands.Climb;
-import frc.alotobots.reefscape.subsystems.climber.commands.UnClimb;
+import frc.alotobots.reefscape.subsystems.climber.commands.ClimberDisableServos;
 import frc.alotobots.reefscape.subsystems.climber.io.ClimberIORevServoReal;
 import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEjectThrough;
@@ -80,10 +79,10 @@ public class RobotContainer {
   private final LocalizationFusion localizationFusion;
   private final OculusPoseSource oculusPoseSource;
   private final AprilTagPoseSource aprilTagPoseSource;
-  private final ObjectDetectionSubsystem objectDetectionSubsystem;
   private final AutoCycleSubsystem autoCycleSubsystem;
   // private final BlingSubsystem blingSubsystem;
   private final PathPlannerManager pathPlannerManager;
+  private final AutoNamedCommands autoNamedCommands;
   private LoggedDashboardChooser<Command> autoChooser;
   private SwerveDriveSimulation driveSimulation;
 
@@ -102,9 +101,12 @@ public class RobotContainer {
                 new ModuleIOTalonFXReal(ModulePosition.BACK_RIGHT.index));
         elevatorSubsystem = new ElevatorSubsystem(new ElevatorIOTalonFXReal());
         coralIntakeSubsystem = new CoralIntakeSubsystem(new CoralIntakeIOVortexReal());
-        wristSubsystem = new WristSubsystem(new WristIOTalonFXReal());
+        wristSubsystem =
+            new WristSubsystem(new WristIOTalonFXReal(), elevatorSubsystem::getCurrentHeight);
         climberSubsystem = new ClimberSubsystem(new ClimberIORevServoReal());
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
+        autoNamedCommands =
+            new AutoNamedCommands(elevatorSubsystem, wristSubsystem, coralIntakeSubsystem);
         configureAutoChooser();
         autoCycleSubsystem =
             new AutoCycleSubsystem(
@@ -128,15 +130,10 @@ public class RobotContainer {
                 aprilTagPoseSource,
                 autoChooser);
 
-        objectDetectionSubsystem =
-            new ObjectDetectionSubsystem(
-                swerveDriveSubsystem::getPose,
-                new ObjectDetectionIOPhotonVision(ObjectDetectionConstants.CAMERA_CONFIGS[0]));
         // blingSubsystem = new BlingSubsystem(new BlingIOReal());
         break;
 
       case SIM:
-        wristSubsystem = new WristSubsystem(new WristIOTalonFXSim());
         coralIntakeSubsystem = new CoralIntakeSubsystem(new CoralIntakeIO() {});
         Pose2d simStartPose = new Pose2d(3, 3, new Rotation2d(0));
         driveSimulation =
@@ -163,7 +160,11 @@ public class RobotContainer {
                     driveSimulation.getModules()[ModulePosition.BACK_RIGHT.index]));
         swerveDriveSubsystem.setPose(simStartPose);
         elevatorSubsystem = new ElevatorSubsystem(new ElevatorIOTalonFXSim());
+        wristSubsystem =
+            new WristSubsystem(new WristIOTalonFXSim(), elevatorSubsystem::getCurrentHeight);
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
+        autoNamedCommands =
+            new AutoNamedCommands(elevatorSubsystem, wristSubsystem, coralIntakeSubsystem);
         configureAutoChooser();
         autoCycleSubsystem =
             new AutoCycleSubsystem(
@@ -189,13 +190,10 @@ public class RobotContainer {
                 aprilTagPoseSource,
                 autoChooser);
 
-        objectDetectionSubsystem =
-            new ObjectDetectionSubsystem(swerveDriveSubsystem::getPose, new ObjectDetectionIO() {});
         // blingSubsystem = new BlingSubsystem(new BlingIOSim());
         break;
 
       default:
-        wristSubsystem = new WristSubsystem(new WristIOTalonFXSim());
         coralIntakeSubsystem = new CoralIntakeSubsystem(new CoralIntakeIOVortexReal());
         climberSubsystem = new ClimberSubsystem(new ClimberIORevServoReal());
 
@@ -208,7 +206,11 @@ public class RobotContainer {
                 new ModuleIO() {},
                 new ModuleIO() {});
         elevatorSubsystem = new ElevatorSubsystem(new ElevatorIO() {});
+        wristSubsystem =
+            new WristSubsystem(new WristIOTalonFXSim(), elevatorSubsystem::getCurrentHeight);
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
+        autoNamedCommands =
+            new AutoNamedCommands(elevatorSubsystem, wristSubsystem, coralIntakeSubsystem);
         configureAutoChooser();
         autoCycleSubsystem =
             new AutoCycleSubsystem(
@@ -229,8 +231,6 @@ public class RobotContainer {
                 aprilTagPoseSource,
                 autoChooser);
 
-        objectDetectionSubsystem =
-            new ObjectDetectionSubsystem(swerveDriveSubsystem::getPose, new ObjectDetectionIO() {});
         // blingSubsystem = new BlingSubsystem(new BlingIO() {});
         break;
     }
@@ -247,37 +247,17 @@ public class RobotContainer {
         new DefaultWristRunAtVelocity(wristSubsystem, OI::getWristAxis));
     // blingSubsystem.setDefaultCommand(
     //    new NoAllianceWaiting(blingSubsystem).andThen(new SetToAllianceColor(blingSubsystem)));
+    climberSubsystem.setDefaultCommand(new ClimberDisableServos(climberSubsystem));
   }
 
   /** Contains button based commands */
   private void configureLogicCommands() {
-    // Enabled state
-    enablePathfindingButton.onTrue(autoCycleSubsystem.togglePathfinding());
-    enableFullAutoPathfindingButton.onTrue(new FullAutoCycle(autoCycleSubsystem).repeatedly());
-
-    // Auto Cycle Reef Branch Controls
-    cycleSelectedBranchRightButton.onTrue(autoCycleSubsystem.cycleReefBranchRight());
-    cycleSelectedBranchLeftButton.onTrue(autoCycleSubsystem.cycleReefBranchLeft());
-    cycleLevelUpButton.onTrue(autoCycleSubsystem.cycleReefLevelUp());
-    cycleLevelDownButton.onTrue(autoCycleSubsystem.cycleReefLevelDown());
-    pathfindToSelectedReefBranchButton.toggleOnTrue(
-        new PathfindToReef(
-            autoCycleSubsystem, () -> DriveCalculator.getChassisSpeeds(swerveDriveSubsystem)));
-
-    // Auto Cycle Coral Station Controls
-    cycleCoralStationSideLeftButton.onTrue(autoCycleSubsystem.cycleCoralStationSideLeft());
-    cycleCoralStationSideRightButton.onTrue(autoCycleSubsystem.cycleCoralStationSideRight());
-    cycleCoralStationPickupPositionLeftButton.onTrue(
-        autoCycleSubsystem.cycleCoralStationPositionLeft());
-    cycleCoralStationPickupPositionRightButton.onTrue(
-        autoCycleSubsystem.cycleCoralStationPositionRight());
-    pathfindToSelectedCoralStationButton.toggleOnTrue(
-        new PathfindToCoralStation(
-            autoCycleSubsystem, () -> DriveCalculator.getChassisSpeeds(swerveDriveSubsystem)));
-
     // Coral Intake
     coralIntakeIntakeButton.toggleOnTrue(
         new CoralIntakeIntake(coralIntakeSubsystem, () -> INTAKE_PERCENTAGE));
+    // Enabled state
+    enablePathfindingButton.onTrue(autoCycleSubsystem.togglePathfinding());
+    enableFullAutoPathfindingButton.onTrue(new FullAutoCycle(autoCycleSubsystem).repeatedly());
 
     stateCoralStationButton.toggleOnTrue(
         new StateCoralStation(elevatorSubsystem, wristSubsystem, coralIntakeSubsystem));
@@ -294,6 +274,26 @@ public class RobotContainer {
         new StateL4(
             elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, coralIntakeReleaseButton));
     stateStowButton.toggleOnTrue(new StateStowed(elevatorSubsystem, wristSubsystem));
+
+    // Auto Cycle Coral Station Controls
+    cycleCoralStationSideLeftButton.onTrue(autoCycleSubsystem.cycleCoralStationSideLeft());
+    cycleCoralStationSideRightButton.onTrue(autoCycleSubsystem.cycleCoralStationSideRight());
+    cycleCoralStationPickupPositionLeftButton.onTrue(
+        autoCycleSubsystem.cycleCoralStationPositionLeft());
+    cycleCoralStationPickupPositionRightButton.onTrue(
+        autoCycleSubsystem.cycleCoralStationPositionRight());
+    pathfindToSelectedCoralStationButton.toggleOnTrue(
+        new PathfindToCoralStation(
+            autoCycleSubsystem, () -> DriveCalculator.getChassisSpeeds(swerveDriveSubsystem)));
+    // Auto Cycle Reef Branch Controls
+    cycleSelectedBranchRightButton.onTrue(autoCycleSubsystem.cycleReefBranchRight());
+    cycleSelectedBranchLeftButton.onTrue(autoCycleSubsystem.cycleReefBranchLeft());
+    cycleLevelUpButton.onTrue(autoCycleSubsystem.cycleReefLevelUp());
+    cycleLevelDownButton.onTrue(autoCycleSubsystem.cycleReefLevelDown());
+    pathfindToSelectedReefBranchButton.toggleOnTrue(
+        new PathfindToReef(
+            autoCycleSubsystem, () -> DriveCalculator.getChassisSpeeds(swerveDriveSubsystem)));
+
     // BACKUP -----------------------------------------------------------------------------
     // Coral Intake
     coralIntakeEjectThroughButton.toggleOnTrue(
@@ -316,7 +316,8 @@ public class RobotContainer {
     wristGroundButton.toggleOnTrue(
         new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.GROUND_INTAKE));
 
-    climbButton.onTrue(new Climb(climberSubsystem, elevatorSubsystem));
+    climbButton.toggleOnTrue(
+        new Climb(climberSubsystem, elevatorSubsystem, () -> -getElevatorAxis()));
     unClimbButton.onTrue(new UnClimb(climberSubsystem));
   }
 

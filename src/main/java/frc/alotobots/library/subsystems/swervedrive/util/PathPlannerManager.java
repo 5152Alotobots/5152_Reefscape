@@ -25,7 +25,6 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
-import frc.alotobots.AutoNamedCommands;
 import frc.alotobots.Constants;
 import frc.alotobots.library.subsystems.swervedrive.SwerveDriveSubsystem;
 import frc.alotobots.util.LocalADStarAK;
@@ -63,9 +62,6 @@ public class PathPlannerManager {
         Constants.tunerConstants.getPathPlannerConfig(),
         () -> DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red,
         driveSubsystem);
-
-    // Setup named commands for autonomous routines
-    AutoNamedCommands.setupNamedCommands();
 
     // Configure pathfinding
     Pathfinding.setPathfinder(new LocalADStarAK());

@@ -21,9 +21,9 @@ import java.util.function.Supplier;
 import org.littletonrobotics.junction.Logger;
 
 /**
- * Command to pathfind to the currently selected coral station position.
- * Uses PathPlanner's pathfinding capabilities with driver override to navigate
- * to the appropriate coral station approach path.
+ * Command to pathfind to the currently selected coral station position. Uses PathPlanner's
+ * pathfinding capabilities with driver override to navigate to the appropriate coral station
+ * approach path.
  */
 public class PathfindToCoralStation extends Command {
   private final AutoCycleSubsystem autoCycleSubsystem;
@@ -39,7 +39,7 @@ public class PathfindToCoralStation extends Command {
    * @param chassisSpeedsSupplier A supplier for driver input as chassis speeds
    */
   public PathfindToCoralStation(
-          AutoCycleSubsystem autoCycleSubsystem, Supplier<ChassisSpeeds> chassisSpeedsSupplier) {
+      AutoCycleSubsystem autoCycleSubsystem, Supplier<ChassisSpeeds> chassisSpeedsSupplier) {
     this.autoCycleSubsystem = autoCycleSubsystem;
     this.pathPlannerManager = autoCycleSubsystem.getPathPlannerManager();
 
@@ -48,31 +48,32 @@ public class PathfindToCoralStation extends Command {
   }
 
   /**
-   * Called when the command is initially scheduled.
-   * Begins pathfinding to the selected coral station if pathfinding is enabled.
+   * Called when the command is initially scheduled. Begins pathfinding to the selected coral
+   * station if pathfinding is enabled.
    */
   @Override
   public void initialize() {
     if (autoCycleSubsystem.getState().isPathfindingEnabled()) {
       autoCycleSubsystem
-              .getState()
-              .setActivePathfinding(AutoCycleState.ActivePathfindingType.CORAL_STATION);
+          .getState()
+          .setActivePathfinding(AutoCycleState.ActivePathfindingType.CORAL_STATION);
       activePathCommand =
-              pathPlannerManager.getPathfindThenFollowPathCommandWithOverride(
-                      autoCycleSubsystem.getState().getSelectedCoralStationPathName(),
-                      chassisSpeedsSupplier,
-                      true);
+          pathPlannerManager.getPathfindThenFollowPathCommandWithOverride(
+              autoCycleSubsystem.getState().getSelectedCoralStationPathName(),
+              chassisSpeedsSupplier,
+              true);
       autoCycleSubsystem.getState().setActivePathfindingCommand(activePathCommand);
       activePathCommand.schedule();
 
-      Logger.recordOutput("PathfindToCoralStation/PathName",
-              autoCycleSubsystem.getState().getSelectedCoralStationPathName());
+      Logger.recordOutput(
+          "PathfindToCoralStation/PathName",
+          autoCycleSubsystem.getState().getSelectedCoralStationPathName());
     }
   }
 
   /**
-   * Called once when the command ends or is interrupted.
-   * Ensures proper cleanup of active path commands.
+   * Called once when the command ends or is interrupted. Ensures proper cleanup of active path
+   * commands.
    *
    * @param interrupted Whether the command was interrupted
    */
@@ -89,8 +90,8 @@ public class PathfindToCoralStation extends Command {
   }
 
   /**
-   * Returns whether this command has finished.
-   * The command finishes when either pathfinding is disabled or the active path command completes.
+   * Returns whether this command has finished. The command finishes when either pathfinding is
+   * disabled or the active path command completes.
    *
    * @return True if the command is finished
    */
@@ -100,6 +101,6 @@ public class PathfindToCoralStation extends Command {
     // 1. Pathfinding is disabled
     // 2. Active path command exists and has finished
     return !autoCycleSubsystem.getState().isPathfindingEnabled()
-            || (activePathCommand != null && !activePathCommand.isScheduled());
+        || (activePathCommand != null && !activePathCommand.isScheduled());
   }
 }

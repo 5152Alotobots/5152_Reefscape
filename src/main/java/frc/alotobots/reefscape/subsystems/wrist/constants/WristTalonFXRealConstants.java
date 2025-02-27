@@ -13,10 +13,14 @@
 package frc.alotobots.reefscape.subsystems.wrist.constants;
 
 import static edu.wpi.first.units.Units.Amps;
+import static edu.wpi.first.units.Units.RotationsPerSecond;
+import static edu.wpi.first.units.Units.RotationsPerSecondPerSecond;
 
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
+import edu.wpi.first.units.measure.AngularAcceleration;
+import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
 import lombok.experimental.UtilityClass;
 
@@ -44,13 +48,13 @@ public class WristTalonFXRealConstants {
       public static final double KA = 0.0;
 
       /** Gravity compensation gain */
-      public static final double KG = 0.0;
+      public static final double KG = 0.18;
 
       /** Static friction compensation */
       public static final double KS = 0.0;
 
       /** Velocity feedforward gain */
-      public static final double KV = 22;
+      public static final double KV = 32;
     }
 
     /** TalonFX-specific PID and motion control constants for Position mode. */
@@ -76,6 +80,12 @@ public class WristTalonFXRealConstants {
       /** Velocity feedforward gain */
       public static final double KV = 0.0;
     }
+  }
+
+  public static final class MotionMagicConstants {
+    public static final AngularVelocity CRUISE_VELOCITY = RotationsPerSecond.of(.5);
+    public static final AngularAcceleration ACCELERATION = RotationsPerSecondPerSecond.of(.8);
+    public static final double JERK = 0;
   }
 
   /** Contains safety limit constants for the wrist motors. */

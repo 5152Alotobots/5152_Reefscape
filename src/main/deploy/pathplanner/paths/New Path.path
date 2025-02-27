@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.57,
+        "y": 0.866
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.0827820471579477,
+        "y": 1.7657880321927713
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.464,
+        "y": 2.64
+      },
+      "prevControl": {
+        "x": 1.9747904106070227,
+        "y": 2.314447722954345
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 460.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 59.99999999999999
+  },
+  "reversed": false,
+  "folder": "BenAutos",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -130.0
+  },
+  "useDefaultConstraints": true
+}

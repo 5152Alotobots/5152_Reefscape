@@ -34,7 +34,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 5.2,
-    "maxAcceleration": 3.5,
+    "maxAcceleration": 3.2,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 460.0,
     "nominalVoltage": 12.0,
@@ -45,7 +45,7 @@
     "rotation": -59.99999999999999
   },
   "reversed": false,
-  "folder": "BranchApproach",
+  "folder": "AutoDrive",
   "idealStartingState": {
     "velocity": 4.5,
     "rotation": -59.99999999999999

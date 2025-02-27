@@ -116,7 +116,7 @@ public class AutoCycleState {
   public void setActivePathfindingCommand(Command command) {
     this.activePathfindingCommand = command;
     Logger.recordOutput(
-            PATHFINDING_KEY + "/ActiveCommandName", command != null ? command.getName() : "none");
+        PATHFINDING_KEY + "/ActiveCommandName", command != null ? command.getName() : "none");
   }
 
   /**
@@ -145,7 +145,7 @@ public class AutoCycleState {
    */
   public String getSelectedCoralStationPathName() {
     return String.format(
-            "CoralStationApproach_%s_%s", coralStationSide, coralStationPickupPosition);
+        "CoralStationApproach_%s_%s", coralStationSide, coralStationPickupPosition);
   }
 
   /**
@@ -167,8 +167,8 @@ public class AutoCycleState {
   }
 
   /**
-   * Logs all state information to AdvantageKit for debugging and monitoring.
-   * This method should be called periodically to update telemetry.
+   * Logs all state information to AdvantageKit for debugging and monitoring. This method should be
+   * called periodically to update telemetry.
    */
   public void logState() {
     // Log selection state
@@ -195,12 +195,12 @@ public class AutoCycleState {
     reefBranchPose.ifPresent(pose -> Logger.recordOutput(REEF_KEY + "/TargetPose", pose));
 
     coralStationPose.ifPresent(
-            pose -> Logger.recordOutput(CORAL_STATION_KEY + "/TargetPose", pose));
+        pose -> Logger.recordOutput(CORAL_STATION_KEY + "/TargetPose", pose));
   }
 
   /**
-   * Cycles the reef branch selection to the next branch to the right.
-   * Wraps around to the first branch if at the end.
+   * Cycles the reef branch selection to the next branch to the right. Wraps around to the first
+   * branch if at the end.
    */
   public void cycleReefBranchRight() {
     int nextOrdinal = reefBranch.ordinal() + 1;
@@ -211,8 +211,8 @@ public class AutoCycleState {
   }
 
   /**
-   * Cycles the reef branch selection to the next branch to the left.
-   * Wraps around to the last branch if at the beginning.
+   * Cycles the reef branch selection to the next branch to the left. Wraps around to the last
+   * branch if at the beginning.
    */
   public void cycleReefBranchLeft() {
     int nextOrdinal = reefBranch.ordinal() - 1;
@@ -222,10 +222,7 @@ public class AutoCycleState {
     setReefBranch(FieldConstants.ReefBranch.values()[nextOrdinal]);
   }
 
-  /**
-   * Cycles the reef level selection up.
-   * Does not wrap; stops at the highest level.
-   */
+  /** Cycles the reef level selection up. Does not wrap; stops at the highest level. */
   public void cycleReefLevelUp() {
     int nextOrdinal = reefLevel.ordinal() + 1;
     if (nextOrdinal < FieldConstants.Level.values().length) {
@@ -233,10 +230,7 @@ public class AutoCycleState {
     }
   }
 
-  /**
-   * Cycles the reef level selection down.
-   * Does not wrap; stops at the lowest level.
-   */
+  /** Cycles the reef level selection down. Does not wrap; stops at the lowest level. */
   public void cycleReefLevelDown() {
     int nextOrdinal = reefLevel.ordinal() - 1;
     if (nextOrdinal >= 0) {
@@ -245,8 +239,8 @@ public class AutoCycleState {
   }
 
   /**
-   * Cycles the coral station side selection to the right.
-   * Does not wrap; stops at the rightmost side.
+   * Cycles the coral station side selection to the right. Does not wrap; stops at the rightmost
+   * side.
    */
   public void cycleCoralStationSideRight() {
     int nextOrdinal = coralStationSide.ordinal() + 1;
@@ -256,8 +250,7 @@ public class AutoCycleState {
   }
 
   /**
-   * Cycles the coral station side selection to the left.
-   * Does not wrap; stops at the leftmost side.
+   * Cycles the coral station side selection to the left. Does not wrap; stops at the leftmost side.
    */
   public void cycleCoralStationSideLeft() {
     int nextOrdinal = coralStationSide.ordinal() - 1;
@@ -267,26 +260,26 @@ public class AutoCycleState {
   }
 
   /**
-   * Cycles the coral station position selection to the right.
-   * Does not wrap; stops at the rightmost position.
+   * Cycles the coral station position selection to the right. Does not wrap; stops at the rightmost
+   * position.
    */
   public void cycleCoralStationPositionRight() {
     int nextOrdinal = coralStationPickupPosition.ordinal() + 1;
     if (nextOrdinal < FieldConstants.CoralStationPickupPosition.values().length) {
       setCoralStationPickupPosition(
-              FieldConstants.CoralStationPickupPosition.values()[nextOrdinal]);
+          FieldConstants.CoralStationPickupPosition.values()[nextOrdinal]);
     }
   }
 
   /**
-   * Cycles the coral station position selection to the left.
-   * Does not wrap; stops at the leftmost position.
+   * Cycles the coral station position selection to the left. Does not wrap; stops at the leftmost
+   * position.
    */
   public void cycleCoralStationPositionLeft() {
     int nextOrdinal = coralStationPickupPosition.ordinal() - 1;
     if (nextOrdinal >= 0) {
       setCoralStationPickupPosition(
-              FieldConstants.CoralStationPickupPosition.values()[nextOrdinal]);
+          FieldConstants.CoralStationPickupPosition.values()[nextOrdinal]);
     }
   }
 }

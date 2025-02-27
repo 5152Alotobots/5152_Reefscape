@@ -26,10 +26,10 @@ public final class ElevatorConstants {
 
   public static final class Thresholds {
     /** Acceptable PID error that will classify as "at position" */
-    public static final Distance AT_SET_POINT_POSITION_THRESHOLD = Meters.of(.02);
+    public static final Distance AT_TARGET_HEIGHT_POSITION_THRESHOLD = Meters.of(.02);
 
     /** How long the elevator must be "at position" to classify as "at position" */
-    public static final Time AT_SET_POINT_TIME_THRESHOLD = Seconds.of(.2);
+    public static final Time AT_TARGET_HEIGHT_TIME_THRESHOLD = Seconds.of(.2);
   }
 
   /** Physical limits and safety thresholds */
@@ -38,25 +38,33 @@ public final class ElevatorConstants {
     public static final Distance MAX_HEIGHT = Meters.of(1.80);
 
     /** Minimum allowed height */
-    public static final Distance MIN_HEIGHT = Meters.of(0.253311);
+    public static final Distance MIN_HEIGHT = Meters.of(0.23);
 
     /** Maximum open loop percent output */
     public static final double MAX_OPEN_LOOP_PERCENTAGE = 0.5;
 
     /** Max speed (magnitude) */
-    public static final LinearVelocity MAX_SPEED = MetersPerSecond.of(0.5);
+    public static final LinearVelocity MAX_OPERATOR_VELOCITY = MetersPerSecond.of(0.5);
 
     /** Enable Limits */
     public static final boolean LIMITS_ENABLED = true;
+
+    /** Maximum velocity near the top or bottom limit */
+    public static final LinearVelocity MAX_VELOCITY_NEAR_LIMIT = MetersPerSecond.of(0.1);
+
+    /** Distance from the top or bottom limit where the velocity limit applies */
+    public static final Distance DISTANCE_FROM_LIMIT = Meters.of(0.2);
   }
 
   /** Position setpoints for different elevator states */
   public static final class Setpoints {
     /** Height when elevator is fully retracted/stowed */
-    public static final Distance STOWED = Meters.of(0.3);
+    public static final Distance STOWED = Meters.of(0.1);
+
+    public static final Distance CLIMB = Meters.of(0.9);
 
     /** Height for picking up from coral station */
-    public static final Distance CORAL_STATION = Meters.of(0.80);
+    public static final Distance CORAL_STATION = Meters.of(0.926);
 
     /** Height for L4 placement */
     public static final Distance L4_PLACE = Meters.of(1.78);

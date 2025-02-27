@@ -14,35 +14,56 @@ package frc.alotobots;
 
 import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.alotobots.reefscape.commands.states.*;
+import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
+import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEject;
+import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEjectThrough;
+import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeIntake;
+import frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeConstants;
+import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
+import frc.alotobots.reefscape.subsystems.wrist.WristSubsystem;
 import java.util.HashMap;
 import java.util.Map;
-import lombok.experimental.UtilityClass;
 
-/**
- * Utility class for registering named commands with PathPlanner's autonomous functionality. This
- * class manages a collection of commands that can be referenced by name in PathPlanner autonomous
- * routines.
- */
-@UtilityClass
+/** Registers and manages named commands for autonomous routines. */
 public class AutoNamedCommands {
+  private final ElevatorSubsystem elevatorSubsystem;
+  private final WristSubsystem wristSubsystem;
+  private final CoralIntakeSubsystem coralIntakeSubsystem;
 
-  /**
-   * Map containing all registered named commands. The key is the command name as a String, and the
-   * value is the corresponding Command object.
-   */
-  private static final Map<String, Command> commands =
-      new HashMap<>() {
-        {
-          // put("SOME_COMMAND_NAME", new Command() {});
-        }
-      };
+  /** Constructs command registration manager with required subsystems. */
+  public AutoNamedCommands(
+      ElevatorSubsystem elevatorSubsystem,
+      WristSubsystem wristSubsystem,
+      CoralIntakeSubsystem coralIntakeSubsystem) {
 
-  /**
-   * Registers all predefined commands with PathPlanner's NamedCommands system. This method should
-   * be called during swerve initialization to ensure all commands are available for autonomous
-   * routines.
-   */
-  public static void setupNamedCommands() {
+    this.elevatorSubsystem = elevatorSubsystem;
+    this.wristSubsystem = wristSubsystem;
+    this.coralIntakeSubsystem = coralIntakeSubsystem;
+
+    registerCommands();
+  }
+
+  /** Registers all available autonomous commands with PathPlanner. */
+  public void registerCommands() {
+    Map<String, Command> commands = new HashMap<>();
+
+    //
+
+    // Coral Intake Commands
+    commands.put(
+        "CoralIntakeEject",
+        new CoralIntakeEject(
+            coralIntakeSubsystem, () -> CoralIntakeConstants.Setpoints.OpenLoop.EJECT_PERCENTAGE));
+    commands.put(
+        "CoralIntakeEjectThrough",
+        new CoralIntakeEjectThrough(
+            coralIntakeSubsystem, () -> CoralIntakeConstants.Setpoints.OpenLoop.EJECT_PERCENTAGE));
+    commands.put(
+        "CoralIntakeIntake",
+        new CoralIntakeIntake(
+            coralIntakeSubsystem, () -> CoralIntakeConstants.Setpoints.OpenLoop.INTAKE_PERCENTAGE));
+
     NamedCommands.registerCommands(commands);
   }
 }

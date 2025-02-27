@@ -21,9 +21,9 @@ import java.util.function.Supplier;
 import org.littletonrobotics.junction.Logger;
 
 /**
- * Command to pathfind to the currently selected reef branch position.
- * Uses PathPlanner's pathfinding capabilities with driver override to navigate
- * to the appropriate reef branch approach path.
+ * Command to pathfind to the currently selected reef branch position. Uses PathPlanner's
+ * pathfinding capabilities with driver override to navigate to the appropriate reef branch approach
+ * path.
  */
 public class PathfindToReef extends Command {
   private final AutoCycleSubsystem autoCycleSubsystem;
@@ -38,7 +38,7 @@ public class PathfindToReef extends Command {
    * @param chassisSpeedsSupplier A supplier for driver input as chassis speeds
    */
   public PathfindToReef(
-          AutoCycleSubsystem autoCycleSubsystem, Supplier<ChassisSpeeds> chassisSpeedsSupplier) {
+      AutoCycleSubsystem autoCycleSubsystem, Supplier<ChassisSpeeds> chassisSpeedsSupplier) {
     this.autoCycleSubsystem = autoCycleSubsystem;
     this.pathPlannerManager = autoCycleSubsystem.getPathPlannerManager();
     this.chassisSpeedsSupplier = chassisSpeedsSupplier;
@@ -47,29 +47,29 @@ public class PathfindToReef extends Command {
   }
 
   /**
-   * Called when the command is initially scheduled.
-   * Begins pathfinding to the selected reef branch if pathfinding is enabled.
+   * Called when the command is initially scheduled. Begins pathfinding to the selected reef branch
+   * if pathfinding is enabled.
    */
   @Override
   public void initialize() {
     if (autoCycleSubsystem.getState().isPathfindingEnabled()) {
       autoCycleSubsystem.getState().setActivePathfinding(ActivePathfindingType.REEF);
       activePathCommand =
-              pathPlannerManager.getPathfindThenFollowPathCommandWithOverride(
-                      autoCycleSubsystem.getState().getSelectedReefBranchPathName(),
-                      chassisSpeedsSupplier,
-                      true);
+          pathPlannerManager.getPathfindThenFollowPathCommandWithOverride(
+              autoCycleSubsystem.getState().getSelectedReefBranchPathName(),
+              chassisSpeedsSupplier,
+              true);
       autoCycleSubsystem.getState().setActivePathfindingCommand(activePathCommand);
       activePathCommand.schedule();
 
-      Logger.recordOutput("PathfindToReef/PathName",
-              autoCycleSubsystem.getState().getSelectedReefBranchPathName());
+      Logger.recordOutput(
+          "PathfindToReef/PathName", autoCycleSubsystem.getState().getSelectedReefBranchPathName());
     }
   }
 
   /**
-   * Called once when the command ends or is interrupted.
-   * Ensures proper cleanup of active path commands.
+   * Called once when the command ends or is interrupted. Ensures proper cleanup of active path
+   * commands.
    *
    * @param interrupted Whether the command was interrupted
    */
@@ -86,8 +86,8 @@ public class PathfindToReef extends Command {
   }
 
   /**
-   * Returns whether this command has finished.
-   * The command finishes when either pathfinding is disabled or the active path command completes.
+   * Returns whether this command has finished. The command finishes when either pathfinding is
+   * disabled or the active path command completes.
    *
    * @return True if the command is finished
    */
@@ -97,6 +97,6 @@ public class PathfindToReef extends Command {
     // 1. Pathfinding is disabled
     // 2. Active path command exists and has finished
     return !autoCycleSubsystem.getState().isPathfindingEnabled()
-            || (activePathCommand != null && !activePathCommand.isScheduled());
+        || (activePathCommand != null && !activePathCommand.isScheduled());
   }
 }

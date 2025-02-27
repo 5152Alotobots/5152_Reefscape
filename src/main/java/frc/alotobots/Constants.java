@@ -23,7 +23,7 @@ import lombok.experimental.UtilityClass;
  */
 public final class Constants {
   /** The simulation mode to use when not running on real hardware. */
-  public static final Mode simMode = Mode.SIM;
+  public static final Mode simMode = Mode.REPLAY;
 
   /** The current runtime mode, determined by whether running on real hardware or in simulation. */
   public static final Mode currentMode = RobotBase.isReal() ? Mode.REAL : simMode;

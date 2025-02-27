@@ -116,6 +116,35 @@ public class OI {
     return driverController.getRightTriggerAxis();
   }
 
+  /* State-based play control triggers */
+  /** Trigger for entering the coral station state, activated by co-driver's right bumper. */
+  public static final Trigger stateCoralStationButton = codriverController.rightBumper();
+
+  /** Trigger for entering the stow state, activated by co-driver's left bumper. */
+  public static final Trigger stateStowButton = codriverController.leftBumper();
+
+  /** Trigger for entering the L4 state, activated by co-driver's Y button. */
+  public static final Trigger stateL4Button = codriverController.y();
+
+  /** Trigger for entering the L3 state, activated by co-driver's X button. */
+  public static final Trigger stateL3Button = codriverController.x();
+
+  /** Trigger for entering the L2 state, activated by co-driver's B button. */
+  public static final Trigger stateL2Button = codriverController.b();
+
+  /** Trigger for entering the L1 state, activated by co-driver's A button. */
+  public static final Trigger stateL1Button = codriverController.a();
+
+  /** Trigger for releasing the prepped coral */
+  public static final Trigger coralIntakeReleaseButton = codriverController.rightTrigger();
+
+  /** Trigger for activating the coral intake */
+  public static final Trigger coralIntakeIntakeButton =
+      codriverBackupController.back().or(codriverController.leftTrigger());
+
+  public static final Trigger climbButton = codriverController.start();
+  public static final Trigger unClimbButton = codriverController.back();
+
   /** Enable pathfinding */
   public static Trigger enablePathfindingButton = driverController.back();
 
@@ -152,35 +181,7 @@ public class OI {
   /** Cycles the branch level down once */
   public static Trigger cycleLevelDownButton = driverController.povDown();
 
-  /* State-based play control triggers */
-  /** Trigger for entering the coral station state, activated by co-driver's right bumper. */
-  public static final Trigger stateCoralStationButton = codriverController.rightBumper();
-
-  /** Trigger for entering the stow state, activated by co-driver's left bumper. */
-  public static final Trigger stateStowButton = codriverController.leftBumper();
-
-  /** Trigger for entering the L4 state, activated by co-driver's Y button. */
-  public static final Trigger stateL4Button = codriverController.y();
-
-  /** Trigger for entering the L3 state, activated by co-driver's X button. */
-  public static final Trigger stateL3Button = codriverController.x();
-
-  /** Trigger for entering the L2 state, activated by co-driver's B button. */
-  public static final Trigger stateL2Button = codriverController.b();
-
-  /** Trigger for entering the L1 state, activated by co-driver's A button. */
-  public static final Trigger stateL1Button = codriverController.a();
-
-  /** Trigger for releasing the prepped coral */
-  public static final Trigger coralIntakeReleaseButton = codriverController.rightTrigger();
-
-  /** Trigger for activating the coral intake */
-  public static final Trigger coralIntakeIntakeButton =
-      codriverBackupController.back().or(codriverController.leftTrigger());
-
-  public static final Trigger climbButton = codriverController.start();
-  public static final Trigger unClimbButton = codriverController.back();
-
+  // BACKUP -----------------------------------------------------------------------------
   /* Backup control triggers */
   /** Trigger for activating the coral eject-through function */
   public static final Trigger coralIntakeEjectThroughButton = codriverBackupController.start();

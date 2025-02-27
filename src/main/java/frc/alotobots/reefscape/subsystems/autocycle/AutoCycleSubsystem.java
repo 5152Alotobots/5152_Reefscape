@@ -28,19 +28,19 @@ import frc.alotobots.reefscape.subsystems.autocycle.util.AutoCycleState;
 import java.util.Optional;
 import java.util.function.Supplier;
 import lombok.Getter;
-import org.littletonrobotics.junction.Logger;
 
 /**
- * Subsystem that manages automated navigation to reef and coral station targets.
- * Provides methods for selecting target locations on the field and pathfinding
- * to those locations using PathPlanner's pathfinding capabilities.
+ * Subsystem that manages automated navigation to reef and coral station targets. Provides methods
+ * for selecting target locations on the field and pathfinding to those locations using
+ * PathPlanner's pathfinding capabilities.
  *
  * <p>This subsystem allows drivers to:
+ *
  * <ul>
- *   <li>Select reef branches and levels to navigate to</li>
- *   <li>Select coral station sides and positions to navigate to</li>
- *   <li>Toggle pathfinding functionality on and off</li>
- *   <li>Manually override pathfinding with driver control</li>
+ *   <li>Select reef branches and levels to navigate to
+ *   <li>Select coral station sides and positions to navigate to
+ *   <li>Toggle pathfinding functionality on and off
+ *   <li>Manually override pathfinding with driver control
  * </ul>
  */
 public class AutoCycleSubsystem extends SubsystemBase {
@@ -58,9 +58,9 @@ public class AutoCycleSubsystem extends SubsystemBase {
    * @param manualControlChassisSpeeds A supplier for manual driver input as chassis speeds
    */
   public AutoCycleSubsystem(
-          PathPlannerManager pathPlannerManager,
-          SwerveDriveSubsystem swerveDriveSubsystem,
-          Supplier<ChassisSpeeds> manualControlChassisSpeeds) {
+      PathPlannerManager pathPlannerManager,
+      SwerveDriveSubsystem swerveDriveSubsystem,
+      Supplier<ChassisSpeeds> manualControlChassisSpeeds) {
     this.state = AutoCycleState.createDefault();
     this.pathPlannerManager = pathPlannerManager;
     this.swerveDriveSubsystem = swerveDriveSubsystem;
@@ -68,18 +68,18 @@ public class AutoCycleSubsystem extends SubsystemBase {
   }
 
   /**
-   * Periodic method that runs on each scheduler loop.
-   * Updates and logs state information and target poses.
+   * Periodic method that runs on each scheduler loop. Updates and logs state information and target
+   * poses.
    */
   @Override
   public void periodic() {
     state.logState();
     // Get end poses for currently selected paths
     Optional<Pose2d> reefPose =
-            pathPlannerManager.getPathEndPose(state.getSelectedReefBranchPathName());
+        pathPlannerManager.getPathEndPose(state.getSelectedReefBranchPathName());
 
     Optional<Pose2d> coralStationPose =
-            pathPlannerManager.getPathEndPose(state.getSelectedCoralStationPathName());
+        pathPlannerManager.getPathEndPose(state.getSelectedCoralStationPathName());
 
     // Log the poses using existing method
     state.logTargetPoses(reefPose, coralStationPose);
@@ -92,18 +92,18 @@ public class AutoCycleSubsystem extends SubsystemBase {
    */
   public Command togglePathfinding() {
     return Commands.runOnce(
-                    () -> {
-                      state.setPathfindingEnabled(!state.isPathfindingEnabled());
-                      if (!state.isPathfindingEnabled()) {
-                        cancelActivePathfinding();
-                      }
-                    })
-            .ignoringDisable(true);
+            () -> {
+              state.setPathfindingEnabled(!state.isPathfindingEnabled());
+              if (!state.isPathfindingEnabled()) {
+                cancelActivePathfinding();
+              }
+            })
+        .ignoringDisable(true);
   }
 
   /**
-   * Cancels the active pathfinding command if one exists.
-   * This stops the robot from following the current path.
+   * Cancels the active pathfinding command if one exists. This stops the robot from following the
+   * current path.
    */
   public void cancelActivePathfinding() {
     Command currentCommand = state.getActivePathfindingCommand();
@@ -134,8 +134,8 @@ public class AutoCycleSubsystem extends SubsystemBase {
   }
 
   /**
-   * Helper method to handle reef branch changes.
-   * Manages state changes and replanning when reef branch selection changes.
+   * Helper method to handle reef branch changes. Manages state changes and replanning when reef
+   * branch selection changes.
    *
    * @param changeAction The runnable action that changes the reef branch state
    * @param replan Whether to automatically replan pathfinding
@@ -143,24 +143,24 @@ public class AutoCycleSubsystem extends SubsystemBase {
    */
   private Command handleReefBranchChange(Runnable changeAction, boolean replan) {
     return Commands.runOnce(
-            () -> {
-              if (replan && state.getLastActiveType() == AutoCycleState.ActivePathfindingType.REEF) {
-                // Cancel any existing pathfinding command
-                Command currentCommand = state.getActivePathfindingCommand();
-                if (currentCommand != null) {
-                  currentCommand.cancel();
-                  state.setActivePathfindingCommand(null);
-                }
-              }
+        () -> {
+          if (replan && state.getLastActiveType() == AutoCycleState.ActivePathfindingType.REEF) {
+            // Cancel any existing pathfinding command
+            Command currentCommand = state.getActivePathfindingCommand();
+            if (currentCommand != null) {
+              currentCommand.cancel();
+              state.setActivePathfindingCommand(null);
+            }
+          }
 
-              // Run the state change action
-              changeAction.run();
+          // Run the state change action
+          changeAction.run();
 
-              // Schedule new pathfinding if needed
-              if (replan && state.shouldRerunReefPathfinding()) {
-                new PathfindToReef(this, manualControlChassisSpeeds).schedule();
-              }
-            });
+          // Schedule new pathfinding if needed
+          if (replan && state.shouldRerunReefPathfinding()) {
+            new PathfindToReef(this, manualControlChassisSpeeds).schedule();
+          }
+        });
   }
 
   /**
@@ -235,8 +235,8 @@ public class AutoCycleSubsystem extends SubsystemBase {
   }
 
   /**
-   * Helper method to handle coral station changes.
-   * Manages state changes and replanning when coral station selection changes.
+   * Helper method to handle coral station changes. Manages state changes and replanning when coral
+   * station selection changes.
    *
    * @param changeAction The runnable action that changes the coral station state
    * @param replan Whether to automatically replan pathfinding
@@ -244,25 +244,25 @@ public class AutoCycleSubsystem extends SubsystemBase {
    */
   private Command handleCoralStationChange(Runnable changeAction, boolean replan) {
     return Commands.runOnce(
-            () -> {
-              if (replan
-                      && state.getLastActiveType() == AutoCycleState.ActivePathfindingType.CORAL_STATION) {
-                // Cancel any existing pathfinding command
-                Command currentCommand = state.getActivePathfindingCommand();
-                if (currentCommand != null) {
-                  currentCommand.cancel();
-                  state.setActivePathfindingCommand(null);
-                }
-              }
+        () -> {
+          if (replan
+              && state.getLastActiveType() == AutoCycleState.ActivePathfindingType.CORAL_STATION) {
+            // Cancel any existing pathfinding command
+            Command currentCommand = state.getActivePathfindingCommand();
+            if (currentCommand != null) {
+              currentCommand.cancel();
+              state.setActivePathfindingCommand(null);
+            }
+          }
 
-              // Run the state change action
-              changeAction.run();
+          // Run the state change action
+          changeAction.run();
 
-              // Schedule new pathfinding if needed
-              if (replan && state.shouldRerunCoralStationPathfinding()) {
-                new PathfindToCoralStation(this, manualControlChassisSpeeds).schedule();
-              }
-            });
+          // Schedule new pathfinding if needed
+          if (replan && state.shouldRerunCoralStationPathfinding()) {
+            new PathfindToCoralStation(this, manualControlChassisSpeeds).schedule();
+          }
+        });
   }
 
   /**
@@ -305,7 +305,7 @@ public class AutoCycleSubsystem extends SubsystemBase {
    * @return Command that sets the coral station position when executed
    */
   public Command setCoralStationPosition(
-          FieldConstants.CoralStationPickupPosition position, boolean replan) {
+      FieldConstants.CoralStationPickupPosition position, boolean replan) {
     return handleCoralStationChange(() -> state.setCoralStationPickupPosition(position), replan);
   }
 

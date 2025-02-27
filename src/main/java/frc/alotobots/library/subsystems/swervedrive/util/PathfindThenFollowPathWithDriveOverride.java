@@ -30,9 +30,9 @@ import java.util.function.Supplier;
 import org.littletonrobotics.junction.Logger;
 
 /**
- * A command that will pathfind to the start of a path and then follow it with driver override capability.
- * This extends PathPlanner's pathfinding functionality by allowing driver inputs to take control
- * when needed and dynamically replanning the path when driver control is released.
+ * A command that will pathfind to the start of a path and then follow it with driver override
+ * capability. This extends PathPlanner's pathfinding functionality by allowing driver inputs to
+ * take control when needed and dynamically replanning the path when driver control is released.
  */
 public class PathfindThenFollowPathWithDriveOverride extends Command {
   private final PathPlannerPath goalPath;
@@ -73,19 +73,19 @@ public class PathfindThenFollowPathWithDriveOverride extends Command {
    * @param requirements The subsystems required by this command
    */
   public PathfindThenFollowPathWithDriveOverride(
-          PathPlannerPath goalPath,
-          PathConstraints constraints,
-          Supplier<Pose2d> poseSupplier,
-          Supplier<ChassisSpeeds> speedsSupplier,
-          BiConsumer<ChassisSpeeds, DriveFeedforwards> output,
-          PathFollowingController controller,
-          RobotConfig robotConfig,
-          BooleanSupplier shouldFlipPath,
-          Supplier<ChassisSpeeds> driverInput,
-          double inputDeadband,
-          boolean smoothTransition,
-          double replanWaitTime,
-          Subsystem... requirements) {
+      PathPlannerPath goalPath,
+      PathConstraints constraints,
+      Supplier<Pose2d> poseSupplier,
+      Supplier<ChassisSpeeds> speedsSupplier,
+      BiConsumer<ChassisSpeeds, DriveFeedforwards> output,
+      PathFollowingController controller,
+      RobotConfig robotConfig,
+      BooleanSupplier shouldFlipPath,
+      Supplier<ChassisSpeeds> driverInput,
+      double inputDeadband,
+      boolean smoothTransition,
+      double replanWaitTime,
+      Subsystem... requirements) {
 
     this.goalPath = goalPath;
     this.constraints = constraints;
@@ -103,16 +103,16 @@ public class PathfindThenFollowPathWithDriveOverride extends Command {
 
     // Store target pose for telemetry and replanning
     this.targetPose =
-            new Pose2d(
-                    goalPath.getPoint(goalPath.numPoints() - 1).position,
-                    goalPath.getGoalEndState().rotation());
+        new Pose2d(
+            goalPath.getPoint(goalPath.numPoints() - 1).position,
+            goalPath.getGoalEndState().rotation());
 
     addRequirements(requirements);
   }
 
   /**
-   * Called when the command is initially scheduled.
-   * Initializes timing mechanisms and starts pathfinding.
+   * Called when the command is initially scheduled. Initializes timing mechanisms and starts
+   * pathfinding.
    */
   @Override
   public void initialize() {
@@ -124,8 +124,8 @@ public class PathfindThenFollowPathWithDriveOverride extends Command {
   }
 
   /**
-   * Called repeatedly when this command is scheduled to run.
-   * Handles transitions between autonomous path following and driver control.
+   * Called repeatedly when this command is scheduled to run. Handles transitions between autonomous
+   * path following and driver control.
    */
   @Override
   public void execute() {
@@ -166,26 +166,26 @@ public class PathfindThenFollowPathWithDriveOverride extends Command {
 
       Pose2d currentPose = poseSupplier.get();
       Logger.recordOutput(
-              "PathfindingOverride/DistanceToTarget",
-              currentPose.getTranslation().getDistance(targetPose.getTranslation()));
+          "PathfindingOverride/DistanceToTarget",
+          currentPose.getTranslation().getDistance(targetPose.getTranslation()));
     }
   }
 
   /**
-   * Determines if significant driver input is present.
-   * Uses a deadband to filter out small inputs that might be noise.
+   * Determines if significant driver input is present. Uses a deadband to filter out small inputs
+   * that might be noise.
    *
    * @return True if driver input exceeds the deadband
    */
   private boolean hasDriverInput() {
     ChassisSpeeds input = driverInput.get();
     return Math.hypot(input.vxMetersPerSecond, input.vyMetersPerSecond) > inputDeadband
-            || Math.abs(input.omegaRadiansPerSecond) > inputDeadband;
+        || Math.abs(input.omegaRadiansPerSecond) > inputDeadband;
   }
 
   /**
-   * Starts a new pathfinding sequence to the goal path.
-   * Creates and initializes a PathfindThenFollowPath command.
+   * Starts a new pathfinding sequence to the goal path. Creates and initializes a
+   * PathfindThenFollowPath command.
    */
   private void startNewPathfinding() {
     if (goalPath.numPoints() < 2) {
@@ -194,23 +194,23 @@ public class PathfindThenFollowPathWithDriveOverride extends Command {
     }
 
     currentPath =
-            new PathfindThenFollowPath(
-                    goalPath,
-                    constraints,
-                    poseSupplier,
-                    speedsSupplier,
-                    output,
-                    controller,
-                    robotConfig,
-                    shouldFlipPath);
+        new PathfindThenFollowPath(
+            goalPath,
+            constraints,
+            poseSupplier,
+            speedsSupplier,
+            output,
+            controller,
+            robotConfig,
+            shouldFlipPath);
     currentPath.initialize();
 
     Logger.recordOutput("PathfindingOverride/StartedNewPath", true);
   }
 
   /**
-   * Called once when the command ends or is interrupted.
-   * Ensures proper cleanup of resources and commands.
+   * Called once when the command ends or is interrupted. Ensures proper cleanup of resources and
+   * commands.
    *
    * @param interrupted Whether the command was interrupted
    */
