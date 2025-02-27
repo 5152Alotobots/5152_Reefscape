@@ -53,7 +53,6 @@ public class StateL2 extends SequentialCommandGroup {
             ElevatorConstants.Setpoints.L2_PLACE,
             WristConstants.Setpoints.L2_PLACE),
         Commands.waitUntil(coralIntakeReleaseTrigger),
-        new CoralIntakeEjectThrough(coralIntakeSubsystem, () -> EJECT_PERCENTAGE),
-        new StateStowed(elevatorSubsystem, wristSubsystem).asProxy());
+        new CoralIntakeEjectThrough(coralIntakeSubsystem, () -> EJECT_PERCENTAGE));
   }
 }
