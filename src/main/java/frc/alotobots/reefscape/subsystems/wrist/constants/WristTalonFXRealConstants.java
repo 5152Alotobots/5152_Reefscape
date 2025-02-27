@@ -48,13 +48,13 @@ public class WristTalonFXRealConstants {
       public static final double KA = 0.0;
 
       /** Gravity compensation gain */
-      public static final double KG = 0.0;
+      public static final double KG = 0.18;
 
       /** Static friction compensation */
       public static final double KS = 0.0;
 
       /** Velocity feedforward gain */
-      public static final double KV = 22;
+      public static final double KV = 32;
     }
 
     /** TalonFX-specific PID and motion control constants for Position mode. */
@@ -83,7 +83,7 @@ public class WristTalonFXRealConstants {
   }
 
   public static final class MotionMagicConstants {
-    public static final AngularVelocity CRUSE_VELOCITY = RotationsPerSecond.of(.5);
+    public static final AngularVelocity CRUISE_VELOCITY = RotationsPerSecond.of(.5);
     public static final AngularAcceleration ACCELERATION = RotationsPerSecondPerSecond.of(.1);
     public static final double JERK = 0;
   }

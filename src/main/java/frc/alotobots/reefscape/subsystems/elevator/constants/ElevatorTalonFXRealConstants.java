@@ -106,7 +106,7 @@ public final class ElevatorTalonFXRealConstants {
   }
 
   public static final class MotionMagicConstants {
-    public static final LinearVelocity CRUSE_VELOCITY = MetersPerSecond.of(1.0);
+    public static final LinearVelocity CRUISE_VELOCITY = MetersPerSecond.of(1.0);
     public static final LinearAcceleration ACCELERATION = MetersPerSecondPerSecond.of(0.8);
     public static final double JERK = 0;
   }
