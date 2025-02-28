@@ -17,7 +17,7 @@ import static frc.alotobots.reefscape.subsystems.algaeintake.constants.AlgaeInta
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.alotobots.library.commands.util.LogCommand;
-import frc.alotobots.reefscape.commands.groups.ParallelElevatorWristRun;
+import frc.alotobots.reefscape.commands.groups.ElevatorWristRun;
 import frc.alotobots.reefscape.subsystems.algaeintake.AlgaeIntakeSubsystem;
 import frc.alotobots.reefscape.subsystems.algaeintake.commands.AlgaeIntakeIntakeOpenLoop;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
@@ -44,13 +44,12 @@ public class StateAlgaeL3L4 extends SequentialCommandGroup {
       Trigger algaeIntakeReleaseTrigger) {
     addCommands(
         new LogCommand("State/State", "ALGAE_L2L3"),
-        new ParallelElevatorWristRun(
+        new ElevatorWristRun(
             elevatorSubsystem,
             wristSubsystem,
             ElevatorConstants.Setpoints.ALGAE_L3L4_PICKUP,
             WristConstants.Setpoints.ALGAE_L3L4_PICKUP),
         new AlgaeIntakeIntakeOpenLoop(
-            algaeIntakeSubsystem, algaeIntakeReleaseTrigger, () -> INTAKE_PERCENTAGE),
-        new StateAlgaeStowed(elevatorSubsystem, wristSubsystem).asProxy());
+            algaeIntakeSubsystem, algaeIntakeReleaseTrigger, () -> INTAKE_PERCENTAGE));
   }
 }

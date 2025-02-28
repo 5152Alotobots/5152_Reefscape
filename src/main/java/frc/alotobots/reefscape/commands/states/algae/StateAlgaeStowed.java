@@ -14,7 +14,7 @@ package frc.alotobots.reefscape.commands.states.algae;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.alotobots.library.commands.util.LogCommand;
-import frc.alotobots.reefscape.commands.groups.ParallelElevatorWristRun;
+import frc.alotobots.reefscape.commands.groups.ElevatorWristRun;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants;
 import frc.alotobots.reefscape.subsystems.wrist.WristSubsystem;
@@ -31,7 +31,7 @@ public class StateAlgaeStowed extends SequentialCommandGroup {
   public StateAlgaeStowed(ElevatorSubsystem elevatorSubsystem, WristSubsystem wristSubsystem) {
     addCommands(
         new LogCommand("State/State", "ALGAE_STOWED"),
-        new ParallelElevatorWristRun(
+        new ElevatorWristRun(
             elevatorSubsystem,
             wristSubsystem,
             ElevatorConstants.Setpoints.ALGAE_STOWED,

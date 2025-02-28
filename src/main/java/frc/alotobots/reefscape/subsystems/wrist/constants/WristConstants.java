@@ -53,11 +53,12 @@ public class WristConstants {
 
   /** Contains position setpoints for different wrist states. */
   public static final class Setpoints {
-    /** Angle when wrist is fully retracted/stowed */
-    public static final Angle STOWED = Degrees.of(115);
 
     /** Angle when wrist is moving to a position. Safe position */
     public static final Angle CRUISE = Degrees.of(90);
+
+    /** Angle when wrist is fully retracted/stowed */
+    public static final Angle CORAL_STOWED = Degrees.of(115);
 
     /** Angle for picking up from coral station */
     public static final Angle CORAL_CORAL_STATION = Degrees.of(45);

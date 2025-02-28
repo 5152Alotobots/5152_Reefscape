@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.alotobots.library.commands.util.LogCommand;
-import frc.alotobots.reefscape.commands.groups.ParallelElevatorWristRun;
+import frc.alotobots.reefscape.commands.groups.ElevatorWristRun;
 import frc.alotobots.reefscape.subsystems.algaeintake.AlgaeIntakeSubsystem;
 import frc.alotobots.reefscape.subsystems.algaeintake.commands.AlgaeIntakeEjectOpenLoop;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
@@ -48,7 +48,7 @@ public class StateAlgaeProcessor extends SequentialCommandGroup {
       Trigger algaeIntakeReleaseTrigger) {
     addCommands(
         new LogCommand("State/State", "ALGAE_PROCESSOR"),
-        new ParallelElevatorWristRun(
+        new ElevatorWristRun(
             elevatorSubsystem,
             wristSubsystem,
             ElevatorConstants.Setpoints.ALGAE_PROCESSOR,

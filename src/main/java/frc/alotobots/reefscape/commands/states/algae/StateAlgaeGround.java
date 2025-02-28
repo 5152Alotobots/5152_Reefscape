@@ -17,7 +17,7 @@ import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralInta
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.alotobots.library.commands.util.LogCommand;
-import frc.alotobots.reefscape.commands.groups.ParallelElevatorWristRun;
+import frc.alotobots.reefscape.commands.groups.ElevatorWristRun;
 import frc.alotobots.reefscape.subsystems.algaeintake.AlgaeIntakeSubsystem;
 import frc.alotobots.reefscape.subsystems.algaeintake.commands.AlgaeIntakeIntakeOpenLoop;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
@@ -26,7 +26,7 @@ import frc.alotobots.reefscape.subsystems.wrist.WristSubsystem;
 import frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants;
 
 /**
- * Command sequence for picking Algea from the ground. The sequence: 1. Moves elevator and wrist to
+ * Command sequence for picking Algae from the ground. The sequence: 1. Moves elevator and wrist to
  * processor position simultaneously 2. Waits for release button confirmation 3. Runs eject 4.
  * Returns to stowed position
  */
@@ -46,7 +46,7 @@ public class StateAlgaeGround extends SequentialCommandGroup {
       Trigger algaeIntakeReleaseTrigger) {
     addCommands(
         new LogCommand("State/State", "ALGAE_PROCESSOR"),
-        new ParallelElevatorWristRun(
+        new ElevatorWristRun(
             elevatorSubsystem,
             wristSubsystem,
             ElevatorConstants.Setpoints.ALGAE_PROCESSOR,

@@ -46,14 +46,13 @@ public class StateCoralL2 extends SequentialCommandGroup {
       CoralIntakeSubsystem coralIntakeSubsystem,
       Trigger coralIntakeReleaseTrigger) {
     addCommands(
-        new LogCommand("State/State", "L2"),
+        new LogCommand("State/State", "CORAL_L2"),
         new ElevatorWristRun(
             elevatorSubsystem,
             wristSubsystem,
             ElevatorConstants.Setpoints.CORAL_L2_PLACE,
             WristConstants.Setpoints.CORAL_L2_PLACE),
         Commands.waitUntil(coralIntakeReleaseTrigger),
-        new CoralIntakeEjectThrough(coralIntakeSubsystem, () -> EJECT_PERCENTAGE),
-        new StateCoralStowed(elevatorSubsystem, wristSubsystem).asProxy());
+        new CoralIntakeEjectThrough(coralIntakeSubsystem, () -> EJECT_PERCENTAGE));
   }
 }

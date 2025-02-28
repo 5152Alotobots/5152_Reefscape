@@ -42,7 +42,7 @@ public class StateCoralCoralStation extends SequentialCommandGroup {
       WristSubsystem wristSubsystem,
       CoralIntakeSubsystem coralIntakeSubsystem) {
     addCommands(
-        new LogCommand("State/State", "CORAL_STATION"),
+        new LogCommand("State/State", "CORAL_CORAL_STATION"),
         new ElevatorWristRun(
             elevatorSubsystem,
             wristSubsystem,

@@ -35,9 +35,10 @@ public class StateCoralStowed extends SequentialCommandGroup {
   public StateCoralStowed(ElevatorSubsystem elevatorSubsystem, WristSubsystem wristSubsystem) {
     addCommands(
         new LogCommand("State/State", "CORAL_STOWED"),
+        new ElevatorWristRun(
             elevatorSubsystem,
             wristSubsystem,
             ElevatorConstants.Setpoints.CORAL_STOWED,
-            WristConstants.Setpoints.STOWED));
+            WristConstants.Setpoints.CORAL_STOWED));
   }
 }
