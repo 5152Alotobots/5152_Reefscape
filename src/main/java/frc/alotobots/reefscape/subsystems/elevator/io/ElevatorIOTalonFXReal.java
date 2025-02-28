@@ -119,6 +119,9 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
   /** Status signal for the CANRange's absolute position measurement */
   private final StatusSignal<Distance> canRangeDistance;
 
+  /** Status signal for the CANRange's proximity sensor */
+  private final StatusSignal<Boolean> canRangeInProximity;
+
   /** Status signal indicating if the top soft limit is reached */
   private final StatusSignal<Boolean> topSoftLimit;
 
@@ -197,7 +200,7 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
     leftConfig.MotorOutput.Inverted = LEFT_MOTOR_DIRECTION;
 
     leftConfig.MotionMagic.MotionMagicCruiseVelocity =
-        linearVelocityToTalonFX(MotionMagicConstants.CRUSE_VELOCITY).in(RotationsPerSecond);
+        linearVelocityToTalonFX(MotionMagicConstants.CRUISE_VELOCITY).in(RotationsPerSecond);
     leftConfig.MotionMagic.MotionMagicAcceleration =
         linearAccelerationToTalonFX(MotionMagicConstants.ACCELERATION)
             .in(RotationsPerSecondPerSecond);
@@ -211,10 +214,12 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
 
     // CANRange config
     var canRangeConfig = new CANrangeConfiguration();
-    canRangeConfig.ToFParams.UpdateMode = UpdateModeValue.LongRangeUserFreq;
+    canRangeConfig.ToFParams.UpdateMode = UpdateModeValue.ShortRangeUserFreq;
     canRangeConfig.ToFParams.UpdateFrequency = 50; // Hz
     canRangeConfig.FovParams.FOVRangeX = 6.75;
     canRangeConfig.FovParams.FOVRangeY = 6.75;
+    canRangeConfig.ProximityParams.ProximityThreshold = .154;
+    canRangeConfig.ProximityParams.ProximityHysteresis = .001;
 
     // Apply config to CANRange
     tryUntilOk(5, () -> canRange.getConfigurator().apply(canRangeConfig, 0.25));
@@ -240,6 +245,8 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
     topSoftLimit = leftTalon.getFault_ForwardSoftLimit();
     bottomSoftLimit = leftTalon.getFault_ReverseSoftLimit();
 
+    canRangeInProximity = canRange.getIsDetected();
+
     BaseStatusSignal.setUpdateFrequencyForAll(
         50.0,
         leftPosition,
@@ -255,7 +262,8 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
         rightAppliedCurrent,
         topSoftLimit,
         bottomSoftLimit,
-        currentPidSlot);
+        currentPidSlot,
+        canRangeInProximity);
     ParentDevice.optimizeBusUtilizationForAll(leftTalon, rightTalon, canRange);
   }
 
@@ -283,7 +291,7 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
             rightAcceleration,
             rightAppliedVoltage,
             rightAppliedCurrent);
-    var canRangeSignals = BaseStatusSignal.refreshAll(canRangeDistance);
+    var canRangeSignals = BaseStatusSignal.refreshAll(canRangeDistance, canRangeInProximity);
 
     // Current slot
     inputs.currentPidSlot = currentPidSlot.getValue();
@@ -319,6 +327,8 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
     // Amps
     inputs.leftCurrentAmps = leftAppliedCurrent.getValue();
     inputs.rightCurrentAmps = rightAppliedCurrent.getValue();
+
+    inputs.canrangeInProximity = canRangeInProximity.getValue();
   }
 
   /**
@@ -374,6 +384,17 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
   @Override
   public void setElevatorBrakeMode(boolean brake) {
     leftTalon.setNeutralMode(brake ? NeutralModeValue.Brake : NeutralModeValue.Coast);
+  }
+
+  /**
+   * Resets the rotor sensors of both motors to be equal to the given height
+   *
+   * @param height The height off the floor the elevator is at
+   */
+  @Override
+  public void resetRotorPositions(Distance height) {
+    leftTalon.setPosition(heightToTalonFX(height));
+    rightTalon.setPosition(heightToTalonFX(height));
   }
 
   /** Stops all elevator motor movement. */

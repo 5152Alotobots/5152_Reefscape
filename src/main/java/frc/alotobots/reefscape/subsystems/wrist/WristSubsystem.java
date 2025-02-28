@@ -14,13 +14,13 @@ package frc.alotobots.reefscape.subsystems.wrist;
 
 import static edu.wpi.first.units.Units.*;
 import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.Limits.*;
-import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.Thresholds.AT_SET_POINT_POSITION_THRESHOLD;
-import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.Thresholds.AT_SET_POINT_TIME_THRESHOLD;
+import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.Thresholds.AT_TARGET_ANGLE_POSITION_THRESHOLD;
+import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.Thresholds.AT_TARGET_ANGLE_TIME_THRESHOLD;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.alotobots.reefscape.subsystems.wrist.io.WristIO;
 import frc.alotobots.reefscape.subsystems.wrist.io.WristIOInputsAutoLogged;
@@ -38,8 +38,9 @@ public class WristSubsystem extends SubsystemBase {
   /** Latest inputs from the wrist hardware */
   private WristIOInputsAutoLogged inputs = new WristIOInputsAutoLogged();
 
-  /** Timer that handles the checking for at position */
-  private final Timer atSetpointTimer = new Timer();
+  /** Debouncer for ensuring stability at a position */
+  private final Debouncer atTargetAngleDebounce =
+      new Debouncer(AT_TARGET_ANGLE_TIME_THRESHOLD.in(Seconds));
 
   /**
    * Angle object that tracks the currently selected position (maintains last position if not in
@@ -129,20 +130,9 @@ public class WristSubsystem extends SubsystemBase {
     // Check if current angle is within threshold of target
     boolean inSetPointThreshold =
         targetAngle.minus(inputs.mechanismAngle).abs(Degrees)
-            < AT_SET_POINT_POSITION_THRESHOLD.in(Degrees);
+            < AT_TARGET_ANGLE_POSITION_THRESHOLD.in(Degrees);
 
-    // Only start if in position threshold
-    if (inSetPointThreshold) {
-      // Start timer if not running and check elapsed time
-      if (!atSetpointTimer.isRunning()) {
-        atSetpointTimer.restart();
-      }
-      // Return true if wrist has been at position for minimum duration
-      return atSetpointTimer.hasElapsed(AT_SET_POINT_TIME_THRESHOLD.in(Seconds));
-    } else {
-      // Reset timer if outside threshold
-      atSetpointTimer.stop();
-      return false;
-    }
+    // Use debouncer to check if we've been at setpoint for the required duration
+    return atTargetAngleDebounce.calculate(inSetPointThreshold);
   }
 }

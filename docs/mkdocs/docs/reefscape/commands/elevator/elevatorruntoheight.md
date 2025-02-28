@@ -15,7 +15,7 @@ public ElevatorRunToHeight(ElevatorSubsystem elevatorSubsystem, Distance targetH
 ## Configuration
 - Ensure PID constants are properly tuned
 - Configure MAX_HEIGHT and MIN_HEIGHT in ElevatorConstants
-- AT_SET_POINT_THRESHOLD must be set appropriately for position tolerance
+- AT_TARGET_HEIGHT_POSITION_THRESHOLD must be set appropriately for position tolerance
 - Soft limits should be enabled to prevent mechanical damage
 - The command will use the appropriate PID slot based on the current game element
 - Brake mode should be properly configured in the motor controller for position holding

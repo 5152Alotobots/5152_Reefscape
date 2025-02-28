@@ -14,13 +14,13 @@ package frc.alotobots.reefscape.subsystems.elevator;
 
 import static edu.wpi.first.units.Units.*;
 import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.Limits.*;
-import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.Thresholds.AT_SET_POINT_POSITION_THRESHOLD;
-import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.Thresholds.AT_SET_POINT_TIME_THRESHOLD;
+import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.Thresholds.AT_TARGET_HEIGHT_POSITION_THRESHOLD;
+import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.Thresholds.AT_TARGET_HEIGHT_TIME_THRESHOLD;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.LinearVelocity;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIO;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIOInputsAutoLogged;
@@ -39,8 +39,15 @@ public class ElevatorSubsystem extends SubsystemBase {
   /** Auto-logged inputs from elevator sensors and motor controllers. */
   private final ElevatorIOInputsAutoLogged inputs = new ElevatorIOInputsAutoLogged();
 
-  /** Timer that handles the checking for at position */
-  private final Timer atSetpointTimer = new Timer();
+  /** Debouncer for ensuring stability at a position */
+  private final Debouncer atTargetHeightDebounce =
+      new Debouncer(AT_TARGET_HEIGHT_TIME_THRESHOLD.in(Seconds));
+
+  /** Debouncer for bottom resetting logic */
+  private final Debouncer atBottomDebounce = new Debouncer(AT_TARGET_HEIGHT_TIME_THRESHOLD.in(Seconds));
+
+  /** Boolean tracking if the elevator has reset from the CANrange in its current position */
+  private boolean hasReset = false;
 
   /**
    * Distance object that tracks the currently selected position (maintains last position if not in
@@ -66,6 +73,9 @@ public class ElevatorSubsystem extends SubsystemBase {
     io.updateInputs(inputs);
     Logger.processInputs("Elevator", inputs);
     Logger.recordOutput("Elevator/TargetHeight", targetHeight);
+
+    // Automatically check every loop to see if the sensor should reset the position of the elevator
+    handleBottomReset();
   }
 
   /**
@@ -152,20 +162,26 @@ public class ElevatorSubsystem extends SubsystemBase {
     // Check if current height is within threshold of target
     boolean inSetPointThreshold =
         targetHeight.minus(inputs.leftHeight).abs(Meters)
-            < AT_SET_POINT_POSITION_THRESHOLD.in(Meters);
+            < AT_TARGET_HEIGHT_POSITION_THRESHOLD.in(Meters);
 
-    // Only start if in position threshold
-    if (inSetPointThreshold) {
-      // Start timer if not running and check elapsed time
-      if (!atSetpointTimer.isRunning()) {
-        atSetpointTimer.restart();
-      }
-      // Return true if elevator has been at position for minimum duration
-      return atSetpointTimer.hasElapsed(AT_SET_POINT_TIME_THRESHOLD.in(Seconds));
-    } else {
-      // Reset timer if outside threshold
-      atSetpointTimer.stop();
-      return false;
+    // Use debouncer to check if we've been at setpoint for the required duration
+    return atTargetHeightDebounce.calculate(inSetPointThreshold);
+  }
+
+  /**
+   * Handles resetting the elevator's position when it reaches the bottom. Uses a debounced bottom
+   * detection to ensure the elevator is stable before resetting. Will only reset once per bottom
+   * detection to prevent multiple resets. The position will not reset again until the elevator
+   * moves away from the bottom and returns.
+   */
+  private void handleBottomReset() {
+    if (atBottomDebounce.calculate(inputs.canrangeInProximity) && !hasReset) {
+      io.resetRotorPositions(MIN_HEIGHT);
+      hasReset = true;
+      Logger.recordOutput("Elevator/PositionReset", true);
+    } else if (!inputs.canrangeInProximity) {
+      hasReset = false;
+      Logger.recordOutput("Elevator/PositionReset", false);
     }
   }
 

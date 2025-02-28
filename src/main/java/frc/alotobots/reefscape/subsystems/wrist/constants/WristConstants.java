@@ -27,10 +27,10 @@ public class WristConstants {
   /** Contains threshold values for various wrist operations. */
   public static final class Thresholds {
     /** Acceptable PID error that will classify as "at position" */
-    public static final Angle AT_SET_POINT_POSITION_THRESHOLD = Degrees.of(3);
+    public static final Angle AT_TARGET_ANGLE_POSITION_THRESHOLD = Degrees.of(3);
 
     /** How long the wrist must be "at position" to classify as "at position" */
-    public static final Time AT_SET_POINT_TIME_THRESHOLD = Seconds.of(.2);
+    public static final Time AT_TARGET_ANGLE_TIME_THRESHOLD = Seconds.of(.2);
   }
 
   /** Contains physical limits and safety thresholds for the wrist. */

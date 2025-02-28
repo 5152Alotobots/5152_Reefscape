@@ -149,7 +149,7 @@ public class WristIOTalonFXReal implements WristIO {
     wristMotorConfig.MotorOutput.Inverted = MOTOR_DIRECTION;
 
     wristMotorConfig.MotionMagic.MotionMagicCruiseVelocity =
-        MotionMagicConstants.CRUSE_VELOCITY.in(RotationsPerSecond);
+        MotionMagicConstants.CRUISE_VELOCITY.in(RotationsPerSecond);
     wristMotorConfig.MotionMagic.MotionMagicAcceleration =
         MotionMagicConstants.ACCELERATION.in(RotationsPerSecondPerSecond);
     wristMotorConfig.MotionMagic.MotionMagicJerk = MotionMagicConstants.JERK;
@@ -231,7 +231,7 @@ public class WristIOTalonFXReal implements WristIO {
   }
 
   /**
-   * Sets the wrist to a target position using closed-loop control & motion magic.
+   * Sets the wrist to a target position using closed-loop control and motion magic.
    *
    * @param rotation The target angle to move to
    * @param pidSlot The PID slot to use (0 for velocity, 1 for position)
