@@ -59,23 +59,35 @@ public final class ElevatorConstants {
   /** Position setpoints for different elevator states */
   public static final class Setpoints {
     /** Height when elevator is fully retracted/stowed */
-    public static final Distance STOWED = Meters.of(0.1);
+    public static final Distance CORAL_STOWED = Meters.of(0.1);
 
     public static final Distance CLIMB = Meters.of(0.9);
 
     /** Height for picking up from coral station */
-    public static final Distance CORAL_STATION = Meters.of(0.80);
+    public static final Distance CORAL_CORAL_STATION = Meters.of(0.80);
 
     /** Height for L4 placement */
-    public static final Distance L4_PLACE = Meters.of(1.78);
+    public static final Distance CORAL_L4_PLACE = Meters.of(1.78);
 
     /** Height for L3 placement */
-    public static final Distance L3_PLACE = Meters.of(1.2);
+    public static final Distance CORAL_L3_PLACE = Meters.of(1.2);
 
     /** Height for L2 placement */
-    public static final Distance L2_PLACE = Meters.of(0.81);
+    public static final Distance CORAL_L2_PLACE = Meters.of(0.81);
 
     /** Height for L1 placement */
-    public static final Distance L1_PLACE = Meters.of(0.457);
+    public static final Distance CORAL_L1_PLACE = Meters.of(0.457);
+
+    /** Height for L2/L3 algae pickup */
+    public static final Distance ALGAE_L2L3_PICKUP = Meters.of(1.34);
+
+    /** Height for L3/L4 algae pickup */
+    public static final Distance ALGAE_L3L4_PICKUP = Meters.of(1.70);
+
+    /** Height for stowed algae */
+    public static final Distance ALGAE_STOWED = Meters.of(0.4);
+
+    /** Height for algae processor */
+    public static final Distance ALGAE_PROCESSOR = Meters.of(0.4);
   }
 }

@@ -12,8 +12,6 @@
 */
 package frc.alotobots.reefscape.commands.groups;
 
-import static edu.wpi.first.units.Units.Meters;
-
 import edu.wpi.first.wpilibj2.command.*;
 import frc.alotobots.library.subsystems.bling.BlingSubsystem;
 import frc.alotobots.library.subsystems.bling.commands.BlingClimberReady;
@@ -50,7 +48,6 @@ public class Climb extends SequentialCommandGroup {
         new InstantCommand(climberSubsystem::unlockCage),
         new WaitUntilCommand(climberSubsystem::getCageSwitches),
         new InstantCommand(climberSubsystem::lockCage),
-        new ElevatorRunToHeight(elevatorSubsystem, Meters.of(1.2)).asProxy(),
         new InstantCommand(climberSubsystem::setPlungerToPlunge),
         new BlingClimberReady(blingSubsystem).asProxy(),
         new ElevatorRunAtClimbVelocity(elevatorSubsystem, input).asProxy());

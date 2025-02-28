@@ -10,7 +10,7 @@
 *
 * Source code must be publicly available on GitHub or an alternative web accessible site
 */
-package frc.alotobots.reefscape.commands.states;
+package frc.alotobots.reefscape.commands.states.coral;
 
 import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeConstants.Setpoints.OpenLoop.EJECT_PERCENTAGE;
 
@@ -21,22 +21,22 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.alotobots.library.commands.util.LogCommand;
 import frc.alotobots.library.subsystems.bling.BlingSubsystem;
 import frc.alotobots.library.subsystems.bling.commands.BlingCoralEjectedDrive;
-import frc.alotobots.reefscape.commands.groups.ParallelElevatorWristRun;
+import frc.alotobots.reefscape.commands.groups.ElevatorWristRun;
 import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
-import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEject;
+import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEjectThrough;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants;
 import frc.alotobots.reefscape.subsystems.wrist.WristSubsystem;
 import frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants;
 
 /**
- * Command sequence for placing game pieces on Level 1. The sequence: 1. Moves elevator and wrist to
- * L1 position simultaneously 2. Waits for release button confirmation 3. Runs eject 4. Returns to
- * stowed position
+ * Command sequence for placing game pieces on Level 3. The sequence: 1. Moves elevator and wrist to
+ * L3 position simultaneously 2. Waits for release button confirmation 3. Runs eject through 4.
+ * Returns to stowed position
  */
-public class StateL1 extends SequentialCommandGroup {
+public class StateCoralL3 extends SequentialCommandGroup {
   /**
-   * Creates a new StateL1 command.
+   * Creates a new StateL3 command.
    *
    * @param elevatorSubsystem The elevator subsystem
    * @param wristSubsystem The wrist subsystem
@@ -44,22 +44,21 @@ public class StateL1 extends SequentialCommandGroup {
    * @param blingSubsystem The bling subsystem
    * @param coralIntakeReleaseTrigger The release button trigger
    */
-  public StateL1(
+  public StateCoralL3(
       ElevatorSubsystem elevatorSubsystem,
       WristSubsystem wristSubsystem,
       CoralIntakeSubsystem coralIntakeSubsystem,
       BlingSubsystem blingSubsystem,
       Trigger coralIntakeReleaseTrigger) {
     addCommands(
-        new LogCommand("State/State", "L1"),
-        new ParallelElevatorWristRun(
+        new LogCommand("State/State", "CORAL_L3"),
+        new ElevatorWristRun(
             elevatorSubsystem,
             wristSubsystem,
-            ElevatorConstants.Setpoints.L1_PLACE,
-            WristConstants.Setpoints.L1_PLACE),
+            ElevatorConstants.Setpoints.CORAL_L3_PLACE,
+            WristConstants.Setpoints.CORAL_L3_PLACE),
         Commands.waitUntil(coralIntakeReleaseTrigger),
-        new CoralIntakeEject(coralIntakeSubsystem, () -> EJECT_PERCENTAGE),
-        new ScheduleCommand(new BlingCoralEjectedDrive(blingSubsystem)),
-        new StateStowed(elevatorSubsystem, wristSubsystem));
+        new CoralIntakeEjectThrough(coralIntakeSubsystem, () -> EJECT_PERCENTAGE),
+        new ScheduleCommand(new BlingCoralEjectedDrive(blingSubsystem)));
   }
 }

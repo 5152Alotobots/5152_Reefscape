@@ -10,11 +10,11 @@
 *
 * Source code must be publicly available on GitHub or an alternative web accessible site
 */
-package frc.alotobots.reefscape.commands.states;
+package frc.alotobots.reefscape.commands.states.coral;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.alotobots.library.commands.util.LogCommand;
-import frc.alotobots.reefscape.commands.groups.SequentialWristElevatorRun;
+import frc.alotobots.reefscape.commands.groups.ElevatorWristRun;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants;
 import frc.alotobots.reefscape.subsystems.wrist.WristSubsystem;
@@ -24,21 +24,21 @@ import frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants;
  * Command for moving the robot's mechanisms to their stowed positions. Moves the wrist first, then
  * the elevator to their positions
  */
-public class StateStowed extends SequentialCommandGroup {
+public class StateCoralStowed extends SequentialCommandGroup {
   /**
-   * Creates a new StateStowed command. Runs both elevator and wrist to stowed position. Wrist moves
-   * first, then elevator. Cedes control back to the default command via usage of ProxyCommand
+   * Creates a new StateCoralStowed command. Runs both elevator and wrist to stowed position. Wrist
+   * moves first, then elevator. Cedes control back to the default command via usage of ProxyCommand
    *
    * @param elevatorSubsystem The elevator subsystem
    * @param wristSubsystem The wrist subsystem
    */
-  public StateStowed(ElevatorSubsystem elevatorSubsystem, WristSubsystem wristSubsystem) {
+  public StateCoralStowed(ElevatorSubsystem elevatorSubsystem, WristSubsystem wristSubsystem) {
     addCommands(
-        new LogCommand("State/State", "STOWED"),
-        new SequentialWristElevatorRun(
-            wristSubsystem,
+        new LogCommand("State/State", "CORAL_STOWED"),
+        new ElevatorWristRun(
             elevatorSubsystem,
-            ElevatorConstants.Setpoints.STOWED,
-            WristConstants.Setpoints.STOWED));
+            wristSubsystem,
+            ElevatorConstants.Setpoints.CORAL_STOWED,
+            WristConstants.Setpoints.CORAL_STOWED));
   }
 }

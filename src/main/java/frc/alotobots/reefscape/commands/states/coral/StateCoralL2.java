@@ -10,7 +10,7 @@
 *
 * Source code must be publicly available on GitHub or an alternative web accessible site
 */
-package frc.alotobots.reefscape.commands.states;
+package frc.alotobots.reefscape.commands.states.coral;
 
 import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeConstants.Setpoints.OpenLoop.EJECT_PERCENTAGE;
 
@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.alotobots.library.commands.util.LogCommand;
 import frc.alotobots.library.subsystems.bling.BlingSubsystem;
 import frc.alotobots.library.subsystems.bling.commands.BlingCoralEjectedDrive;
-import frc.alotobots.reefscape.commands.groups.ParallelElevatorWristRun;
+import frc.alotobots.reefscape.commands.groups.ElevatorWristRun;
 import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEjectThrough;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
@@ -30,13 +30,13 @@ import frc.alotobots.reefscape.subsystems.wrist.WristSubsystem;
 import frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants;
 
 /**
- * Command sequence for placing game pieces on Level 3. The sequence: 1. Moves elevator and wrist to
- * L3 position simultaneously 2. Waits for release button confirmation 3. Runs eject through 4.
+ * Command sequence for placing game pieces on Level 2. The sequence: 1. Moves elevator and wrist to
+ * L2 position simultaneously 2. Waits for release button confirmation 3. Runs eject through 4.
  * Returns to stowed position
  */
-public class StateL3 extends SequentialCommandGroup {
+public class StateCoralL2 extends SequentialCommandGroup {
   /**
-   * Creates a new StateL3 command.
+   * Creates a new StateL2 command.
    *
    * @param elevatorSubsystem The elevator subsystem
    * @param wristSubsystem The wrist subsystem
@@ -44,22 +44,21 @@ public class StateL3 extends SequentialCommandGroup {
    * @param blingSubsystem The bling subsystem
    * @param coralIntakeReleaseTrigger The release button trigger
    */
-  public StateL3(
+  public StateCoralL2(
       ElevatorSubsystem elevatorSubsystem,
       WristSubsystem wristSubsystem,
       CoralIntakeSubsystem coralIntakeSubsystem,
       BlingSubsystem blingSubsystem,
       Trigger coralIntakeReleaseTrigger) {
     addCommands(
-        new LogCommand("State/State", "L3"),
-        new ParallelElevatorWristRun(
+        new LogCommand("State/State", "CORAL_L2"),
+        new ElevatorWristRun(
             elevatorSubsystem,
             wristSubsystem,
-            ElevatorConstants.Setpoints.L3_PLACE,
-            WristConstants.Setpoints.L3_PLACE),
+            ElevatorConstants.Setpoints.CORAL_L2_PLACE,
+            WristConstants.Setpoints.CORAL_L2_PLACE),
         Commands.waitUntil(coralIntakeReleaseTrigger),
         new CoralIntakeEjectThrough(coralIntakeSubsystem, () -> EJECT_PERCENTAGE),
-        new ScheduleCommand(new BlingCoralEjectedDrive(blingSubsystem)),
-        new StateStowed(elevatorSubsystem, wristSubsystem).asProxy());
+        new ScheduleCommand(new BlingCoralEjectedDrive(blingSubsystem)));
   }
 }
