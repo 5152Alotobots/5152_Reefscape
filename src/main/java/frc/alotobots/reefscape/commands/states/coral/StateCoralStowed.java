@@ -14,7 +14,7 @@ package frc.alotobots.reefscape.commands.states.coral;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.alotobots.library.commands.util.LogCommand;
-import frc.alotobots.reefscape.commands.groups.SequentialWristElevatorRun;
+import frc.alotobots.reefscape.commands.groups.ElevatorWristRun;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants;
 import frc.alotobots.reefscape.subsystems.wrist.WristSubsystem;
@@ -35,9 +35,8 @@ public class StateCoralStowed extends SequentialCommandGroup {
   public StateCoralStowed(ElevatorSubsystem elevatorSubsystem, WristSubsystem wristSubsystem) {
     addCommands(
         new LogCommand("State/State", "CORAL_STOWED"),
-        new SequentialWristElevatorRun(
-            wristSubsystem,
             elevatorSubsystem,
+            wristSubsystem,
             ElevatorConstants.Setpoints.CORAL_STOWED,
             WristConstants.Setpoints.STOWED));
   }
