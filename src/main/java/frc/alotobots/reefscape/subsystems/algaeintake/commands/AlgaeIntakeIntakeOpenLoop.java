@@ -31,6 +31,7 @@ public class AlgaeIntakeIntakeOpenLoop extends Command {
 
   /** The input for controlling intake speed */
   private final DoubleSupplier input;
+
   private final Trigger stop;
 
   /**

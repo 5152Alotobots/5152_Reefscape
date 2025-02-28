@@ -49,7 +49,8 @@ public class StateAlgaeL2L3 extends SequentialCommandGroup {
             wristSubsystem,
             ElevatorConstants.Setpoints.ALGAE_L2L3_PICKUP,
             WristConstants.Setpoints.ALGAE_L2L3_PICKUP),
-        new AlgaeIntakeIntakeOpenLoop(algaeIntakeSubsystem, algaeIntakeReleaseTrigger, () -> INTAKE_PERCENTAGE),
+        new AlgaeIntakeIntakeOpenLoop(
+            algaeIntakeSubsystem, algaeIntakeReleaseTrigger, () -> INTAKE_PERCENTAGE),
         new StateAlgaeStowed(elevatorSubsystem, wristSubsystem).asProxy());
   }
 }
