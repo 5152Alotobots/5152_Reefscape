@@ -79,15 +79,15 @@ public final class ElevatorConstants {
     public static final Distance CORAL_L1_PLACE = Meters.of(0.457);
 
     /** Height for L2/L3 algae pickup */
-    public static final Distance ALGAE_L2L3_PICKUP = Meters.of(0.8);
+    public static final Distance ALGAE_L2L3_PICKUP = Meters.of(1.34);
 
     /** Height for L3/L4 algae pickup */
-    public static final Distance ALGAE_L3L4_PICKUP = Meters.of(1.5);
+    public static final Distance ALGAE_L3L4_PICKUP = Meters.of(1.70);
 
     /** Height for stowed algae */
-    public static final Distance ALGAE_STOWED = Meters.of(0.1);
+    public static final Distance ALGAE_STOWED = Meters.of(0.4);
 
     /** Height for algae processor */
-    public static final Distance ALGAE_PROCESSOR = Meters.of(0.5);
+    public static final Distance ALGAE_PROCESSOR = Meters.of(0.4);
   }
 }

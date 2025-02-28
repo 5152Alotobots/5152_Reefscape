@@ -44,7 +44,8 @@ public class ElevatorSubsystem extends SubsystemBase {
       new Debouncer(AT_TARGET_HEIGHT_TIME_THRESHOLD.in(Seconds));
 
   /** Debouncer for bottom resetting logic */
-  private final Debouncer atBottomDebounce = new Debouncer(AT_TARGET_HEIGHT_TIME_THRESHOLD.in(Seconds));
+  private final Debouncer atBottomDebounce =
+      new Debouncer(AT_TARGET_HEIGHT_TIME_THRESHOLD.in(Seconds));
 
   /** Boolean tracking if the elevator has reset from the CANrange in its current position */
   private boolean hasReset = false;

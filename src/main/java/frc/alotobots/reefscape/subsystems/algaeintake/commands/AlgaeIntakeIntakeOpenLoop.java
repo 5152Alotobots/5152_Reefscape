@@ -76,6 +76,6 @@ public class AlgaeIntakeIntakeOpenLoop extends Command {
    */
   @Override
   public boolean isFinished() {
-    return stop.getAsBoolean();
+    return stop.getAsBoolean() || algaeIntakeSubsystem.isIntakeOccupied();
   }
 }

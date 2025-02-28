@@ -145,7 +145,7 @@ public class OI {
    * Trigger for entering stowed state for algae handling, activated by co-driver's D-pad down
    * button.
    */
-  public static final Trigger stateAlgaeStowedButton = codriverController.povDown();
+  public static final Trigger stateAlgaeProcessorButton = codriverController.povDown();
 
   /**
    * Trigger for entering L3/L4 state for algae handling, activated by co-driver's D-pad up button.
