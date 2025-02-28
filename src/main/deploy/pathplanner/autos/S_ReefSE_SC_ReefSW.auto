@@ -1,0 +1,94 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "S_ReefSE_SC_ReefSW 1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoStateL4"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "CoralIntakeEjectThrough"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "S_ReefSE_SC_ReefSW 2"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoStateCoralStation\r"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "CoralIntakeIntake"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "S_ReefSE_SC_ReefSW 3"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoStateL4"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "CoralIntakeEjectThrough"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": " AutoStateStowed"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": false,
+  "folder": "Two Piece",
+  "choreoAuto": false
+}

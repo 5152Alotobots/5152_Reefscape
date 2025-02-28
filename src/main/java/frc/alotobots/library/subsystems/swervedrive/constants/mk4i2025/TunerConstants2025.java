@@ -67,7 +67,7 @@ public class TunerConstants2025 implements TunerConstants {
     // When using closed-loop control, the drive motor uses the control
     // output type specified by SwerveModuleConstants.DriveMotorClosedLoopOutput
     private static final Slot0Configs driveGains =
-        new Slot0Configs().withKP(0.1).withKI(0).withKD(0).withKS(0.16504).withKV(0.55969);
+        new Slot0Configs().withKP(0.2).withKI(0).withKD(0).withKS(0.16504).withKV(0.57969);
 
     // The closed-loop output type to use for the steer motors;
     // This affects the PID/FF gains for the steer motors
@@ -89,7 +89,7 @@ public class TunerConstants2025 implements TunerConstants {
 
     // The stator current at which the wheels start to slip;
     // This needs to be tuned to your individual robot
-    private static final Current kSlipCurrent = Amps.of(120.0);
+    private static final Current kSlipCurrent = Amps.of(70.0);
 
     // Initial configs for the drive and steer motors and the azimuth encoder; these cannot be null.
     // Some configs will be overwritten; check the `with*InitialConfigs()` API documentation.
@@ -267,7 +267,7 @@ public class TunerConstants2025 implements TunerConstants {
 
   public static class CustomConstants {
     // Custom constants go here
-    public static final PIDConstants translationPid = new PIDConstants(2.4, 0, 0.015);
+    public static final PIDConstants translationPid = new PIDConstants(1.5, 0, 0.0);
     public static final PIDConstants rotationPid = new PIDConstants(7.8, 0, 0.015);
     public static final double precisionAlignTolerance = .03; // Meters
     public static final double precisionAlignAllowRadius = .5; // Meters
@@ -290,9 +290,9 @@ public class TunerConstants2025 implements TunerConstants {
     public static final LinearVelocity NOMINAL_SPEED = MetersPerSecond.of(4.8);
     public static final LinearVelocity TURBO_SPEED = MetersPerSecond.of(6.00);
     public static final double MAX_MODULAR_ROTATIONAL_RATE = Units.rotationsToRadians(12);
-    public static final double ROBOT_MASS_KG = 34;
+    public static final double ROBOT_MASS_KG = 54.4;
     public static final double ROBOT_MOI = 2.550;
-    public static final double WHEEL_COF = 0.6;
+    public static final double WHEEL_COF = 1.2;
 
     public static final RobotConfig pathPlannerConfig =
         new RobotConfig(

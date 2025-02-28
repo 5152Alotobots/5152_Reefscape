@@ -116,6 +116,8 @@ public class OI {
     return driverController.getRightTriggerAxis();
   }
 
+  public static final Trigger ejectCoralButton = codriverBackupController.rightBumper();
+
   /* State-based play control triggers */
   /** Trigger for entering the coral station state, activated by co-driver's right bumper. */
   public static final Trigger stateCoralCoralStationButton = codriverController.rightBumper();

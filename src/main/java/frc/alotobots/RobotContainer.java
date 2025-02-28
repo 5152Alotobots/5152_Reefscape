@@ -57,6 +57,7 @@ import frc.alotobots.reefscape.subsystems.climber.ClimberSubsystem;
 import frc.alotobots.reefscape.subsystems.climber.commands.ClimberDisableServos;
 import frc.alotobots.reefscape.subsystems.climber.io.ClimberIORevServoReal;
 import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
+import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEject;
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEjectThrough;
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeIntake;
 import frc.alotobots.reefscape.subsystems.coralIntake.io.CoralIntakeIO;
@@ -93,6 +94,7 @@ public class RobotContainer {
   private final AprilTagPoseSource aprilTagPoseSource;
   private final BlingSubsystem blingSubsystem;
   private final PathPlannerManager pathPlannerManager;
+  private final AutoNamedCommands autoNamedCommands;
   private LoggedDashboardChooser<Command> autoChooser;
   private SwerveDriveSimulation driveSimulation;
 
@@ -116,6 +118,8 @@ public class RobotContainer {
         algaeIntakeSubsystem = new AlgaeIntakeSubsystem(new AlgaeIntakeIOSparkMaxReal());
         climberSubsystem = new ClimberSubsystem(new ClimberIORevServoReal());
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
+        autoNamedCommands =
+            new AutoNamedCommands(elevatorSubsystem, wristSubsystem, coralIntakeSubsystem);
         configureAutoChooser();
 
         oculusSubsystem = new OculusSubsystem(new OculusIOReal());
@@ -169,6 +173,8 @@ public class RobotContainer {
         wristSubsystem =
             new WristSubsystem(new WristIOTalonFXSim(), elevatorSubsystem::getCurrentHeight);
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
+        autoNamedCommands =
+            new AutoNamedCommands(elevatorSubsystem, wristSubsystem, coralIntakeSubsystem);
         configureAutoChooser();
 
         oculusSubsystem = new OculusSubsystem(new OculusIOSim(driveSimulation));
@@ -209,6 +215,8 @@ public class RobotContainer {
         wristSubsystem =
             new WristSubsystem(new WristIOTalonFXSim(), elevatorSubsystem::getCurrentHeight);
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
+        autoNamedCommands =
+            new AutoNamedCommands(elevatorSubsystem, wristSubsystem, coralIntakeSubsystem);
         configureAutoChooser();
 
         oculusSubsystem = new OculusSubsystem(new OculusIO() {});
@@ -325,6 +333,7 @@ public class RobotContainer {
 
     // BACKUP -----------------------------------------------------------------------------
     // Coral Intake
+    ejectCoralButton.whileTrue(new CoralIntakeEject(coralIntakeSubsystem, () -> EJECT_PERCENTAGE));
     coralIntakeEjectThroughButton.toggleOnTrue(
         new CoralIntakeEjectThrough(coralIntakeSubsystem, () -> EJECT_PERCENTAGE));
     coralIntakeIntakeButton.toggleOnTrue(
