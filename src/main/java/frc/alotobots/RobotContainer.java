@@ -41,6 +41,7 @@ import frc.alotobots.reefscape.commands.groups.UnClimb;
 import frc.alotobots.reefscape.commands.states.algae.StateAlgaeL2L3;
 import frc.alotobots.reefscape.commands.states.algae.StateAlgaeL3L4;
 import frc.alotobots.reefscape.commands.states.algae.StateAlgaeProcessor;
+import frc.alotobots.reefscape.commands.states.algae.StateAlgaeGround;
 import frc.alotobots.reefscape.commands.states.algae.StateAlgaeStowed;
 import frc.alotobots.reefscape.commands.states.coral.*;
 import frc.alotobots.reefscape.subsystems.algaeintake.AlgaeIntakeSubsystem;
@@ -265,12 +266,12 @@ public class RobotContainer {
 
     // Algae
     stateAlgaeL3L4Button.toggleOnTrue(
-        new StateAlgaeL3L4(elevatorSubsystem, wristSubsystem, algaeIntakeSubsystem));
+        new StateAlgaeL3L4(elevatorSubsystem, wristSubsystem, algaeIntakeSubsystem, algaeIntakeReleaseButton));
     stateAlgaeL2L3Button.toggleOnTrue(
-        new StateAlgaeL2L3(elevatorSubsystem, wristSubsystem, algaeIntakeSubsystem));
+        new StateAlgaeL2L3(elevatorSubsystem, wristSubsystem, algaeIntakeSubsystem, algaeIntakeReleaseButton));
     stateAlgaeStowedButton.toggleOnTrue(new StateAlgaeStowed(elevatorSubsystem, wristSubsystem));
-    stateAlgaeProcessorButton.toggleOnTrue(
-        new StateAlgaeProcessor(
+    stateAlgaeGroundButton.toggleOnTrue(
+        new StateAlgaeGround(
             elevatorSubsystem, wristSubsystem, algaeIntakeSubsystem, algaeIntakeReleaseButton));
 
     // BACKUP -----------------------------------------------------------------------------

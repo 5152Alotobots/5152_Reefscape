@@ -15,6 +15,7 @@ package frc.alotobots.reefscape.commands.states.algae;
 import static frc.alotobots.reefscape.subsystems.algaeintake.constants.AlgaeIntakeConstants.Setpoints.OpenLoop.INTAKE_PERCENTAGE;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.alotobots.library.commands.util.LogCommand;
 import frc.alotobots.reefscape.commands.groups.ParallelElevatorWristRun;
 import frc.alotobots.reefscape.subsystems.algaeintake.AlgaeIntakeSubsystem;
@@ -25,12 +26,12 @@ import frc.alotobots.reefscape.subsystems.wrist.WristSubsystem;
 import frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants;
 
 /**
- * Command sequence for grabbing algae on Level 3/4. The sequence: 1. Moves elevator and wrist to
+ * Command sequence for grabbing algae on Level 2/3. The sequence: 1. Moves elevator and wrist to
  * L2L3 position simultaneously 2. Runs intake
  */
 public class StateAlgaeL3L4 extends SequentialCommandGroup {
   /**
-   * Creates a new StateAlgaeL3L4 command.
+   * Creates a new StateAlgaeL2L3 command.
    *
    * @param elevatorSubsystem The elevator subsystem
    * @param wristSubsystem The wrist subsystem
@@ -39,15 +40,16 @@ public class StateAlgaeL3L4 extends SequentialCommandGroup {
   public StateAlgaeL3L4(
       ElevatorSubsystem elevatorSubsystem,
       WristSubsystem wristSubsystem,
-      AlgaeIntakeSubsystem algaeIntakeSubsystem) {
+      AlgaeIntakeSubsystem algaeIntakeSubsystem,
+      Trigger algaeIntakeReleaseTrigger) {
     addCommands(
-        new LogCommand("State/State", "ALGAE_L3L4"),
+        new LogCommand("State/State", "ALGAE_L2L3"),
         new ParallelElevatorWristRun(
             elevatorSubsystem,
             wristSubsystem,
             ElevatorConstants.Setpoints.ALGAE_L3L4_PICKUP,
             WristConstants.Setpoints.ALGAE_L3L4_PICKUP),
-        new AlgaeIntakeIntakeOpenLoop(algaeIntakeSubsystem, () -> INTAKE_PERCENTAGE),
+        new AlgaeIntakeIntakeOpenLoop(algaeIntakeSubsystem, algaeIntakeReleaseTrigger, () -> INTAKE_PERCENTAGE),
         new StateAlgaeStowed(elevatorSubsystem, wristSubsystem).asProxy());
   }
 }

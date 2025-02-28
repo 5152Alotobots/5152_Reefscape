@@ -12,8 +12,8 @@
 */
 package frc.alotobots.reefscape.commands.states.algae;
 
-import static edu.wpi.first.units.Units.Seconds;
 import static frc.alotobots.reefscape.subsystems.algaeintake.constants.AlgaeIntakeConstants.Setpoints.OpenLoop.EJECT_PERCENTAGE;
+import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeConstants.Setpoints.OpenLoop.INTAKE_PERCENTAGE;
 
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -22,17 +22,18 @@ import frc.alotobots.library.commands.util.LogCommand;
 import frc.alotobots.reefscape.commands.groups.ParallelElevatorWristRun;
 import frc.alotobots.reefscape.subsystems.algaeintake.AlgaeIntakeSubsystem;
 import frc.alotobots.reefscape.subsystems.algaeintake.commands.AlgaeIntakeEjectOpenLoop;
+import frc.alotobots.reefscape.subsystems.algaeintake.commands.AlgaeIntakeIntakeOpenLoop;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants;
 import frc.alotobots.reefscape.subsystems.wrist.WristSubsystem;
 import frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants;
 
 /**
- * Command sequence for scoring algae in the processor. The sequence: 1. Moves elevator and wrist to
+ * Command sequence for picking Algea from the ground. The sequence: 1. Moves elevator and wrist to
  * processor position simultaneously 2. Waits for release button confirmation 3. Runs eject 4.
  * Returns to stowed position
  */
-public class StateAlgaeProcessor extends SequentialCommandGroup {
+public class StateAlgaeGround extends SequentialCommandGroup {
   /**
    * Creates a new StateAlgaeProcessor command.
    *
@@ -41,7 +42,7 @@ public class StateAlgaeProcessor extends SequentialCommandGroup {
    * @param algaeIntakeSubsystem The algae intake subsystem
    * @param algaeIntakeReleaseTrigger The release button trigger
    */
-  public StateAlgaeProcessor(
+  public StateAlgaeGround(
       ElevatorSubsystem elevatorSubsystem,
       WristSubsystem wristSubsystem,
       AlgaeIntakeSubsystem algaeIntakeSubsystem,
@@ -53,8 +54,7 @@ public class StateAlgaeProcessor extends SequentialCommandGroup {
             wristSubsystem,
             ElevatorConstants.Setpoints.ALGAE_PROCESSOR,
             WristConstants.Setpoints.ALGAE_PROCESSOR),
-        Commands.waitUntil(algaeIntakeReleaseTrigger),
-        new AlgaeIntakeEjectOpenLoop(algaeIntakeSubsystem, () -> EJECT_PERCENTAGE).withTimeout(Seconds.of(2)),
+        new AlgaeIntakeIntakeOpenLoop(algaeIntakeSubsystem, algaeIntakeReleaseTrigger, () -> INTAKE_PERCENTAGE),
         new StateAlgaeStowed(elevatorSubsystem, wristSubsystem).asProxy());
   }
 }

@@ -162,7 +162,7 @@ public class OI {
    * Trigger for entering processor state for algae handling, activated by co-driver's D-pad right
    * button.
    */
-  public static final Trigger stateAlgaeProcessorButton = codriverController.povRight();
+  public static final Trigger stateAlgaeGroundButton = codriverController.povRight();
 
   /** Trigger for initiating climbing sequence, activated by co-driver's start button. */
   public static final Trigger climbButton = codriverController.start();
