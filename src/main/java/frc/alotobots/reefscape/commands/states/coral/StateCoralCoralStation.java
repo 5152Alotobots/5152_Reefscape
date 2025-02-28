@@ -52,7 +52,8 @@ public class StateCoralCoralStation extends SequentialCommandGroup {
             elevatorSubsystem,
             wristSubsystem,
             ElevatorConstants.Setpoints.CORAL_CORAL_STATION,
-            WristConstants.Setpoints.CORAL_CORAL_STATION),
+            WristConstants.Setpoints.CORAL_CORAL_STATION,
+            false),
         new ParallelRaceGroup(
             new BlingCoralWantsPiece(blingSubsystem).asProxy(),
             new CoralIntakeIntake(coralIntakeSubsystem, () -> INTAKE_PERCENTAGE)),

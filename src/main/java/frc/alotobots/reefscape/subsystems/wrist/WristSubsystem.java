@@ -84,6 +84,8 @@ public class WristSubsystem extends SubsystemBase {
   /** Parameters for pending percent output command */
   private double pendingPercentOutput = 0.0;
 
+  private boolean pendingHasAlgae = false;
+
   /**
    * Creates a new WristSubsystem.
    *
@@ -170,7 +172,7 @@ public class WristSubsystem extends SubsystemBase {
   private void executePendingCommand() {
     switch (pendingCommandType) {
       case POSITION:
-        runToTargetAngle(pendingTargetAngle);
+        runToTargetAngle(pendingTargetAngle, pendingHasAlgae);
         Logger.recordOutput("Wrist/ExecutingQueuedPositionCommand", true);
         break;
       case VELOCITY:
@@ -197,11 +199,12 @@ public class WristSubsystem extends SubsystemBase {
    *
    * @param angle The target angle for the wrist
    */
-  public void runToTargetAngle(Angle angle) {
+  public void runToTargetAngle(Angle angle, boolean hasAlgae) {
     // If in auto recovery, store command for later execution
     if (inAutoRecovery) {
       pendingCommandType = PendingCommandType.POSITION;
       pendingTargetAngle = angle;
+      pendingHasAlgae = hasAlgae;
       Logger.recordOutput("Wrist/CommandQueuedDuringRecovery", true);
       return;
     }
@@ -217,8 +220,13 @@ public class WristSubsystem extends SubsystemBase {
     targetAngle = adjustedAngle;
 
     // Command the wrist to the adjusted angle with dynamic limits
-    io.setWristPositionMotionMagic(
-        adjustedAngle, ControlType.ClosedLoop.POSITION.ordinal(), minAngle, maxAngle);
+    if (hasAlgae) {
+      io.setWristPositionMotionMagic(
+          adjustedAngle, ControlType.ClosedLoop.POSITION.ordinal(), minAngle, maxAngle);
+    } else {
+      io.setWristPosition(
+          adjustedAngle, ControlType.ClosedLoop.POSITION.ordinal(), minAngle, maxAngle);
+    }
     Logger.recordOutput("Wrist/ControlType", ControlType.ClosedLoop.POSITION);
   }
 

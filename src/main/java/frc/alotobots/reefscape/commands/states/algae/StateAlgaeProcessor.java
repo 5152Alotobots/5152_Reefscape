@@ -58,9 +58,11 @@ public class StateAlgaeProcessor extends SequentialCommandGroup {
             elevatorSubsystem,
             wristSubsystem,
             ElevatorConstants.Setpoints.ALGAE_PROCESSOR,
-            WristConstants.Setpoints.ALGAE_PROCESSOR),
+            WristConstants.Setpoints.ALGAE_PROCESSOR,
+            true),
         Commands.waitUntil(algaeIntakeReleaseTrigger),
         new AlgaeIntakeEjectOpenLoop(algaeIntakeSubsystem, () -> EJECT_PERCENTAGE)
+            .asProxy()
             .withTimeout(Seconds.of(2)),
         new ScheduleCommand(
             new BlingAlgaeEjectedDrive(blingSubsystem).withTimeout(BLING_NOTIFICATION_TIME)),

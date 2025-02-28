@@ -57,7 +57,8 @@ public class StateCoralL2 extends SequentialCommandGroup {
             elevatorSubsystem,
             wristSubsystem,
             ElevatorConstants.Setpoints.CORAL_L2_PLACE,
-            WristConstants.Setpoints.CORAL_L2_PLACE),
+            WristConstants.Setpoints.CORAL_L2_PLACE,
+            false),
         Commands.waitUntil(coralIntakeReleaseTrigger),
         new CoralIntakeEjectThrough(coralIntakeSubsystem, () -> EJECT_PERCENTAGE),
         new ScheduleCommand(

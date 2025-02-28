@@ -10,10 +10,11 @@
 *
 * Source code must be publicly available on GitHub or an alternative web accessible site
 */
-package frc.alotobots.reefscape.commands.states.coral;
+package frc.alotobots.reefscape.commands.states.algae;
 
+import static edu.wpi.first.units.Units.Seconds;
 import static frc.alotobots.library.subsystems.bling.constants.BlingConstants.BLING_NOTIFICATION_TIME;
-import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeConstants.Setpoints.OpenLoop.EJECT_PERCENTAGE;
+import static frc.alotobots.reefscape.subsystems.algaeintake.constants.AlgaeIntakeConstants.Setpoints.OpenLoop.EJECT_PERCENTAGE;
 
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ScheduleCommand;
@@ -21,47 +22,50 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.alotobots.library.commands.util.LogCommand;
 import frc.alotobots.library.subsystems.bling.BlingSubsystem;
-import frc.alotobots.library.subsystems.bling.commands.BlingCoralEjectedDrive;
+import frc.alotobots.library.subsystems.bling.commands.BlingAlgaeEjectedDrive;
 import frc.alotobots.reefscape.commands.groups.ElevatorWristRun;
-import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
-import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEject;
+import frc.alotobots.reefscape.subsystems.algaeintake.AlgaeIntakeSubsystem;
+import frc.alotobots.reefscape.subsystems.algaeintake.commands.AlgaeIntakeEjectOpenLoop;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants;
 import frc.alotobots.reefscape.subsystems.wrist.WristSubsystem;
 import frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants;
 
 /**
- * Command sequence for placing game pieces on Level 1. The sequence: 1. Moves elevator and wrist to
- * L1 position simultaneously 2. Waits for release button confirmation 3. Runs eject 4. Returns to
- * stowed position
+ * Command sequence for scoring algae in the processor. The sequence: 1. Moves elevator and wrist to
+ * processor position simultaneously 2. Waits for release button confirmation 3. Runs eject 4.
+ * Returns to stowed position
  */
-public class StateCoralL1 extends SequentialCommandGroup {
+public class StateAlgaeNet extends SequentialCommandGroup {
   /**
-   * Creates a new StateL1 command.
+   * Creates a new StateAlgaeProcessor command.
    *
    * @param elevatorSubsystem The elevator subsystem
    * @param wristSubsystem The wrist subsystem
-   * @param coralIntakeSubsystem The coral intake subsystem
+   * @param algaeIntakeSubsystem The algae intake subsystem
    * @param blingSubsystem The bling subsystem
-   * @param coralIntakeReleaseTrigger The release button trigger
+   * @param algaeIntakeReleaseTrigger The release button trigger
    */
-  public StateCoralL1(
+  public StateAlgaeNet(
       ElevatorSubsystem elevatorSubsystem,
       WristSubsystem wristSubsystem,
-      CoralIntakeSubsystem coralIntakeSubsystem,
+      AlgaeIntakeSubsystem algaeIntakeSubsystem,
       BlingSubsystem blingSubsystem,
-      Trigger coralIntakeReleaseTrigger) {
+      Trigger algaeIntakeReleaseTrigger) {
     addCommands(
-        new LogCommand("State/State", "CORAL_L1"),
+        new LogCommand("State/State", "ALGAE_NET"),
         new ElevatorWristRun(
             elevatorSubsystem,
             wristSubsystem,
-            ElevatorConstants.Setpoints.CORAL_L1_PLACE,
-            WristConstants.Setpoints.CORAL_L1_PLACE,
-            false),
-        Commands.waitUntil(coralIntakeReleaseTrigger),
-        new CoralIntakeEject(coralIntakeSubsystem, () -> EJECT_PERCENTAGE),
+            ElevatorConstants.Setpoints.ALGAE_NET,
+            WristConstants.Setpoints.ALGAE_NET,
+            true),
+        Commands.waitUntil(algaeIntakeReleaseTrigger),
+        new AlgaeIntakeEjectOpenLoop(algaeIntakeSubsystem, () -> EJECT_PERCENTAGE)
+            .asProxy()
+            .withTimeout(Seconds.of(2)),
         new ScheduleCommand(
-            new BlingCoralEjectedDrive(blingSubsystem).withTimeout(BLING_NOTIFICATION_TIME)));
+            new BlingAlgaeEjectedDrive(blingSubsystem).withTimeout(BLING_NOTIFICATION_TIME)),
+        new StateAlgaeStowed(elevatorSubsystem, wristSubsystem).asProxy());
   }
 }

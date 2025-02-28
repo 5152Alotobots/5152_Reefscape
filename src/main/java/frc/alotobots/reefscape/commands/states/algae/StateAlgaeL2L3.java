@@ -53,7 +53,8 @@ public class StateAlgaeL2L3 extends SequentialCommandGroup {
             elevatorSubsystem,
             wristSubsystem,
             ElevatorConstants.Setpoints.ALGAE_L2L3_PICKUP,
-            WristConstants.Setpoints.ALGAE_L2L3_PICKUP),
+            WristConstants.Setpoints.ALGAE_L2L3_PICKUP,
+            false),
         new ParallelRaceGroup(
             new BlingAlgaeWantsPiece(blingSubsystem).asProxy(),
             new AlgaeIntakeIntakeOpenLoop(

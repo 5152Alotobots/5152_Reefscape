@@ -45,12 +45,10 @@ import frc.alotobots.library.subsystems.vision.photonvision.apriltag.util.AprilT
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.io.*;
 import frc.alotobots.reefscape.commands.groups.Climb;
 import frc.alotobots.reefscape.commands.groups.UnClimb;
-import frc.alotobots.reefscape.commands.states.algae.StateAlgaeGround;
-import frc.alotobots.reefscape.commands.states.algae.StateAlgaeL2L3;
-import frc.alotobots.reefscape.commands.states.algae.StateAlgaeL3L4;
-import frc.alotobots.reefscape.commands.states.algae.StateAlgaeProcessor;
+import frc.alotobots.reefscape.commands.states.algae.*;
 import frc.alotobots.reefscape.commands.states.coral.*;
 import frc.alotobots.reefscape.subsystems.algaeintake.AlgaeIntakeSubsystem;
+import frc.alotobots.reefscape.subsystems.algaeintake.commands.DefaultAlgaeIntakeHold;
 import frc.alotobots.reefscape.subsystems.algaeintake.io.AlgaeIntakeIO;
 import frc.alotobots.reefscape.subsystems.algaeintake.io.AlgaeIntakeIOSparkMaxReal;
 import frc.alotobots.reefscape.subsystems.climber.ClimberSubsystem;
@@ -249,6 +247,7 @@ public class RobotContainer {
     blingSubsystem.setDefaultCommand(
         new NoAllianceWaiting(blingSubsystem).andThen(new SetToAllianceColor(blingSubsystem)));
     climberSubsystem.setDefaultCommand(new ClimberDisableServos(climberSubsystem));
+    algaeIntakeSubsystem.setDefaultCommand(new DefaultAlgaeIntakeHold(algaeIntakeSubsystem));
   }
 
   /** Contains button based commands */
@@ -326,6 +325,13 @@ public class RobotContainer {
             algaeIntakeSubsystem,
             blingSubsystem,
             algaeIntakeReleaseButton));
+    stateAlgaeNetButton.toggleOnTrue(
+        new StateAlgaeNet(
+            elevatorSubsystem,
+            wristSubsystem,
+            algaeIntakeSubsystem,
+            blingSubsystem,
+            algaeIntakeReleaseButton));
 
     climbButton.toggleOnTrue(
         new Climb(climberSubsystem, elevatorSubsystem, blingSubsystem, () -> -getElevatorAxis()));
@@ -350,11 +356,11 @@ public class RobotContainer {
         new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.CORAL_L4_PLACE));
     // Wrist
     wristL4coralButton.toggleOnTrue(
-        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.CORAL_L4_PLACE));
+        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.CORAL_L4_PLACE, false));
     wristL2and3coralButton.toggleOnTrue(
-        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.CORAL_L3_PLACE));
+        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.CORAL_L3_PLACE, false));
     wristGroundButton.toggleOnTrue(
-        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.CORAL_GROUND_INTAKE));
+        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.CORAL_GROUND_INTAKE, false));
   }
 
   private void configureAutoChooser() {

@@ -104,6 +104,22 @@ public class WristLimitZones {
     zones.add(
         new WristLimitZone(
             MIN_HEIGHT, // Min elevator height
+            Meters.of(.35), // Max elevator height
+            Degrees.of(3), // Min wrist angle
+            Degrees.of(95) // Max wrist angle
+            ));
+
+    zones.add(
+        new WristLimitZone(
+            Meters.of(.35), // Min elevator height
+            Meters.of(0.433), // Max elevator height
+            Degrees.of(-13), // Min wrist angle
+            Degrees.of(95) // Max wrist angle
+            ));
+
+    zones.add(
+        new WristLimitZone(
+            Meters.of(.433), // Min elevator height
             Meters.of(0.55), // Max elevator height
             MIN_ANGLE, // Min wrist angle
             Degrees.of(95) // Max wrist angle

@@ -40,7 +40,8 @@ public class AutoStateCoralStation extends SequentialCommandGroup {
             elevatorSubsystem,
             wristSubsystem,
             ElevatorConstants.Setpoints.CORAL_CORAL_STATION,
-            WristConstants.Setpoints.CORAL_CORAL_STATION),
+            WristConstants.Setpoints.CORAL_CORAL_STATION,
+            false),
         new ElevatorWristHold(elevatorSubsystem, wristSubsystem));
   }
 }

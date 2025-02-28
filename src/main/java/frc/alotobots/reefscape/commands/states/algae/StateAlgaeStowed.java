@@ -35,6 +35,7 @@ public class StateAlgaeStowed extends SequentialCommandGroup {
             elevatorSubsystem,
             wristSubsystem,
             ElevatorConstants.Setpoints.ALGAE_STOWED,
-            WristConstants.Setpoints.ALGAE_STOWED));
+            WristConstants.Setpoints.ALGAE_STOWED,
+            true));
   }
 }

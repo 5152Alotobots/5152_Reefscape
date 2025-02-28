@@ -89,5 +89,8 @@ public final class ElevatorConstants {
 
     /** Height for algae processor */
     public static final Distance ALGAE_PROCESSOR = Meters.of(0.4);
+
+    /** Height for algae processor */
+    public static final Distance ALGAE_NET = Meters.of(1.8);
   }
 }

@@ -39,7 +39,7 @@ public class WristConstants {
     public static final Angle MAX_ANGLE = Degrees.of(125);
 
     /** Minimum allowed angle */
-    public static final Angle MIN_ANGLE = Degrees.of(-10);
+    public static final Angle MIN_ANGLE = Degrees.of(-22);
 
     /** Maximum open loop percent output */
     public static final double MAX_OPEN_LOOP_PERCENTAGE = 0.5;
@@ -89,5 +89,8 @@ public class WristConstants {
 
     /** Height for algae processor */
     public static final Angle ALGAE_PROCESSOR = Degrees.of(-17);
+
+    /** Height for algae processor */
+    public static final Angle ALGAE_NET = Degrees.of(60);
   }
 }

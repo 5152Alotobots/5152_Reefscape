@@ -55,7 +55,8 @@ public class StateAlgaeGround extends SequentialCommandGroup {
             elevatorSubsystem,
             wristSubsystem,
             ElevatorConstants.Setpoints.ALGAE_PROCESSOR,
-            WristConstants.Setpoints.ALGAE_PROCESSOR),
+            WristConstants.Setpoints.ALGAE_PROCESSOR,
+            false),
         new ParallelRaceGroup(
             new BlingAlgaeWantsPiece(blingSubsystem).asProxy(),
             new AlgaeIntakeIntakeOpenLoop(
