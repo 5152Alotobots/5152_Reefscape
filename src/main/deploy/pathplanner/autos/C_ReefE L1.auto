@@ -11,13 +11,13 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "StartS_ReefSW"
+                  "pathName": "StartC_ReefE"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "AutoStateL4"
+                  "name": "AutoStateL1"
                 }
               }
             ]

@@ -11,13 +11,13 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "M_ReefSE_SC_ReefSW 1"
+                  "pathName": "N_ReefNW_L1 1"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "AutoStateL4"
+                  "name": "AutoStateL1"
                 }
               }
             ]
@@ -26,7 +26,7 @@
         {
           "type": "named",
           "data": {
-            "name": "CoralIntakeEjectThrough"
+            "name": "CoralIntakeEject"
           }
         },
         {
@@ -36,7 +36,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "M_ReefSE_SC_ReefSW Part2"
+                  "pathName": "N_ReefNW_L1 2"
                 }
               },
               {
@@ -61,13 +61,13 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "M_ReefSE_SC_ReefSW Part 3"
+                  "pathName": "N_ReefNW_L1 3"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "AutoStateL4"
+                  "name": "AutoStateL1"
                 }
               }
             ]
@@ -76,19 +76,13 @@
         {
           "type": "named",
           "data": {
-            "name": "CoralIntakeEjectThrough"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": " AutoStateStowed"
+            "name": "CoralIntakeEject"
           }
         }
       ]
     }
   },
   "resetOdom": false,
-  "folder": "Two Piece",
+  "folder": "One Piece",
   "choreoAuto": false
 }

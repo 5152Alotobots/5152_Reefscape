@@ -41,6 +41,7 @@ import frc.alotobots.reefscape.subsystems.climber.ClimberSubsystem;
 import frc.alotobots.reefscape.subsystems.climber.commands.ClimberDisableServos;
 import frc.alotobots.reefscape.subsystems.climber.io.ClimberIORevServoReal;
 import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
+import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEject;
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEjectThrough;
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeIntake;
 import frc.alotobots.reefscape.subsystems.coralIntake.io.CoralIntakeIO;
@@ -253,6 +254,7 @@ public class RobotContainer {
     stateStowButton.toggleOnTrue(new StateStowed(elevatorSubsystem, wristSubsystem));
     // BACKUP -----------------------------------------------------------------------------
     // Coral Intake
+    ejectCoralButton.whileTrue(new CoralIntakeEject(coralIntakeSubsystem, () -> EJECT_PERCENTAGE));
     coralIntakeEjectThroughButton.toggleOnTrue(
         new CoralIntakeEjectThrough(coralIntakeSubsystem, () -> EJECT_PERCENTAGE));
 

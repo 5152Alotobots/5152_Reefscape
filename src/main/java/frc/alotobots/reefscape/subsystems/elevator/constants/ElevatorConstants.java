@@ -76,6 +76,6 @@ public final class ElevatorConstants {
     public static final Distance L2_PLACE = Meters.of(0.81);
 
     /** Height for L1 placement */
-    public static final Distance L1_PLACE = Meters.of(0.457);
+    public static final Distance L1_PLACE = Meters.of(0.780);
   }
 }
