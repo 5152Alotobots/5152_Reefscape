@@ -12,6 +12,7 @@
 */
 package frc.alotobots.reefscape.commands.states.coral;
 
+import static frc.alotobots.library.subsystems.bling.constants.BlingConstants.BLING_NOTIFICATION_TIME;
 import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeConstants.Setpoints.OpenLoop.EJECT_PERCENTAGE;
 
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -59,6 +60,7 @@ public class StateCoralL2 extends SequentialCommandGroup {
             WristConstants.Setpoints.CORAL_L2_PLACE),
         Commands.waitUntil(coralIntakeReleaseTrigger),
         new CoralIntakeEjectThrough(coralIntakeSubsystem, () -> EJECT_PERCENTAGE),
-        new ScheduleCommand(new BlingCoralEjectedDrive(blingSubsystem)));
+        new ScheduleCommand(
+            new BlingCoralEjectedDrive(blingSubsystem).withTimeout(BLING_NOTIFICATION_TIME)));
   }
 }

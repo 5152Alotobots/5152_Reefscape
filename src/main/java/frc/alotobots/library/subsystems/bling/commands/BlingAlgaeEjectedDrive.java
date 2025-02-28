@@ -31,7 +31,6 @@ public class BlingAlgaeEjectedDrive extends Command {
     this.blingSubsystem = blingSubsystem;
     addRequirements(blingSubsystem);
     // Set a 2 second timeout for this command
-    withTimeout(2.0);
   }
 
   @Override

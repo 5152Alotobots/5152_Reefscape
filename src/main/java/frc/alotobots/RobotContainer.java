@@ -14,6 +14,7 @@ package frc.alotobots;
 
 import static edu.wpi.first.units.Units.Seconds;
 import static frc.alotobots.OI.*;
+import static frc.alotobots.library.subsystems.bling.constants.BlingConstants.BLING_NOTIFICATION_TIME;
 import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeConstants.Setpoints.OpenLoop.EJECT_PERCENTAGE;
 import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeConstants.Setpoints.OpenLoop.INTAKE_PERCENTAGE;
 
@@ -246,12 +247,14 @@ public class RobotContainer {
   private void configureLogicCommands() {
     // Bling
     BlingUtil.scheduleAtMatchTime(
-        new BlingEndgameCountdown(blingSubsystem).andThen(new BlingTimeToClimb(blingSubsystem)),
+        new BlingEndgameCountdown(blingSubsystem)
+            .withTimeout(20)
+            .andThen(new BlingTimeToClimb(blingSubsystem).withTimeout(BLING_NOTIFICATION_TIME)),
         Seconds.of(30));
     new Trigger(coralIntakeSubsystem::isIntakeOccupied)
-        .onTrue(new BlingCoralHasPiece(blingSubsystem));
+        .onTrue(new BlingCoralHasPiece(blingSubsystem).withTimeout(BLING_NOTIFICATION_TIME));
     new Trigger(algaeIntakeSubsystem::isIntakeOccupied)
-        .onTrue(new BlingAlgaeHasPiece(blingSubsystem));
+        .onTrue(new BlingAlgaeHasPiece(blingSubsystem).withTimeout(BLING_NOTIFICATION_TIME));
     // Coral
     stateCoralCoralStationButton.toggleOnTrue(
         new StateCoralCoralStation(

@@ -13,6 +13,7 @@
 package frc.alotobots.reefscape.commands.states.algae;
 
 import static edu.wpi.first.units.Units.Seconds;
+import static frc.alotobots.library.subsystems.bling.constants.BlingConstants.BLING_NOTIFICATION_TIME;
 import static frc.alotobots.reefscape.subsystems.algaeintake.constants.AlgaeIntakeConstants.Setpoints.OpenLoop.EJECT_PERCENTAGE;
 
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -61,7 +62,8 @@ public class StateAlgaeProcessor extends SequentialCommandGroup {
         Commands.waitUntil(algaeIntakeReleaseTrigger),
         new AlgaeIntakeEjectOpenLoop(algaeIntakeSubsystem, () -> EJECT_PERCENTAGE)
             .withTimeout(Seconds.of(2)),
-        new ScheduleCommand(new BlingAlgaeEjectedDrive(blingSubsystem)),
+        new ScheduleCommand(
+            new BlingAlgaeEjectedDrive(blingSubsystem).withTimeout(BLING_NOTIFICATION_TIME)),
         new StateAlgaeStowed(elevatorSubsystem, wristSubsystem).asProxy());
   }
 }

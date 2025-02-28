@@ -12,7 +12,10 @@
 */
 package frc.alotobots.library.subsystems.bling.constants;
 
+import static edu.wpi.first.units.Units.Seconds;
+
 import com.ctre.phoenix.led.*;
+import edu.wpi.first.units.measure.Time;
 import frc.alotobots.library.subsystems.bling.io.BlingIO;
 
 /** Constants for LED control and configuration. */
@@ -31,6 +34,9 @@ public class BlingConstants {
 
   /** LED strip type configuration */
   public static final CANdle.LEDStripType LED_TYPE = CANdle.LEDStripType.GRB;
+
+  /** Duration of non state based LED notifications */
+  public static final Time BLING_NOTIFICATION_TIME = Seconds.of(2);
 
   /** Pre-configured animation patterns. */
   public static final class Animations {
