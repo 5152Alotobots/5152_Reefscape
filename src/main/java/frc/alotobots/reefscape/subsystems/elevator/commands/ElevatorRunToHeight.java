@@ -24,26 +24,17 @@ import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 public class ElevatorRunToHeight extends Command {
   private final ElevatorSubsystem elevatorSubsystem;
   private final Distance targetHeight;
-  private final boolean holdPosition;
 
   /**
    * Creates a new ElevatorRunToHeight command.
    *
    * @param elevatorSubsystem The elevator subsystem to control
    * @param targetHeight The desired height for the elevator to reach
-   * @param holdPosition If true, command will continue running to maintain position
    */
-  public ElevatorRunToHeight(
-      ElevatorSubsystem elevatorSubsystem, Distance targetHeight, boolean holdPosition) {
+  public ElevatorRunToHeight(ElevatorSubsystem elevatorSubsystem, Distance targetHeight) {
     this.elevatorSubsystem = elevatorSubsystem;
     this.targetHeight = targetHeight;
-    this.holdPosition = holdPosition;
     addRequirements(elevatorSubsystem);
-  }
-
-  // Constructor overload for backward compatibility
-  public ElevatorRunToHeight(ElevatorSubsystem elevatorSubsystem, Distance targetHeight) {
-    this(elevatorSubsystem, targetHeight, false);
   }
 
   @Override
@@ -63,6 +54,6 @@ public class ElevatorRunToHeight extends Command {
 
   @Override
   public boolean isFinished() {
-    return !holdPosition && elevatorSubsystem.isAtTargetHeight();
+    return elevatorSubsystem.isAtTargetHeight();
   }
 }
