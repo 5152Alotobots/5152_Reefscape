@@ -56,6 +56,7 @@ public class StateAlgaeProcessor extends SequentialCommandGroup {
             true),
         Commands.waitUntil(algaeIntakeReleaseTrigger),
         new AlgaeIntakeEjectOpenLoop(algaeIntakeSubsystem, () -> EJECT_PERCENTAGE)
+            .asProxy()
             .withTimeout(Seconds.of(2)),
         new StateAlgaeStowed(elevatorSubsystem, wristSubsystem).asProxy());
   }

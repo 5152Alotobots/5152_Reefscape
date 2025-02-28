@@ -42,6 +42,7 @@ import frc.alotobots.reefscape.commands.states.algae.StateAlgaeL3L4;
 import frc.alotobots.reefscape.commands.states.algae.StateAlgaeProcessor;
 import frc.alotobots.reefscape.commands.states.coral.*;
 import frc.alotobots.reefscape.subsystems.algaeintake.AlgaeIntakeSubsystem;
+import frc.alotobots.reefscape.subsystems.algaeintake.commands.DefaultAlgaeIntakeHold;
 import frc.alotobots.reefscape.subsystems.algaeintake.io.AlgaeIntakeIO;
 import frc.alotobots.reefscape.subsystems.algaeintake.io.AlgaeIntakeIOSparkMaxReal;
 import frc.alotobots.reefscape.subsystems.climber.ClimberSubsystem;
@@ -232,6 +233,7 @@ public class RobotContainer {
     // blingSubsystem.setDefaultCommand(
     //    new NoAllianceWaiting(blingSubsystem).andThen(new SetToAllianceColor(blingSubsystem)));
     climberSubsystem.setDefaultCommand(new ClimberDisableServos(climberSubsystem));
+    algaeIntakeSubsystem.setDefaultCommand(new DefaultAlgaeIntakeHold(algaeIntakeSubsystem));
   }
 
   /** Contains button based commands */

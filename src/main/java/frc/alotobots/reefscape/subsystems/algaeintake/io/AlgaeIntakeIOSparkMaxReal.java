@@ -94,13 +94,13 @@ public class AlgaeIntakeIOSparkMaxReal implements AlgaeIntakeIO {
 
     // Configure CANrange sensor
     var canRangeConfig = new CANrangeConfiguration();
-    canRangeConfig.ToFParams.UpdateMode = UpdateModeValue.ShortRangeUserFreq;
-    canRangeConfig.ToFParams.UpdateFrequency = 100; // Hz
-    canRangeConfig.ProximityParams.MinSignalStrengthForValidMeasurement = 5000;
-    canRangeConfig.ProximityParams.ProximityHysteresis = .03;
-    canRangeConfig.ProximityParams.ProximityThreshold = .1;
-    canRangeConfig.FovParams.FOVRangeX = 27;
-    canRangeConfig.FovParams.FOVRangeY = 13;
+    canRangeConfig.ToFParams.UpdateMode = UpdateModeValue.ShortRange100Hz;
+    canRangeConfig.ToFParams.UpdateFrequency = 50; // Hz
+    canRangeConfig.ProximityParams.MinSignalStrengthForValidMeasurement = 2500;
+    canRangeConfig.ProximityParams.ProximityHysteresis = .001;
+    canRangeConfig.ProximityParams.ProximityThreshold = .15;
+    canRangeConfig.FovParams.FOVRangeX = 7.5;
+    canRangeConfig.FovParams.FOVRangeY = 7.5;
 
     tryUntilOk(5, () -> canRange.getConfigurator().apply(canRangeConfig, 0.25));
 

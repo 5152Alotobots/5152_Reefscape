@@ -51,6 +51,7 @@ public class StateAlgaeL3L4 extends SequentialCommandGroup {
             WristConstants.Setpoints.ALGAE_L3L4_PICKUP,
             true),
         new AlgaeIntakeIntakeOpenLoop(
-            algaeIntakeSubsystem, algaeIntakeReleaseTrigger, () -> INTAKE_PERCENTAGE));
+                algaeIntakeSubsystem, algaeIntakeReleaseTrigger, () -> INTAKE_PERCENTAGE)
+            .asProxy());
   }
 }

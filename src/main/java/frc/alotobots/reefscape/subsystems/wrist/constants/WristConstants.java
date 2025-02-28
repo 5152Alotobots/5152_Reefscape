@@ -39,7 +39,7 @@ public class WristConstants {
     public static final Angle MAX_ANGLE = Degrees.of(125);
 
     /** Minimum allowed angle */
-    public static final Angle MIN_ANGLE = Degrees.of(-10);
+    public static final Angle MIN_ANGLE = Degrees.of(-17);
 
     /** Maximum open loop percent output */
     public static final double MAX_OPEN_LOOP_PERCENTAGE = 0.5;

@@ -84,7 +84,7 @@ public class WristTalonFXRealConstants {
 
   public static final class MotionMagicConstants {
     public static final AngularVelocity CRUISE_VELOCITY = RotationsPerSecond.of(.5);
-    public static final AngularAcceleration ACCELERATION = RotationsPerSecondPerSecond.of(.8);
+    public static final AngularAcceleration ACCELERATION = RotationsPerSecondPerSecond.of(.4);
     public static final double JERK = 0;
   }
 

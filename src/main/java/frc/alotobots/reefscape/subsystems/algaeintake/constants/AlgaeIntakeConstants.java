@@ -31,13 +31,13 @@ public class AlgaeIntakeConstants {
   public static final class Limits {
 
     /** Maximum open loop percent output (global) */
-    public static final double MAX_OPEN_LOOP_PERCENTAGE = 0.7;
+    public static final double MAX_OPEN_LOOP_PERCENTAGE = 1.0;
 
     /** Maximum open loop intake percent output */
     public static final double MAX_OPEN_LOOP_INTAKE_PERCENTAGE = 0.7;
 
     /** Maximum open loop outtake percent output */
-    public static final double MAX_OPEN_LOOP_OUTTAKE_PERCENTAGE = 0.7;
+    public static final double MAX_OPEN_LOOP_OUTTAKE_PERCENTAGE = 1.0;
   }
 
   /** Setpoints for different algae intake states */
