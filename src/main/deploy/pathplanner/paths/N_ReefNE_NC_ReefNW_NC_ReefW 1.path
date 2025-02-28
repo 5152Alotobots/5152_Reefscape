@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.38625,
-        "y": 5.86775
+        "x": 6.238922619273154,
+        "y": 5.849374707748768
       },
       "isLocked": false,
       "linkedName": "Start North"
@@ -20,8 +20,8 @@
         "y": 5.029249999999999
       },
       "prevControl": {
-        "x": 6.064500000000001,
-        "y": 5.662999999999999
+        "x": 6.170320154113224,
+        "y": 5.549257838808653
       },
       "nextControl": null,
       "isLocked": false,

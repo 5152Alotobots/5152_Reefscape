@@ -17,13 +17,13 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "ElevatorRunToL4"
+                  "name": null
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "WristRunToL4"
+                  "name": "AutoStateL4"
                 }
               }
             ]
@@ -48,13 +48,13 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "WristRunToCoralStation"
+                  "name": null
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "RaiseElevatorToCoralStation"
+                  "name": "AutoStateCoralStation\r"
                 }
               }
             ]
@@ -79,13 +79,13 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "ElevatorRunToL4"
+                  "name": null
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "WristRunToL4"
+                  "name": "AutoStateL4"
                 }
               }
             ]
@@ -110,13 +110,13 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "RaiseElevatorToCoralStation"
+                  "name": "AutoStateCoralStation\r"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "WristRunToCoralStation"
+                  "name": null
                 }
               }
             ]
@@ -141,13 +141,13 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "ElevatorRunToL4"
+                  "name": null
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "WristRunToL4"
+                  "name": "AutoStateL4"
                 }
               }
             ]
