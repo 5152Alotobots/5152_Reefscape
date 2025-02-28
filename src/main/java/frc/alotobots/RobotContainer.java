@@ -267,6 +267,10 @@ public class RobotContainer {
         new StateAlgaeGround(
             elevatorSubsystem, wristSubsystem, algaeIntakeSubsystem, algaeIntakeReleaseButton));
 
+    climbButton.toggleOnTrue(
+            new Climb(climberSubsystem, elevatorSubsystem, () -> -getElevatorAxis()));
+    unClimbButton.onTrue(new UnClimb(climberSubsystem));
+
     // BACKUP -----------------------------------------------------------------------------
     // Coral Intake
     coralIntakeEjectThroughButton.toggleOnTrue(
@@ -290,10 +294,6 @@ public class RobotContainer {
         new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.CORAL_L3_PLACE));
     wristGroundButton.toggleOnTrue(
         new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.CORAL_GROUND_INTAKE));
-
-    climbButton.toggleOnTrue(
-        new Climb(climberSubsystem, elevatorSubsystem, () -> -getElevatorAxis()));
-    unClimbButton.onTrue(new UnClimb(climberSubsystem));
   }
 
   private void configureAutoChooser() {
