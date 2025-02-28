@@ -32,8 +32,8 @@ public class BlingEndgameCountdown extends Command {
   public BlingEndgameCountdown(BlingSubsystem blingSubsystem) {
     this.blingSubsystem = blingSubsystem;
     addRequirements(blingSubsystem);
-    // Set a 25 second timeout for this command; last 5 seconds are time to climb
-    withTimeout(25.0);
+    // Set a 20 second timeout for this command; last 5 seconds are time to climb
+    withTimeout(20.0);
   }
 
   @Override

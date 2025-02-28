@@ -49,7 +49,7 @@ public class Climb extends SequentialCommandGroup {
         new WaitUntilCommand(climberSubsystem::getCageSwitches),
         new InstantCommand(climberSubsystem::lockCage),
         new InstantCommand(climberSubsystem::setPlungerToPlunge),
-        new BlingClimberReady(blingSubsystem).asProxy(),
+        new ScheduleCommand(new BlingClimberReady(blingSubsystem)),
         new ElevatorRunAtClimbVelocity(elevatorSubsystem, input).asProxy());
     addRequirements(climberSubsystem);
   }

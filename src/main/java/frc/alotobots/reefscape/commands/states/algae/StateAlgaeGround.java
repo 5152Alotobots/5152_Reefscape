@@ -14,9 +14,12 @@ package frc.alotobots.reefscape.commands.states.algae;
 
 import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeConstants.Setpoints.OpenLoop.INTAKE_PERCENTAGE;
 
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.alotobots.library.commands.util.LogCommand;
+import frc.alotobots.library.subsystems.bling.BlingSubsystem;
+import frc.alotobots.library.subsystems.bling.commands.BlingAlgaeWantsPiece;
 import frc.alotobots.reefscape.commands.groups.ElevatorWristRun;
 import frc.alotobots.reefscape.subsystems.algaeintake.AlgaeIntakeSubsystem;
 import frc.alotobots.reefscape.subsystems.algaeintake.commands.AlgaeIntakeIntakeOpenLoop;
@@ -37,12 +40,14 @@ public class StateAlgaeGround extends SequentialCommandGroup {
    * @param elevatorSubsystem The elevator subsystem
    * @param wristSubsystem The wrist subsystem
    * @param algaeIntakeSubsystem The algae intake subsystem
+   * @param blingSubsystem The bling subsystem
    * @param algaeIntakeReleaseTrigger The release button trigger
    */
   public StateAlgaeGround(
       ElevatorSubsystem elevatorSubsystem,
       WristSubsystem wristSubsystem,
       AlgaeIntakeSubsystem algaeIntakeSubsystem,
+      BlingSubsystem blingSubsystem,
       Trigger algaeIntakeReleaseTrigger) {
     addCommands(
         new LogCommand("State/State", "ALGAE_PROCESSOR"),
@@ -51,8 +56,10 @@ public class StateAlgaeGround extends SequentialCommandGroup {
             wristSubsystem,
             ElevatorConstants.Setpoints.ALGAE_PROCESSOR,
             WristConstants.Setpoints.ALGAE_PROCESSOR),
-        new AlgaeIntakeIntakeOpenLoop(
-            algaeIntakeSubsystem, algaeIntakeReleaseTrigger, () -> INTAKE_PERCENTAGE),
+        new ParallelRaceGroup(
+            new BlingAlgaeWantsPiece(blingSubsystem).asProxy(),
+            new AlgaeIntakeIntakeOpenLoop(
+                algaeIntakeSubsystem, algaeIntakeReleaseTrigger, () -> INTAKE_PERCENTAGE)),
         new StateAlgaeStowed(elevatorSubsystem, wristSubsystem).asProxy());
   }
 }

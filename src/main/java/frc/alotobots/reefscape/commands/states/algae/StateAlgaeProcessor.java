@@ -16,9 +16,12 @@ import static edu.wpi.first.units.Units.Seconds;
 import static frc.alotobots.reefscape.subsystems.algaeintake.constants.AlgaeIntakeConstants.Setpoints.OpenLoop.EJECT_PERCENTAGE;
 
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.alotobots.library.commands.util.LogCommand;
+import frc.alotobots.library.subsystems.bling.BlingSubsystem;
+import frc.alotobots.library.subsystems.bling.commands.BlingAlgaeEjectedDrive;
 import frc.alotobots.reefscape.commands.groups.ElevatorWristRun;
 import frc.alotobots.reefscape.subsystems.algaeintake.AlgaeIntakeSubsystem;
 import frc.alotobots.reefscape.subsystems.algaeintake.commands.AlgaeIntakeEjectOpenLoop;
@@ -39,12 +42,14 @@ public class StateAlgaeProcessor extends SequentialCommandGroup {
    * @param elevatorSubsystem The elevator subsystem
    * @param wristSubsystem The wrist subsystem
    * @param algaeIntakeSubsystem The algae intake subsystem
+   * @param blingSubsystem The bling subsystem
    * @param algaeIntakeReleaseTrigger The release button trigger
    */
   public StateAlgaeProcessor(
       ElevatorSubsystem elevatorSubsystem,
       WristSubsystem wristSubsystem,
       AlgaeIntakeSubsystem algaeIntakeSubsystem,
+      BlingSubsystem blingSubsystem,
       Trigger algaeIntakeReleaseTrigger) {
     addCommands(
         new LogCommand("State/State", "ALGAE_PROCESSOR"),
@@ -56,6 +61,7 @@ public class StateAlgaeProcessor extends SequentialCommandGroup {
         Commands.waitUntil(algaeIntakeReleaseTrigger),
         new AlgaeIntakeEjectOpenLoop(algaeIntakeSubsystem, () -> EJECT_PERCENTAGE)
             .withTimeout(Seconds.of(2)),
+        new ScheduleCommand(new BlingAlgaeEjectedDrive(blingSubsystem)),
         new StateAlgaeStowed(elevatorSubsystem, wristSubsystem).asProxy());
   }
 }

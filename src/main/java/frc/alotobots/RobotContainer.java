@@ -250,8 +250,8 @@ public class RobotContainer {
         Seconds.of(30));
     new Trigger(coralIntakeSubsystem::isIntakeOccupied)
         .onTrue(new BlingCoralHasPiece(blingSubsystem));
-    //    new Trigger(algaeIntakeSubsystem::isIntakeOccupied).onTrue(new
-    // BlingAlgaeHasPiece(blingSubsystem));
+    new Trigger(algaeIntakeSubsystem::isIntakeOccupied)
+        .onTrue(new BlingAlgaeHasPiece(blingSubsystem));
     // Coral
     stateCoralCoralStationButton.toggleOnTrue(
         new StateCoralCoralStation(
@@ -289,16 +289,32 @@ public class RobotContainer {
     // Algae
     stateAlgaeL3L4Button.toggleOnTrue(
         new StateAlgaeL3L4(
-            elevatorSubsystem, wristSubsystem, algaeIntakeSubsystem, algaeIntakeReleaseButton));
+            elevatorSubsystem,
+            wristSubsystem,
+            algaeIntakeSubsystem,
+            blingSubsystem,
+            algaeIntakeReleaseButton));
     stateAlgaeL2L3Button.toggleOnTrue(
         new StateAlgaeL2L3(
-            elevatorSubsystem, wristSubsystem, algaeIntakeSubsystem, algaeIntakeReleaseButton));
+            elevatorSubsystem,
+            wristSubsystem,
+            algaeIntakeSubsystem,
+            blingSubsystem,
+            algaeIntakeReleaseButton));
     stateAlgaeProcessorButton.toggleOnTrue(
         new StateAlgaeProcessor(
-            elevatorSubsystem, wristSubsystem, algaeIntakeSubsystem, algaeIntakeReleaseButton));
+            elevatorSubsystem,
+            wristSubsystem,
+            algaeIntakeSubsystem,
+            blingSubsystem,
+            algaeIntakeReleaseButton));
     stateAlgaeGroundButton.toggleOnTrue(
         new StateAlgaeGround(
-            elevatorSubsystem, wristSubsystem, algaeIntakeSubsystem, algaeIntakeReleaseButton));
+            elevatorSubsystem,
+            wristSubsystem,
+            algaeIntakeSubsystem,
+            blingSubsystem,
+            algaeIntakeReleaseButton));
 
     climbButton.toggleOnTrue(
         new Climb(climberSubsystem, elevatorSubsystem, blingSubsystem, () -> -getElevatorAxis()));

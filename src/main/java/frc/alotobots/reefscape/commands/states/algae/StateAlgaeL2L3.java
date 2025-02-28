@@ -12,14 +12,16 @@
 */
 package frc.alotobots.reefscape.commands.states.algae;
 
-import static frc.alotobots.reefscape.subsystems.algaeintake.constants.AlgaeIntakeConstants.Setpoints.OpenLoop.INTAKE_PERCENTAGE;
-
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.alotobots.library.commands.util.LogCommand;
+import frc.alotobots.library.subsystems.bling.BlingSubsystem;
+import frc.alotobots.library.subsystems.bling.commands.BlingAlgaeWantsPiece;
 import frc.alotobots.reefscape.commands.groups.ElevatorWristRun;
 import frc.alotobots.reefscape.subsystems.algaeintake.AlgaeIntakeSubsystem;
 import frc.alotobots.reefscape.subsystems.algaeintake.commands.AlgaeIntakeIntakeOpenLoop;
+import frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeConstants;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants;
 import frc.alotobots.reefscape.subsystems.wrist.WristSubsystem;
@@ -36,11 +38,14 @@ public class StateAlgaeL2L3 extends SequentialCommandGroup {
    * @param elevatorSubsystem The elevator subsystem
    * @param wristSubsystem The wrist subsystem
    * @param algaeIntakeSubsystem The algae intake subsystem
+   * @param blingSubsystem The bling subsystem
+   * @param algaeIntakeReleaseTrigger The release button trigger
    */
   public StateAlgaeL2L3(
       ElevatorSubsystem elevatorSubsystem,
       WristSubsystem wristSubsystem,
       AlgaeIntakeSubsystem algaeIntakeSubsystem,
+      BlingSubsystem blingSubsystem,
       Trigger algaeIntakeReleaseTrigger) {
     addCommands(
         new LogCommand("State/State", "ALGAE_L2L3"),
@@ -49,7 +54,11 @@ public class StateAlgaeL2L3 extends SequentialCommandGroup {
             wristSubsystem,
             ElevatorConstants.Setpoints.ALGAE_L2L3_PICKUP,
             WristConstants.Setpoints.ALGAE_L2L3_PICKUP),
-        new AlgaeIntakeIntakeOpenLoop(
-            algaeIntakeSubsystem, algaeIntakeReleaseTrigger, () -> INTAKE_PERCENTAGE));
+        new ParallelRaceGroup(
+            new BlingAlgaeWantsPiece(blingSubsystem).asProxy(),
+            new AlgaeIntakeIntakeOpenLoop(
+                algaeIntakeSubsystem,
+                algaeIntakeReleaseTrigger,
+                () -> CoralIntakeConstants.Setpoints.OpenLoop.INTAKE_PERCENTAGE)));
   }
 }
