@@ -36,10 +36,7 @@ import frc.alotobots.library.subsystems.vision.photonvision.apriltag.util.AprilT
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.io.*;
 import frc.alotobots.reefscape.commands.groups.Climb;
 import frc.alotobots.reefscape.commands.groups.UnClimb;
-import frc.alotobots.reefscape.commands.states.algae.StateAlgaeGround;
-import frc.alotobots.reefscape.commands.states.algae.StateAlgaeL2L3;
-import frc.alotobots.reefscape.commands.states.algae.StateAlgaeL3L4;
-import frc.alotobots.reefscape.commands.states.algae.StateAlgaeProcessor;
+import frc.alotobots.reefscape.commands.states.algae.*;
 import frc.alotobots.reefscape.commands.states.coral.*;
 import frc.alotobots.reefscape.subsystems.algaeintake.AlgaeIntakeSubsystem;
 import frc.alotobots.reefscape.subsystems.algaeintake.commands.DefaultAlgaeIntakeHold;
@@ -267,6 +264,9 @@ public class RobotContainer {
             elevatorSubsystem, wristSubsystem, algaeIntakeSubsystem, algaeIntakeReleaseButton));
     stateAlgaeGroundButton.toggleOnTrue(
         new StateAlgaeGround(
+            elevatorSubsystem, wristSubsystem, algaeIntakeSubsystem, algaeIntakeReleaseButton));
+    stateAlgaeNetButton.toggleOnTrue(
+        new StateAlgaeNet(
             elevatorSubsystem, wristSubsystem, algaeIntakeSubsystem, algaeIntakeReleaseButton));
 
     climbButton.toggleOnTrue(
