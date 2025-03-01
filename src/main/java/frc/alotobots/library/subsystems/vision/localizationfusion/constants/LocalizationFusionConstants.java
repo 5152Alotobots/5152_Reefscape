@@ -28,16 +28,16 @@ public class LocalizationFusionConstants {
   @UtilityClass
   public static class ValidationThresholds {
     /** Maximum acceptable difference between AprilTag and Quest poses for validation (meters). */
-    public static final double APRILTAG_VALIDATION_THRESHOLD = 0.5;
+    public static final double APRILTAG_VALIDATION_THRESHOLD = 0.3;
 
     /** Stricter threshold used during initialization phase for validating poses (meters). */
     public static final double INIT_VALIDATION_THRESHOLD = 0.1;
 
     /** Maximum allowed pose change during disabled state to trigger recalibration (meters). */
-    public static final double DISABLED_RECALIBRATION_THRESHOLD = 0.02;
+    public static final double DISABLED_RECALIBRATION_THRESHOLD = 0.075;
 
     /** Maximum allowed rotation change between poses (degrees). */
-    public static final double MAX_ROTATION_CHANGE_DEGREES = 35.0;
+    public static final double MAX_ROTATION_CHANGE_DEGREES = 15.0;
   }
 
   /**
@@ -57,10 +57,10 @@ public class LocalizationFusionConstants {
     public static final double MAX_MOVEMENT = 0.05;
 
     /** Time robot must be stable before realigning (seconds). */
-    public static final double STABILITY_TIME = 0.25;
+    public static final double STABILITY_TIME = 0.1;
 
     /** Minimum time between auto-realignments (seconds). */
-    public static final double COOLDOWN = 10.0;
+    public static final double COOLDOWN = 4.0;
   }
 
   /**
