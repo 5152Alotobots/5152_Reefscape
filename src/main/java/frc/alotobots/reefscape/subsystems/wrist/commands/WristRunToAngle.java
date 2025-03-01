@@ -27,15 +27,18 @@ public class WristRunToAngle extends Command {
   /** The target angle for the wrist to reach */
   private final Angle angle;
 
+  private final boolean hasAlgae;
+
   /**
    * Creates a new WristRunToAngle command.
    *
    * @param wristSubsystem The wrist subsystem to control
    * @param angle The desired angle for the wrist to reach
    */
-  public WristRunToAngle(WristSubsystem wristSubsystem, Angle angle) {
+  public WristRunToAngle(WristSubsystem wristSubsystem, Angle angle, boolean hasAlgae) {
     this.wristSubsystem = wristSubsystem;
     this.angle = angle;
+    this.hasAlgae = hasAlgae;
     addRequirements(wristSubsystem);
   }
 
@@ -45,7 +48,7 @@ public class WristRunToAngle extends Command {
    */
   @Override
   public void initialize() {
-    wristSubsystem.runToTargetAngle(angle);
+    wristSubsystem.runToTargetAngle(angle, hasAlgae);
   }
 
   /** Executes the position control loop. The PID control is handled internally by the subsystem. */

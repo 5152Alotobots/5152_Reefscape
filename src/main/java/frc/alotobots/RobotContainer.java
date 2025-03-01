@@ -268,7 +268,7 @@ public class RobotContainer {
             elevatorSubsystem, wristSubsystem, algaeIntakeSubsystem, algaeIntakeReleaseButton));
 
     climbButton.toggleOnTrue(
-            new Climb(climberSubsystem, elevatorSubsystem, () -> -getElevatorAxis()));
+        new Climb(climberSubsystem, elevatorSubsystem, () -> -getElevatorAxis()));
     unClimbButton.onTrue(new UnClimb(climberSubsystem));
 
     // BACKUP -----------------------------------------------------------------------------
@@ -289,11 +289,11 @@ public class RobotContainer {
         new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.CORAL_L4_PLACE));
     // Wrist
     wristL4coralButton.toggleOnTrue(
-        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.CORAL_L4_PLACE));
+        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.CORAL_L4_PLACE, false));
     wristL2and3coralButton.toggleOnTrue(
-        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.CORAL_L3_PLACE));
+        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.CORAL_L3_PLACE, false));
     wristGroundButton.toggleOnTrue(
-        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.CORAL_GROUND_INTAKE));
+        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.CORAL_GROUND_INTAKE, false));
   }
 
   private void configureAutoChooser() {

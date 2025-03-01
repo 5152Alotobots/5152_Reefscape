@@ -50,7 +50,8 @@ public class StateAlgaeGround extends SequentialCommandGroup {
             elevatorSubsystem,
             wristSubsystem,
             ElevatorConstants.Setpoints.ALGAE_PROCESSOR,
-            WristConstants.Setpoints.ALGAE_PROCESSOR),
+            WristConstants.Setpoints.ALGAE_PROCESSOR,
+            true),
         new AlgaeIntakeIntakeOpenLoop(
             algaeIntakeSubsystem, algaeIntakeReleaseTrigger, () -> INTAKE_PERCENTAGE),
         new StateAlgaeStowed(elevatorSubsystem, wristSubsystem).asProxy());

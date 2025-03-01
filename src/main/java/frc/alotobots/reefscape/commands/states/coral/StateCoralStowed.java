@@ -39,6 +39,7 @@ public class StateCoralStowed extends SequentialCommandGroup {
             elevatorSubsystem,
             wristSubsystem,
             ElevatorConstants.Setpoints.CORAL_STOWED,
-            WristConstants.Setpoints.CORAL_STOWED));
+            WristConstants.Setpoints.CORAL_STOWED,
+            false));
   }
 }
