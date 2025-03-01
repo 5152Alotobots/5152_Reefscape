@@ -18,7 +18,7 @@ import frc.alotobots.reefscape.subsystems.wrist.WristSubsystem;
 
 /**
  * Command that moves the wrist to a specified target angle. Uses closed-loop control to accurately
- * position the wrist and ends when the target angle is reached within tolerance.
+ * position the wrist. Can either end when reaching target or continuously hold position.
  */
 public class WristRunToAngle extends Command {
   /** The wrist subsystem being controlled */
@@ -27,49 +27,47 @@ public class WristRunToAngle extends Command {
   /** The target angle for the wrist to reach */
   private final Angle angle;
 
+  private final boolean hasAlgae;
+
   /**
    * Creates a new WristRunToAngle command.
    *
    * @param wristSubsystem The wrist subsystem to control
    * @param angle The desired angle for the wrist to reach
+   * @param hasAlgae Whether the robot has algae [TEMPORARY]
    */
-  public WristRunToAngle(WristSubsystem wristSubsystem, Angle angle) {
+  public WristRunToAngle(WristSubsystem wristSubsystem, Angle angle, boolean hasAlgae) {
     this.wristSubsystem = wristSubsystem;
     this.angle = angle;
+    this.hasAlgae = hasAlgae;
     addRequirements(wristSubsystem);
   }
 
   /**
-   * Initializes the command by setting the wrist's target position. Called when the command is
-   * initially scheduled.
+   * Creates a new WristRunToAngle command that ends after reaching target.
+   *
+   * @param wristSubsystem The wrist subsystem to control
+   * @param angle The desired angle for the wrist to reach
    */
-  @Override
-  public void initialize() {
-    wristSubsystem.runToTargetAngle(angle);
+  public WristRunToAngle(WristSubsystem wristSubsystem, Angle angle) {
+    this(wristSubsystem, angle, false);
   }
 
-  /** Executes the position control loop. The PID control is handled internally by the subsystem. */
+  @Override
+  public void initialize() {
+    wristSubsystem.runToTargetAngle(angle, hasAlgae);
+  }
+
   @Override
   public void execute() {
     // Position control is handled by the subsystem's internal PID loop
   }
 
-  /**
-   * Called when the command ends or is interrupted. Stops the wrist to ensure safe operation.
-   *
-   * @param interrupted true if the command was interrupted, false if it completed normally
-   */
   @Override
   public void end(boolean interrupted) {
     wristSubsystem.stop();
   }
 
-  /**
-   * Determines if the command has finished. Returns true once angle is reached, then other
-   * controller takes over
-   *
-   * @return true if at position
-   */
   @Override
   public boolean isFinished() {
     return wristSubsystem.isAtTargetAngle();

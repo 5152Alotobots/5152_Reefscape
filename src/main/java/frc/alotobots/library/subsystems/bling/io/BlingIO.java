@@ -67,8 +67,8 @@ public interface BlingIO {
    *
    * @param color The color to display
    */
-  public default void setSolidColor(BlingIO.LoggedColor color) {}
+  public default void setSolidColor(LoggedColor color, int from, int to) {}
 
   /** Clears the current solid color, turning off all LEDs. */
-  public default void clearSolidColor() {}
+  public default void clearSolidColor(int from, int to) {}
 }

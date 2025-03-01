@@ -12,7 +12,9 @@
 */
 package frc.alotobots;
 
+import static edu.wpi.first.units.Units.Seconds;
 import static frc.alotobots.OI.*;
+import static frc.alotobots.library.subsystems.bling.constants.BlingConstants.BLING_NOTIFICATION_TIME;
 import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeConstants.Setpoints.OpenLoop.EJECT_PERCENTAGE;
 import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeConstants.Setpoints.OpenLoop.INTAKE_PERCENTAGE;
 
@@ -20,7 +22,14 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import frc.alotobots.library.subsystems.bling.BlingSubsystem;
+import frc.alotobots.library.subsystems.bling.commands.*;
+import frc.alotobots.library.subsystems.bling.io.BlingIO;
+import frc.alotobots.library.subsystems.bling.io.BlingIOReal;
+import frc.alotobots.library.subsystems.bling.io.BlingIOSim;
+import frc.alotobots.library.subsystems.bling.util.BlingUtil;
 import frc.alotobots.library.subsystems.swervedrive.*;
 import frc.alotobots.library.subsystems.swervedrive.commands.*;
 import frc.alotobots.library.subsystems.swervedrive.io.*;
@@ -36,11 +45,17 @@ import frc.alotobots.library.subsystems.vision.photonvision.apriltag.util.AprilT
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.io.*;
 import frc.alotobots.reefscape.commands.groups.Climb;
 import frc.alotobots.reefscape.commands.groups.UnClimb;
-import frc.alotobots.reefscape.commands.states.*;
+import frc.alotobots.reefscape.commands.states.algae.*;
+import frc.alotobots.reefscape.commands.states.coral.*;
+import frc.alotobots.reefscape.subsystems.algaeintake.AlgaeIntakeSubsystem;
+import frc.alotobots.reefscape.subsystems.algaeintake.commands.DefaultAlgaeIntakeHold;
+import frc.alotobots.reefscape.subsystems.algaeintake.io.AlgaeIntakeIO;
+import frc.alotobots.reefscape.subsystems.algaeintake.io.AlgaeIntakeIOTalonFXReal;
 import frc.alotobots.reefscape.subsystems.climber.ClimberSubsystem;
 import frc.alotobots.reefscape.subsystems.climber.commands.ClimberDisableServos;
 import frc.alotobots.reefscape.subsystems.climber.io.ClimberIORevServoReal;
 import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
+import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEject;
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEjectThrough;
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeIntake;
 import frc.alotobots.reefscape.subsystems.coralIntake.io.CoralIntakeIO;
@@ -64,6 +79,7 @@ import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 public class RobotContainer {
+  private final AlgaeIntakeSubsystem algaeIntakeSubsystem;
   private final SwerveDriveSubsystem swerveDriveSubsystem;
   private final ElevatorSubsystem elevatorSubsystem;
   private final WristSubsystem wristSubsystem;
@@ -74,8 +90,9 @@ public class RobotContainer {
   private final LocalizationFusion localizationFusion;
   private final OculusPoseSource oculusPoseSource;
   private final AprilTagPoseSource aprilTagPoseSource;
-  // private final BlingSubsystem blingSubsystem;
+  private final BlingSubsystem blingSubsystem;
   private final PathPlannerManager pathPlannerManager;
+  private final AutoNamedCommands autoNamedCommands;
   private LoggedDashboardChooser<Command> autoChooser;
   private SwerveDriveSimulation driveSimulation;
 
@@ -96,8 +113,11 @@ public class RobotContainer {
         coralIntakeSubsystem = new CoralIntakeSubsystem(new CoralIntakeIOVortexReal());
         wristSubsystem =
             new WristSubsystem(new WristIOTalonFXReal(), elevatorSubsystem::getCurrentHeight);
+        algaeIntakeSubsystem = new AlgaeIntakeSubsystem(new AlgaeIntakeIOTalonFXReal());
         climberSubsystem = new ClimberSubsystem(new ClimberIORevServoReal());
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
+        autoNamedCommands =
+            new AutoNamedCommands(elevatorSubsystem, wristSubsystem, coralIntakeSubsystem);
         configureAutoChooser();
 
         oculusSubsystem = new OculusSubsystem(new OculusIOReal());
@@ -117,11 +137,12 @@ public class RobotContainer {
                 aprilTagPoseSource,
                 autoChooser);
 
-        // blingSubsystem = new BlingSubsystem(new BlingIOReal());
+        blingSubsystem = new BlingSubsystem(new BlingIOReal());
         break;
 
       case SIM:
         coralIntakeSubsystem = new CoralIntakeSubsystem(new CoralIntakeIO() {});
+        algaeIntakeSubsystem = new AlgaeIntakeSubsystem(new AlgaeIntakeIO() {});
         Pose2d simStartPose = new Pose2d(3, 3, new Rotation2d(0));
         driveSimulation =
             new SwerveDriveSimulation(
@@ -150,6 +171,8 @@ public class RobotContainer {
         wristSubsystem =
             new WristSubsystem(new WristIOTalonFXSim(), elevatorSubsystem::getCurrentHeight);
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
+        autoNamedCommands =
+            new AutoNamedCommands(elevatorSubsystem, wristSubsystem, coralIntakeSubsystem);
         configureAutoChooser();
 
         oculusSubsystem = new OculusSubsystem(new OculusIOSim(driveSimulation));
@@ -170,12 +193,13 @@ public class RobotContainer {
                 aprilTagPoseSource,
                 autoChooser);
 
-        // blingSubsystem = new BlingSubsystem(new BlingIOSim());
+        blingSubsystem = new BlingSubsystem(new BlingIOSim());
         break;
 
       default:
         coralIntakeSubsystem = new CoralIntakeSubsystem(new CoralIntakeIOVortexReal());
         climberSubsystem = new ClimberSubsystem(new ClimberIORevServoReal());
+        algaeIntakeSubsystem = new AlgaeIntakeSubsystem(new AlgaeIntakeIO() {});
 
         // Replay mode initialization
         swerveDriveSubsystem =
@@ -189,6 +213,8 @@ public class RobotContainer {
         wristSubsystem =
             new WristSubsystem(new WristIOTalonFXSim(), elevatorSubsystem::getCurrentHeight);
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
+        autoNamedCommands =
+            new AutoNamedCommands(elevatorSubsystem, wristSubsystem, coralIntakeSubsystem);
         configureAutoChooser();
 
         oculusSubsystem = new OculusSubsystem(new OculusIO() {});
@@ -204,7 +230,7 @@ public class RobotContainer {
                 aprilTagPoseSource,
                 autoChooser);
 
-        // blingSubsystem = new BlingSubsystem(new BlingIO() {});
+        blingSubsystem = new BlingSubsystem(new BlingIO() {});
         break;
     }
     configureDefaultCommands();
@@ -218,57 +244,123 @@ public class RobotContainer {
         new DefaultElevatorRunAtVelocity(elevatorSubsystem, () -> -getElevatorAxis()));
     wristSubsystem.setDefaultCommand(
         new DefaultWristRunAtVelocity(wristSubsystem, OI::getWristAxis));
-    // blingSubsystem.setDefaultCommand(
-    //    new NoAllianceWaiting(blingSubsystem).andThen(new SetToAllianceColor(blingSubsystem)));
+    blingSubsystem.setDefaultCommand(
+        new NoAllianceWaiting(blingSubsystem).andThen(new SetToAllianceColor(blingSubsystem)));
     climberSubsystem.setDefaultCommand(new ClimberDisableServos(climberSubsystem));
+    algaeIntakeSubsystem.setDefaultCommand(new DefaultAlgaeIntakeHold(algaeIntakeSubsystem));
   }
 
   /** Contains button based commands */
   private void configureLogicCommands() {
+    // Bling
+    BlingUtil.scheduleAtMatchTime(
+        new BlingEndgameCountdown(blingSubsystem)
+            .withTimeout(20)
+            .andThen(new BlingTimeToClimb(blingSubsystem).withTimeout(BLING_NOTIFICATION_TIME)),
+        Seconds.of(30));
+    new Trigger(coralIntakeSubsystem::isIntakeOccupied)
+        .onTrue(new BlingCoralHasPiece(blingSubsystem).withTimeout(BLING_NOTIFICATION_TIME));
+    new Trigger(algaeIntakeSubsystem::isIntakeOccupied)
+        .onTrue(new BlingAlgaeHasPiece(blingSubsystem).withTimeout(BLING_NOTIFICATION_TIME));
+    // Coral
+    stateCoralCoralStationButton.toggleOnTrue(
+        new StateCoralCoralStation(
+            elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, blingSubsystem));
+    stateCoralL1Button.toggleOnTrue(
+        new StateCoralL1(
+            elevatorSubsystem,
+            wristSubsystem,
+            coralIntakeSubsystem,
+            blingSubsystem,
+            coralIntakeReleaseButton));
+    stateCoralL2Button.toggleOnTrue(
+        new StateCoralL2(
+            elevatorSubsystem,
+            wristSubsystem,
+            coralIntakeSubsystem,
+            blingSubsystem,
+            coralIntakeReleaseButton));
+    stateCoralL3Button.toggleOnTrue(
+        new StateCoralL3(
+            elevatorSubsystem,
+            wristSubsystem,
+            coralIntakeSubsystem,
+            blingSubsystem,
+            coralIntakeReleaseButton));
+    stateCoralL4Button.toggleOnTrue(
+        new StateCoralL4(
+            elevatorSubsystem,
+            wristSubsystem,
+            coralIntakeSubsystem,
+            blingSubsystem,
+            coralIntakeReleaseButton));
+    stateCoralStowedButton.toggleOnTrue(new StateCoralStowed(elevatorSubsystem, wristSubsystem));
+
+    // Algae
+    stateAlgaeL3L4Button.toggleOnTrue(
+        new StateAlgaeL3L4(
+            elevatorSubsystem,
+            wristSubsystem,
+            algaeIntakeSubsystem,
+            blingSubsystem,
+            algaeIntakeReleaseButton));
+    stateAlgaeL2L3Button.toggleOnTrue(
+        new StateAlgaeL2L3(
+            elevatorSubsystem,
+            wristSubsystem,
+            algaeIntakeSubsystem,
+            blingSubsystem,
+            algaeIntakeReleaseButton));
+    stateAlgaeProcessorButton.toggleOnTrue(
+        new StateAlgaeProcessor(
+            elevatorSubsystem,
+            wristSubsystem,
+            algaeIntakeSubsystem,
+            blingSubsystem,
+            algaeIntakeReleaseButton));
+    stateAlgaeGroundButton.toggleOnTrue(
+        new StateAlgaeGround(
+            elevatorSubsystem,
+            wristSubsystem,
+            algaeIntakeSubsystem,
+            blingSubsystem,
+            algaeIntakeReleaseButton));
+    stateAlgaeNetButton.toggleOnTrue(
+        new StateAlgaeNet(
+            elevatorSubsystem,
+            wristSubsystem,
+            algaeIntakeSubsystem,
+            blingSubsystem,
+            algaeIntakeReleaseButton));
+
+    climbButton.toggleOnTrue(
+        new Climb(climberSubsystem, elevatorSubsystem, blingSubsystem, () -> -getElevatorAxis()));
+    unClimbButton.onTrue(new UnClimb(climberSubsystem));
+
+    // BACKUP -----------------------------------------------------------------------------
     // Coral Intake
+    ejectCoralButton.whileTrue(new CoralIntakeEject(coralIntakeSubsystem, () -> EJECT_PERCENTAGE));
+    coralIntakeEjectThroughButton.toggleOnTrue(
+        new CoralIntakeEjectThrough(coralIntakeSubsystem, () -> EJECT_PERCENTAGE));
     coralIntakeIntakeButton.toggleOnTrue(
         new CoralIntakeIntake(coralIntakeSubsystem, () -> INTAKE_PERCENTAGE));
 
-    stateCoralStationButton.toggleOnTrue(
-        new StateCoralStation(elevatorSubsystem, wristSubsystem, coralIntakeSubsystem));
-    stateL1Button.toggleOnTrue(
-        new StateL1(
-            elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, coralIntakeReleaseButton));
-    stateL2Button.toggleOnTrue(
-        new StateL2(
-            elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, coralIntakeReleaseButton));
-    stateL3Button.toggleOnTrue(
-        new StateL3(
-            elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, coralIntakeReleaseButton));
-    stateL4Button.toggleOnTrue(
-        new StateL4(
-            elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, coralIntakeReleaseButton));
-    stateStowButton.toggleOnTrue(new StateStowed(elevatorSubsystem, wristSubsystem));
-    // BACKUP -----------------------------------------------------------------------------
-    // Coral Intake
-    coralIntakeEjectThroughButton.toggleOnTrue(
-        new CoralIntakeEjectThrough(coralIntakeSubsystem, () -> EJECT_PERCENTAGE));
-
     // Elevator
     elevatorStowButton.toggleOnTrue(
-        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.STOWED));
+        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.CORAL_STOWED));
     elevatorL2Button.toggleOnTrue(
-        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L2_PLACE));
+        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.CORAL_L2_PLACE));
     elevatorL3Button.toggleOnTrue(
-        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L3_PLACE));
+        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.CORAL_L3_PLACE));
     elevatorL4Button.toggleOnTrue(
-        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.L4_PLACE));
+        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.CORAL_L4_PLACE));
     // Wrist
     wristL4coralButton.toggleOnTrue(
-        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.L4_PLACE));
+        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.CORAL_L4_PLACE, false));
     wristL2and3coralButton.toggleOnTrue(
-        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.L3_PLACE));
+        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.CORAL_L3_PLACE, false));
     wristGroundButton.toggleOnTrue(
-        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.GROUND_INTAKE));
-
-    climbButton.toggleOnTrue(
-        new Climb(climberSubsystem, elevatorSubsystem, () -> -getElevatorAxis()));
-    unClimbButton.onTrue(new UnClimb(climberSubsystem));
+        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.CORAL_GROUND_INTAKE, false));
   }
 
   private void configureAutoChooser() {

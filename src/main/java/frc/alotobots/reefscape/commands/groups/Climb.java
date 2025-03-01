@@ -12,9 +12,11 @@
 */
 package frc.alotobots.reefscape.commands.groups;
 
-import static edu.wpi.first.units.Units.Meters;
+import static frc.alotobots.library.subsystems.bling.constants.BlingConstants.BLING_NOTIFICATION_TIME;
 
 import edu.wpi.first.wpilibj2.command.*;
+import frc.alotobots.library.subsystems.bling.BlingSubsystem;
+import frc.alotobots.library.subsystems.bling.commands.BlingClimberReady;
 import frc.alotobots.reefscape.subsystems.climber.ClimberSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.commands.ElevatorRunAtClimbVelocity;
@@ -33,20 +35,24 @@ public class Climb extends SequentialCommandGroup {
    *
    * @param climberSubsystem The climber subsystem to control
    * @param elevatorSubsystem The elevator subsystem to control
+   * @param blingSubsystem The bling subsystem to control
    * @param input The input supplier for controlling climb velocity
    */
   public Climb(
       ClimberSubsystem climberSubsystem,
       ElevatorSubsystem elevatorSubsystem,
+      BlingSubsystem blingSubsystem,
       DoubleSupplier input) {
     addCommands(
         new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.CLIMB).asProxy(),
-        new InstantCommand(climberSubsystem::enableServos),
         new InstantCommand(climberSubsystem::setPlungerToReceive),
+        new InstantCommand(climberSubsystem::enableServos),
         new InstantCommand(climberSubsystem::unlockCage),
         new WaitUntilCommand(climberSubsystem::getCageSwitches),
         new InstantCommand(climberSubsystem::lockCage),
         new InstantCommand(climberSubsystem::setPlungerToPlunge),
+        new ScheduleCommand(
+            new BlingClimberReady(blingSubsystem).withTimeout(BLING_NOTIFICATION_TIME)),
         new ElevatorRunAtClimbVelocity(elevatorSubsystem, input).asProxy());
     addRequirements(climberSubsystem);
   }

@@ -31,12 +31,48 @@ import org.ironmaple.simulation.motorsims.SimulatedBattery;
 import org.ironmaple.simulation.motorsims.SimulatedMotorController;
 
 public final class PhoenixUtil {
-  /** Attempts to run the command until no error is produced. */
-  public static void tryUntilOk(int maxAttempts, Supplier<StatusCode> command) {
-    for (int i = 0; i < maxAttempts; i++) {
-      var error = command.get();
-      if (error.isOK()) break;
+  // In PhoenixUtil.java
+  public static class ConfigStatus {
+    // Track if any configuration has failed
+    private static boolean anyConfigError = false;
+
+    /** Reset configuration error status (call at robot startup) */
+    public static void reset() {
+      anyConfigError = false;
     }
+
+    /** Record a successful configuration */
+    private static void recordSuccess() {
+      // Only update status if we haven't seen any errors
+    }
+
+    /** Record a configuration error */
+    private static void recordError() {
+      anyConfigError = true;
+    }
+  }
+
+  /**
+   * Attempts to run the command until no error is produced or max attempts are reached. Records the
+   * result for diagnostic tracking.
+   *
+   * @param maxAttempts Maximum number of attempts to try the command
+   * @param command The command to execute
+   * @return The final status code
+   */
+  public static StatusCode tryUntilOk(int maxAttempts, Supplier<StatusCode> command) {
+    StatusCode lastStatus = StatusCode.GeneralError;
+    for (int i = 0; i < maxAttempts; i++) {
+      lastStatus = command.get();
+      if (lastStatus.isOK()) {
+        ConfigStatus.recordSuccess();
+        return lastStatus;
+      }
+    }
+
+    // If we exit the loop without success, record the error
+    ConfigStatus.recordError();
+    return lastStatus;
   }
 
   public static class TalonFXMotorControllerSim implements SimulatedMotorController {

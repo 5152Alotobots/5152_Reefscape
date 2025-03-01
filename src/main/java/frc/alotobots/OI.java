@@ -116,36 +116,35 @@ public class OI {
     return driverController.getRightTriggerAxis();
   }
 
+  public static final Trigger ejectCoralButton = codriverBackupController.rightBumper();
+
   /* State-based play control triggers */
-  /** Trigger for entering the coral station state, activated by co-driver's right bumper. */
-  public static final Trigger stateCoralStationButton = codriverController.rightBumper();
 
-  /** Trigger for entering the stow state, activated by co-driver's left bumper. */
-  public static final Trigger stateStowButton = codriverController.leftBumper();
+  public static final Trigger stateCoralCoralStationButton = codriverController.rightBumper();
+  public static final Trigger stateCoralStowedButton = codriverController.leftBumper();
+  public static final Trigger stateCoralL4Button = codriverController.y();
+  public static final Trigger stateCoralL3Button = codriverController.x();
+  public static final Trigger stateCoralL2Button = codriverController.b();
+  public static final Trigger stateCoralL1Button = codriverController.a();
 
-  /** Trigger for entering the L4 state, activated by co-driver's Y button. */
-  public static final Trigger stateL4Button = codriverController.y();
-
-  /** Trigger for entering the L3 state, activated by co-driver's X button. */
-  public static final Trigger stateL3Button = codriverController.x();
-
-  /** Trigger for entering the L2 state, activated by co-driver's B button. */
-  public static final Trigger stateL2Button = codriverController.b();
-
-  /** Trigger for entering the L1 state, activated by co-driver's A button. */
-  public static final Trigger stateL1Button = codriverController.a();
-
-  /** Trigger for releasing the prepped coral */
   public static final Trigger coralIntakeReleaseButton = codriverController.rightTrigger();
+  public static final Trigger algaeIntakeReleaseButton = codriverController.leftTrigger();
+
+  public static final Trigger stateAlgaeL3L4Button = codriverController.povUp();
+  public static final Trigger stateAlgaeL2L3Button = codriverController.povLeft();
+  public static final Trigger stateAlgaeGroundButton = codriverController.povRight();
+  public static final Trigger stateAlgaeNetButton = codriverController.back();
+  public static final Trigger stateAlgaeProcessorButton = codriverController.start();
+
+  public static final Trigger climbButton = driverController.start();
+  public static final Trigger unClimbButton = driverController.back();
+
+  // BACKUP -----------------------------------------------------------
+  /* Backup control triggers */
 
   /** Trigger for activating the coral intake */
-  public static final Trigger coralIntakeIntakeButton =
-      codriverBackupController.back().or(codriverController.leftTrigger());
+  public static final Trigger coralIntakeIntakeButton = driverController.povUp();
 
-  public static final Trigger climbButton = codriverController.start();
-  public static final Trigger unClimbButton = codriverController.back();
-
-  /* Backup control triggers */
   /** Trigger for activating the coral eject-through function */
   public static final Trigger coralIntakeEjectThroughButton = codriverBackupController.start();
 
