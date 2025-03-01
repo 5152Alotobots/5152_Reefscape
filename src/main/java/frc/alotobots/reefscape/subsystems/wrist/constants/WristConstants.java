@@ -92,5 +92,8 @@ public class WristConstants {
 
     /** Height for algae processor */
     public static final Angle ALGAE_NET = Degrees.of(60);
+
+    /** Height for algae processor */
+    public static final Angle ALGAE_GROUND_INTAKE = Degrees.of(1);
   }
 }
