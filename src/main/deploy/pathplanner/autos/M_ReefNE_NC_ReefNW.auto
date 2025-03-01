@@ -49,6 +49,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "CoralIntakeIntake"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [

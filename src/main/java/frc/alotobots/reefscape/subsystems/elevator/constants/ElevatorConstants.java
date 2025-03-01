@@ -64,7 +64,7 @@ public final class ElevatorConstants {
     public static final Distance CLIMB = Meters.of(1.1);
 
     /** Height for picking up from coral station */
-    public static final Distance CORAL_CORAL_STATION = Meters.of(0.80);
+    public static final Distance CORAL_CORAL_STATION = Meters.of(0.75);
 
     /** Height for L4 placement */
     public static final Distance CORAL_L4_PLACE = Meters.of(1.78);
@@ -84,7 +84,7 @@ public final class ElevatorConstants {
     public static final Distance ALGAE_L2L3_PICKUP = Meters.of(1.34);
 
     /** Height for L3/L4 algae pickup */
-    public static final Distance ALGAE_L3L4_PICKUP = Meters.of(1.70);
+    public static final Distance ALGAE_L3L4_PICKUP = Meters.of(1.50);
 
     /** Height for stowed algae */
     public static final Distance ALGAE_STOWED = Meters.of(0.4);
