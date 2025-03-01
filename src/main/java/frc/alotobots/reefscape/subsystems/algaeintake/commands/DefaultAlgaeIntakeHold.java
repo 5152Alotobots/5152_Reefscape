@@ -15,6 +15,8 @@ package frc.alotobots.reefscape.subsystems.algaeintake.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.alotobots.reefscape.subsystems.algaeintake.AlgaeIntakeSubsystem;
 
+import static edu.wpi.first.units.Units.DegreesPerSecond;
+
 public class DefaultAlgaeIntakeHold extends Command {
 
   private final AlgaeIntakeSubsystem algaeIntakeSubsystem;
@@ -26,11 +28,7 @@ public class DefaultAlgaeIntakeHold extends Command {
 
   @Override
   public void execute() {
-    if (algaeIntakeSubsystem.isIntakeOccupied()) {
-      algaeIntakeSubsystem.runAtPercentOutput(0.25);
-    } else {
-      algaeIntakeSubsystem.stop();
-    }
+    algaeIntakeSubsystem.runToTargetVelocity(DegreesPerSecond.of(0));
   }
 
   @Override

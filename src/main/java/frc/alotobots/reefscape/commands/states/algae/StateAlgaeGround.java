@@ -22,6 +22,7 @@ import frc.alotobots.library.subsystems.bling.BlingSubsystem;
 import frc.alotobots.library.subsystems.bling.commands.BlingAlgaeWantsPiece;
 import frc.alotobots.reefscape.commands.groups.ElevatorWristRun;
 import frc.alotobots.reefscape.subsystems.algaeintake.AlgaeIntakeSubsystem;
+import frc.alotobots.reefscape.subsystems.algaeintake.commands.AlgaeIntakeIntakeAtVelocity;
 import frc.alotobots.reefscape.subsystems.algaeintake.commands.AlgaeIntakeIntakeOpenLoop;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants;
@@ -59,8 +60,8 @@ public class StateAlgaeGround extends SequentialCommandGroup {
             false),
         new ParallelRaceGroup(
             new BlingAlgaeWantsPiece(blingSubsystem).asProxy(),
-            new AlgaeIntakeIntakeOpenLoop(
-                algaeIntakeSubsystem, algaeIntakeReleaseTrigger, () -> INTAKE_PERCENTAGE)),
+            new AlgaeIntakeIntakeAtVelocity(
+                algaeIntakeSubsystem, algaeIntakeReleaseTrigger)),
         new StateAlgaeStowed(elevatorSubsystem, wristSubsystem).asProxy());
   }
 }

@@ -25,6 +25,7 @@ import frc.alotobots.library.subsystems.bling.BlingSubsystem;
 import frc.alotobots.library.subsystems.bling.commands.BlingAlgaeEjectedDrive;
 import frc.alotobots.reefscape.commands.groups.ElevatorWristRun;
 import frc.alotobots.reefscape.subsystems.algaeintake.AlgaeIntakeSubsystem;
+import frc.alotobots.reefscape.subsystems.algaeintake.commands.AlgaeIntakeEjectAtVelocity;
 import frc.alotobots.reefscape.subsystems.algaeintake.commands.AlgaeIntakeEjectOpenLoop;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants;
@@ -61,7 +62,7 @@ public class StateAlgaeNet extends SequentialCommandGroup {
             WristConstants.Setpoints.ALGAE_NET,
             true),
         Commands.waitUntil(algaeIntakeReleaseTrigger),
-        new AlgaeIntakeEjectOpenLoop(algaeIntakeSubsystem, () -> EJECT_PERCENTAGE)
+        new AlgaeIntakeEjectAtVelocity(algaeIntakeSubsystem)
             .asProxy()
             .withTimeout(Seconds.of(2)),
         new ScheduleCommand(
