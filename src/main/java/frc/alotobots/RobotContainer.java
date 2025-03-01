@@ -348,7 +348,7 @@ public class RobotContainer {
         new CoralIntakeEjectThrough(coralIntakeSubsystem, () -> EJECT_PERCENTAGE));
     coralIntakeIntakeManualButton.whileTrue(
         new CoralIntakeIntakeManual(coralIntakeSubsystem, () -> INTAKE_PERCENTAGE));
-    coralIntakeIntakeManualButton.whileTrue(
+    coralIntakeEjectManualButton.whileTrue(
         new CoralIntakeEjectManual(coralIntakeSubsystem, () -> -0.5));
     // Elevator
     elevatorStowButton.toggleOnTrue(

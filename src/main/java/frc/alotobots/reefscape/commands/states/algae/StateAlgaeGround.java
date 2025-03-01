@@ -60,7 +60,8 @@ public class StateAlgaeGround extends SequentialCommandGroup {
         new ParallelRaceGroup(
             new BlingAlgaeWantsPiece(blingSubsystem).asProxy(),
             new AlgaeIntakeIntakeOpenLoop(
-                algaeIntakeSubsystem, algaeIntakeReleaseTrigger, () -> INTAKE_PERCENTAGE).asProxy()),
+                    algaeIntakeSubsystem, algaeIntakeReleaseTrigger, () -> INTAKE_PERCENTAGE)
+                .asProxy()),
         new StateAlgaeStowed(elevatorSubsystem, wristSubsystem).asProxy());
   }
 }
