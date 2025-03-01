@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.7215,
-        "y": 1.24625
+        "x": 0.7432377049180328,
+        "y": 1.3337602459016387
       },
       "prevControl": null,
       "nextControl": {
-        "x": -0.7752285811061348,
-        "y": 0.9657112706333097
+        "x": -0.7534908761881021,
+        "y": 1.0532215165349483
       },
       "isLocked": false,
       "linkedName": "South Right Station"
