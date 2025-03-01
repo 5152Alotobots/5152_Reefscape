@@ -12,6 +12,9 @@
 */
 package frc.alotobots.reefscape.subsystems.algaeintake.constants;
 
+import static edu.wpi.first.units.Units.DegreesPerSecond;
+
+import edu.wpi.first.units.measure.AngularVelocity;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -29,6 +32,9 @@ public class AlgaeIntakeConstants {
 
   /** Contains physical limits and safety thresholds for the algae intake. */
   public static final class Limits {
+
+    /** Max velocity */
+    public static final AngularVelocity MAX_VELOCITY = DegreesPerSecond.of(360);
 
     /** Maximum open loop percent output (global) */
     public static final double MAX_OPEN_LOOP_PERCENTAGE = 1.0;

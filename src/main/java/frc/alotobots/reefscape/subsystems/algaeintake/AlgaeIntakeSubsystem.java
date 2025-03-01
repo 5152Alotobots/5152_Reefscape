@@ -12,9 +12,11 @@
 */
 package frc.alotobots.reefscape.subsystems.algaeintake;
 
+import static edu.wpi.first.units.Units.DegreesPerSecond;
 import static frc.alotobots.reefscape.subsystems.algaeintake.constants.AlgaeIntakeConstants.Limits.*;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.alotobots.reefscape.subsystems.algaeintake.io.AlgaeIntakeIO;
 import frc.alotobots.reefscape.subsystems.algaeintake.io.AlgaeIntakeIOInputsAutoLogged;
@@ -63,8 +65,25 @@ public class AlgaeIntakeSubsystem extends SubsystemBase {
     double adjustedOutput =
         MathUtil.clamp(percentOutput, -MAX_OPEN_LOOP_PERCENTAGE, MAX_OPEN_LOOP_PERCENTAGE);
 
-    io.setIntakeOpenLoop(adjustedOutput);
+    io.setAlgaeIntakeOpenLoop(adjustedOutput);
     Logger.recordOutput("AlgaeIntake/ControlType", ControlType.OpenLoop.OPEN_LOOP);
+  }
+
+  /**
+   * Controls the elevator to move to a specified velocity using closed-loop velocity control.
+   *
+   * @param velocity Target velocity in meters per second, automatically constrained between
+   *     -MAX_OPERATOR_VELOCITY and MAX_OPERATOR_VELOCITY
+   */
+  public void runToTargetVelocity(AngularVelocity velocity) {
+    AngularVelocity adjustedVelocity =
+        DegreesPerSecond.of(
+            MathUtil.clamp(
+                velocity.in(DegreesPerSecond),
+                -MAX_VELOCITY.in(DegreesPerSecond),
+                MAX_VELOCITY.in(DegreesPerSecond)));
+    io.setAlgaeIntakeVelocity(adjustedVelocity, ControlType.ClosedLoop.VELOCITY.ordinal());
+    Logger.recordOutput("Elevator/ControlType", ControlType.ClosedLoop.VELOCITY);
   }
 
   /**
@@ -81,6 +100,6 @@ public class AlgaeIntakeSubsystem extends SubsystemBase {
    * @return true if a game piece is detected in the intake
    */
   public boolean isIntakeOccupied() {
-    return inputs.intakeOccupied;
+    return inputs.canRangeInProximity;
   }
 }

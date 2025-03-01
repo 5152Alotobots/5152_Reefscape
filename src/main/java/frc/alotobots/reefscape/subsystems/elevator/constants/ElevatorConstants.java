@@ -77,6 +77,7 @@ public final class ElevatorConstants {
 
     /** Height for L1 placement */
     public static final Distance CORAL_L1_PLACE = Meters.of(0.457);
+
     public static final Distance CORAL_GROUND_PLACE = Meters.of(0.3);
 
     /** Height for L2/L3 algae pickup */

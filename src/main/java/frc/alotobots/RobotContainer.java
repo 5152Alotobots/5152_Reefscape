@@ -50,7 +50,7 @@ import frc.alotobots.reefscape.commands.states.coral.*;
 import frc.alotobots.reefscape.subsystems.algaeintake.AlgaeIntakeSubsystem;
 import frc.alotobots.reefscape.subsystems.algaeintake.commands.DefaultAlgaeIntakeHold;
 import frc.alotobots.reefscape.subsystems.algaeintake.io.AlgaeIntakeIO;
-import frc.alotobots.reefscape.subsystems.algaeintake.io.AlgaeIntakeIOSparkMaxReal;
+import frc.alotobots.reefscape.subsystems.algaeintake.io.AlgaeIntakeIOTalonFXReal;
 import frc.alotobots.reefscape.subsystems.climber.ClimberSubsystem;
 import frc.alotobots.reefscape.subsystems.climber.commands.ClimberDisableServos;
 import frc.alotobots.reefscape.subsystems.climber.io.ClimberIORevServoReal;
@@ -113,7 +113,7 @@ public class RobotContainer {
         coralIntakeSubsystem = new CoralIntakeSubsystem(new CoralIntakeIOVortexReal());
         wristSubsystem =
             new WristSubsystem(new WristIOTalonFXReal(), elevatorSubsystem::getCurrentHeight);
-        algaeIntakeSubsystem = new AlgaeIntakeSubsystem(new AlgaeIntakeIOSparkMaxReal());
+        algaeIntakeSubsystem = new AlgaeIntakeSubsystem(new AlgaeIntakeIOTalonFXReal());
         climberSubsystem = new ClimberSubsystem(new ClimberIORevServoReal());
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         autoNamedCommands =

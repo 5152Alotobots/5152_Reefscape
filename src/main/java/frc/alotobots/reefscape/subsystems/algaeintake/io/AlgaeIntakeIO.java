@@ -39,31 +39,40 @@ public interface AlgaeIntakeIO {
     public boolean canRangeConnected = false;
 
     /** Current game piece detection status from CANrange */
-    public boolean intakeOccupied = false;
+    public boolean canRangeInProximity = false;
 
     /** Current angular velocity of the left intake motor */
-    public AngularVelocity leftMotorVelocity = RotationsPerSecond.zero();
+    public AngularVelocity leftVelocity = RotationsPerSecond.zero();
 
     /** Current angular velocity of the right intake motor */
-    public AngularVelocity rightMotorVelocity = RotationsPerSecond.zero();
+    public AngularVelocity rightVelocity = RotationsPerSecond.zero();
 
     /** Current voltage being applied to the left intake motor */
-    public Voltage leftMotorAppliedVolts = Volts.zero();
+    public Voltage leftAppliedVolts = Volts.zero();
 
     /** Current voltage being applied to the right intake motor */
-    public Voltage rightMotorAppliedVolts = Volts.zero();
+    public Voltage rightAppliedVolts = Volts.zero();
 
     /** Current being drawn by the left intake motor */
-    public Current leftMotorCurrentAmps = Amps.zero();
+    public Current leftCurrentAmps = Amps.zero();
 
     /** Current being drawn by the right intake motor */
-    public Current rightMotorCurrentAmps = Amps.zero();
+    public Current rightCurrentAmps = Amps.zero();
 
     /** Left motor temperature */
     public Temperature leftMotorTemp = Celsius.zero();
 
     /** Right motor temperature */
     public Temperature rightMotorTemp = Celsius.zero();
+
+    /** Left motor acceleration */
+    public AngularAcceleration leftAcceleration = RadiansPerSecondPerSecond.zero();
+
+    /** Right motor acceleration */
+    public AngularAcceleration rightAcceleration = RadiansPerSecondPerSecond.zero();
+
+    /** Current PID slot */
+    public int currentPidSlot = 0;
   }
 
   /**
@@ -79,7 +88,9 @@ public interface AlgaeIntakeIO {
    * @param percentOutput Motor output percentage (-1.0 to 1.0) Positive values are for intake,
    *     negative for outtake
    */
-  public default void setIntakeOpenLoop(double percentOutput) {}
+  public default void setAlgaeIntakeOpenLoop(double percentOutput) {}
+
+  public default void setAlgaeIntakeVelocity(AngularVelocity velocity, int pidSlot) {}
 
   /**
    * Gets the current game piece detection status.
@@ -92,4 +103,7 @@ public interface AlgaeIntakeIO {
 
   /** Stops all intake motor movement. */
   public default void stop() {}
+
+  /** Sets the brake mode */
+  public default void setAlgaeIntakeBrakeMode(boolean brake) {}
 }

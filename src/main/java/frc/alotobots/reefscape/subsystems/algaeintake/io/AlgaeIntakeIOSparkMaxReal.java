@@ -148,22 +148,19 @@ public class AlgaeIntakeIOSparkMaxReal implements AlgaeIntakeIO {
     inputs.canRangeConnected = canRangeConnectedDebounce.calculate(canRangeSignals.isOK());
 
     // Game piece detection from CANrange
-    inputs.intakeOccupied = intakeOccupied.getValue();
+    inputs.canRangeInProximity = intakeOccupied.getValue();
 
     // Velocities - convert from RPM to rad/s
-    inputs.leftMotorVelocity = RevolutionsPerSecond.of(leftMotor.getEncoder().getVelocity() / 60.0);
-    inputs.rightMotorVelocity =
-        RevolutionsPerSecond.of(rightMotor.getEncoder().getVelocity() / 60.0);
+    inputs.leftVelocity = RevolutionsPerSecond.of(leftMotor.getEncoder().getVelocity() / 60.0);
+    inputs.rightVelocity = RevolutionsPerSecond.of(rightMotor.getEncoder().getVelocity() / 60.0);
 
     // Volts
-    inputs.leftMotorAppliedVolts =
-        Volts.of(leftMotor.getAppliedOutput() * leftMotor.getBusVoltage());
-    inputs.rightMotorAppliedVolts =
-        Volts.of(rightMotor.getAppliedOutput() * rightMotor.getBusVoltage());
+    inputs.leftAppliedVolts = Volts.of(leftMotor.getAppliedOutput() * leftMotor.getBusVoltage());
+    inputs.rightAppliedVolts = Volts.of(rightMotor.getAppliedOutput() * rightMotor.getBusVoltage());
 
     // Amps
-    inputs.leftMotorCurrentAmps = Amps.of(leftMotor.getOutputCurrent());
-    inputs.rightMotorCurrentAmps = Amps.of(rightMotor.getOutputCurrent());
+    inputs.leftCurrentAmps = Amps.of(leftMotor.getOutputCurrent());
+    inputs.rightCurrentAmps = Amps.of(rightMotor.getOutputCurrent());
 
     // Temperature
     inputs.leftMotorTemp = Celsius.of(leftMotor.getMotorTemperature());
@@ -177,7 +174,7 @@ public class AlgaeIntakeIOSparkMaxReal implements AlgaeIntakeIO {
    * @param percent Motor output percentage (-1.0 to 1.0)
    */
   @Override
-  public void setIntakeOpenLoop(double percent) {
+  public void setAlgaeIntakeOpenLoop(double percent) {
     // For intake (positive values):
     // - Left motor runs forward
     // - Right motor runs in opposite direction (handled by motor inversion)
