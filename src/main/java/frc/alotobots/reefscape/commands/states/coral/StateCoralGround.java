@@ -1,0 +1,62 @@
+/*
+* ALOTOBOTS - FRC Team 5152
+  https://github.com/5152Alotobots
+* Copyright (C) 2025 ALOTOBOTS
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* Source code must be publicly available on GitHub or an alternative web accessible site
+*/
+package frc.alotobots.reefscape.commands.states.coral;
+
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.alotobots.library.commands.util.LogCommand;
+import frc.alotobots.library.subsystems.bling.BlingSubsystem;
+import frc.alotobots.library.subsystems.bling.commands.BlingCoralWantsPiece;
+import frc.alotobots.reefscape.commands.groups.ElevatorWristRun;
+import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
+import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeIntake;
+import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
+import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants;
+import frc.alotobots.reefscape.subsystems.wrist.WristSubsystem;
+import frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants;
+
+import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeConstants.Setpoints.OpenLoop.INTAKE_PERCENTAGE;
+
+/**
+ * Command sequence for intaking from the coral station. The sequence: 1. Moves elevator and wrist
+ * to coral station position simultaneously 2. Waits for release button confirmation 3. Runs intake
+ * 4. Returns to stowed position
+ */
+public class StateCoralGround extends SequentialCommandGroup {
+  /**
+   * Creates a new StateCoralStation command.
+   *
+   * @param elevatorSubsystem The elevator subsystem
+   * @param wristSubsystem The wrist subsystem
+   * @param coralIntakeSubsystem The coral intake subsystem
+   * @param blingSubsystem The bling subsystem
+   */
+  public StateCoralGround(
+      ElevatorSubsystem elevatorSubsystem,
+      WristSubsystem wristSubsystem,
+      CoralIntakeSubsystem coralIntakeSubsystem,
+      BlingSubsystem blingSubsystem) {
+    addCommands(
+        new LogCommand("State/State", "CORAL_CORAL_STATION"),
+        new ElevatorWristRun(
+            elevatorSubsystem,
+            wristSubsystem,
+            ElevatorConstants.Setpoints.CORAL_GROUND_PLACE,
+            WristConstants.Setpoints.CORAL_GROUND_INTAKE,
+            false),
+        new ParallelRaceGroup(
+            new BlingCoralWantsPiece(blingSubsystem).asProxy(),
+            new CoralIntakeIntake(coralIntakeSubsystem, () -> INTAKE_PERCENTAGE)),
+        new StateCoralStowed(elevatorSubsystem, wristSubsystem).asProxy());
+  }
+}
