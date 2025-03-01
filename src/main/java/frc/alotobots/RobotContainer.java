@@ -58,7 +58,6 @@ import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEject;
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEjectManual;
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEjectThrough;
-import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeIntake;
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeIntakeManual;
 import frc.alotobots.reefscape.subsystems.coralIntake.io.CoralIntakeIO;
 import frc.alotobots.reefscape.subsystems.coralIntake.io.CoralIntakeIOVortexReal;
@@ -336,10 +335,7 @@ public class RobotContainer {
             algaeIntakeReleaseButton));
     stateCoralGroundButton.toggleOnTrue(
         new StateCoralGround(
-            elevatorSubsystem, 
-            wristSubsystem,
-            coralIntakeSubsystem, 
-            blingSubsystem));
+            elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, blingSubsystem));
 
     climbButton.toggleOnTrue(
         new Climb(climberSubsystem, elevatorSubsystem, blingSubsystem, () -> -getElevatorAxis()));
@@ -353,7 +349,7 @@ public class RobotContainer {
     coralIntakeIntakeManualButton.whileTrue(
         new CoralIntakeIntakeManual(coralIntakeSubsystem, () -> INTAKE_PERCENTAGE));
     coralIntakeIntakeManualButton.whileTrue(
-        new CoralIntakeEjectManual(coralIntakeSubsystem, () -> INTAKE_PERCENTAGE));
+        new CoralIntakeEjectManual(coralIntakeSubsystem, () -> -0.5));
     // Elevator
     elevatorStowButton.toggleOnTrue(
         new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.CORAL_STOWED));
