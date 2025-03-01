@@ -118,33 +118,16 @@ public class OI {
 
   public static final Trigger ejectCoralButton = codriverBackupController.rightBumper();
 
-  /* State-based play control triggers */
-
-  public static final Trigger stateCoralCoralStationButton = codriverController.rightBumper();
-  public static final Trigger stateCoralStowedButton = codriverController.leftBumper();
-  public static final Trigger stateCoralL4Button = codriverController.y();
-  public static final Trigger stateCoralL3Button = codriverController.x();
-  public static final Trigger stateCoralL2Button = codriverController.b();
-  public static final Trigger stateCoralL1Button = codriverController.a();
-
-  public static final Trigger coralIntakeReleaseButton = codriverController.rightTrigger();
-  public static final Trigger algaeIntakeReleaseButton = codriverController.leftTrigger();
-
-  public static final Trigger stateAlgaeL3L4Button = codriverController.povUp();
-  public static final Trigger stateAlgaeL2L3Button = codriverController.povLeft();
-  public static final Trigger stateAlgaeGroundButton = codriverController.povRight();
-  public static final Trigger stateAlgaeNetButton = codriverController.back();
-  public static final Trigger stateAlgaeProcessorButton = codriverController.start();
-
+  // DRIVER -----------------------------------------------------------
   public static final Trigger climbButton = driverController.start();
   public static final Trigger unClimbButton = driverController.back();
 
   // Auto Drive
   /** Enable pathfinding */
-  public static Trigger enablePathfindingButton = driverController.back();
+  public static Trigger enablePathfindingButton = driverController.leftStick();
 
   /** Enable auto pathfinding */
-  public static Trigger enableFullAutoPathfindingButton = driverController.start();
+  // public static Trigger enableFullAutoPathfindingButton = driverController.start();
 
   /** Pathfind to the selected coral station */
   public static Trigger pathfindToSelectedCoralStationButton = driverController.a();
@@ -169,12 +152,25 @@ public class OI {
 
   /** Cycles the selected branch one to the right */
   public static Trigger cycleSelectedBranchRightButton = driverController.povRight();
+  
+  // CODRIVER -----------------------------------------------------------
+  public static final Trigger stateCoralCoralStationButton = codriverController.rightBumper();
+  public static final Trigger stateCoralStowedButton = codriverController.leftBumper();
+  public static final Trigger stateCoralL4Button = codriverController.y();
+  public static final Trigger stateCoralL3Button = codriverController.x();
+  public static final Trigger stateCoralL2Button = codriverController.b();
+  public static final Trigger stateCoralL1Button = codriverController.a();
 
-  /** Cycles the branch level up once */
-  public static Trigger cycleLevelUpButton = driverController.povUp();
+  public static final Trigger coralIntakeReleaseButton = codriverController.rightTrigger();
+  public static final Trigger algaeIntakeReleaseButton = codriverController.leftTrigger();
 
-  /** Cycles the branch level down once */
-  public static Trigger cycleLevelDownButton = driverController.povDown();
+  public static final Trigger stateAlgaeL3L4Button = codriverController.povUp();
+  public static final Trigger stateAlgaeL2L3Button = codriverController.povLeft();
+  public static final Trigger stateAlgaeGroundButton = codriverController.povRight();
+  public static final Trigger stateAlgaeNetButton = codriverController.back();
+  public static final Trigger stateAlgaeProcessorButton = codriverController.start();
+
+  // END CODRIVER -----------------------------------------------------------
 
   // BACKUP -----------------------------------------------------------
   /* Backup control triggers */

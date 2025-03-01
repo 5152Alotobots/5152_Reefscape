@@ -361,7 +361,7 @@ public class RobotContainer {
 
     // Enabled state
     enablePathfindingButton.onTrue(autoCycleSubsystem.togglePathfinding());
-    enableFullAutoPathfindingButton.onTrue(new FullAutoCycle(autoCycleSubsystem).repeatedly());
+    // enableFullAutoPathfindingButton.onTrue(new FullAutoCycle(autoCycleSubsystem).repeatedly());
 
     cycleCoralStationSideLeftButton.onTrue(autoCycleSubsystem.cycleCoralStationSideLeft());
     cycleCoralStationSideRightButton.onTrue(autoCycleSubsystem.cycleCoralStationSideRight());
@@ -375,8 +375,6 @@ public class RobotContainer {
     // Auto Cycle Reef Branch Controls
     cycleSelectedBranchRightButton.onTrue(autoCycleSubsystem.cycleReefBranchRight());
     cycleSelectedBranchLeftButton.onTrue(autoCycleSubsystem.cycleReefBranchLeft());
-    cycleLevelUpButton.onTrue(autoCycleSubsystem.cycleReefLevelUp());
-    cycleLevelDownButton.onTrue(autoCycleSubsystem.cycleReefLevelDown());
     pathfindToSelectedReefBranchButton.toggleOnTrue(
         new PathfindToReef(
             autoCycleSubsystem, () -> DriveCalculator.getChassisSpeeds(swerveDriveSubsystem)));
