@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 3.7641393442622952,
-        "y": 5.301690573770491
+        "x": 3.752151639344262,
+        "y": 5.25373975409836
       },
       "prevControl": {
-        "x": 2.6972336065573774,
-        "y": 6.7761782786885245
+        "x": 2.685245901639344,
+        "y": 6.728227459016393
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Experimental L1 NE"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -29.999999999999996
+    "rotation": -90.0
   },
   "reversed": false,
   "folder": "Battle Creek",

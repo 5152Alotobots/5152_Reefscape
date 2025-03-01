@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.7641393442622952,
-        "y": 5.301690573770491
+        "x": 3.812090163934426,
+        "y": 5.313678278688524
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.733196721311476,
-        "y": 5.984989754098359
+        "x": 2.7811475409836066,
+        "y": 5.996977459016392
       },
       "isLocked": false,
-      "linkedName": "Experimental L1 NE"
+      "linkedName": null
     },
     {
       "anchor": {
@@ -48,7 +48,7 @@
   "folder": "Battle Creek",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -29.999999999999996
+    "rotation": -35.0
   },
   "useDefaultConstraints": false
 }
