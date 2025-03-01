@@ -47,7 +47,7 @@ public final class ElevatorTalonFXRealConstants {
       public static final double KA = 0.0;
 
       /** Gravity compensation gain */
-      public static final double KG = 0.14;
+      public static final double KG = 0.16;
 
       /** Static friction compensation */
       public static final double KS = 0.0;
@@ -71,7 +71,7 @@ public final class ElevatorTalonFXRealConstants {
       public static final double KA = 0.0;
 
       /** Gravity compensation gain */
-      public static final double KG = 0.14;
+      public static final double KG = 0.16;
 
       /** Static friction compensation */
       public static final double KS = 0.19;
