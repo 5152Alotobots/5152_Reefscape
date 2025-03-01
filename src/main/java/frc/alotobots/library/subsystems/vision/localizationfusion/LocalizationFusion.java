@@ -190,6 +190,8 @@ public class LocalizationFusion extends SubsystemBase implements StateTransition
    * </pre>
    */
   private void setupShuffleboardLogging() {
+    prematchTab.addString("Localization State", () -> state.getCurrentState().getDescription());
+
     prematchTab
         .addBoolean("Quest Ready", () -> oculusSource.isConnected() && questInitialized)
         .withSize(2, 1)
