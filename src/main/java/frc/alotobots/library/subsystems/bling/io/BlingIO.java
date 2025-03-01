@@ -24,7 +24,7 @@ public interface BlingIO {
   @AutoLog
   public static class BlingIOInputs {
     /** Current solid color setting of the LEDs */
-    public LoggedColor currentSolidColor;
+    public LoggedColor currentSolidColor = new LoggedColor(0, 0, 0);
 
     /** Flag indicating if an animation is currently active */
     public boolean hasAnimation = false;
