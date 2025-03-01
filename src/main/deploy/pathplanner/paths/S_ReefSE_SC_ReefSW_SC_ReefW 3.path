@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.5943647540983608,
-        "y": 0.7103995901639337
+        "x": 1.726229508196721,
+        "y": 0.8902151639344253
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.588864754098361,
-        "y": 1.870649590163933
+        "x": 2.7207295081967215,
+        "y": 2.0504651639344247
       },
       "isLocked": false,
       "linkedName": "South Left Station"
@@ -48,7 +48,7 @@
   "folder": "Three Piece",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -130.0
+    "rotation": -125.00000000000001
   },
   "useDefaultConstraints": true
 }
