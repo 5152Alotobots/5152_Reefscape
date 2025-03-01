@@ -56,8 +56,10 @@ import frc.alotobots.reefscape.subsystems.climber.commands.ClimberDisableServos;
 import frc.alotobots.reefscape.subsystems.climber.io.ClimberIORevServoReal;
 import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEject;
+import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEjectManual;
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEjectThrough;
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeIntake;
+import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeIntakeManual;
 import frc.alotobots.reefscape.subsystems.coralIntake.io.CoralIntakeIO;
 import frc.alotobots.reefscape.subsystems.coralIntake.io.CoralIntakeIOVortexReal;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
@@ -332,6 +334,12 @@ public class RobotContainer {
             algaeIntakeSubsystem,
             blingSubsystem,
             algaeIntakeReleaseButton));
+    stateCoralGroundButton.toggleOnTrue(
+        new StateCoralGround(
+            elevatorSubsystem, 
+            wristSubsystem,
+            coralIntakeSubsystem, 
+            blingSubsystem));
 
     climbButton.toggleOnTrue(
         new Climb(climberSubsystem, elevatorSubsystem, blingSubsystem, () -> -getElevatorAxis()));
@@ -342,9 +350,10 @@ public class RobotContainer {
     ejectCoralButton.whileTrue(new CoralIntakeEject(coralIntakeSubsystem, () -> EJECT_PERCENTAGE));
     coralIntakeEjectThroughButton.toggleOnTrue(
         new CoralIntakeEjectThrough(coralIntakeSubsystem, () -> EJECT_PERCENTAGE));
-    coralIntakeIntakeButton.toggleOnTrue(
-        new CoralIntakeIntake(coralIntakeSubsystem, () -> INTAKE_PERCENTAGE));
-
+    coralIntakeIntakeManualButton.whileTrue(
+        new CoralIntakeIntakeManual(coralIntakeSubsystem, () -> INTAKE_PERCENTAGE));
+    coralIntakeIntakeManualButton.whileTrue(
+        new CoralIntakeEjectManual(coralIntakeSubsystem, () -> INTAKE_PERCENTAGE));
     // Elevator
     elevatorStowButton.toggleOnTrue(
         new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.CORAL_STOWED));
