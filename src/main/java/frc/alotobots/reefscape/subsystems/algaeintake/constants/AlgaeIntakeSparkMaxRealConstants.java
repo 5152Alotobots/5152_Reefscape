@@ -35,7 +35,7 @@ public final class AlgaeIntakeSparkMaxRealConstants {
   public static final boolean LEFT_MOTOR_INVERTED = false;
 
   /** Direction of the right motor rotation (true = inverted) */
-  public static final boolean RIGHT_MOTOR_INVERTED = true;
+  public static final boolean RIGHT_MOTOR_INVERTED = false;
 
   /** Neutral mode (brake/coast) setting for the mechanism */
   public static final SparkBaseConfig.IdleMode MECHANISM_NEUTRAL_MODE =

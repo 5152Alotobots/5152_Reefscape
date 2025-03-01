@@ -16,6 +16,7 @@ import static frc.alotobots.reefscape.subsystems.algaeintake.constants.AlgaeInta
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.alotobots.reefscape.subsystems.algaeintake.AlgaeIntakeSubsystem;
 import java.util.function.DoubleSupplier;
 
@@ -31,6 +32,8 @@ public class AlgaeIntakeIntakeOpenLoop extends Command {
   /** The input for controlling intake speed */
   private final DoubleSupplier input;
 
+  private final Trigger stop;
+
   /**
    * Creates a new AlgaeIntakeIntakeOpenLoop command.
    *
@@ -39,7 +42,8 @@ public class AlgaeIntakeIntakeOpenLoop extends Command {
    *     values pull inward.
    */
   public AlgaeIntakeIntakeOpenLoop(
-      AlgaeIntakeSubsystem algaeIntakeSubsystem, DoubleSupplier input) {
+      AlgaeIntakeSubsystem algaeIntakeSubsystem, Trigger stop, DoubleSupplier input) {
+    this.stop = stop;
     this.algaeIntakeSubsystem = algaeIntakeSubsystem;
     this.input = input;
     addRequirements(algaeIntakeSubsystem);
@@ -72,6 +76,6 @@ public class AlgaeIntakeIntakeOpenLoop extends Command {
    */
   @Override
   public boolean isFinished() {
-    return algaeIntakeSubsystem.isIntakeOccupied();
+    return stop.getAsBoolean() || algaeIntakeSubsystem.isIntakeOccupied();
   }
 }

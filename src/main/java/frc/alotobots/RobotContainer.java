@@ -39,13 +39,13 @@ import frc.alotobots.reefscape.commands.groups.UnClimb;
 import frc.alotobots.reefscape.commands.states.algae.StateAlgaeGround;
 import frc.alotobots.reefscape.commands.states.algae.StateAlgaeL2L3;
 import frc.alotobots.reefscape.commands.states.algae.StateAlgaeL3L4;
+import frc.alotobots.reefscape.commands.states.algae.StateAlgaeProcessor;
 import frc.alotobots.reefscape.commands.states.coral.*;
 import frc.alotobots.reefscape.subsystems.algaeintake.AlgaeIntakeSubsystem;
 import frc.alotobots.reefscape.subsystems.algaeintake.io.AlgaeIntakeIO;
 import frc.alotobots.reefscape.subsystems.algaeintake.io.AlgaeIntakeIOSparkMaxReal;
 import frc.alotobots.reefscape.subsystems.climber.ClimberSubsystem;
 import frc.alotobots.reefscape.subsystems.climber.commands.ClimberDisableServos;
-import frc.alotobots.reefscape.subsystems.climber.io.ClimberIO;
 import frc.alotobots.reefscape.subsystems.climber.io.ClimberIORevServoReal;
 import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEjectThrough;
@@ -63,7 +63,6 @@ import frc.alotobots.reefscape.subsystems.wrist.WristSubsystem;
 import frc.alotobots.reefscape.subsystems.wrist.commands.DefaultWristRunAtVelocity;
 import frc.alotobots.reefscape.subsystems.wrist.commands.WristRunToAngle;
 import frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants;
-import frc.alotobots.reefscape.subsystems.wrist.io.WristIO;
 import frc.alotobots.reefscape.subsystems.wrist.io.WristIOTalonFXReal;
 import frc.alotobots.reefscape.subsystems.wrist.io.WristIOTalonFXSim;
 import org.ironmaple.simulation.SimulatedArena;
@@ -103,8 +102,9 @@ public class RobotContainer {
                 new ModuleIOTalonFXReal(ModulePosition.BACK_RIGHT.index));
         elevatorSubsystem = new ElevatorSubsystem(new ElevatorIOTalonFXReal());
         coralIntakeSubsystem = new CoralIntakeSubsystem(new CoralIntakeIOVortexReal());
+        wristSubsystem =
+            new WristSubsystem(new WristIOTalonFXReal(), elevatorSubsystem::getCurrentHeight);
         algaeIntakeSubsystem = new AlgaeIntakeSubsystem(new AlgaeIntakeIOSparkMaxReal());
-        wristSubsystem = new WristSubsystem(new WristIOTalonFXReal());
         climberSubsystem = new ClimberSubsystem(new ClimberIORevServoReal());
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         configureAutoChooser();
@@ -130,7 +130,6 @@ public class RobotContainer {
         break;
 
       case SIM:
-        wristSubsystem = new WristSubsystem(new WristIOTalonFXSim());
         coralIntakeSubsystem = new CoralIntakeSubsystem(new CoralIntakeIO() {});
         algaeIntakeSubsystem = new AlgaeIntakeSubsystem(new AlgaeIntakeIO() {});
         Pose2d simStartPose = new Pose2d(3, 3, new Rotation2d(0));
@@ -158,6 +157,8 @@ public class RobotContainer {
                     driveSimulation.getModules()[ModulePosition.BACK_RIGHT.index]));
         swerveDriveSubsystem.setPose(simStartPose);
         elevatorSubsystem = new ElevatorSubsystem(new ElevatorIOTalonFXSim());
+        wristSubsystem =
+            new WristSubsystem(new WristIOTalonFXSim(), elevatorSubsystem::getCurrentHeight);
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         configureAutoChooser();
 
@@ -183,9 +184,8 @@ public class RobotContainer {
         break;
 
       default:
-        wristSubsystem = new WristSubsystem(new WristIO() {});
-        coralIntakeSubsystem = new CoralIntakeSubsystem(new CoralIntakeIO() {});
-        climberSubsystem = new ClimberSubsystem(new ClimberIO() {});
+        coralIntakeSubsystem = new CoralIntakeSubsystem(new CoralIntakeIOVortexReal());
+        climberSubsystem = new ClimberSubsystem(new ClimberIORevServoReal());
         algaeIntakeSubsystem = new AlgaeIntakeSubsystem(new AlgaeIntakeIO() {});
 
         // Replay mode initialization
@@ -197,6 +197,8 @@ public class RobotContainer {
                 new ModuleIO() {},
                 new ModuleIO() {});
         elevatorSubsystem = new ElevatorSubsystem(new ElevatorIO() {});
+        wristSubsystem =
+            new WristSubsystem(new WristIOTalonFXSim(), elevatorSubsystem::getCurrentHeight);
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         configureAutoChooser();
 
@@ -253,11 +255,21 @@ public class RobotContainer {
 
     // Algae
     stateAlgaeL3L4Button.toggleOnTrue(
-        new StateAlgaeL3L4(elevatorSubsystem, wristSubsystem, algaeIntakeSubsystem));
+        new StateAlgaeL3L4(
+            elevatorSubsystem, wristSubsystem, algaeIntakeSubsystem, algaeIntakeReleaseButton));
     stateAlgaeL2L3Button.toggleOnTrue(
-        new StateAlgaeL2L3(elevatorSubsystem, wristSubsystem, algaeIntakeSubsystem));
-    stateAlgaeProcessorButton.whileTrue(
-        new StateAlgaeGround(elevatorSubsystem, wristSubsystem, algaeIntakeSubsystem));
+        new StateAlgaeL2L3(
+            elevatorSubsystem, wristSubsystem, algaeIntakeSubsystem, algaeIntakeReleaseButton));
+    stateAlgaeProcessorButton.toggleOnTrue(
+        new StateAlgaeProcessor(
+            elevatorSubsystem, wristSubsystem, algaeIntakeSubsystem, algaeIntakeReleaseButton));
+    stateAlgaeGroundButton.toggleOnTrue(
+        new StateAlgaeGround(
+            elevatorSubsystem, wristSubsystem, algaeIntakeSubsystem, algaeIntakeReleaseButton));
+
+    climbButton.toggleOnTrue(
+            new Climb(climberSubsystem, elevatorSubsystem, () -> -getElevatorAxis()));
+    unClimbButton.onTrue(new UnClimb(climberSubsystem));
 
     // BACKUP -----------------------------------------------------------------------------
     // Coral Intake
@@ -282,10 +294,6 @@ public class RobotContainer {
         new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.CORAL_L3_PLACE));
     wristGroundButton.toggleOnTrue(
         new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.CORAL_GROUND_INTAKE));
-
-    climbButton.toggleOnTrue(
-        new Climb(climberSubsystem, elevatorSubsystem, () -> -getElevatorAxis()));
-    unClimbButton.onTrue(new UnClimb(climberSubsystem));
   }
 
   private void configureAutoChooser() {
