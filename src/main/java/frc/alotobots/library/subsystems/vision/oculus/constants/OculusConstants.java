@@ -32,7 +32,7 @@ public class OculusConstants {
    * Y: Positive is left - Rotation: Positive is counter-clockwise
    */
   public static final Transform2d ROBOT_TO_OCULUS =
-      new Transform2d(0.16, -0.21, Rotation2d.fromDegrees(-90));
+      new Transform2d(0.14, -0.22, Rotation2d.fromDegrees(-90));
 
   /**
    * Timeout duration in seconds for reset operations (pose reset, heading reset, ping). If a reset
@@ -56,9 +56,9 @@ public class OculusConstants {
    */
   public static final Matrix<N3, N1> OCULUS_STD_DEVS =
       VecBuilder.fill(
-          0.005, // Trust down to 50mm
-          0.005, // Trust down to 50mm
-          0.05 // Trust down to ~2.87deg
+          0.015, // Trust down to 50mm
+          0.015, // Trust down to 50mm
+          0.04 // Trust down to ~2.87deg
           );
 
   /**
