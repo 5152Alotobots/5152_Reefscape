@@ -72,12 +72,6 @@
           "data": {
             "name": "CoralIntakeEjectThrough"
           }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": " AutoStateStowed"
-          }
         }
       ]
     }
