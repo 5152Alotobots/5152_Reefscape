@@ -66,9 +66,9 @@ public class BlingConstants {
     /** Coral intake has piece - Yellow (2s) */
     public static final ColorFlowAnimation ALGAE_HAS_PIECE_ANIMATION =
         new ColorFlowAnimation(
-            128, 0, 128, 0, 0.75, NUM_LEDS, ColorFlowAnimation.Direction.Forward, LED_OFFSET);
+            255, 255, 0, 0, 0.75, NUM_LEDS, ColorFlowAnimation.Direction.Forward, LED_OFFSET);
 
-    /** Algea ejected time to drive (For Reef) - Yellow run up and down (2s) */
+    /** Algae ejected time to drive (For Reef) - Yellow run up and down (2s) */
     public static final LarsonAnimation ALGAE_EJECTED_DRIVE_ANIMATION =
         new LarsonAnimation(
             255, 255, 0, 0, 0.5, NUM_LEDS, LarsonAnimation.BounceMode.Front, LED_OFFSET);
