@@ -1,6 +1,6 @@
 {
-  "robotWidth": 0.74,
-  "robotLength": 0.74,
+  "robotWidth": 0.807,
+  "robotLength": 0.883,
   "holonomicMode": true,
   "pathFolders": [
     "Battle Creek",
@@ -16,8 +16,8 @@
     "Three Piece",
     "Two Piece"
   ],
-  "defaultMaxVel": 5.2,
-  "defaultMaxAccel": 3.2,
+  "defaultMaxVel": 5.0,
+  "defaultMaxAccel": 3.0,
   "defaultMaxAngVel": 540.0,
   "defaultMaxAngAccel": 460.0,
   "defaultNominalVoltage": 12.0,

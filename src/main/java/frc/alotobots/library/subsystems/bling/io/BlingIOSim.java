@@ -51,14 +51,4 @@ public class BlingIOSim implements BlingIO {
   public void clearAnimation() {
     currentAnimation = null;
   }
-
-  @Override
-  public void setSolidColor(LoggedColor color) {
-    currentColor = color;
-  }
-
-  @Override
-  public void clearSolidColor() {
-    currentColor = null;
-  }
 }

@@ -12,13 +12,10 @@
 */
 package frc.alotobots.reefscape.commands.auto;
 
-import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeConstants.Setpoints.OpenLoop.INTAKE_PERCENTAGE;
-
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.alotobots.library.commands.util.LogCommand;
+import frc.alotobots.reefscape.commands.groups.ElevatorWristHold;
 import frc.alotobots.reefscape.commands.groups.ElevatorWristRun;
-import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
-import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeIntake;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants;
 import frc.alotobots.reefscape.subsystems.wrist.WristSubsystem;
@@ -35,19 +32,16 @@ public class AutoStateCoralStation extends SequentialCommandGroup {
    *
    * @param elevatorSubsystem The elevator subsystem
    * @param wristSubsystem The wrist subsystem
-   * @param coralIntakeSubsystem The coral intake subsystem
    */
-  public AutoStateCoralStation(
-      ElevatorSubsystem elevatorSubsystem,
-      WristSubsystem wristSubsystem,
-      CoralIntakeSubsystem coralIntakeSubsystem) {
+  public AutoStateCoralStation(ElevatorSubsystem elevatorSubsystem, WristSubsystem wristSubsystem) {
     addCommands(
-        new LogCommand("State/State", "AUTO_CORAL_STATION"),
+        new LogCommand("State/State", "AUTO_CORAL_CORAL_STATION"),
         new ElevatorWristRun(
             elevatorSubsystem,
             wristSubsystem,
-            ElevatorConstants.Setpoints.CORAL_STATION,
-            WristConstants.Setpoints.CORAL_STATION),
-        new CoralIntakeIntake(coralIntakeSubsystem, () -> INTAKE_PERCENTAGE));
+            ElevatorConstants.Setpoints.CORAL_CORAL_STATION,
+            WristConstants.Setpoints.CORAL_CORAL_STATION,
+            false),
+        new ElevatorWristHold(elevatorSubsystem, wristSubsystem));
   }
 }

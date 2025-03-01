@@ -17,13 +17,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "ElevatorRunToL4"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "WristRunToL4"
+                  "name": "AutoStateL4"
                 }
               }
             ]
@@ -48,13 +42,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "RaiseElevatorToCoralStation"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "WristRunToCoralStation"
+                  "name": "AutoStateCoralStation\r"
                 }
               }
             ]
@@ -79,13 +67,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "ElevatorRunToL4"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "WristRunToL4"
+                  "name": "AutoStateL4"
                 }
               }
             ]
@@ -98,22 +80,9 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "ElevatorRunToStowed"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "WristRunToStowed"
-                }
-              }
-            ]
+            "name": " AutoStateStowed"
           }
         }
       ]

@@ -272,7 +272,7 @@ public class TunerConstants2025 implements TunerConstants {
     public static final double precisionAlignTolerance = .03; // Meters
     public static final double precisionAlignAllowRadius = .5; // Meters
     public static final PathConstraints PATHFINDING_CONSTRAINTS =
-        new PathConstraints(6.2, 3.5, Units.degreesToRadians(540), Units.degreesToRadians(460));
+        new PathConstraints(6.2, 3.2, Units.degreesToRadians(540), Units.degreesToRadians(460));
     public static final PPHolonomicDriveController PP_HOLONOMIC_DRIVE_CONTROLLER =
         new PPHolonomicDriveController(translationPid, rotationPid);
     public static final ProfiledPIDController driveFacingAngleController =

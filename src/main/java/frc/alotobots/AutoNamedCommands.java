@@ -14,7 +14,7 @@ package frc.alotobots;
 
 import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.alotobots.reefscape.commands.states.*;
+import frc.alotobots.reefscape.commands.auto.*;
 import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEject;
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEjectThrough;
@@ -48,7 +48,14 @@ public class AutoNamedCommands {
   public void registerCommands() {
     Map<String, Command> commands = new HashMap<>();
 
-    //
+    // Auto states
+    commands.put("AutoStateL1", new AutoStateL1(elevatorSubsystem, wristSubsystem));
+    commands.put("AutoStateL2", new AutoStateL2(elevatorSubsystem, wristSubsystem));
+    commands.put("AutoStateL3", new AutoStateL3(elevatorSubsystem, wristSubsystem));
+    commands.put("AutoStateL4", new AutoStateL4(elevatorSubsystem, wristSubsystem));
+    commands.put("AutoStateStowed", new AutoStateStowed(elevatorSubsystem, wristSubsystem));
+    commands.put(
+        "AutoStateCoralStation", new AutoStateCoralStation(elevatorSubsystem, wristSubsystem));
 
     // Coral Intake Commands
     commands.put(

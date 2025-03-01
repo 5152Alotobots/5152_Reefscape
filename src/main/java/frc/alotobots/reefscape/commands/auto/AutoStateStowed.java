@@ -14,6 +14,7 @@ package frc.alotobots.reefscape.commands.auto;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.alotobots.library.commands.util.LogCommand;
+import frc.alotobots.reefscape.commands.groups.ElevatorWristHold;
 import frc.alotobots.reefscape.commands.groups.ElevatorWristRun;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants;
@@ -34,11 +35,13 @@ public class AutoStateStowed extends SequentialCommandGroup {
    */
   public AutoStateStowed(ElevatorSubsystem elevatorSubsystem, WristSubsystem wristSubsystem) {
     addCommands(
-        new LogCommand("State/State", "AUTO_STOWED"),
+        new LogCommand("State/State", "AUTO_CORAL_STOWED"),
         new ElevatorWristRun(
             elevatorSubsystem,
             wristSubsystem,
-            ElevatorConstants.Setpoints.STOWED,
-            WristConstants.Setpoints.STOWED));
+            ElevatorConstants.Setpoints.CORAL_STOWED,
+            WristConstants.Setpoints.CORAL_STOWED,
+            false),
+        new ElevatorWristHold(elevatorSubsystem, wristSubsystem));
   }
 }

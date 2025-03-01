@@ -12,6 +12,9 @@
 */
 package frc.alotobots.library.subsystems.bling;
 
+import static frc.alotobots.library.subsystems.bling.constants.BlingConstants.LED_OFFSET;
+import static frc.alotobots.library.subsystems.bling.constants.BlingConstants.NUM_LEDS;
+
 import com.ctre.phoenix.led.Animation;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.alotobots.library.subsystems.bling.io.BlingIO;
@@ -43,20 +46,26 @@ public class BlingSubsystem extends SubsystemBase {
     // Update inputs
     io.updateInputs(inputs);
     Logger.processInputs("Bling", inputs);
-    if (this.getCurrentCommand() != null) {
-      Logger.recordOutput("Bling/CurrentCommand", this.getCurrentCommand().getName());
-    } else {
-      Logger.recordOutput("Bling/CurrentCommand", "None");
-    }
   }
 
   /**
-   * Sets the LEDs to display a solid color.
+   * Sets a range of LEDs to display a solid color.
+   *
+   * @param color The color to display
+   * @param from The start index
+   * @param to The end index
+   */
+  public void setSolidColor(BlingIO.LoggedColor color, int from, int to) {
+    io.setSolidColor(color, from, to);
+  }
+
+  /**
+   * Sets the display LEDs to display a solid color.
    *
    * @param color The color to display
    */
   public void setSolidColor(BlingIO.LoggedColor color) {
-    io.setSolidColor(color);
+    io.setSolidColor(color, LED_OFFSET, NUM_LEDS);
   }
 
   /**
@@ -71,6 +80,6 @@ public class BlingSubsystem extends SubsystemBase {
   /** Clears all LED effects, turning off animations and solid colors. */
   public void clear() {
     io.clearAnimation();
-    io.clearSolidColor();
+    io.clearSolidColor(LED_OFFSET, NUM_LEDS);
   }
 }

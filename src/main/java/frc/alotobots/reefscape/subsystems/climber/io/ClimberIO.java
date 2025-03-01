@@ -67,38 +67,40 @@ public interface ClimberIO {
    *
    * @return true if both cage switches are activated
    */
-  boolean getCageSwitches();
+  public default boolean getCageSwitches() {
+    return false;
+  }
 
   /**
    * Updates the input values with current hardware states.
    *
    * @param inputs The ClimberIOInputs object to update
    */
-  public void updateInputs(ClimberIOInputs inputs);
+  public default void updateInputs(ClimberIOInputs inputs) {}
 
   /** Enables the locking servo. */
-  public void enableLockingServo();
+  public default void enableLockingServo() {}
 
   /** Disables the locking servo. */
-  public void disableLockingServo();
+  public default void disableLockingServo() {}
 
   /** Enables the plunger servo. */
-  public void enablePlungerServo();
+  public default void enablePlungerServo() {}
 
   /** Disables the plunger servo. */
-  public void disablePlungerServo();
+  public default void disablePlungerServo() {}
 
   /**
    * Sets the position of the plunger servo.
    *
    * @param angle The desired angle for the plunger servo
    */
-  public void setPlungerServoPosition(Angle angle);
+  public default void setPlungerServoPosition(Angle angle) {}
 
   /**
    * Sets the locked state of the locking servo.
    *
    * @param lockingServoLocked true to lock, false to unlock
    */
-  public void setLockingServoLocked(boolean lockingServoLocked);
+  public default void setLockingServoLocked(boolean lockingServoLocked) {}
 }

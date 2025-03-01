@@ -10,12 +10,15 @@
 *
 * Source code must be publicly available on GitHub or an alternative web accessible site
 */
-package frc.alotobots.reefscape.commands.states;
+package frc.alotobots.reefscape.commands.states.coral;
 
 import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeConstants.Setpoints.OpenLoop.INTAKE_PERCENTAGE;
 
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.alotobots.library.commands.util.LogCommand;
+import frc.alotobots.library.subsystems.bling.BlingSubsystem;
+import frc.alotobots.library.subsystems.bling.commands.BlingCoralWantsPiece;
 import frc.alotobots.reefscape.commands.groups.ElevatorWristRun;
 import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeIntake;
@@ -29,26 +32,31 @@ import frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants;
  * to coral station position simultaneously 2. Waits for release button confirmation 3. Runs intake
  * 4. Returns to stowed position
  */
-public class StateCoralStation extends SequentialCommandGroup {
+public class StateCoralGround extends SequentialCommandGroup {
   /**
    * Creates a new StateCoralStation command.
    *
    * @param elevatorSubsystem The elevator subsystem
    * @param wristSubsystem The wrist subsystem
    * @param coralIntakeSubsystem The coral intake subsystem
+   * @param blingSubsystem The bling subsystem
    */
-  public StateCoralStation(
+  public StateCoralGround(
       ElevatorSubsystem elevatorSubsystem,
       WristSubsystem wristSubsystem,
-      CoralIntakeSubsystem coralIntakeSubsystem) {
+      CoralIntakeSubsystem coralIntakeSubsystem,
+      BlingSubsystem blingSubsystem) {
     addCommands(
-        new LogCommand("State/State", "CORAL_STATION"),
+        new LogCommand("State/State", "CORAL_CORAL_STATION"),
         new ElevatorWristRun(
             elevatorSubsystem,
             wristSubsystem,
-            ElevatorConstants.Setpoints.CORAL_STATION,
-            WristConstants.Setpoints.CORAL_STATION),
-        new CoralIntakeIntake(coralIntakeSubsystem, () -> INTAKE_PERCENTAGE),
-        new StateStowed(elevatorSubsystem, wristSubsystem).asProxy());
+            ElevatorConstants.Setpoints.CORAL_GROUND_PLACE,
+            WristConstants.Setpoints.CORAL_GROUND_INTAKE,
+            false),
+        new ParallelRaceGroup(
+            new BlingCoralWantsPiece(blingSubsystem).asProxy(),
+            new CoralIntakeIntake(coralIntakeSubsystem, () -> INTAKE_PERCENTAGE)),
+        new StateCoralStowed(elevatorSubsystem, wristSubsystem).asProxy());
   }
 }

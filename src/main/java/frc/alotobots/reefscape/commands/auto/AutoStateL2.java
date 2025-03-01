@@ -12,16 +12,10 @@
 */
 package frc.alotobots.reefscape.commands.auto;
 
-import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeConstants.Setpoints.OpenLoop.EJECT_PERCENTAGE;
-
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.alotobots.library.commands.util.LogCommand;
+import frc.alotobots.reefscape.commands.groups.ElevatorWristHold;
 import frc.alotobots.reefscape.commands.groups.ElevatorWristRun;
-import frc.alotobots.reefscape.commands.states.StateStowed;
-import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
-import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEjectThrough;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants;
 import frc.alotobots.reefscape.subsystems.wrist.WristSubsystem;
@@ -38,23 +32,16 @@ public class AutoStateL2 extends SequentialCommandGroup {
    *
    * @param elevatorSubsystem The elevator subsystem
    * @param wristSubsystem The wrist subsystem
-   * @param coralIntakeSubsystem The coral intake subsystem
-   * @param coralIntakeReleaseTrigger The release button trigger
    */
-  public AutoStateL2(
-      ElevatorSubsystem elevatorSubsystem,
-      WristSubsystem wristSubsystem,
-      CoralIntakeSubsystem coralIntakeSubsystem,
-      Trigger coralIntakeReleaseTrigger) {
+  public AutoStateL2(ElevatorSubsystem elevatorSubsystem, WristSubsystem wristSubsystem) {
     addCommands(
-        new LogCommand("State/State", "AUTO_L2"),
+        new LogCommand("State/State", "AUTO_CORAL_L2"),
         new ElevatorWristRun(
             elevatorSubsystem,
             wristSubsystem,
-            ElevatorConstants.Setpoints.L2_PLACE,
-            WristConstants.Setpoints.L2_PLACE),
-        Commands.waitUntil(coralIntakeReleaseTrigger),
-        new CoralIntakeEjectThrough(coralIntakeSubsystem, () -> EJECT_PERCENTAGE),
-        new StateStowed(elevatorSubsystem, wristSubsystem).asProxy());
+            ElevatorConstants.Setpoints.CORAL_L2_PLACE,
+            WristConstants.Setpoints.CORAL_L2_PLACE,
+            false),
+        new ElevatorWristHold(elevatorSubsystem, wristSubsystem));
   }
 }

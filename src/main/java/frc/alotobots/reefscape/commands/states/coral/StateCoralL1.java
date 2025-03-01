@@ -10,14 +10,18 @@
 *
 * Source code must be publicly available on GitHub or an alternative web accessible site
 */
-package frc.alotobots.reefscape.commands.states;
+package frc.alotobots.reefscape.commands.states.coral;
 
+import static frc.alotobots.library.subsystems.bling.constants.BlingConstants.BLING_NOTIFICATION_TIME;
 import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeConstants.Setpoints.OpenLoop.EJECT_PERCENTAGE;
 
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.alotobots.library.commands.util.LogCommand;
+import frc.alotobots.library.subsystems.bling.BlingSubsystem;
+import frc.alotobots.library.subsystems.bling.commands.BlingCoralEjectedDrive;
 import frc.alotobots.reefscape.commands.groups.ElevatorWristRun;
 import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEject;
@@ -31,28 +35,33 @@ import frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants;
  * L1 position simultaneously 2. Waits for release button confirmation 3. Runs eject 4. Returns to
  * stowed position
  */
-public class StateL1 extends SequentialCommandGroup {
+public class StateCoralL1 extends SequentialCommandGroup {
   /**
    * Creates a new StateL1 command.
    *
    * @param elevatorSubsystem The elevator subsystem
    * @param wristSubsystem The wrist subsystem
    * @param coralIntakeSubsystem The coral intake subsystem
+   * @param blingSubsystem The bling subsystem
    * @param coralIntakeReleaseTrigger The release button trigger
    */
-  public StateL1(
+  public StateCoralL1(
       ElevatorSubsystem elevatorSubsystem,
       WristSubsystem wristSubsystem,
       CoralIntakeSubsystem coralIntakeSubsystem,
+      BlingSubsystem blingSubsystem,
       Trigger coralIntakeReleaseTrigger) {
     addCommands(
-        new LogCommand("State/State", "L1"),
+        new LogCommand("State/State", "CORAL_L1"),
         new ElevatorWristRun(
             elevatorSubsystem,
             wristSubsystem,
-            ElevatorConstants.Setpoints.L1_PLACE,
-            WristConstants.Setpoints.L1_PLACE),
+            ElevatorConstants.Setpoints.CORAL_L1_PLACE,
+            WristConstants.Setpoints.CORAL_L1_PLACE,
+            false),
         Commands.waitUntil(coralIntakeReleaseTrigger),
-        new CoralIntakeEject(coralIntakeSubsystem, () -> EJECT_PERCENTAGE));
+        new CoralIntakeEject(coralIntakeSubsystem, () -> EJECT_PERCENTAGE),
+        new ScheduleCommand(
+            new BlingCoralEjectedDrive(blingSubsystem).withTimeout(BLING_NOTIFICATION_TIME)));
   }
 }
