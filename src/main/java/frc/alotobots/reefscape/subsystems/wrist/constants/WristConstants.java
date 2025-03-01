@@ -48,7 +48,7 @@ public class WristConstants {
     public static final AngularVelocity MAX_SPEED = DegreesPerSecond.of(90);
 
     /** Enable Limits */
-    public static final boolean LIMITS_ENABLED = false;
+    public static final boolean LIMITS_ENABLED = true;
   }
 
   /** Contains position setpoints for different wrist states. */
