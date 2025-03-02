@@ -117,6 +117,8 @@ public class OI {
   }
 
   /* State-based play control triggers */
+  public static final Trigger resetGyroButton =
+      driverController.leftStick().and(driverController.rightStick());
 
   public static final Trigger stateCoralCoralStationButton = codriverController.rightBumper();
   public static final Trigger stateCoralStowedButton = codriverController.leftBumper();
