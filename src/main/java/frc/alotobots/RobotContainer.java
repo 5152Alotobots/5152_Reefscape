@@ -137,6 +137,7 @@ public class RobotContainer {
                 swerveDriveSubsystem::addVisionMeasurement,
                 oculusPoseSource,
                 aprilTagPoseSource,
+                swerveDriveSubsystem,
                 autoChooser);
 
         blingSubsystem = new BlingSubsystem(new BlingIOReal());
@@ -193,6 +194,7 @@ public class RobotContainer {
                 swerveDriveSubsystem::addVisionMeasurement,
                 oculusPoseSource,
                 aprilTagPoseSource,
+                swerveDriveSubsystem,
                 autoChooser);
 
         blingSubsystem = new BlingSubsystem(new BlingIOSim());
@@ -230,6 +232,7 @@ public class RobotContainer {
                 swerveDriveSubsystem::addVisionMeasurement,
                 oculusPoseSource,
                 aprilTagPoseSource,
+                swerveDriveSubsystem,
                 autoChooser);
 
         blingSubsystem = new BlingSubsystem(new BlingIO() {});
