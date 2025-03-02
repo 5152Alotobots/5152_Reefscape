@@ -117,7 +117,6 @@ public class WristLimitZones {
             Degrees.of(95) // Max wrist angle
             ));
 
-            
     zones.add(
         new WristLimitZone(
             Meters.of(.433), // Min elevator height
