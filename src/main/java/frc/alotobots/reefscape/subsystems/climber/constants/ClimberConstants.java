@@ -17,5 +17,5 @@ import static edu.wpi.first.units.Units.Seconds;
 import edu.wpi.first.units.measure.Time;
 
 public class ClimberConstants {
-  public static final Time SWITCHES_ACTIVE_DEBOUNCE = Seconds.of(1);
+  public static final Time SWITCHES_ACTIVE_DEBOUNCE = Seconds.of(0.3);
 }
