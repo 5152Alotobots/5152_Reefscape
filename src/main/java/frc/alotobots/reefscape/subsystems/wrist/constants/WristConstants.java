@@ -61,7 +61,7 @@ public class WristConstants {
     public static final Angle CORAL_STOWED = Degrees.of(85);
 
     /** Angle for picking up from coral station */
-    public static final Angle CORAL_CORAL_STATION = Degrees.of(42);
+    public static final Angle CORAL_CORAL_STATION = Degrees.of(31.1);
 
     /** Angle for L4 placement */
     public static final Angle CORAL_L4_PLACE = Degrees.of(90);
