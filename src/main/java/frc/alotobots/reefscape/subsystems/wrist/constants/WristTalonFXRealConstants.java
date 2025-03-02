@@ -48,7 +48,7 @@ public class WristTalonFXRealConstants {
       public static final double KA = 0.0;
 
       /** Gravity compensation gain */
-      public static final double KG = 0.22;
+      public static final double KG = 0.0;
 
       /** Static friction compensation */
       public static final double KS = 0.0;
@@ -72,7 +72,7 @@ public class WristTalonFXRealConstants {
       public static final double KA = 0.0;
 
       /** Gravity compensation gain */
-      public static final double KG = 0.22;
+      public static final double KG = 0.0;
 
       /** Static friction compensation */
       public static final double KS = 0.0;
@@ -114,5 +114,5 @@ public class WristTalonFXRealConstants {
   public static final int ROTOR_TO_SENSOR_RATIO = 189;
 
   /** Magnet offset for the CANCoder absolute position */
-  public static final double ENCODER_MAGNET_OFFSET = 0.240966796875;
+  public static final double ENCODER_MAGNET_OFFSET = 0.4296875;
 }
