@@ -21,7 +21,7 @@ import java.util.function.DoubleSupplier;
 
 /**
  * Command that runs the intake in reverse (negative output) to eject game pieces out the front.
- * Automatically ends when the game piece is no longer detected by the intake sensor. The speed is
+ * Runs until manually canceled. The speed is
  * clamped to the maximum allowed eject percentage.
  */
 public class CoralIntakeEjectManual extends Command {
