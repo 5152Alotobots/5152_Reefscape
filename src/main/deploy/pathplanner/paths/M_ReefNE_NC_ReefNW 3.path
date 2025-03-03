@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.78,
-        "y": 6.823249999999999
+        "x": 1.0549180327895902,
+        "y": 6.476485655739021
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.704364224137931,
-        "y": 6.7104525862068956
+        "x": 2.9792822569275215,
+        "y": 6.363688241945917
       },
       "isLocked": false,
       "linkedName": "North Left Station"
     },
     {
       "anchor": {
-        "x": 3.978,
-        "y": 5.253499999999999
+        "x": 3.954173731455673,
+        "y": 5.287904260806781
       },
       "prevControl": {
-        "x": 3.0246853448275854,
-        "y": 6.277249999999997
+        "x": 3.000859076283258,
+        "y": 6.311654260806779
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -59.99999999999999
+    "rotation": -59.548718065917626
   },
   "reversed": false,
   "folder": "Battle Creek",

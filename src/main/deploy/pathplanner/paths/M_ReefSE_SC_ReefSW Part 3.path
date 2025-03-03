@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.5307499999999998,
-        "y": 0.6319999999999993
+        "x": 1.8101434426229508,
+        "y": 1.0700307377049172
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.425569078947368,
-        "y": 1.6326578947368406
+        "x": 2.7049625215703186,
+        "y": 2.070688632441758
       },
       "isLocked": false,
       "linkedName": "South Left Station"
     },
     {
       "anchor": {
-        "x": 3.6855,
-        "y": 3.0499999999999994
+        "x": 3.784160204882524,
+        "y": 2.9376246228281895
       },
       "prevControl": {
-        "x": 2.771180921052631,
-        "y": 2.1012993421052633
+        "x": 2.8698411259351544,
+        "y": 1.9889239649334534
       },
       "nextControl": null,
       "isLocked": false,
@@ -48,7 +48,7 @@
   "folder": "Test2025",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -130.0
+    "rotation": -125.00000000000001
   },
   "useDefaultConstraints": true
 }

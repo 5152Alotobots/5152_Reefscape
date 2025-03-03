@@ -27,7 +27,7 @@ public class DefaultAlgaeIntakeHold extends Command {
   @Override
   public void execute() {
     if (algaeIntakeSubsystem.isIntakeOccupied()) {
-      algaeIntakeSubsystem.runAtPercentOutput(0.25);
+      algaeIntakeSubsystem.runAtPercentOutput(0.15);
     } else {
       algaeIntakeSubsystem.stop();
     }

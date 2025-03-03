@@ -66,7 +66,7 @@ public final class AlgaeIntakeTalonFXRealConstants {
   }
 
   /** Direction of the left motor rotation */
-  public static final InvertedValue LEFT_MOTOR_DIRECTION = InvertedValue.Clockwise_Positive;
+  public static final InvertedValue LEFT_MOTOR_DIRECTION = InvertedValue.CounterClockwise_Positive;
 
   /** Direction of the right motor rotation */
   public static final boolean RIGHT_MOTOR_INVERTED = true;

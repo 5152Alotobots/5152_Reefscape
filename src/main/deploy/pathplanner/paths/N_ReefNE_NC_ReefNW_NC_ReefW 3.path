@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.78,
-        "y": 6.823249999999999
+        "x": 1.0549180327895902,
+        "y": 6.476485655739021
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.8232499999999998,
-        "y": 6.3065
+        "x": 2.09816803278959,
+        "y": 5.9597356557390215
       },
       "isLocked": false,
       "linkedName": "North Left Station"
     },
     {
       "anchor": {
-        "x": 3.978,
-        "y": 5.253499999999999
+        "x": 3.954173731455673,
+        "y": 5.287904260806781
       },
       "prevControl": {
-        "x": 3.1005000000000003,
-        "y": 6.667249999999998
+        "x": 3.076673731455673,
+        "y": 6.70165426080678
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -59.99999999999999
+    "rotation": -59.548718065917626
   },
   "reversed": false,
   "folder": "Three Piece",

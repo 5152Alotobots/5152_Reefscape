@@ -116,9 +116,9 @@ public class OI {
     return driverController.getRightTriggerAxis();
   }
 
-  public static final Trigger ejectCoralButton = codriverBackupController.rightBumper();
-
   /* State-based play control triggers */
+  public static final Trigger resetGyroButton =
+      driverController.leftStick().and(driverController.rightStick());
 
   public static final Trigger stateCoralCoralStationButton = codriverController.rightBumper();
   public static final Trigger stateCoralStowedButton = codriverController.leftBumper();
@@ -130,20 +130,22 @@ public class OI {
   public static final Trigger coralIntakeReleaseButton = codriverController.rightTrigger();
   public static final Trigger algaeIntakeReleaseButton = codriverController.leftTrigger();
 
-  public static final Trigger stateAlgaeL3L4Button = codriverController.povUp();
-  public static final Trigger stateAlgaeL2L3Button = codriverController.povLeft();
-  public static final Trigger stateAlgaeGroundButton = codriverController.povRight();
+  public static final Trigger stateAlgaeL3L4Button = codriverController.povLeft();
+  public static final Trigger stateAlgaeL2L3Button = codriverController.povRight();
+  public static final Trigger stateAlgaeGroundButton = codriverController.povUp();
+  public static final Trigger stateCoralGroundButton = codriverController.povDown();
   public static final Trigger stateAlgaeNetButton = codriverController.back();
   public static final Trigger stateAlgaeProcessorButton = codriverController.start();
 
   public static final Trigger climbButton = driverController.start();
   public static final Trigger unClimbButton = driverController.back();
 
+  public static final Trigger coralIntakeIntakeManualButton = driverController.povDown();
+  public static final Trigger coralIntakeEjectManualButton = driverController.povUp();
   // BACKUP -----------------------------------------------------------
   /* Backup control triggers */
 
-  /** Trigger for activating the coral intake */
-  public static final Trigger coralIntakeIntakeButton = driverController.povUp();
+  public static final Trigger ejectCoralButton = codriverBackupController.rightBumper();
 
   /** Trigger for activating the coral eject-through function */
   public static final Trigger coralIntakeEjectThroughButton = codriverBackupController.start();

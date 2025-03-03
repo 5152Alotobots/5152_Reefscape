@@ -11,7 +11,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "M_ReefSE_SC_ReefSW 1"
+                  "pathName": "StartC_ReefE"
                 }
               },
               {
@@ -36,53 +36,35 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "M_ReefSE_SC_ReefSW Part2"
+                  "pathName": "C_ReefE_WithRetreat 1"
                 }
               },
               {
-                "type": "named",
+                "type": "sequential",
                 "data": {
-                  "name": "AutoStateCoralStation\r"
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 2.0
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "AutoStateL1"
+                      }
+                    }
+                  ]
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "CoralIntakeIntake"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "M_ReefSE_SC_ReefSW Part 3"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutoStateL4"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "CoralIntakeEjectThrough"
           }
         }
       ]
     }
   },
   "resetOdom": false,
-  "folder": "Two Piece",
+  "folder": "One Piece",
   "choreoAuto": false
 }

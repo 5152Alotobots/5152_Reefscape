@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.7215,
-        "y": 1.24625
+        "x": 0.7432377049180328,
+        "y": 1.3337602459016387
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.721499999999998,
-        "y": 1.24625
+        "x": 1.7432377049180308,
+        "y": 1.3337602459016387
       },
       "isLocked": false,
       "linkedName": "South Right Station"
     },
     {
       "anchor": {
-        "x": 1.5307499999999998,
-        "y": 0.6319999999999993
+        "x": 1.8101434426229508,
+        "y": 1.0700307377049172
       },
       "prevControl": {
-        "x": 0.5307499999999998,
-        "y": 0.6319999999999995
+        "x": 0.8101434426229508,
+        "y": 1.0700307377049172
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -130.0
+    "rotation": -125.00000000000001
   },
   "reversed": false,
   "folder": "Positions",

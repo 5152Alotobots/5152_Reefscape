@@ -13,7 +13,10 @@
 package frc.alotobots.reefscape.subsystems.climber;
 
 import static edu.wpi.first.units.Units.Degrees;
+import static edu.wpi.first.units.Units.Seconds;
+import static frc.alotobots.reefscape.subsystems.climber.constants.ClimberConstants.SWITCHES_ACTIVE_DEBOUNCE;
 
+import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.alotobots.reefscape.subsystems.climber.io.ClimberIO;
@@ -31,6 +34,9 @@ public class ClimberSubsystem extends SubsystemBase {
 
   /** The logged inputs from the climber hardware */
   private final ClimberIOInputsAutoLogged inputs = new ClimberIOInputsAutoLogged();
+
+  /** A debouncer to ensure the cage is fully latched */
+  private final Debouncer cageDebouncer = new Debouncer(SWITCHES_ACTIVE_DEBOUNCE.in(Seconds));
 
   /**
    * Creates a new ClimberSubsystem.
@@ -54,7 +60,7 @@ public class ClimberSubsystem extends SubsystemBase {
    * @return true if the cage switches are activated
    */
   public boolean getCageSwitches() {
-    return io.getCageSwitches();
+    return cageDebouncer.calculate(io.getCageSwitches());
   }
 
   /** Enables both the plunger and locking servos. */

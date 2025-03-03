@@ -17,12 +17,6 @@
               {
                 "type": "named",
                 "data": {
-                  "name": null
-                }
-              },
-              {
-                "type": "named",
-                "data": {
                   "name": "AutoStateL4"
                 }
               }
@@ -48,12 +42,6 @@
               {
                 "type": "named",
                 "data": {
-                  "name": null
-                }
-              },
-              {
-                "type": "named",
-                "data": {
                   "name": "AutoStateCoralStation\r"
                 }
               }
@@ -74,12 +62,6 @@
                 "type": "path",
                 "data": {
                   "pathName": "N_ReefNE_NC_ReefNW_NC_ReefW 3"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": null
                 }
               },
               {
@@ -112,12 +94,6 @@
                 "data": {
                   "name": "AutoStateCoralStation\r"
                 }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": null
-                }
               }
             ]
           }
@@ -136,12 +112,6 @@
                 "type": "path",
                 "data": {
                   "pathName": "N_ReefNE_NC_ReefNW_NC_ReefW 5"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": null
                 }
               },
               {
