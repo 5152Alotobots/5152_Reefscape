@@ -49,6 +49,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "CoralIntakeIntake"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
@@ -71,12 +77,6 @@
           "type": "named",
           "data": {
             "name": "CoralIntakeEjectThrough"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": " AutoStateStowed"
           }
         }
       ]

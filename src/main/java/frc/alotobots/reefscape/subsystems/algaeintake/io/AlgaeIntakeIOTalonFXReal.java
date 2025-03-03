@@ -116,6 +116,9 @@ public class AlgaeIntakeIOTalonFXReal implements AlgaeIntakeIO {
     // Left motor config
     var leftConfig = new TalonFXConfiguration();
 
+    // Right motor config
+    var rightConfig = new TalonFXConfiguration();
+
     // PID configuration for velocity mode (Slot 0)
     leftConfig.Slot0.kP = AlgaeIntakeTalonFXRealConstants.PIDConstants.VelocityPIDConstants.KP;
     leftConfig.Slot0.kI = AlgaeIntakeTalonFXRealConstants.PIDConstants.VelocityPIDConstants.KI;
@@ -132,10 +135,20 @@ public class AlgaeIntakeIOTalonFXReal implements AlgaeIntakeIO {
     leftConfig.CurrentLimits.StatorCurrentLimit = STATOR_AMP_LIMIT.in(Amps);
     leftConfig.CurrentLimits.StatorCurrentLimitEnable = true; // Always should be true
 
-    leftConfig.MotorOutput.Inverted = LEFT_MOTOR_DIRECTION;
+    rightConfig.MotorOutput.Inverted = LEFT_MOTOR_DIRECTION;
+
+    rightConfig.MotorOutput.NeutralMode = MECHANISM_NEUTRAL_MODE;
+
+    rightConfig.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.RotorSensor;
+
+    rightConfig.CurrentLimits.StatorCurrentLimit = STATOR_AMP_LIMIT.in(Amps);
+    rightConfig.CurrentLimits.StatorCurrentLimitEnable = true; // Always should be true
 
     // Apply config to left motor
     tryUntilOk(5, () -> leftTalon.getConfigurator().apply(leftConfig, 0.25));
+
+    // Apply config to right motor
+    tryUntilOk(5, () -> rightTalon.getConfigurator().apply(rightConfig, 0.25));
 
     // Set right motor to be inverted follower
     tryUntilOk(

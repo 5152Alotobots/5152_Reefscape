@@ -22,6 +22,7 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.alotobots.library.subsystems.bling.BlingSubsystem;
@@ -56,8 +57,9 @@ import frc.alotobots.reefscape.subsystems.climber.commands.ClimberDisableServos;
 import frc.alotobots.reefscape.subsystems.climber.io.ClimberIORevServoReal;
 import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEject;
+import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEjectManual;
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEjectThrough;
-import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeIntake;
+import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeIntakeManual;
 import frc.alotobots.reefscape.subsystems.coralIntake.io.CoralIntakeIO;
 import frc.alotobots.reefscape.subsystems.coralIntake.io.CoralIntakeIOVortexReal;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
@@ -135,6 +137,7 @@ public class RobotContainer {
                 swerveDriveSubsystem::addVisionMeasurement,
                 oculusPoseSource,
                 aprilTagPoseSource,
+                swerveDriveSubsystem,
                 autoChooser);
 
         blingSubsystem = new BlingSubsystem(new BlingIOReal());
@@ -191,6 +194,7 @@ public class RobotContainer {
                 swerveDriveSubsystem::addVisionMeasurement,
                 oculusPoseSource,
                 aprilTagPoseSource,
+                swerveDriveSubsystem,
                 autoChooser);
 
         blingSubsystem = new BlingSubsystem(new BlingIOSim());
@@ -228,6 +232,7 @@ public class RobotContainer {
                 swerveDriveSubsystem::addVisionMeasurement,
                 oculusPoseSource,
                 aprilTagPoseSource,
+                swerveDriveSubsystem,
                 autoChooser);
 
         blingSubsystem = new BlingSubsystem(new BlingIO() {});
@@ -252,6 +257,9 @@ public class RobotContainer {
 
   /** Contains button based commands */
   private void configureLogicCommands() {
+    // TEMPORARY!!
+    resetGyroButton.onTrue(
+        new InstantCommand(() -> swerveDriveSubsystem.setPose(new Pose2d(0, 0, Rotation2d.kZero))));
     // Bling
     BlingUtil.scheduleAtMatchTime(
         new BlingEndgameCountdown(blingSubsystem)
@@ -332,6 +340,9 @@ public class RobotContainer {
             algaeIntakeSubsystem,
             blingSubsystem,
             algaeIntakeReleaseButton));
+    stateCoralGroundButton.toggleOnTrue(
+        new StateCoralGround(
+            elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, blingSubsystem));
 
     climbButton.toggleOnTrue(
         new Climb(climberSubsystem, elevatorSubsystem, blingSubsystem, () -> -getElevatorAxis()));
@@ -342,9 +353,10 @@ public class RobotContainer {
     ejectCoralButton.whileTrue(new CoralIntakeEject(coralIntakeSubsystem, () -> EJECT_PERCENTAGE));
     coralIntakeEjectThroughButton.toggleOnTrue(
         new CoralIntakeEjectThrough(coralIntakeSubsystem, () -> EJECT_PERCENTAGE));
-    coralIntakeIntakeButton.toggleOnTrue(
-        new CoralIntakeIntake(coralIntakeSubsystem, () -> INTAKE_PERCENTAGE));
-
+    coralIntakeIntakeManualButton.whileTrue(
+        new CoralIntakeIntakeManual(coralIntakeSubsystem, () -> INTAKE_PERCENTAGE));
+    coralIntakeEjectManualButton.whileTrue(
+        new CoralIntakeEjectManual(coralIntakeSubsystem, () -> 0.5));
     // Elevator
     elevatorStowButton.toggleOnTrue(
         new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.CORAL_STOWED));

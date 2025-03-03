@@ -54,13 +54,14 @@ public class StateAlgaeGround extends SequentialCommandGroup {
         new ElevatorWristRun(
             elevatorSubsystem,
             wristSubsystem,
-            ElevatorConstants.Setpoints.ALGAE_PROCESSOR,
-            WristConstants.Setpoints.ALGAE_PROCESSOR,
+            ElevatorConstants.Setpoints.ALGAE_GROUND_INTAKE,
+            WristConstants.Setpoints.ALGAE_GROUND_INTAKE,
             false),
         new ParallelRaceGroup(
             new BlingAlgaeWantsPiece(blingSubsystem).asProxy(),
             new AlgaeIntakeIntakeOpenLoop(
-                algaeIntakeSubsystem, algaeIntakeReleaseTrigger, () -> INTAKE_PERCENTAGE)),
+                    algaeIntakeSubsystem, algaeIntakeReleaseTrigger, () -> INTAKE_PERCENTAGE)
+                .asProxy()),
         new StateAlgaeStowed(elevatorSubsystem, wristSubsystem).asProxy());
   }
 }

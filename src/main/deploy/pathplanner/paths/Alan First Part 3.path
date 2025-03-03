@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.78,
-        "y": 6.823249999999999
+        "x": 1.0549180327895902,
+        "y": 6.476485655739021
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.262,
-        "y": 6.286999999999999
+        "x": 2.5369180327895906,
+        "y": 5.940235655739021
       },
       "isLocked": false,
       "linkedName": "North Left Station"
     },
     {
       "anchor": {
-        "x": 3.978,
-        "y": 5.253499999999999
+        "x": 3.954173731455673,
+        "y": 5.287904260806781
       },
       "prevControl": {
-        "x": 3.0271140119667175,
-        "y": 5.621874754856169
+        "x": 3.00328774342239,
+        "y": 5.6562790156629505
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -59.99999999999999
+    "rotation": -59.548718065917626
   },
   "reversed": false,
   "folder": "Test2025",
