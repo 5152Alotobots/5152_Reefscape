@@ -14,11 +14,9 @@ package frc.alotobots.library.subsystems.bling.commands;
 
 import static frc.alotobots.library.subsystems.bling.constants.BlingConstants.Colors.CAGE_SWITCH_COLOR;
 
-import java.util.function.BooleanSupplier;
-
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.alotobots.library.subsystems.bling.BlingSubsystem;
-import frc.alotobots.library.subsystems.bling.constants.BlingConstants;
+import java.util.function.BooleanSupplier;
 
 /**
  * Command that displays the Coral Wants Piece animation until a piece is detected. Should be ran in
@@ -27,6 +25,7 @@ import frc.alotobots.library.subsystems.bling.constants.BlingConstants;
 public class BlingCageSwitchActive extends Command {
   /** The bling subsystem to control */
   private BlingSubsystem blingSubsystem;
+
   private BooleanSupplier switchesActive;
 
   /**
@@ -42,13 +41,12 @@ public class BlingCageSwitchActive extends Command {
 
   @Override
   public void execute() {
-      if (switchesActive.getAsBoolean()) {
-        blingSubsystem.setSolidColor(CAGE_SWITCH_COLOR);
-      } else {
-        blingSubsystem.clear();
-      }
+    if (switchesActive.getAsBoolean()) {
+      blingSubsystem.setSolidColor(CAGE_SWITCH_COLOR);
+    } else {
+      blingSubsystem.clear();
+    }
   }
-  
 
   @Override
   public boolean isFinished() {

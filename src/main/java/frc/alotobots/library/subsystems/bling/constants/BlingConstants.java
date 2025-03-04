@@ -82,6 +82,7 @@ public class BlingConstants {
     public static final LarsonAnimation ENDGAME_COUNTDOWN_BLUE_ANIMATION =
         new LarsonAnimation(
             0, 0, 255, 0, 0.3, NUM_LEDS, LarsonAnimation.BounceMode.Front, 5, LED_OFFSET);
+
     /** Time to climb animation (triggers like 5s before end of match) - Blink red rapidly (2s) */
     public static final StrobeAnimation TIME_TO_CLIMB_RED_ANIMATION =
         new StrobeAnimation(255, 0, 0, 0, 0.1, NUM_LEDS, LED_OFFSET);
