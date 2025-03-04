@@ -82,7 +82,6 @@ public class BlingConstants {
     public static final LarsonAnimation ENDGAME_COUNTDOWN_BLUE_ANIMATION =
         new LarsonAnimation(
             0, 0, 255, 0, 0.3, NUM_LEDS, LarsonAnimation.BounceMode.Front, 5, LED_OFFSET);
-
     /** Time to climb animation (triggers like 5s before end of match) - Blink red rapidly (2s) */
     public static final StrobeAnimation TIME_TO_CLIMB_RED_ANIMATION =
         new StrobeAnimation(255, 0, 0, 0, 0.1, NUM_LEDS, LED_OFFSET);
@@ -111,6 +110,9 @@ public class BlingConstants {
 
     /** Color setting for red alliance */
     public static final BlingIO.LoggedColor RED_ALLIANCE_COLOR = new BlingIO.LoggedColor(255, 0, 0);
+
+    /** Cage Color */
+    public static final BlingIO.LoggedColor CAGE_SWITCH_COLOR = new BlingIO.LoggedColor(0, 255, 0);
 
     /** Color setting for no alliance selected */
     public static final BlingIO.LoggedColor NO_ALLIANCE_COLOR =
