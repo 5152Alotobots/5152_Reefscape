@@ -20,6 +20,10 @@ import static frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXRea
 import static frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXRealConstants.MotorSafetyLimits.*;
 import static frc.alotobots.util.PhoenixUtil.tryUntilOk;
 
+import java.util.function.Supplier;
+
+import org.littletonrobotics.junction.Logger;
+
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
@@ -33,14 +37,16 @@ import com.ctre.phoenix6.hardware.ParentDevice;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
 import com.ctre.phoenix6.signals.GravityTypeValue;
+
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularAcceleration;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
+import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.Voltage;
 import frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXRealConstants;
-import frc.alotobots.reefscape.subsystems.wrist.util.WristLimitZones;
 
 /**
  * Hardware implementation of the WristIO interface using TalonFX motor controller and CANCoder for
@@ -97,12 +103,17 @@ public class WristIOTalonFXReal implements WristIO {
   /** Debouncer to filter rapid changes in encoder connection status */
   private final Debouncer encoderConnectedDebouncer = new Debouncer(0.5);
 
+  private Angle bottomLimitAngle;
+  private Distance wristHeight; 
+
   /**
    * Creates a new WristIOTalonFXReal instance and configures all motor controller and encoder
    * settings. This includes PID configurations, software limits, current limits, and sensor
    * settings.
    */
-  public WristIOTalonFXReal() {
+  public WristIOTalonFXReal(Supplier<Distance> elevatorHeightSupplier) {
+   
+    bottomLimitAngle = Rotations.zero();
     wristTalon = new TalonFX(WRIST_MOTOR_CAN_ID);
     wristEncoder = new CANcoder(WRIST_ENCODER_CAN_ID);
 
@@ -207,6 +218,7 @@ public class WristIOTalonFXReal implements WristIO {
     // Update connection status
     inputs.motorConnected = motorConnectedDebouncer.calculate(wristSignals.isOK());
     inputs.cancoderConnected = encoderConnectedDebouncer.calculate(wristEncoder.isConnected());
+    inputs.bottomLimitAngle = bottomLimitAngle;
 
     // Update all input values
     inputs.pidSlot = currentPidSlot.getValue();
@@ -218,30 +230,32 @@ public class WristIOTalonFXReal implements WristIO {
     inputs.bottomLimit = bottomSoftLimit.getValue();
   }
 
+  @Override
+  public void setBottomLimitAngle(Angle bottomLimitAngle) {
+    this.bottomLimitAngle = Degrees.of(MathUtil.clamp(bottomLimitAngle.in(Degree), -45, 0));   
+  }
+
+  private boolean shouldLimit(Angle currentAngle) {
+    Logger.recordOutput("Wrist/shouldLimit", currentAngle.in(Degrees) - 2.5 < bottomLimitAngle.in(Degrees));
+
+    return currentAngle.in(Degrees) - 2.5 < bottomLimitAngle.in(Degrees);
+  }
+
   /**
    * Sets the wrist to a target position using closed-loop control.
    *
    * @param rotation The target angle to move to
    * @param pidSlot The PID slot to use (0 for velocity, 1 for position)
-   * @param minAngle The minimum allowed angle
-   * @param maxAngle The maximum allowed angle
    */
   @Override
-  public void setWristPosition(Angle rotation, int pidSlot, Angle minAngle, Angle maxAngle) {
-    // Get current angle to determine if we need to apply limits
-    Angle currentAngle = wristPosition.getValue();
-
-    // Determine if we're approaching either limit and should activate motion limits
-    boolean limitForward = WristLimitZones.shouldLimitForwardMotion(currentAngle, maxAngle);
-    boolean limitReverse = WristLimitZones.shouldLimitReverseMotion(currentAngle, minAngle);
-
+  public void setWristPosition(Angle rotation, int pidSlot) {
+    var boundedRotation = MathUtil.clamp(rotation.in(Degree), MAX_ANGLE.in(Degree), bottomLimitAngle.in(Degree));
+    
     // Set up the request with appropriate limits
     wristTalon.setControl(
         positionVoltage
-            .withPosition(rotation)
-            .withSlot(pidSlot)
-            .withLimitForwardMotion(limitForward)
-            .withLimitReverseMotion(limitReverse));
+            .withPosition(boundedRotation)
+            .withSlot(pidSlot));
   }
 
   /**
@@ -249,26 +263,19 @@ public class WristIOTalonFXReal implements WristIO {
    *
    * @param position The target angle to move to
    * @param pidSlot The PID slot to use (0 for velocity, 1 for position)
-   * @param minAngle The minimum allowed angle
-   * @param maxAngle The maximum allowed angle
    */
   @Override
-  public void setWristPositionMotionMagic(
-      Angle position, int pidSlot, Angle minAngle, Angle maxAngle) {
+  public void setWristPositionMotionMagic(Angle position, int pidSlot) {
     // Get current angle to determine if we need to apply limits
     Angle currentAngle = wristPosition.getValue();
-
-    // Determine if we're approaching either limit and should activate motion limits
-    boolean limitForward = WristLimitZones.shouldLimitForwardMotion(currentAngle, maxAngle);
-    boolean limitReverse = WristLimitZones.shouldLimitReverseMotion(currentAngle, minAngle);
 
     // Set up the request with appropriate limits
     wristTalon.setControl(
         magicPositionVoltage
             .withPosition(position)
             .withSlot(pidSlot)
-            .withLimitForwardMotion(limitForward)
-            .withLimitReverseMotion(limitReverse));
+            .withLimitForwardMotion(shouldLimit(currentAngle)));
+    
   }
 
   /**
@@ -276,48 +283,35 @@ public class WristIOTalonFXReal implements WristIO {
    *
    * @param velocity The target velocity to move at
    * @param pidSlot The PID slot to use (0 for velocity, 1 for position)
-   * @param minAngle The minimum allowed angle
-   * @param maxAngle The maximum allowed angle
    */
   @Override
-  public void setWristVelocity(
-      AngularVelocity velocity, int pidSlot, Angle minAngle, Angle maxAngle) {
+  public void setWristVelocity(AngularVelocity velocity, int pidSlot) {
     // Get current angle to determine if we need to apply limits
     Angle currentAngle = wristPosition.getValue();
-
-    // Determine if we should activate limits
-    boolean limitForward = WristLimitZones.shouldLimitForwardMotion(currentAngle, maxAngle);
-    boolean limitReverse = WristLimitZones.shouldLimitReverseMotion(currentAngle, minAngle);
 
     wristTalon.setControl(
         velocityVoltage
             .withVelocity(velocity)
             .withSlot(pidSlot)
-            .withLimitForwardMotion(limitForward)
-            .withLimitReverseMotion(limitReverse));
+            .withLimitForwardMotion(shouldLimit(currentAngle)));
   }
 
   /**
    * Sets the wrist motor to run in open-loop mode at a specified percentage of maximum output.
    *
    * @param percentOutput The motor output percentage (-1.0 to 1.0)
-   * @param minAngle The minimum allowed angle
-   * @param maxAngle The maximum allowed angle
    */
   @Override
-  public void setWristOpenLoop(double percentOutput, Angle minAngle, Angle maxAngle) {
+  public void setWristOpenLoop(double percentOutput) {
     // Get current angle to determine if we need to apply limits
     Angle currentAngle = wristPosition.getValue();
 
     // Determine if we should activate limits
-    boolean limitForward = WristLimitZones.shouldLimitForwardMotion(currentAngle, maxAngle);
-    boolean limitReverse = WristLimitZones.shouldLimitReverseMotion(currentAngle, minAngle);
 
     wristTalon.setControl(
         dutyCycleOut
             .withOutput(percentOutput)
-            .withLimitForwardMotion(limitForward)
-            .withLimitReverseMotion(limitReverse));
+            .withLimitForwardMotion(shouldLimit(currentAngle)));
   }
 
   /** Stops the wrist motor by setting the motor output to zero. */

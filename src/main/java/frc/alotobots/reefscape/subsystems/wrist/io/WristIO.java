@@ -18,6 +18,7 @@ import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularAcceleration;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
+import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.Voltage;
 import org.littletonrobotics.junction.AutoLog;
 
@@ -44,9 +45,11 @@ public interface WristIO {
 
     /** Whether the bottom limit switch/soft limit is triggered */
     public boolean bottomLimit = false;
+    public Angle bottomLimitAngle = Rotations.zero();
 
     /** Current angle of the wrist mechanism */
     public Angle mechanismAngle = Rotations.zero();
+    public Distance mechanismHeight = Meters.zero();
 
     /** Current angular velocity of the wrist */
     public AngularVelocity rotationVelocity = RotationsPerSecond.zero();
@@ -67,47 +70,41 @@ public interface WristIO {
    */
   public default void updateInputs(WristIOInputs inputs) {}
 
+  public default void setBottomLimitAngle(Angle bottomLimitAngle) {}
+
   /**
    * Sets the wrist to run to a target position using closed-loop control.
    *
    * @param rotation The target angle to move to
    * @param pidSlot The PID slot to use (0 for velocity, 1 for position)
-   * @param minAngle The minimum allowed angle
-   * @param maxAngle The maximum allowed angle
    */
   public default void setWristPosition(
-      Angle rotation, int pidSlot, Angle minAngle, Angle maxAngle) {}
+      Angle rotation, int pidSlot) {}
 
   /**
    * Sets the wrist to run at a target velocity using closed-loop control.
    *
    * @param velocity The target velocity to move at
    * @param pidSlot The PID slot to use (0 for velocity, 1 for position)
-   * @param minAngle The minimum allowed angle
-   * @param maxAngle The maximum allowed angle
    */
   public default void setWristVelocity(
-      AngularVelocity velocity, int pidSlot, Angle minAngle, Angle maxAngle) {}
+      AngularVelocity velocity, int pidSlot) {}
 
   /**
    * Sets the wrist to run at a target position using motion magic control.
    *
    * @param position The target position to move to
    * @param pidSlot The PID slot to use (0 for velocity, 1 for position)
-   * @param minAngle The minimum allowed angle
-   * @param maxAngle The maximum allowed angle
    */
   public default void setWristPositionMotionMagic(
-      Angle position, int pidSlot, Angle minAngle, Angle maxAngle) {}
+      Angle position, int pidSlot) {}
 
   /**
    * Runs the wrist using direct percentage output (open-loop control).
    *
    * @param percentOutput The motor output as a percentage (-1.0 to 1.0)
-   * @param minAngle The minimum allowed angle
-   * @param maxAngle The maximum allowed angle
    */
-  public default void setWristOpenLoop(double percentOutput, Angle minAngle, Angle maxAngle) {}
+  public default void setWristOpenLoop(double percentOutput) {}
 
   /** Stops all wrist motor movement. */
   public default void stop() {}

@@ -87,14 +87,15 @@ public class WristIOTalonFXSim implements WristIO {
   }
 
   @Override
-  public void setWristOpenLoop(double percentOutput, Angle minAngle, Angle maxAngle) {
+  public void setWristOpenLoop(double percentOutput) {
     appliedVolts = percentOutput * 13.0;
     wristSim.setInputVoltage(appliedVolts);
   }
 
   @Override
   public void setWristVelocity(
-      AngularVelocity velocity, int pidSlot, Angle minAngle, Angle maxAngle) {
+      AngularVelocity velocity, int pidSlot) {
+
     var vel = velocity.in(RotationsPerSecond);
     wristSim.setInputVoltage(.50 * 13);
   }
