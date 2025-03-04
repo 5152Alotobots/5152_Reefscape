@@ -45,11 +45,9 @@ public interface WristIO {
 
     /** Whether the bottom limit switch/soft limit is triggered */
     public boolean bottomLimit = false;
-    public Angle bottomLimitAngle = Rotations.zero();
 
     /** Current angle of the wrist mechanism */
     public Angle mechanismAngle = Rotations.zero();
-    public Distance mechanismHeight = Meters.zero();
 
     /** Current angular velocity of the wrist */
     public AngularVelocity rotationVelocity = RotationsPerSecond.zero();
@@ -70,7 +68,6 @@ public interface WristIO {
    */
   public default void updateInputs(WristIOInputs inputs) {}
 
-  public default void setBottomLimitAngle(Angle bottomLimitAngle) {}
 
   /**
    * Sets the wrist to run to a target position using closed-loop control.

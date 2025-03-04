@@ -104,14 +104,16 @@ public class WristIOTalonFXReal implements WristIO {
   private final Debouncer encoderConnectedDebouncer = new Debouncer(0.5);
 
   private Angle bottomLimitAngle;
-  private Distance wristHeight; 
-
-  /**
-   * Creates a new WristIOTalonFXReal instance and configures all motor controller and encoder
-   * settings. This includes PID configurations, software limits, current limits, and sensor
-   * settings.
-   */
-  public WristIOTalonFXReal(Supplier<Distance> elevatorHeightSupplier) {
+  
+  private final Supplier<Distance> elevatorHeightSupplier; 
+  
+    /**
+     * Creates a new WristIOTalonFXReal instance and configures all motor controller and encoder
+     * settings. This includes PID configurations, software limits, current limits, and sensor
+     * settings.
+     */
+    public WristIOTalonFXReal(Supplier<Distance> elevatorHeightSupplier) {
+      this.elevatorHeightSupplier = elevatorHeightSupplier;
    
     bottomLimitAngle = Rotations.zero();
     wristTalon = new TalonFX(WRIST_MOTOR_CAN_ID);
@@ -218,7 +220,6 @@ public class WristIOTalonFXReal implements WristIO {
     // Update connection status
     inputs.motorConnected = motorConnectedDebouncer.calculate(wristSignals.isOK());
     inputs.cancoderConnected = encoderConnectedDebouncer.calculate(wristEncoder.isConnected());
-    inputs.bottomLimitAngle = bottomLimitAngle;
 
     // Update all input values
     inputs.pidSlot = currentPidSlot.getValue();
@@ -228,11 +229,15 @@ public class WristIOTalonFXReal implements WristIO {
     inputs.mechanismAngle = wristPosition.getValue();
     inputs.topLimit = topSoftLimit.getValue();
     inputs.bottomLimit = bottomSoftLimit.getValue();
+    updateBottomLimitAngle();
+    Logger.recordOutput("Wrist/bottomLimitAngle", bottomLimitAngle);
   }
 
-  @Override
-  public void setBottomLimitAngle(Angle bottomLimitAngle) {
-    this.bottomLimitAngle = Degrees.of(MathUtil.clamp(bottomLimitAngle.in(Degree), -45, 0));   
+
+  private void updateBottomLimitAngle() {
+    Angle newAngle = Radians.of(Math.asin(-(Math.min(elevatorHeightSupplier.get().in(Meters), .308) / .308)));
+  
+    this.bottomLimitAngle = Degrees.of(MathUtil.clamp(newAngle.in(Degree), -45, 0));   
   }
 
   private boolean shouldLimit(Angle currentAngle) {
