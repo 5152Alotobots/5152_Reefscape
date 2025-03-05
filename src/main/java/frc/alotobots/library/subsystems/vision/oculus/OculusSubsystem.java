@@ -43,43 +43,6 @@ import org.littletonrobotics.junction.Logger;
  * tracking is lost
  */
 public class OculusSubsystem extends SubsystemBase implements PoseSource {
-  // Add these new fields for heartbeat system
-
-  /** Heartbeat counter for robot heartbeat signal */
-  private double heartbeatCounter = 0;
-
-  /** Last Quest heartbeat value received */
-  private double lastQuestHeartbeat = 0;
-
-  /** Connection status constants matching Quest-side values */
-  public enum ConnectionStatus {
-    DISCONNECTED(0),
-    CONNECTING(1),
-    CONNECTED(2),
-    DEGRADED(3);
-
-    private final int value;
-
-    ConnectionStatus(int value) {
-      this.value = value;
-    }
-
-    public int getValue() {
-      return value;
-    }
-
-    public static ConnectionStatus fromValue(int value) {
-      for (ConnectionStatus status : values()) {
-        if (status.getValue() == value) {
-          return status;
-        }
-      }
-      return DISCONNECTED;
-    }
-  }
-
-  /** Current connection status from Quest */
-  @Getter private ConnectionStatus connectionStatus = ConnectionStatus.DISCONNECTED;
 
   /** Hardware communication interface */
   private final OculusIO io;
@@ -141,14 +104,9 @@ public class OculusSubsystem extends SubsystemBase implements PoseSource {
    */
   @Override
   public void periodic() {
-    // Send heartbeat to maintain connection with Quest
-    sendHeartbeat();
 
     io.updateInputs(inputs);
     Logger.processInputs("Oculus", inputs);
-
-    // Update connection status
-    updateConnectionStatus();
 
     lastTimestamp = currentTimestamp;
     currentTimestamp = inputs.timestamp;
@@ -162,40 +120,6 @@ public class OculusSubsystem extends SubsystemBase implements PoseSource {
     handleResetTimeout();
     handleResetCompletion();
     handlePingResponse();
-  }
-
-  /**
-   * Sends heartbeat signal to Quest and processes heartbeat responses.
-   */
-  private void sendHeartbeat() {
-    // Increment and send heartbeat
-    heartbeatCounter++;
-    io.sendHeartbeat(heartbeatCounter);
-
-    // Process quest heartbeat
-    if (inputs.questHeartbeat != lastQuestHeartbeat && inputs.questHeartbeat > 0) {
-      lastQuestHeartbeat = inputs.questHeartbeat;
-      lastQuestUpdateTime = Timer.getTimestamp();
-    }
-  }
-
-  /** Updates connection status based on heartbeat and Quest-reported status. */
-  private void updateConnectionStatus() {
-    // Update connection status from Quest
-    ConnectionStatus newStatus = ConnectionStatus.fromValue(inputs.connectionStatus);
-
-    // If status has changed, log it
-    if (newStatus != connectionStatus) {
-      Logger.recordOutput("Oculus/status", "Connection status changed: " + newStatus);
-      connectionStatus = newStatus;
-    }
-
-    // Update wasConnected state for connection change detection
-    boolean isConnected = isConnected();
-    if (isConnected != wasConnected) {
-      Logger.recordOutput("Oculus/status", isConnected ? "Connected" : "Disconnected");
-      wasConnected = isConnected;
-    }
   }
 
   /**
@@ -445,8 +369,7 @@ public class OculusSubsystem extends SubsystemBase implements PoseSource {
   @Override
   public boolean isConnected() {
     // We consider connected if we're in CONNECTED or DEGRADED state
-    return connectionStatus == ConnectionStatus.CONNECTED
-        || connectionStatus == ConnectionStatus.DEGRADED;
+    return currentTimestamp - lastTimestamp > 0.1;
   }
 
   /**
