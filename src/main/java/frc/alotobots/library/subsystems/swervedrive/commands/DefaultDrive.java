@@ -20,11 +20,9 @@ import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 
 public class DefaultDrive {
   private final SwerveDriveSubsystem swerveDriveSubsystem;
-  private final ElevatorSubsystem elevatorSubsystem;
 
-  public DefaultDrive(SwerveDriveSubsystem swerveDriveSubsystem, ElevatorSubsystem elevatorSubsystem) {
+  public DefaultDrive(SwerveDriveSubsystem swerveDriveSubsystem) {
     this.swerveDriveSubsystem = swerveDriveSubsystem;
-    this.elevatorSubsystem = elevatorSubsystem;
   }
 
   public void applyRequest() {
