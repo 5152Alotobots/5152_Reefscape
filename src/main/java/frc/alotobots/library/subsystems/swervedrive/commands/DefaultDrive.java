@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.alotobots.library.subsystems.swervedrive.SwerveDriveSubsystem;
 import frc.alotobots.library.subsystems.swervedrive.util.DriveCalculator;
-import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 
 public class DefaultDrive {
   private final SwerveDriveSubsystem swerveDriveSubsystem;
