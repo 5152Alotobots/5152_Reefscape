@@ -67,7 +67,7 @@ public class TunerConstants2025 implements TunerConstants {
     // When using closed-loop control, the drive motor uses the control
     // output type specified by SwerveModuleConstants.DriveMotorClosedLoopOutput
     private static final Slot0Configs driveGains =
-        new Slot0Configs().withKP(0.13).withKI(0).withKD(0).withKS(0.21099).withKV(0.63824);
+        new Slot0Configs().withKP(0.18).withKI(0).withKD(0.05).withKS(0.20660).withKV(0.63114);
 
     // The closed-loop output type to use for the steer motors;
     // This affects the PID/FF gains for the steer motors
@@ -267,7 +267,7 @@ public class TunerConstants2025 implements TunerConstants {
 
   public static class CustomConstants {
     // Custom constants go here
-    public static final PIDConstants translationPid = new PIDConstants(1.6, 0, 0.0);
+    public static final PIDConstants translationPid = new PIDConstants(2.3, 0, 0.07);
     public static final PIDConstants rotationPid = new PIDConstants(7.8, 0, 0.015);
     public static final double precisionAlignTolerance = .03; // Meters
     public static final double precisionAlignAllowRadius = .5; // Meters
