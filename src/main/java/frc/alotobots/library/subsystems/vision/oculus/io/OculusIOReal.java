@@ -1,15 +1,3 @@
-/*
-* ALOTOBOTS - FRC Team 5152
-  https://github.com/5152Alotobots
-* Copyright (C) 2025 ALOTOBOTS
-*
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* (at your option) any later version.
-*
-* Source code must be publicly available on GitHub or an alternative web accessible site
-*/
 package frc.alotobots.library.subsystems.vision.oculus.io;
 
 import edu.wpi.first.networktables.*;
@@ -43,6 +31,15 @@ public class OculusIOReal implements OculusIO {
   /** Subscriber for battery percentage updates */
   private final DoubleSubscriber questBatteryPercent;
 
+  /** Subscriber for Quest heartbeat counter */
+  private final DoubleSubscriber questHeartbeat;
+
+  /** Subscriber for Quest connection status */
+  private final IntegerSubscriber connectionStatus;
+
+  /** Publisher for robot heartbeat counter */
+  private final DoublePublisher robotHeartbeat;
+
   /** Publisher for pose reset commands */
   private final DoubleArrayPublisher resetPosePub;
 
@@ -57,13 +54,16 @@ public class OculusIOReal implements OculusIO {
     questFrameCount = nt4Table.getIntegerTopic("frameCount").subscribe(-1);
     questTimestamp = nt4Table.getDoubleTopic("timestamp").subscribe(-1.0);
     questPosition =
-        nt4Table.getFloatArrayTopic("position").subscribe(new float[] {0.0f, 0.0f, 0.0f});
+            nt4Table.getFloatArrayTopic("position").subscribe(new float[] {0.0f, 0.0f, 0.0f});
     questQuaternion =
-        nt4Table.getFloatArrayTopic("quaternion").subscribe(new float[] {0.0f, 0.0f, 0.0f, 0.0f});
+            nt4Table.getFloatArrayTopic("quaternion").subscribe(new float[] {0.0f, 0.0f, 0.0f, 0.0f});
     questEulerAngles =
-        nt4Table.getFloatArrayTopic("eulerAngles").subscribe(new float[] {0.0f, 0.0f, 0.0f});
+            nt4Table.getFloatArrayTopic("eulerAngles").subscribe(new float[] {0.0f, 0.0f, 0.0f});
     questBatteryPercent = nt4Table.getDoubleTopic("batteryPercent").subscribe(-1.0);
+    questHeartbeat = nt4Table.getDoubleTopic("questHeartbeat").subscribe(0.0);
+    connectionStatus = nt4Table.getIntegerTopic("connectionStatus").subscribe(0);
 
+    robotHeartbeat = nt4Table.getDoubleTopic("robotHeartbeat").publish();
     resetPosePub = nt4Table.getDoubleArrayTopic("resetpose").publish();
   }
 
@@ -76,6 +76,8 @@ public class OculusIOReal implements OculusIO {
     inputs.frameCount = (int) questFrameCount.get();
     inputs.batteryPercent = questBatteryPercent.get();
     inputs.misoValue = (int) questMiso.get();
+    inputs.questHeartbeat = questHeartbeat.get();
+    inputs.connectionStatus = (int) connectionStatus.get();
   }
 
   @Override
@@ -86,5 +88,10 @@ public class OculusIOReal implements OculusIO {
   @Override
   public void setResetPose(double x, double y, double rotation) {
     resetPosePub.set(new double[] {x, y, rotation});
+  }
+
+  @Override
+  public void sendHeartbeat(double value) {
+    robotHeartbeat.set(value);
   }
 }

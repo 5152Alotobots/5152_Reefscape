@@ -12,19 +12,30 @@
 */
 package frc.alotobots.library.subsystems.vision.oculus.util;
 
-import lombok.experimental.UtilityClass;
-
-@UtilityClass
-public final class OculusStatus {
-  /** Status indicating system is ready for commands */
+/**
+ * Constants for Quest communication status codes.
+ *
+ * <p>This class defines the status codes used in communication between the robot and Quest headset.
+ */
+public class OculusStatus {
+  /** Status code indicating Quest is ready for commands */
   public static final int STATUS_READY = 0;
 
-  /** Status indicating heading reset completion */
-  public static final int STATUS_HEADING_RESET_COMPLETE = 99;
+  /** Status code indicating error state */
+  public static final int STATUS_ERROR = -1;
 
-  /** Status indicating pose reset completion */
+  /** Status code indicating Quest is disconnecting */
+  public static final int STATUS_DISCONNECT = -2;
+
+  /** Status code indicating successful pose reset */
   public static final int STATUS_POSE_RESET_COMPLETE = 98;
 
-  /** Status indicating ping response receipt */
+  /** Status code indicating successful heading reset */
+  public static final int STATUS_HEADING_RESET_COMPLETE = 99;
+
+  /** Status code indicating ping response */
   public static final int STATUS_PING_RESPONSE = 97;
+
+  /** Status code indicating successful transform update */
+  public static final int STATUS_TRANSFORM_SUCCESS = 96;
 }

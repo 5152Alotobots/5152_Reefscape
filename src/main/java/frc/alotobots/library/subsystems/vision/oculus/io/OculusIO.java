@@ -1,15 +1,3 @@
-/*
-* ALOTOBOTS - FRC Team 5152
-  https://github.com/5152Alotobots
-* Copyright (C) 2025 ALOTOBOTS
-*
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* (at your option) any later version.
-*
-* Source code must be publicly available on GitHub or an alternative web accessible site
-*/
 package frc.alotobots.library.subsystems.vision.oculus.io;
 
 import org.littletonrobotics.junction.AutoLog;
@@ -39,6 +27,12 @@ public interface OculusIO {
 
     /** Current MISO (Master In Slave Out) value */
     public int misoValue = 0;
+
+    /** Quest heartbeat counter value */
+    public double questHeartbeat = 0.0;
+
+    /** Connection status reported by Quest (0=Disconnected, 1=Connecting, 2=Connected, 3=Degraded) */
+    public int connectionStatus = 0;
   }
 
   /**
@@ -63,4 +57,11 @@ public interface OculusIO {
    * @param rotation The rotation in degrees
    */
   public default void setResetPose(double x, double y, double rotation) {}
+
+  /**
+   * Publishes robot heartbeat to maintain connection with Quest.
+   *
+   * @param value Incrementing heartbeat counter
+   */
+  public default void sendHeartbeat(double value) {}
 }

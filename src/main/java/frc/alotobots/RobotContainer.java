@@ -178,7 +178,7 @@ public class RobotContainer {
             new AutoNamedCommands(elevatorSubsystem, wristSubsystem, coralIntakeSubsystem);
         configureAutoChooser();
 
-        oculusSubsystem = new OculusSubsystem(new OculusIOSim(driveSimulation));
+        oculusSubsystem = new OculusSubsystem(new OculusIOReal());
         aprilTagSubsystem =
             new AprilTagSubsystem(
                 new AprilTagIOPhotonVisionSim(
