@@ -168,7 +168,7 @@ public class AprilTagSubsystem extends SubsystemBase implements PoseSource {
       List<Pose3d> robotPosesAccepted,
       List<Pose3d> robotPosesRejected) {
 
-    for (var observation : inputs[cameraIndex].poseObservations) {
+    for (var observation : inputs[cameraIndex].multiTagObservations) {
       boolean rejectPose = shouldRejectPose(observation);
 
       robotPoses.add(observation.pose());
@@ -184,7 +184,7 @@ public class AprilTagSubsystem extends SubsystemBase implements PoseSource {
     }
   }
 
-  private boolean shouldRejectPose(AprilTagIO.PoseObservation observation) {
+  private boolean shouldRejectPose(AprilTagIO.MultiTagObservation observation) {
     return observation.tagCount() == 0
         || (observation.tagCount() == 1 && observation.ambiguity() > MAX_AMBIGUITY)
         || Math.abs(observation.pose().getZ()) > MAX_Z_ERROR
@@ -194,7 +194,7 @@ public class AprilTagSubsystem extends SubsystemBase implements PoseSource {
         || observation.pose().getY() > APRIL_TAG_LAYOUT.getFieldWidth();
   }
 
-  private void updateLatestPose(AprilTagIO.PoseObservation observation, int cameraIndex) {
+  private void updateLatestPose(AprilTagIO.MultiTagObservation observation, int cameraIndex) {
     double stdDevFactor = Math.pow(observation.averageTagDistance(), 2.0) / observation.tagCount();
     double linearStdDev = LINEAR_STD_DEV_BASE * stdDevFactor;
     double angularStdDev = ANGULAR_STD_DEV_BASE * stdDevFactor;

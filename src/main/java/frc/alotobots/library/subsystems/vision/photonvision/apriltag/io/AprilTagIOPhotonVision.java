@@ -13,7 +13,6 @@
 package frc.alotobots.library.subsystems.vision.photonvision.apriltag.io;
 
 import edu.wpi.first.math.geometry.Pose3d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform3d;
 import frc.alotobots.library.subsystems.vision.photonvision.apriltag.constants.CameraConfig;
 import java.util.HashSet;
@@ -38,17 +37,8 @@ public class AprilTagIOPhotonVision implements AprilTagIO {
 
     // Read new camera observations
     Set<Short> tagIds = new HashSet<>();
-    List<PoseObservation> poseObservations = new LinkedList<>();
+    List<MultiTagObservation> multiTagObservations = new LinkedList<>();
     for (var result : camera.getAllUnreadResults()) {
-      // Update latest target observation
-      if (result.hasTargets()) {
-        inputs.latestTargetObservation =
-            new TargetObservation(
-                Rotation2d.fromDegrees(result.getBestTarget().getYaw()),
-                Rotation2d.fromDegrees(result.getBestTarget().getPitch()));
-      } else {
-        inputs.latestTargetObservation = new TargetObservation(new Rotation2d(), new Rotation2d());
-      }
 
       // Add pose observation
       if (result.multitagResult.isPresent()) {
@@ -69,8 +59,8 @@ public class AprilTagIOPhotonVision implements AprilTagIO {
         tagIds.addAll(multitagResult.fiducialIDsUsed);
 
         // Add observation
-        poseObservations.add(
-            new PoseObservation(
+        multiTagObservations.add(
+            new MultiTagObservation(
                 result.getTimestampSeconds(), // Timestamp
                 robotPose, // 3D pose estimate
                 multitagResult.estimatedPose.ambiguity, // Ambiguity
@@ -80,9 +70,9 @@ public class AprilTagIOPhotonVision implements AprilTagIO {
     }
 
     // Save pose observations to inputs object
-    inputs.poseObservations = new PoseObservation[poseObservations.size()];
-    for (int i = 0; i < poseObservations.size(); i++) {
-      inputs.poseObservations[i] = poseObservations.get(i);
+    inputs.multiTagObservations = new MultiTagObservation[multiTagObservations.size()];
+    for (int i = 0; i < multiTagObservations.size(); i++) {
+      inputs.multiTagObservations[i] = multiTagObservations.get(i);
     }
 
     // Save tag IDs to inputs objects
