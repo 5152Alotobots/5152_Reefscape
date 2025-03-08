@@ -21,14 +21,14 @@
   "defaultMaxAngVel": 540.0,
   "defaultMaxAngAccel": 460.0,
   "defaultNominalVoltage": 12.0,
-  "robotMass": 36.0,
-  "robotMOI": 2.55,
+  "robotMass": 59.1,
+  "robotMOI": 6.79453,
   "robotTrackwidth": 0.546,
   "driveWheelRadius": 0.051,
-  "driveGearing": 5.14,
+  "driveGearing": 5.87752,
   "maxDriveSpeed": 5.7,
   "driveMotorType": "falcon500",
-  "driveCurrentLimit": 120.0,
+  "driveCurrentLimit": 70.0,
   "wheelCOF": 1.2,
   "flModuleX": 0.273,
   "flModuleY": 0.273,
@@ -40,5 +40,7 @@
   "brModuleY": -0.273,
   "bumperOffsetX": 0.0,
   "bumperOffsetY": 0.0,
-  "robotFeatures": []
+  "robotFeatures": [
+    "{\"name\":\"Rectangle\",\"type\":\"rounded_rect\",\"data\":{\"center\":{\"x\":0.38,\"y\":0.01},\"size\":{\"width\":0.19,\"length\":0.1},\"borderRadius\":0.0,\"strokeWidth\":0.02,\"filled\":false}}"
+  ]
 }
