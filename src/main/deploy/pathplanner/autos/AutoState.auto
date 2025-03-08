@@ -11,34 +11,22 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "N_ReefSE"
+                  "pathName": "Goesnoweere"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "AutoStateL4"
+                  "name": "AutoStateCoralStation\r"
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "CoralIntakeEjectThrough"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": null
           }
         }
       ]
     }
   },
-  "resetOdom": false,
-  "folder": "One Piece",
+  "resetOdom": true,
+  "folder": null,
   "choreoAuto": false
 }

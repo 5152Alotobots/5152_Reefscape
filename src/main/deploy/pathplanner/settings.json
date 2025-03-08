@@ -3,15 +3,17 @@
   "robotLength": 0.88,
   "holonomicMode": true,
   "pathFolders": [
+    "AutoDrive",
     "Battle Creek",
     "BenAutos",
-    "AutoDrive",
+    "BasicMeters",
     "Positions",
     "Test2025",
     "Three Piece"
   ],
   "autoFolders": [
     "Just Leave",
+    "BasicMeters",
     "One Piece",
     "Three Piece",
     "Two Piece"
