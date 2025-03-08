@@ -258,10 +258,9 @@ public class WristIOTalonFXReal implements WristIO {
 
     // Set up the request with appropriate limits
     wristTalon.setControl(
-        magicPositionVoltage
-            .withPosition(position)
-            .withSlot(pidSlot)
-            .withLimitForwardMotion(shouldLimit(currentAngle)));
+        magicPositionVoltage.withPosition(position).withSlot(pidSlot)
+        // .withLimitForwardMotion(shouldLimit(currentAngle)
+        );
   }
 
   /**

@@ -59,7 +59,7 @@ public final class ElevatorTalonFXRealConstants {
     /** TalonFX-specific PID and motion control constants for Position mode (Position mode). */
     public static final class PositionPIDConstants {
       /** Position control proportional gain */
-      public static final double KP = 3.3;
+      public static final double KP = 3.5;
 
       /** Position control integral gain */
       public static final double KI = 0.0;

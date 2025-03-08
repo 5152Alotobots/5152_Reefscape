@@ -56,7 +56,7 @@ import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEjectM
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEjectThrough;
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeIntakeManual;
 import frc.alotobots.reefscape.subsystems.coralIntake.io.CoralIntakeIO;
-import frc.alotobots.reefscape.subsystems.coralIntake.io.CoralIntakeIOVortexReal;
+import frc.alotobots.reefscape.subsystems.coralIntake.io.CoralIntakeIOTalonFXReal;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.commands.DefaultElevatorRunAtVelocity;
 import frc.alotobots.reefscape.subsystems.elevator.commands.ElevatorRunToHeight;
@@ -107,7 +107,7 @@ public class RobotContainer {
                 new ModuleIOTalonFXReal(ModulePosition.BACK_LEFT.index),
                 new ModuleIOTalonFXReal(ModulePosition.BACK_RIGHT.index));
         elevatorSubsystem = new ElevatorSubsystem(new ElevatorIOTalonFXReal());
-        coralIntakeSubsystem = new CoralIntakeSubsystem(new CoralIntakeIOVortexReal());
+        coralIntakeSubsystem = new CoralIntakeSubsystem(new CoralIntakeIOTalonFXReal());
         wristSubsystem =
             new WristSubsystem(new WristIOTalonFXReal(elevatorSubsystem::getCurrentHeight));
         // algaeIntakeSubsystem = new AlgaeIntakeSubsystem(new AlgaeIntakeIOTalonFXReal());
@@ -195,10 +195,10 @@ public class RobotContainer {
         break;
 
       default:
-        coralIntakeSubsystem = new CoralIntakeSubsystem(new CoralIntakeIOVortexReal());
+        coralIntakeSubsystem = new CoralIntakeSubsystem(new CoralIntakeIOTalonFXReal());
         climberSubsystem = new ClimberSubsystem(new ClimberIORevServoReal());
         // algaeIntakeSubsystem = new AlgaeIntakeSubsystem(new AlgaeIntakeIO() {});
-
+        //
         // Replay mode initialization
         swerveDriveSubsystem =
             new SwerveDriveSubsystem(
@@ -260,7 +260,7 @@ public class RobotContainer {
         Seconds.of(30));
     new Trigger(coralIntakeSubsystem::isIntakeOccupied)
         .onTrue(new BlingCoralHasPiece(blingSubsystem).withTimeout(BLING_NOTIFICATION_TIME));
-    
+
     stateCoralCoralStationButton.toggleOnTrue(
         new StateCoralCoralStation(
             elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, blingSubsystem));
