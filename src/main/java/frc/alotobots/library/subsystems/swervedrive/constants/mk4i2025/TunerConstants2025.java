@@ -272,7 +272,7 @@ public class TunerConstants2025 implements TunerConstants {
     public static final double precisionAlignTolerance = .03; // Meters
     public static final double precisionAlignAllowRadius = .5; // Meters
     public static final PathConstraints PATHFINDING_CONSTRAINTS =
-        new PathConstraints(5.94, 3.5, Units.degreesToRadians(540), Units.degreesToRadians(460));
+        new PathConstraints(5.0, 3.5, Units.degreesToRadians(540), Units.degreesToRadians(460));
     public static final PPHolonomicDriveController PP_HOLONOMIC_DRIVE_CONTROLLER =
         new PPHolonomicDriveController(translationPid, rotationPid);
     public static final ProfiledPIDController driveFacingAngleController =
@@ -288,7 +288,7 @@ public class TunerConstants2025 implements TunerConstants {
     public static final Distance BUMPER_WIDTH = Distance.ofBaseUnits(.80, Meters);
     public static final LinearVelocity TURTLE_SPEED = MetersPerSecond.of(1.0);
     public static final LinearVelocity NOMINAL_SPEED = MetersPerSecond.of(3.5);
-    public static final LinearVelocity TURBO_SPEED = MetersPerSecond.of(5.94);
+    public static final LinearVelocity TURBO_SPEED = MetersPerSecond.of(5.2);
     public static final double MAX_MODULAR_ROTATIONAL_RATE = Units.rotationsToRadians(12);
     public static final double ROBOT_MASS_KG = 59.1;
     public static final double ROBOT_MOI = 6.79453;
