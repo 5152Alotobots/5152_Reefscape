@@ -284,7 +284,7 @@ public class TunerConstants2025 implements TunerConstants {
                 PATHFINDING_CONSTRAINTS.maxVelocityMPS(),
                 PATHFINDING_CONSTRAINTS.maxAccelerationMPSSq()));
     public static final double ODOMETRY_FREQUENCY = kCANBus.isNetworkFD() ? 250.0 : 100.0;
-    public static final Distance BUMPER_LENGTH = Distance.ofBaseUnits(.86, Meters);
+    public static final Distance BUMPER_LENGTH = Distance.ofBaseUnits(.88, Meters);
     public static final Distance BUMPER_WIDTH = Distance.ofBaseUnits(.80, Meters);
     public static final LinearVelocity TURTLE_SPEED = MetersPerSecond.of(1.0);
     public static final LinearVelocity NOMINAL_SPEED = MetersPerSecond.of(3.5);
