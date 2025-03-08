@@ -130,5 +130,5 @@ public final class ElevatorTalonFXRealConstants {
   public static final NeutralModeValue MECHANISM_NEUTRAL_MODE = NeutralModeValue.Brake;
 
   /** Regression used to calculate height of motor. (Should be linear) Rotations:Meters */
-  public static final double HEIGHT_PER_ROTATION = 0.00977762;
+  public static final double HEIGHT_PER_ROTATION = 0.0224766;
 }

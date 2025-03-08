@@ -114,5 +114,5 @@ public class WristTalonFXRealConstants {
   public static final int ROTOR_TO_SENSOR_RATIO = 189;
 
   /** Magnet offset for the CANCoder absolute position */
-  public static final double ENCODER_MAGNET_OFFSET = -0.225341796875;
+  public static final double ENCODER_MAGNET_OFFSET = 0.0966796875;
 }
