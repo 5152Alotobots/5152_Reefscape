@@ -19,7 +19,6 @@ import static frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXSim
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.system.plant.DCMotor;
-import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import edu.wpi.first.wpilibj.util.Color;
@@ -93,8 +92,7 @@ public class WristIOTalonFXSim implements WristIO {
   }
 
   @Override
-  public void setWristVelocity(
-      AngularVelocity velocity, int pidSlot) {
+  public void setWristVelocity(AngularVelocity velocity, int pidSlot) {
 
     var vel = velocity.in(RotationsPerSecond);
     wristSim.setInputVoltage(.50 * 13);

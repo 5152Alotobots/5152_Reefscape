@@ -48,10 +48,6 @@ import frc.alotobots.reefscape.commands.groups.Climb;
 import frc.alotobots.reefscape.commands.groups.UnClimb;
 import frc.alotobots.reefscape.commands.states.algae.*;
 import frc.alotobots.reefscape.commands.states.coral.*;
-import frc.alotobots.reefscape.subsystems.algaeintake.AlgaeIntakeSubsystem;
-import frc.alotobots.reefscape.subsystems.algaeintake.commands.DefaultAlgaeIntakeHold;
-import frc.alotobots.reefscape.subsystems.algaeintake.io.AlgaeIntakeIO;
-import frc.alotobots.reefscape.subsystems.algaeintake.io.AlgaeIntakeIOTalonFXReal;
 import frc.alotobots.reefscape.subsystems.climber.ClimberSubsystem;
 import frc.alotobots.reefscape.subsystems.climber.commands.ClimberDisableServos;
 import frc.alotobots.reefscape.subsystems.climber.io.ClimberIORevServoReal;
@@ -81,7 +77,7 @@ import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 public class RobotContainer {
-  private final AlgaeIntakeSubsystem algaeIntakeSubsystem;
+  //   private final AlgaeIntakeSubsystem algaeIntakeSubsystem;
   private final SwerveDriveSubsystem swerveDriveSubsystem;
   private final ElevatorSubsystem elevatorSubsystem;
   private final WristSubsystem wristSubsystem;
@@ -114,8 +110,8 @@ public class RobotContainer {
         elevatorSubsystem = new ElevatorSubsystem(new ElevatorIOTalonFXReal());
         coralIntakeSubsystem = new CoralIntakeSubsystem(new CoralIntakeIOVortexReal());
         wristSubsystem =
-            new WristSubsystem(new WristIOTalonFXReal(), elevatorSubsystem::getCurrentHeight);
-        algaeIntakeSubsystem = new AlgaeIntakeSubsystem(new AlgaeIntakeIOTalonFXReal());
+            new WristSubsystem(new WristIOTalonFXReal(elevatorSubsystem::getCurrentHeight));
+        // algaeIntakeSubsystem = new AlgaeIntakeSubsystem(new AlgaeIntakeIOTalonFXReal());
         climberSubsystem = new ClimberSubsystem(new ClimberIORevServoReal());
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         autoNamedCommands =
@@ -145,7 +141,7 @@ public class RobotContainer {
 
       case SIM:
         coralIntakeSubsystem = new CoralIntakeSubsystem(new CoralIntakeIO() {});
-        algaeIntakeSubsystem = new AlgaeIntakeSubsystem(new AlgaeIntakeIO() {});
+        // algaeIntakeSubsystem = new AlgaeIntakeSubsystem(new AlgaeIntakeIO() {});
         Pose2d simStartPose = new Pose2d(3, 3, new Rotation2d(0));
         driveSimulation =
             new SwerveDriveSimulation(
@@ -171,8 +167,7 @@ public class RobotContainer {
                     driveSimulation.getModules()[ModulePosition.BACK_RIGHT.index]));
         swerveDriveSubsystem.setPose(simStartPose);
         elevatorSubsystem = new ElevatorSubsystem(new ElevatorIOTalonFXSim());
-        wristSubsystem =
-            new WristSubsystem(new WristIOTalonFXSim(), elevatorSubsystem::getCurrentHeight);
+        wristSubsystem = new WristSubsystem(new WristIOTalonFXSim());
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         autoNamedCommands =
             new AutoNamedCommands(elevatorSubsystem, wristSubsystem, coralIntakeSubsystem);
@@ -203,7 +198,7 @@ public class RobotContainer {
       default:
         coralIntakeSubsystem = new CoralIntakeSubsystem(new CoralIntakeIOVortexReal());
         climberSubsystem = new ClimberSubsystem(new ClimberIORevServoReal());
-        algaeIntakeSubsystem = new AlgaeIntakeSubsystem(new AlgaeIntakeIO() {});
+        // algaeIntakeSubsystem = new AlgaeIntakeSubsystem(new AlgaeIntakeIO() {});
 
         // Replay mode initialization
         swerveDriveSubsystem =
@@ -214,8 +209,7 @@ public class RobotContainer {
                 new ModuleIO() {},
                 new ModuleIO() {});
         elevatorSubsystem = new ElevatorSubsystem(new ElevatorIO() {});
-        wristSubsystem =
-            new WristSubsystem(new WristIOTalonFXSim(), elevatorSubsystem::getCurrentHeight);
+        wristSubsystem = new WristSubsystem(new WristIOTalonFXSim());
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         autoNamedCommands =
             new AutoNamedCommands(elevatorSubsystem, wristSubsystem, coralIntakeSubsystem);
@@ -252,7 +246,7 @@ public class RobotContainer {
     blingSubsystem.setDefaultCommand(
         new NoAllianceWaiting(blingSubsystem).andThen(new SetToAllianceColor(blingSubsystem)));
     climberSubsystem.setDefaultCommand(new ClimberDisableServos(climberSubsystem));
-    algaeIntakeSubsystem.setDefaultCommand(new DefaultAlgaeIntakeHold(algaeIntakeSubsystem));
+    // algaeIntakeSubsystem.setDefaultCommand(new DefaultAlgaeIntakeHold(algaeIntakeSubsystem));
   }
 
   /** Contains button based commands */
@@ -268,8 +262,8 @@ public class RobotContainer {
         Seconds.of(30));
     new Trigger(coralIntakeSubsystem::isIntakeOccupied)
         .onTrue(new BlingCoralHasPiece(blingSubsystem).withTimeout(BLING_NOTIFICATION_TIME));
-    new Trigger(algaeIntakeSubsystem::isIntakeOccupied)
-        .onTrue(new BlingAlgaeHasPiece(blingSubsystem).withTimeout(BLING_NOTIFICATION_TIME));
+    // new Trigger(algaeIntakeSubsystem::isIntakeOccupied)
+    // .onTrue(new BlingAlgaeHasPiece(blingSubsystem).withTimeout(BLING_NOTIFICATION_TIME));
     // Coral
     stateCoralCoralStationButton.toggleOnTrue(
         new StateCoralCoralStation(
@@ -304,42 +298,6 @@ public class RobotContainer {
             coralIntakeReleaseButton));
     stateCoralStowedButton.toggleOnTrue(new StateCoralStowed(elevatorSubsystem, wristSubsystem));
 
-    // Algae
-    stateAlgaeL3L4Button.toggleOnTrue(
-        new StateAlgaeL3L4(
-            elevatorSubsystem,
-            wristSubsystem,
-            algaeIntakeSubsystem,
-            blingSubsystem,
-            algaeIntakeReleaseButton));
-    stateAlgaeL2L3Button.toggleOnTrue(
-        new StateAlgaeL2L3(
-            elevatorSubsystem,
-            wristSubsystem,
-            algaeIntakeSubsystem,
-            blingSubsystem,
-            algaeIntakeReleaseButton));
-    stateAlgaeProcessorButton.toggleOnTrue(
-        new StateAlgaeProcessor(
-            elevatorSubsystem,
-            wristSubsystem,
-            algaeIntakeSubsystem,
-            blingSubsystem,
-            algaeIntakeReleaseButton));
-    stateAlgaeGroundButton.toggleOnTrue(
-        new StateAlgaeGround(
-            elevatorSubsystem,
-            wristSubsystem,
-            algaeIntakeSubsystem,
-            blingSubsystem,
-            algaeIntakeReleaseButton));
-    stateAlgaeNetButton.toggleOnTrue(
-        new StateAlgaeNet(
-            elevatorSubsystem,
-            wristSubsystem,
-            algaeIntakeSubsystem,
-            blingSubsystem,
-            algaeIntakeReleaseButton));
     stateCoralGroundButton.toggleOnTrue(
         new StateCoralGround(
             elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, blingSubsystem));

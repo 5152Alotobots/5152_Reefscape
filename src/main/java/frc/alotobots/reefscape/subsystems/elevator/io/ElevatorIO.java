@@ -28,64 +28,39 @@ public interface ElevatorIO {
    */
   @AutoLog
   public static class ElevatorIOInputs {
-    /** Current PID slot */
+    /* Current PID slot */
     public int currentPidSlot = 0;
 
-    /** Connection status of the left elevator motor */
+    /* Connection status of the left elevator motor */
     public boolean leftMotorConnected = false;
-
-    /** Connection status of the right elevator motor */
     public boolean rightMotorConnected = false;
 
-    /** Connection status of the CANRange position sensor */
-    public boolean canrangeConnected = false;
-
-    /** Top Software Limit */
+    /* Software Limits */
     public boolean topLimit = false;
-
-    /** Bottom Software Limit */
     public boolean bottomLimit = false;
 
-    /** Detection status of CANrange */
-    public boolean canrangeInProximity = false;
-
-    /** Current position of the left elevator motor */
+    /* Current position of the elevator motors (Height of the Elevator) */
     public Distance leftHeight = Meters.zero();
-
-    /** Current position of the right elevator motor */
     public Distance rightHeight = Meters.zero();
 
-    /** Current rotations of the left elevator motor */
+    /* Current rotation of the elevator motors */
     public Angle leftMotorAngle = Rotations.zero();
-
-    /** Current rotations of the right elevator motor */
     public Angle rightMotorAngle = Rotations.zero();
 
-    /** Current position reading from the CANCoder in meters */
-    public Distance canrangeDistance = Meters.zero();
-
-    /** Current velocity of the left elevator motor in meters per second */
+    /* Current velocity of the elevator motors */
     public LinearVelocity leftVelocity = MetersPerSecond.zero();
-
-    /** Current velocity of the right elevator motor in meters per second */
     public LinearVelocity rightVelocity = MetersPerSecond.zero();
 
-    /** Current acceleration of the left elevator motor in meters per second per second */
+    /* Current acceleration of the elevator motors */
     public LinearAcceleration leftAcceleration = MetersPerSecondPerSecond.zero();
-
-    /** Current acceleration of the right elevator motor in meters per second per second */
     public LinearAcceleration rightAcceleration = MetersPerSecondPerSecond.zero();
 
-    /** Applied voltage to the left elevator motor */
+    /* Applied voltage to the elevator motors */
     public Voltage leftAppliedVolts = Volts.zero();
-
-    /** Applied voltage to the right elevator motor */
     public Voltage rightAppliedVolts = Volts.zero();
 
-    /** Current draw of the left elevator motor in amperes */
+    /* Current draw of the elevator motors */
     public Current leftCurrentAmps = Amps.zero();
-
-    /** Current draw of the right elevator motor in amperes */
     public Current rightCurrentAmps = Amps.zero();
   }
 

@@ -21,13 +21,10 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
-import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXRealConstants.PIDConstants;
 import frc.alotobots.reefscape.subsystems.wrist.io.WristIO;
 import frc.alotobots.reefscape.subsystems.wrist.io.WristIOInputsAutoLogged;
 import frc.alotobots.reefscape.util.ControlType;
-import java.util.function.Supplier;
 import org.littletonrobotics.junction.Logger;
 
 /**
@@ -37,9 +34,6 @@ import org.littletonrobotics.junction.Logger;
 public class WristSubsystem extends SubsystemBase {
   /** Hardware abstraction for the wrist */
   private final WristIO io;
-
-  /** Supplier for the current elevator height */
-  private final Supplier<Distance> elevatorHeightSupplier;
 
   /** Latest inputs from the wrist hardware */
   private final WristIOInputsAutoLogged inputs = new WristIOInputsAutoLogged();
@@ -62,7 +56,6 @@ public class WristSubsystem extends SubsystemBase {
    */
   public WristSubsystem(WristIO io) {
     this.io = io;
-    this.elevatorHeightSupplier = elevatorHeightSupplier;
   }
 
   @Override
@@ -70,7 +63,6 @@ public class WristSubsystem extends SubsystemBase {
     // Update hardware inputs
     io.updateInputs(inputs);
     Logger.processInputs("Wrist", inputs);
-
   }
 
   /**
@@ -99,8 +91,7 @@ public class WristSubsystem extends SubsystemBase {
                 -MAX_SPEED.in(DegreesPerSecond),
                 MAX_SPEED.in(DegreesPerSecond)));
 
-    io.setWristVelocity(
-        adjustedVelocity, ControlType.ClosedLoop.VELOCITY.ordinal());
+    io.setWristVelocity(adjustedVelocity, ControlType.ClosedLoop.VELOCITY.ordinal());
 
     Logger.recordOutput("Wrist/ControlType", ControlType.ClosedLoop.VELOCITY);
   }

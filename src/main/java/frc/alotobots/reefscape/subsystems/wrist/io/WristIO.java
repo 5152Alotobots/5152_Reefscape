@@ -18,7 +18,6 @@ import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularAcceleration;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
-import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.Voltage;
 import org.littletonrobotics.junction.AutoLog;
 
@@ -68,15 +67,13 @@ public interface WristIO {
    */
   public default void updateInputs(WristIOInputs inputs) {}
 
-
   /**
    * Sets the wrist to run to a target position using closed-loop control.
    *
    * @param rotation The target angle to move to
    * @param pidSlot The PID slot to use (0 for velocity, 1 for position)
    */
-  public default void setWristPosition(
-      Angle rotation, int pidSlot) {}
+  public default void setWristPosition(Angle rotation, int pidSlot) {}
 
   /**
    * Sets the wrist to run at a target velocity using closed-loop control.
@@ -84,8 +81,7 @@ public interface WristIO {
    * @param velocity The target velocity to move at
    * @param pidSlot The PID slot to use (0 for velocity, 1 for position)
    */
-  public default void setWristVelocity(
-      AngularVelocity velocity, int pidSlot) {}
+  public default void setWristVelocity(AngularVelocity velocity, int pidSlot) {}
 
   /**
    * Sets the wrist to run at a target position using motion magic control.
@@ -93,8 +89,7 @@ public interface WristIO {
    * @param position The target position to move to
    * @param pidSlot The PID slot to use (0 for velocity, 1 for position)
    */
-  public default void setWristPositionMotionMagic(
-      Angle position, int pidSlot) {}
+  public default void setWristPositionMotionMagic(Angle position, int pidSlot) {}
 
   /**
    * Runs the wrist using direct percentage output (open-loop control).
