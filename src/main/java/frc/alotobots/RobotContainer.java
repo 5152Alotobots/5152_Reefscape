@@ -125,8 +125,10 @@ public class RobotContainer {
         oculusSubsystem = new OculusSubsystem(new OculusIOReal());
         aprilTagSubsystem =
             new AprilTagSubsystem(
-                new AprilTagIOPhotonVision(AprilTagConstants.CAMERA_CONFIGS[0]),
-                new AprilTagIOPhotonVision(AprilTagConstants.CAMERA_CONFIGS[1]));
+                new AprilTagIOPhotonVision(
+                    AprilTagConstants.CAMERA_CONFIGS[0], swerveDriveSubsystem::getRotation),
+                new AprilTagIOPhotonVision(
+                    AprilTagConstants.CAMERA_CONFIGS[1], swerveDriveSubsystem::getRotation));
 
         // Create pose sources
         oculusPoseSource = new OculusPoseSource(oculusSubsystem);

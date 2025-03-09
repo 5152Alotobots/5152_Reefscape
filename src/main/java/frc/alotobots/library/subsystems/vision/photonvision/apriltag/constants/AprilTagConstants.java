@@ -61,10 +61,15 @@ public class AprilTagConstants {
   // (Adjust to trust some cameras more than others)
   // SHOULD NEVER BE LESS THAN 1.0, NUMBERS GREATER THAN 1 = TRUST LESS
   public static double[] CAMERA_STD_DEV_FACTORS = new double[] {1.0, 1.0};
+  public static final double SINGLE_TAG_STD_DEV_FACTOR = 1.5; // Higher uncertainty for single tag
 
   // Basic Filtering
-  public static double MAX_AMBIGUITY = 0.3;
+  public static double MULTITAG_MAX_AMBIGUITY = 0.3;
   public static double MAX_Z_ERROR = 0.75;
+
+  // Constants for single tag processing
+  public static final double SINGLE_TAG_MAX_AMBIGUITY = 0.2;
+  public static final double SINGLE_TAG_MAX_DISTANCE = 4.0; // meters
 
   /** Time after which a pose is considered stale (seconds) */
   public static final double POSE_TIMEOUT = 0.06;

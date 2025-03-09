@@ -12,7 +12,9 @@
 */
 package frc.alotobots.library.subsystems.vision.photonvision.apriltag.io;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import org.littletonrobotics.junction.AutoLog;
 
 public interface AprilTagIO {
@@ -21,8 +23,10 @@ public interface AprilTagIO {
   public static class AprilTagIOInputs {
     public boolean connected = false;
     public SingleTagObservation[] singleTagObservations = new SingleTagObservation[0];
+    public int singleTagId = -1;
     public MultiTagObservation[] multiTagObservations = new MultiTagObservation[0];
-    public int[] tagIds = new int[0];
+    public int[] multiTagIds = new int[0];
+    public Rotation2d[] singleTagHeadingBuffer = new Rotation2d[0];
   }
 
   /** Represents a robot pose sample used for pose estimation. (2+ tags) */
@@ -31,7 +35,7 @@ public interface AprilTagIO {
 
   /** Represents a robot pose sample used for pose estimation. (1 tag) */
   public static record SingleTagObservation(
-          double timestamp, Pose3d pose, double ambiguity, double tagDistance) {}
+      double timestamp, Pose2d pose, double ambiguity, double tagDistance) {}
 
   public default void updateInputs(AprilTagIOInputs inputs) {}
 }
