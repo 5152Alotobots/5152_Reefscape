@@ -71,27 +71,13 @@ public class WristIOTalonFXReal implements WristIO {
   private final DutyCycleOut dutyCycleOut = new DutyCycleOut(0);
 
   // Status Signals for monitoring hardware state
-  /** Current active PID slot being used for control */
   StatusSignal<Integer> currentPidSlot;
-
-  /** Current voltage being applied to the motor */
   StatusSignal<Voltage> wristAppliedVoltage;
-
-  /** Current being drawn by the wrist motor */
   StatusSignal<Current> wristAppliedCurrent;
-
-  /** Current angular velocity of the wrist */
   StatusSignal<AngularVelocity> wristVelocity;
-
   StatusSignal<AngularAcceleration> wristAcceleration;
-
-  /** Current angular position of the wrist */
   StatusSignal<Angle> wristPosition;
-
-  /** Status of the forward/top software limit switch */
   StatusSignal<Boolean> topSoftLimit;
-
-  /** Status of the reverse/bottom software limit switch */
   StatusSignal<Boolean> bottomSoftLimit;
 
   /** Debouncer to filter rapid changes in motor connection status */

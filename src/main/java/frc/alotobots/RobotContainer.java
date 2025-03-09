@@ -46,7 +46,6 @@ import frc.alotobots.library.subsystems.vision.photonvision.apriltag.util.AprilT
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.io.*;
 import frc.alotobots.reefscape.commands.groups.Climb;
 import frc.alotobots.reefscape.commands.groups.UnClimb;
-import frc.alotobots.reefscape.commands.states.algae.*;
 import frc.alotobots.reefscape.commands.states.coral.*;
 import frc.alotobots.reefscape.subsystems.climber.ClimberSubsystem;
 import frc.alotobots.reefscape.subsystems.climber.commands.ClimberDisableServos;
@@ -246,7 +245,6 @@ public class RobotContainer {
     blingSubsystem.setDefaultCommand(
         new NoAllianceWaiting(blingSubsystem).andThen(new SetToAllianceColor(blingSubsystem)));
     climberSubsystem.setDefaultCommand(new ClimberDisableServos(climberSubsystem));
-    // algaeIntakeSubsystem.setDefaultCommand(new DefaultAlgaeIntakeHold(algaeIntakeSubsystem));
   }
 
   /** Contains button based commands */
@@ -262,9 +260,7 @@ public class RobotContainer {
         Seconds.of(30));
     new Trigger(coralIntakeSubsystem::isIntakeOccupied)
         .onTrue(new BlingCoralHasPiece(blingSubsystem).withTimeout(BLING_NOTIFICATION_TIME));
-    // new Trigger(algaeIntakeSubsystem::isIntakeOccupied)
-    // .onTrue(new BlingAlgaeHasPiece(blingSubsystem).withTimeout(BLING_NOTIFICATION_TIME));
-    // Coral
+    
     stateCoralCoralStationButton.toggleOnTrue(
         new StateCoralCoralStation(
             elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, blingSubsystem));
