@@ -72,8 +72,8 @@ public class OculusIOReal implements OculusIO {
     questEulerAngles =
         nt4Table.getFloatArrayTopic("eulerAngles").subscribe(new float[] {0.0f, 0.0f, 0.0f});
     questBatteryPercent = nt4Table.getDoubleTopic("batteryPercent").subscribe(-1.0);
-    heartbeatRequestSub = nt4Table.getDoubleTopic("heartbeatReq").subscribe(0.0);
-    heartbeatResponsePub = nt4Table.getDoubleTopic("heartbeatResp").publish();
+    heartbeatRequestSub = nt4Table.getDoubleTopic("Heartbeat/Quest").subscribe(0.0);
+    heartbeatResponsePub = nt4Table.getDoubleTopic("Heartbeat/Robot").publish();
     resetPosePub = nt4Table.getDoubleArrayTopic("resetpose").publish();
   }
 
