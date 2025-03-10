@@ -106,16 +106,20 @@ public class AprilTagSubsystem extends SubsystemBase implements PoseSource {
     }
 
     // Initialize logging values
-    List<Pose3d> allTagPoses = new LinkedList<>();
-    List<Pose3d> allRobotPoses = new LinkedList<>();
-    List<Pose3d> allRobotPosesAccepted = new LinkedList<>();
-    List<Pose3d> allRobotPosesRejected = new LinkedList<>();
+    List<Pose3d> allMultiTagPoses = new LinkedList<>();
+    List<Pose3d> allMultiTagRobotPoses = new LinkedList<>();
+    List<Pose3d> allSingleTagPoses = new LinkedList<>();
+    List<Pose3d> allSingleTagRobotPoses = new LinkedList<>();
+    List<Pose3d> allMultiTagRobotPosesAccepted = new LinkedList<>();
+    List<Pose3d> allMultiTagRobotPosesRejected = new LinkedList<>();
+    List<Pose3d> allSingleTagRobotPosesAccepted = new LinkedList<>();
+    List<Pose3d> allSingleTagRobotPosesRejected = new LinkedList<>();
 
     // Process camera data
-    processCameraData(allTagPoses, allRobotPoses, allRobotPosesAccepted, allRobotPosesRejected);
+    processCameraData(allMultiTagPoses, allMultiTagRobotPoses, allMultiTagRobotPosesAccepted, allMultiTagRobotPosesRejected);
 
     // Log summary data
-    logSummaryData(allTagPoses, allRobotPoses, allRobotPosesAccepted, allRobotPosesRejected);
+    logSummaryData(allMultiTagPoses, allMultiTagRobotPoses, allMultiTagRobotPosesAccepted, allMultiTagRobotPosesRejected);
 
     // Log pose staleness
     double timeSinceLastPose = Timer.getTimestamp() - lastPoseTimestamp;

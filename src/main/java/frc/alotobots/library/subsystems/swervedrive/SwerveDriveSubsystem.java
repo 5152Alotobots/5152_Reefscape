@@ -101,6 +101,8 @@ public class SwerveDriveSubsystem extends SubsystemBase {
   /** Pose estimator for odometry */
   private SwerveDrivePoseEstimator poseEstimator =
       new SwerveDrivePoseEstimator(kinematics, rawGyroRotation, lastModulePositions, new Pose2d());
+  private SwerveDrivePoseEstimator precisionAlignPoseEstimator =
+          new SwerveDrivePoseEstimator(kinematics, rawGyroRotation, lastModulePositions, new Pose2d());
 
   /**
    * Constructs a new SwerveDriveSubsystem.
@@ -200,6 +202,8 @@ public class SwerveDriveSubsystem extends SubsystemBase {
       }
 
       poseEstimator.updateWithTime(sampleTimestamps[i], rawGyroRotation, modulePositions);
+      precisionAlignPoseEstimator.updateWithTime(
+              sampleTimestamps[i], rawGyroRotation, modulePositions);
     }
 
     gyroDisconnectedAlert.set(!gyroInputs.connected && Constants.currentMode != Mode.SIM);
@@ -373,10 +377,21 @@ public class SwerveDriveSubsystem extends SubsystemBase {
    *
    * @return Current robot pose
    */
-  @AutoLogOutput(key = "Odometry/Robot")
+  @AutoLogOutput(key = "Drive/Pose")
   public Pose2d getPose() {
     return poseEstimator.getEstimatedPosition();
   }
+
+  /**
+   * Gets current odometry pose.
+   *
+   * @return Current robot pose
+   */
+  @AutoLogOutput(key = "Drive/PrecisionAlignPose")
+  public Pose2d getPrecisionAlignPose() {
+    return precisionAlignPoseEstimator.getEstimatedPosition();
+  }
+
 
   /**
    * Gets current odometry rotation.
@@ -394,6 +409,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
    */
   public void setPose(Pose2d pose) {
     poseEstimator.resetPosition(rawGyroRotation, getModulePositions(), pose);
+    precisionAlignPoseEstimator.resetPosition(rawGyroRotation, getModulePositions(), pose);
   }
 
   /**
@@ -409,6 +425,21 @@ public class SwerveDriveSubsystem extends SubsystemBase {
       Matrix<N3, N1> visionMeasurementStdDevs) {
     poseEstimator.addVisionMeasurement(
         visionRobotPoseMeters, timestampSeconds, visionMeasurementStdDevs);
+  }
+
+  /**
+   * Adds vision measurement for pose estimation.
+   *
+   * @param visionRobotPoseMeters Vision-measured robot pose
+   * @param timestampSeconds Timestamp of measurement
+   * @param visionMeasurementStdDevs Standard deviations of vision measurements
+   */
+  public void addPrecisionAlignVisionMeasurement(
+          Pose2d visionRobotPoseMeters,
+          double timestampSeconds,
+          Matrix<N3, N1> visionMeasurementStdDevs) {
+    precisionAlignPoseEstimator.addVisionMeasurement(
+            visionRobotPoseMeters, timestampSeconds, visionMeasurementStdDevs);
   }
 
   /**
