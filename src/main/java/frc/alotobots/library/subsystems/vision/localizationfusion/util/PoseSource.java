@@ -1,78 +1,90 @@
-/*
-* ALOTOBOTS - FRC Team 5152
-  https://github.com/5152Alotobots
-* Copyright (C) 2025 ALOTOBOTS
-*
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* (at your option) any later version.
-*
-* Source code must be publicly available on GitHub or an alternative web accessible site
-*/
 package frc.alotobots.library.subsystems.vision.localizationfusion.util;
 
 import edu.wpi.first.math.Matrix;
-import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.Vector;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
+import edu.wpi.first.units.measure.Time;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 /**
- * Standardized interface for pose estimation sources in the robot localization system.
- *
- * <p>This interface defines the contract that all pose sources must fulfill to integrate with the
- * localization fusion system. It supports various types of pose sources including:
- *
- * <p>- Meta Quest SLAM (primary source) - AprilTag vision (secondary source) - Wheel odometry
- * (emergency backup) - Other potential sources (e.g., LiDAR, external cameras)
- *
- * <p>Each source must provide: - Connection status monitoring - Current pose estimation -
- * Measurement uncertainty estimates - Source identification
+ * Base interface for all pose estimation sources
+ */
+/**
+ * Interface representing a source of pose estimation data.
  */
 public interface PoseSource {
+    /**
+     * Gets the unread results of the pipeline. Automatically clears the buffer after this method is used.
+     * Ensure it is called ONCE each loop to avoid data loss.
+     *
+     * @return the unread poses as an object
+     */
+    ArrayList<PoseSourceResult> getUnreadResults();
 
-  /**
-   * Checks if the pose source is currently connected and providing valid data.
-   *
-   * <p>This method should: - Verify hardware connectivity (if applicable) - Check data freshness -
-   * Validate sensor readings - Monitor update frequency
-   *
-   * @return true if the source is connected and providing valid data
-   */
-  boolean isConnected();
+    // Uncertainty using standard deviations
+    /**
+     * Gets the standard deviation in X/Y/Rot positions.
+     *
+     * @return the standard deviation in X/Y/Rot positions
+     */
+    Matrix<N3, N1> getStandardDeviations();
 
-  /**
-   * Gets the most recent pose estimate from this source.
-   *
-   * <p>The returned pose should be: - In field-relative coordinates - Using the standard FRC
-   * coordinate system: - Origin at field corner - +X towards opposite alliance wall - +Y towards
-   * driver station - CCW positive rotation
-   *
-   * <p>If no valid pose is available, returns null.
-   *
-   * @return The current robot pose estimate, or null if unavailable
-   */
-  Pose2d getCurrentPose();
+    /**
+     * Sets if the pose source is connected to the robot.
+     * */
+    void isConnected(boolean isConnected);
 
-  /**
-   * Gets the standard deviations of measurement uncertainty for this pose source.
-   *
-   * <p>Returns a 3x1 matrix containing standard deviations for: - X position (meters) - Y position
-   * (meters) - Rotation (radians)
-   *
-   * <p>These values should: - Reflect real measurement uncertainty - Scale with distance/conditions
-   * - Account for systematic errors - Consider environmental factors
-   *
-   * @return 3x1 matrix of standard deviations [x, y, theta]
-   */
-  Matrix<N3, N1> getStdDevs();
+    // Priority system
+    /**
+     * Gets the priority of the pose source.
+     *
+     * @return the priority, where a lower number indicates higher priority
+     */
+    int getPriority();
+    /**
+     * Sets the priority of the pose source.
+     *
+     * @param priority the priority to set, where a lower number indicates higher priority
+     */
+    void setPriority(int priority);
+    
+    // Status information
+    enum SourceStatus { READY, UNINITIALIZED, DEGRADED, OFFLINE }
+    /**
+     * Gets the status of the pose source.
+     *
+     * @return the status of the pose source
+     */
+    SourceStatus getStatus();
 
-  /**
-   * Gets a human-readable identifier for this pose source.
-   *
-   * <p>Used for: - Logging - Debugging - User interfaces - Status reporting
-   *
-   * @return String identifier for this pose source
-   */
-  String getSourceName();
+    enum PoseSourceType { MULTI_TAG, SINGLE_TAG, OCULUS, ODOMETRY }
+
+    // Metadata
+    /**
+     * Gets the type of the pose source.
+     *
+     * @return the type of the pose source, e.g., "Odometry", "Vision", "IMU", etc.
+     */
+    PoseSourceType getSourceType();
+    
+    // Lifecycle methods
+    /**
+     * Initializes the pose source.
+     */
+    void initialize();
+    /**
+     * Updates the pose source.
+     */
+    void update(Supplier<List<PoseSourceResult>> resultSupplier);
+    /**
+     * Checks if the pose source is initialized.
+     *
+     * @return true if the pose source is initialized, false otherwise
+     */
+    boolean isInitialized();
 }

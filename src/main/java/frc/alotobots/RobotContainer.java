@@ -42,8 +42,7 @@ import frc.alotobots.library.subsystems.vision.oculus.util.OculusPoseSource;
 import frc.alotobots.library.subsystems.vision.photonvision.apriltag.AprilTagSubsystem;
 import frc.alotobots.library.subsystems.vision.photonvision.apriltag.constants.AprilTagConstants;
 import frc.alotobots.library.subsystems.vision.photonvision.apriltag.io.*;
-import frc.alotobots.library.subsystems.vision.photonvision.apriltag.util.AprilTagPoseSource;
-import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.io.*;
+import frc.alotobots.library.subsystems.vision.localizationfusion.sources.SingleTagPoseSource;
 import frc.alotobots.reefscape.commands.groups.Climb;
 import frc.alotobots.reefscape.commands.groups.UnClimb;
 import frc.alotobots.reefscape.commands.states.algae.*;
@@ -91,7 +90,7 @@ public class RobotContainer {
   private final AprilTagSubsystem aprilTagSubsystem;
   private final LocalizationFusion localizationFusion;
   private final OculusPoseSource oculusPoseSource;
-  private final AprilTagPoseSource aprilTagPoseSource;
+  private final SingleTagPoseSource aprilTagPoseSource;
   private final BlingSubsystem blingSubsystem;
   private final PathPlannerManager pathPlannerManager;
   private final AutoNamedCommands autoNamedCommands;
@@ -132,7 +131,7 @@ public class RobotContainer {
 
         // Create pose sources
         oculusPoseSource = new OculusPoseSource(oculusSubsystem);
-        aprilTagPoseSource = new AprilTagPoseSource(aprilTagSubsystem);
+        aprilTagPoseSource = new SingleTagPoseSource(aprilTagSubsystem);
 
         localizationFusion =
             new LocalizationFusion(
@@ -190,7 +189,7 @@ public class RobotContainer {
 
         // Create pose sources
         oculusPoseSource = new OculusPoseSource(oculusSubsystem);
-        aprilTagPoseSource = new AprilTagPoseSource(aprilTagSubsystem);
+        aprilTagPoseSource = new SingleTagPoseSource(aprilTagSubsystem);
         localizationFusion =
             new LocalizationFusion(
                 swerveDriveSubsystem::addVisionMeasurement,
@@ -228,7 +227,7 @@ public class RobotContainer {
 
         // Create pose sources
         oculusPoseSource = new OculusPoseSource(oculusSubsystem);
-        aprilTagPoseSource = new AprilTagPoseSource(aprilTagSubsystem);
+        aprilTagPoseSource = new SingleTagPoseSource(aprilTagSubsystem);
         localizationFusion =
             new LocalizationFusion(
                 swerveDriveSubsystem::addVisionMeasurement,

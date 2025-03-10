@@ -33,7 +33,7 @@ import java.util.LinkedList;
 import java.util.List;
 import org.littletonrobotics.junction.Logger;
 
-public class AprilTagSubsystem extends SubsystemBase implements PoseSource {
+public class AprilTagSubsystem extends SubsystemBase {
 
   private final AprilTagIO[] io;
   private final AprilTagIOInputsAutoLogged[] inputs;
@@ -61,31 +61,6 @@ public class AprilTagSubsystem extends SubsystemBase implements PoseSource {
     }
 
     validateConfiguration();
-  }
-
-  // PoseSource interface implementation
-  @Override
-  public boolean isConnected() {
-    return isConnected;
-  }
-
-  @Override
-  public Pose2d getCurrentPose() {
-    double timeSinceLastPose = Timer.getTimestamp() - lastPoseTimestamp;
-    if (timeSinceLastPose > POSE_TIMEOUT) {
-      return null; // Return null if pose is stale
-    }
-    return hasValidPose ? latestPose : null;
-  }
-
-  @Override
-  public Matrix<N3, N1> getStdDevs() {
-    return latestStdDevs;
-  }
-
-  @Override
-  public String getSourceName() {
-    return "AprilTag";
   }
 
   @Override
