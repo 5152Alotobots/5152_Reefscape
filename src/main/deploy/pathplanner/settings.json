@@ -4,9 +4,10 @@
   "holonomicMode": true,
   "pathFolders": [
     "AutoDrive",
+    "BasicMeters",
     "Battle Creek",
     "BenAutos",
-    "BasicMeters",
+    "TwoPiece",
     "Positions",
     "Test2025",
     "Three Piece"

@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.3105532786885234,
-        "y": 2.9521004098360653
+        "x": 7.22475,
+        "y": 1.8889802631578947
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.130993920009297,
-        "y": 3.2376201992949847
+        "x": 3.441918103448276,
+        "y": 1.41519396551724
       },
       "isLocked": false,
-      "linkedName": "Reef_SE_R"
+      "linkedName": "Start South"
     },
     {
       "anchor": {
-        "x": 1.3994612068965517,
-        "y": 1.2449892241379303
+        "x": 3.725592672413793,
+        "y": 2.7579202586206897
       },
       "prevControl": {
-        "x": 1.1780099182979769,
-        "y": 1.1289748854636494
+        "x": 4.444234913793103,
+        "y": 2.0771012931034476
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "South Left Station"
+      "linkedName": "Reef_SEL1"
     }
   ],
   "rotationTargets": [],
@@ -33,8 +33,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 5.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 2.0,
+    "maxAcceleration": 1.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 460.0,
     "nominalVoltage": 12.0,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -125.00000000000001
+    "rotation": 29.999999999999996
   },
   "reversed": false,
-  "folder": "Battle Creek",
+  "folder": "TwoPiece",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 119.99999999999999
+    "rotation": 180.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }
