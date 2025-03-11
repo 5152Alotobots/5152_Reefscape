@@ -108,8 +108,7 @@ public class RobotContainer {
                 new ModuleIOTalonFXReal(ModulePosition.BACK_RIGHT.index));
         elevatorSubsystem = new ElevatorSubsystem(new ElevatorIOTalonFXReal());
         coralIntakeSubsystem = new CoralIntakeSubsystem(new CoralIntakeIOVortexReal());
-        wristSubsystem =
-            new WristSubsystem(new WristIOTalonFXReal(elevatorSubsystem::getCurrentHeight));
+        wristSubsystem = new WristSubsystem(new WristIOTalonFXReal());
         // algaeIntakeSubsystem = new AlgaeIntakeSubsystem(new AlgaeIntakeIOTalonFXReal());
         climberSubsystem = new ClimberSubsystem(new ClimberIORevServoReal());
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
@@ -260,7 +259,7 @@ public class RobotContainer {
         Seconds.of(30));
     new Trigger(coralIntakeSubsystem::isIntakeOccupied)
         .onTrue(new BlingCoralHasPiece(blingSubsystem).withTimeout(BLING_NOTIFICATION_TIME));
-    
+
     stateCoralCoralStationButton.toggleOnTrue(
         new StateCoralCoralStation(
             elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, blingSubsystem));
@@ -322,11 +321,11 @@ public class RobotContainer {
         new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.CORAL_L4_PLACE));
     // Wrist
     wristL4coralButton.toggleOnTrue(
-        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.CORAL_L4_PLACE, false));
+        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.CORAL_L4_PLACE));
     wristL2and3coralButton.toggleOnTrue(
-        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.CORAL_L3_PLACE, false));
+        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.CORAL_L3_PLACE));
     wristGroundButton.toggleOnTrue(
-        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.CORAL_GROUND_INTAKE, false));
+        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.CORAL_GROUND_INTAKE));
   }
 
   private void configureAutoChooser() {

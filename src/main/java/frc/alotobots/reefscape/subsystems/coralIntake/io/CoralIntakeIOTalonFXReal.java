@@ -17,33 +17,22 @@ import static frc.alotobots.Constants.CanId.INTAKE_CANRANGE_ID;
 import static frc.alotobots.Constants.CanId.INTAKE_MOTOR_CAN_ID;
 import static frc.alotobots.util.PhoenixUtil.tryUntilOk;
 
-import java.io.ObjectInputFilter.Status;
-
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.CANrangeConfiguration;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.DutyCycleOut;
-import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.VelocityVoltage;
-import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.CANrange;
 import com.ctre.phoenix6.hardware.ParentDevice;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.UpdateModeValue;
-import com.revrobotics.REVLibError;
-import com.revrobotics.spark.SparkBase.PersistMode;
-import com.revrobotics.spark.SparkBase.ResetMode;
-import com.revrobotics.spark.SparkFlex;
-import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.config.SparkFlexConfig;
 import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularAcceleration;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Voltage;
-import edu.wpi.first.wpilibj.MotorSafety;
 import frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeTalonFXRealConstants;
 import frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeTalonFXRealConstants.MotorSafetyLimits;
 
@@ -57,6 +46,7 @@ public class CoralIntakeIOTalonFXReal implements CoralIntakeIO {
   private final TalonFX intakeMotor;
 
   private final CANrange canRange;
+
   /** Control mode for velocity control using direct voltage */
   private final VelocityVoltage velocityVoltage = new VelocityVoltage(0);
 
@@ -75,11 +65,11 @@ public class CoralIntakeIOTalonFXReal implements CoralIntakeIO {
 
   StatusSignal<Boolean> intakeOccupied;
 
- /** Debounce for motor connection status */
+  /** Debounce for motor connection status */
   private final Debouncer motorConnectedDebounce = new Debouncer(0.5);
 
   private final Debouncer canRangeConnectedDebounce = new Debouncer(0.5);
-  
+
   /**
    * Creates a new CoralIntakeIOVortexReal instance and configures all hardware devices. Sets up
    * motor controller parameters, CANrange sensor configuration, and status signals.
@@ -91,27 +81,36 @@ public class CoralIntakeIOTalonFXReal implements CoralIntakeIO {
     var intakeMotorConfig = new TalonFXConfiguration();
 
     // PID configuration for velocity mode (Slot 0)
-    // wristMotorConfig.Slot0.kP = CoralIntakeTalonFXRealConstants.PIDConstants.VelocityPIDConstants.KP;
-    // wristMotorConfig.Slot0.kI = CoralIntakeTalonFXRealConstants.PIDConstants.VelocityPIDConstants.KI;
-    // wristMotorConfig.Slot0.kD = CoralIntakeTalonFXRealConstants.PIDConstants.VelocityPIDConstants.KD;
-    // wristMotorConfig.Slot0.kA = CoralIntakeTalonFXRealConstants.PIDConstants.VelocityPIDConstants.KA;
-    // wristMotorConfig.Slot0.kG = CoralIntakeTalonFXRealConstants.PIDConstants.VelocityPIDConstants.KG;
-    // wristMotorConfig.Slot0.kS = CoralIntakeTalonFXRealConstants.PIDConstants.VelocityPIDConstants.KS;
-    // wristMotorConfig.Slot0.kV = CoralIntakeTalonFXRealConstants.PIDConstants.VelocityPIDConstants.KV;
+    // wristMotorConfig.Slot0.kP =
+    // CoralIntakeTalonFXRealConstants.PIDConstants.VelocityPIDConstants.KP;
+    // wristMotorConfig.Slot0.kI =
+    // CoralIntakeTalonFXRealConstants.PIDConstants.VelocityPIDConstants.KI;
+    // wristMotorConfig.Slot0.kD =
+    // CoralIntakeTalonFXRealConstants.PIDConstants.VelocityPIDConstants.KD;
+    // wristMotorConfig.Slot0.kA =
+    // CoralIntakeTalonFXRealConstants.PIDConstants.VelocityPIDConstants.KA;
+    // wristMotorConfig.Slot0.kG =
+    // CoralIntakeTalonFXRealConstants.PIDConstants.VelocityPIDConstants.KG;
+    // wristMotorConfig.Slot0.kS =
+    // CoralIntakeTalonFXRealConstants.PIDConstants.VelocityPIDConstants.KS;
+    // wristMotorConfig.Slot0.kV =
+    // CoralIntakeTalonFXRealConstants.PIDConstants.VelocityPIDConstants.KV;
 
-    intakeMotorConfig.MotorOutput.NeutralMode = CoralIntakeTalonFXRealConstants.MECHANISM_NEUTRAL_MODE;
+    intakeMotorConfig.MotorOutput.NeutralMode =
+        CoralIntakeTalonFXRealConstants.MECHANISM_NEUTRAL_MODE;
 
-    intakeMotorConfig.TorqueCurrent.PeakForwardTorqueCurrent = MotorSafetyLimits.TORQUE_FORWARD_AMP_LIMIT.in(Amps);
-    intakeMotorConfig.TorqueCurrent.PeakReverseTorqueCurrent = MotorSafetyLimits.TORQUE_REVERSE_AMP_LIMIT.in(Amps);
+    intakeMotorConfig.TorqueCurrent.PeakForwardTorqueCurrent =
+        MotorSafetyLimits.TORQUE_FORWARD_AMP_LIMIT.in(Amps);
+    intakeMotorConfig.TorqueCurrent.PeakReverseTorqueCurrent =
+        MotorSafetyLimits.TORQUE_REVERSE_AMP_LIMIT.in(Amps);
 
-    intakeMotorConfig.CurrentLimits.StatorCurrentLimit = MotorSafetyLimits.STATOR_AMP_LIMIT.in(Amps);
+    intakeMotorConfig.CurrentLimits.StatorCurrentLimit =
+        MotorSafetyLimits.STATOR_AMP_LIMIT.in(Amps);
     intakeMotorConfig.CurrentLimits.StatorCurrentLimitEnable = true;
 
     intakeMotorConfig.MotorOutput.Inverted = CoralIntakeTalonFXRealConstants.MOTOR_DIRECTION;
 
-
     tryUntilOk(5, () -> intakeMotor.getConfigurator().apply(intakeMotorConfig, 0.25));
-
 
     var canRangeConfig = new CANrangeConfiguration();
     canRangeConfig.ToFParams.UpdateMode = UpdateModeValue.ShortRangeUserFreq;

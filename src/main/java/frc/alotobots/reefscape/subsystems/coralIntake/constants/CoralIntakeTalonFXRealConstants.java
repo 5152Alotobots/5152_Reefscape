@@ -14,13 +14,8 @@ package frc.alotobots.reefscape.subsystems.coralIntake.constants;
 
 import static edu.wpi.first.units.Units.Amps;
 
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix6.configs.MotorOutputConfigs;
-import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.configs.TalonFXConfigurator;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
-import com.revrobotics.spark.config.SparkBaseConfig;
 import edu.wpi.first.units.measure.Current;
 import lombok.experimental.UtilityClass;
 
@@ -65,6 +60,5 @@ public final class CoralIntakeTalonFXRealConstants {
   public static final InvertedValue MOTOR_DIRECTION = InvertedValue.Clockwise_Positive;
 
   /** Neutral mode (brake/coast) setting for the mechanism */
-  public static final NeutralModeValue MECHANISM_NEUTRAL_MODE =
-      NeutralModeValue.Brake;
+  public static final NeutralModeValue MECHANISM_NEUTRAL_MODE = NeutralModeValue.Brake;
 }

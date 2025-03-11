@@ -39,11 +39,8 @@ import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularAcceleration;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
-import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.Voltage;
 import frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXRealConstants;
-import java.util.function.Supplier;
-import org.littletonrobotics.junction.Logger;
 
 /**
  * Hardware implementation of the WristIO interface using TalonFX motor controller and CANCoder for
@@ -86,19 +83,13 @@ public class WristIOTalonFXReal implements WristIO {
   /** Debouncer to filter rapid changes in encoder connection status */
   private final Debouncer encoderConnectedDebouncer = new Debouncer(0.5);
 
-  private Angle bottomLimitAngle;
-
-  private final Supplier<Distance> elevatorHeightSupplier;
-
   /**
    * Creates a new WristIOTalonFXReal instance and configures all motor controller and encoder
    * settings. This includes PID configurations, software limits, current limits, and sensor
    * settings.
    */
-  public WristIOTalonFXReal(Supplier<Distance> elevatorHeightSupplier) {
-    this.elevatorHeightSupplier = elevatorHeightSupplier;
+  public WristIOTalonFXReal() {
 
-    bottomLimitAngle = Rotations.zero();
     wristTalon = new TalonFX(WRIST_MOTOR_CAN_ID);
     wristEncoder = new CANcoder(WRIST_ENCODER_CAN_ID);
 
@@ -212,22 +203,6 @@ public class WristIOTalonFXReal implements WristIO {
     inputs.mechanismAngle = wristPosition.getValue();
     inputs.topLimit = topSoftLimit.getValue();
     inputs.bottomLimit = bottomSoftLimit.getValue();
-    updateBottomLimitAngle();
-    Logger.recordOutput("Wrist/bottomLimitAngle", bottomLimitAngle);
-  }
-
-  private void updateBottomLimitAngle() {
-    Angle newAngle =
-        Radians.of(Math.asin(-(Math.min(elevatorHeightSupplier.get().in(Meters), .308) / .308)));
-
-    this.bottomLimitAngle = Degrees.of(MathUtil.clamp(newAngle.in(Degree), -45, 0));
-  }
-
-  private boolean shouldLimit(Angle currentAngle) {
-    Logger.recordOutput(
-        "Wrist/shouldLimit", currentAngle.in(Degrees) - 2.5 < bottomLimitAngle.in(Degrees));
-
-    return currentAngle.in(Degrees) - 2.5 < bottomLimitAngle.in(Degrees);
   }
 
   /**
@@ -239,7 +214,7 @@ public class WristIOTalonFXReal implements WristIO {
   @Override
   public void setWristPosition(Angle rotation, int pidSlot) {
     var boundedRotation =
-        MathUtil.clamp(rotation.in(Degree), MAX_ANGLE.in(Degree), bottomLimitAngle.in(Degree));
+        MathUtil.clamp(rotation.in(Degree), MAX_ANGLE.in(Degree), MIN_ANGLE.in(Degree));
 
     // Set up the request with appropriate limits
     wristTalon.setControl(positionVoltage.withPosition(boundedRotation).withSlot(pidSlot));
@@ -257,11 +232,7 @@ public class WristIOTalonFXReal implements WristIO {
     Angle currentAngle = wristPosition.getValue();
 
     // Set up the request with appropriate limits
-    wristTalon.setControl(
-        magicPositionVoltage
-            .withPosition(position)
-            .withSlot(pidSlot)
-            .withLimitForwardMotion(shouldLimit(currentAngle)));
+    wristTalon.setControl(magicPositionVoltage.withPosition(position).withSlot(pidSlot));
   }
 
   /**
@@ -275,11 +246,7 @@ public class WristIOTalonFXReal implements WristIO {
     // Get current angle to determine if we need to apply limits
     Angle currentAngle = wristPosition.getValue();
 
-    wristTalon.setControl(
-        velocityVoltage
-            .withVelocity(velocity)
-            .withSlot(pidSlot)
-            .withLimitForwardMotion(shouldLimit(currentAngle)));
+    wristTalon.setControl(velocityVoltage.withVelocity(velocity).withSlot(pidSlot));
   }
 
   /**
@@ -294,8 +261,7 @@ public class WristIOTalonFXReal implements WristIO {
 
     // Determine if we should activate limits
 
-    wristTalon.setControl(
-        dutyCycleOut.withOutput(percentOutput).withLimitForwardMotion(shouldLimit(currentAngle)));
+    wristTalon.setControl(dutyCycleOut.withOutput(percentOutput));
   }
 
   /** Stops the wrist motor by setting the motor output to zero. */
