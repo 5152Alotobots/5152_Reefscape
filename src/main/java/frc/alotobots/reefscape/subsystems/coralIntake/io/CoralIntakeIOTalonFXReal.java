@@ -12,7 +12,7 @@
 */
 package frc.alotobots.reefscape.subsystems.coralIntake.io;
 
-import static edu.wpi.first.units.Units.*;
+import static edu.wpi.first.units.Units.Amps;
 import static frc.alotobots.Constants.CanId.INTAKE_CANRANGE_ID;
 import static frc.alotobots.Constants.CanId.INTAKE_MOTOR_CAN_ID;
 import static frc.alotobots.util.PhoenixUtil.tryUntilOk;
@@ -132,6 +132,7 @@ public class CoralIntakeIOTalonFXReal implements CoralIntakeIO {
     var canRangeSignals = BaseStatusSignal.refreshAll(intakeOccupied);
 
     // Connected Status
+    inputs.intakeOccupied = intakeOccupied.getValue();
     inputs.canRangeConnected = canRangeConnectedDebounce.calculate(canRangeSignals.isOK());
     inputs.motorConnected = intakeMotor.isConnected();
     // Positions

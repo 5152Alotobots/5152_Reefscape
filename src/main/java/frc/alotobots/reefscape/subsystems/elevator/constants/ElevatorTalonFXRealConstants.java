@@ -59,7 +59,7 @@ public final class ElevatorTalonFXRealConstants {
     /** TalonFX-specific PID and motion control constants for Position mode (Position mode). */
     public static final class PositionPIDConstants {
       /** Position control proportional gain */
-      public static final double KP = 3.3;
+      public static final double KP = 3.5;
 
       /** Position control integral gain */
       public static final double KI = 0.0;
@@ -130,5 +130,5 @@ public final class ElevatorTalonFXRealConstants {
   public static final NeutralModeValue MECHANISM_NEUTRAL_MODE = NeutralModeValue.Brake;
 
   /** Regression used to calculate height of motor. (Should be linear) Rotations:Meters */
-  public static final double HEIGHT_PER_ROTATION = 0.00977762;
+  public static final double HEIGHT_PER_ROTATION = 0.0224766;
 }

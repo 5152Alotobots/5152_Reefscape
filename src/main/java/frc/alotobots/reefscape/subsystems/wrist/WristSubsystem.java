@@ -62,6 +62,7 @@ public class WristSubsystem extends SubsystemBase {
   public void periodic() {
     // Update hardware inputs
     io.updateInputs(inputs);
+    Logger.recordOutput("Wrist/TargetAngle", targetAngle.in(Degree));
     Logger.processInputs("Wrist", inputs);
   }
 

@@ -195,10 +195,10 @@ public class RobotContainer {
         break;
 
       default:
-        coralIntakeSubsystem = new CoralIntakeSubsystem(new CoralIntakeIOVortexReal());
+        coralIntakeSubsystem = new CoralIntakeSubsystem(new CoralIntakeIOTalonFXReal());
         climberSubsystem = new ClimberSubsystem(new ClimberIORevServoReal());
         // algaeIntakeSubsystem = new AlgaeIntakeSubsystem(new AlgaeIntakeIO() {});
-
+        //
         // Replay mode initialization
         swerveDriveSubsystem =
             new SwerveDriveSubsystem(
