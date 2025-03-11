@@ -26,7 +26,7 @@
         {
           "type": "named",
           "data": {
-            "name": "CoralIntakeEject"
+            "name": "CoralIntakeEjectAggressive"
           }
         },
         {
@@ -34,15 +34,28 @@
           "data": {
             "commands": [
               {
-                "type": "path",
+                "type": "sequential",
                 "data": {
-                  "pathName": "N_ReefNW_L1 2"
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 1.0
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "AutoStateCoralStation"
+                      }
+                    }
+                  ]
                 }
               },
               {
-                "type": "named",
+                "type": "path",
                 "data": {
-                  "name": "AutoStateCoralStation"
+                  "pathName": "N_ReefNW_L1 2"
                 }
               }
             ]
@@ -76,7 +89,7 @@
         {
           "type": "named",
           "data": {
-            "name": "CoralIntakeEject"
+            "name": "CoralIntakeEjectAggressive"
           }
         }
       ]
