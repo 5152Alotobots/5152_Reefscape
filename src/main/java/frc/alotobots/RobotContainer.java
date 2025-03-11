@@ -56,6 +56,7 @@ import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEjectM
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEjectThrough;
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeIntakeManual;
 import frc.alotobots.reefscape.subsystems.coralIntake.io.CoralIntakeIO;
+import frc.alotobots.reefscape.subsystems.coralIntake.io.CoralIntakeIOTalonFXReal;
 import frc.alotobots.reefscape.subsystems.coralIntake.io.CoralIntakeIOVortexReal;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.commands.DefaultElevatorRunAtVelocity;
@@ -107,7 +108,7 @@ public class RobotContainer {
                 new ModuleIOTalonFXReal(ModulePosition.BACK_LEFT.index),
                 new ModuleIOTalonFXReal(ModulePosition.BACK_RIGHT.index));
         elevatorSubsystem = new ElevatorSubsystem(new ElevatorIOTalonFXReal());
-        coralIntakeSubsystem = new CoralIntakeSubsystem(new CoralIntakeIOVortexReal());
+        coralIntakeSubsystem = new CoralIntakeSubsystem(new CoralIntakeIOTalonFXReal());
         wristSubsystem = new WristSubsystem(new WristIOTalonFXReal());
         // algaeIntakeSubsystem = new AlgaeIntakeSubsystem(new AlgaeIntakeIOTalonFXReal());
         climberSubsystem = new ClimberSubsystem(new ClimberIORevServoReal());

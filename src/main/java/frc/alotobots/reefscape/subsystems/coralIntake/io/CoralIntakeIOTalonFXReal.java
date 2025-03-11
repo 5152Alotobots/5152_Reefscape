@@ -80,21 +80,14 @@ public class CoralIntakeIOTalonFXReal implements CoralIntakeIO {
 
     var intakeMotorConfig = new TalonFXConfiguration();
 
-    // PID configuration for velocity mode (Slot 0)
-    // wristMotorConfig.Slot0.kP =
-    // CoralIntakeTalonFXRealConstants.PIDConstants.VelocityPIDConstants.KP;
-    // wristMotorConfig.Slot0.kI =
-    // CoralIntakeTalonFXRealConstants.PIDConstants.VelocityPIDConstants.KI;
-    // wristMotorConfig.Slot0.kD =
-    // CoralIntakeTalonFXRealConstants.PIDConstants.VelocityPIDConstants.KD;
-    // wristMotorConfig.Slot0.kA =
-    // CoralIntakeTalonFXRealConstants.PIDConstants.VelocityPIDConstants.KA;
-    // wristMotorConfig.Slot0.kG =
-    // CoralIntakeTalonFXRealConstants.PIDConstants.VelocityPIDConstants.KG;
-    // wristMotorConfig.Slot0.kS =
-    // CoralIntakeTalonFXRealConstants.PIDConstants.VelocityPIDConstants.KS;
-    // wristMotorConfig.Slot0.kV =
-    // CoralIntakeTalonFXRealConstants.PIDConstants.VelocityPIDConstants.KV;
+    currentPidSlot = intakeMotor.getClosedLoopSlot();
+    intakeAppliedVoltage = intakeMotor.getMotorVoltage();
+    intakeAppliedCurrent = intakeMotor.getStatorCurrent();
+    intakeVelocity = intakeMotor.getVelocity();
+    intakeAcceleration = intakeMotor.getAcceleration();
+    intakePosition = intakeMotor.getPosition();
+    topSoftLimit = intakeMotor.getFault_ForwardSoftLimit();
+    bottomSoftLimit = intakeMotor.getFault_ReverseSoftLimit();
 
     intakeMotorConfig.MotorOutput.NeutralMode =
         CoralIntakeTalonFXRealConstants.MECHANISM_NEUTRAL_MODE;
