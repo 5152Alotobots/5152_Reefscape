@@ -12,6 +12,7 @@
 */
 package frc.alotobots.library.subsystems.vision.oculus;
 
+import static edu.wpi.first.units.Units.Seconds;
 import static frc.alotobots.library.subsystems.vision.oculus.constants.OculusConstants.*;
 import static frc.alotobots.library.subsystems.vision.oculus.util.OculusStatus.*;
 
@@ -359,6 +360,7 @@ public class OculusSubsystem extends SubsystemBase {
   }
 
   public Time getTimestamp() {
-    return inputs.timestamp;
+    // TODO: Implement timesync/latency compensation
+    return Seconds.of(Timer.getTimestamp());
   }
 }

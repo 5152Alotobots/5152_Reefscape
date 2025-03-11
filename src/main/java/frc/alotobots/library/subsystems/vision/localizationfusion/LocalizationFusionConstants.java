@@ -12,18 +12,12 @@
 */
 package frc.alotobots.library.subsystems.vision.localizationfusion;
 
-import edu.wpi.first.math.Matrix;
-import edu.wpi.first.math.VecBuilder;
-import edu.wpi.first.math.numbers.N1;
-import edu.wpi.first.math.numbers.N3;
-
-import java.util.List;
-import java.util.Map;
+import static edu.wpi.first.units.Units.Seconds;
 
 import edu.wpi.first.units.measure.Time;
+import java.util.List;
+import java.util.Map;
 import lombok.experimental.UtilityClass;
-
-import static edu.wpi.first.units.Units.Seconds;
 
 @UtilityClass
 public class LocalizationFusionConstants {
@@ -35,14 +29,12 @@ public class LocalizationFusionConstants {
           LocalizationType.ODOMETRY, 3,
           LocalizationType.NONE, 4);
 
-  /** If the source matches any of these states, automatically fall back to a lower
-   * state if available
-   * */
+  /**
+   * If the source matches any of these states, automatically fall back to a lower state if
+   * available
+   */
   public static final List<LocalizationSourceState> FALLBACK_SOURCE_STATES =
-          List.of(
-                  LocalizationSourceState.FAULT,
-                  LocalizationSourceState.DISABLED
-          );
+      List.of(LocalizationSourceState.FAULT, LocalizationSourceState.DISABLED);
 
   public Time ELASTIC_NOTIFICATION_DURATION = Seconds.of(0.5);
 
@@ -54,6 +46,5 @@ public class LocalizationFusionConstants {
     public static final String AKIT_SOURCE_POSE_PATH = AKIT_BASE_PATH + "/SourcePose";
     public static final String AKIT_SOURCE_STD_DEVS_PATH = AKIT_BASE_PATH + "/SourceStdDevs";
     public static final String AKIT_SOURCE_TIMESTAMP_PATH = AKIT_BASE_PATH + "/SourceTimestamp";
-
   }
 }

@@ -1,3 +1,15 @@
+/*
+* ALOTOBOTS - FRC Team 5152
+  https://github.com/5152Alotobots
+* Copyright (C) 2025 ALOTOBOTS
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* Source code must be publicly available on GitHub or an alternative web accessible site
+*/
 package frc.alotobots.library.subsystems.vision.localizationfusion.sources;
 
 import edu.wpi.first.math.Matrix;
@@ -13,32 +25,34 @@ import frc.alotobots.library.subsystems.vision.oculus.constants.OculusConstants;
 
 public class OculusLocalizationSource extends LocalizationSource {
 
-    private final OculusSubsystem oculusSubsystem;
-    public OculusLocalizationSource(OculusSubsystem oculusSubsystem) {
-        this.oculusSubsystem = oculusSubsystem;
-    }
+  private final OculusSubsystem oculusSubsystem;
 
-    @Override
-    protected Pose2d getRawPose() {
-        return oculusSubsystem.getPose();
-    }
+  public OculusLocalizationSource(OculusSubsystem oculusSubsystem) {
+    this.oculusSubsystem = oculusSubsystem;
+  }
 
-    @Override
-    protected Matrix<N3, N1> getRawStdDevs() {
-        return OculusConstants.OCULUS_STD_DEVS;
-    }
+  @Override
+  protected Pose2d getRawPose() {
+    return oculusSubsystem.getPose();
+  }
 
-    @Override
-    public Time getTimestamp() {
-        return oculusSubsystem.getTimestamp();
-    }
+  @Override
+  protected Matrix<N3, N1> getRawStdDevs() {
+    return OculusConstants.OCULUS_STD_DEVS;
+  }
 
-    @Override
-    public LocalizationSourceState getState() {
-    }
+  @Override
+  public Time getTimestamp() {
+    return oculusSubsystem.getTimestamp();
+  }
 
-    @Override
-    protected LocalizationType getType() {
-        return null;
-    }
+  @Override
+  public LocalizationSourceState getState() {
+    return LocalizationSourceState.DISABLED;
+  }
+
+  @Override
+  protected LocalizationType getType() {
+    return null;
+  }
 }
