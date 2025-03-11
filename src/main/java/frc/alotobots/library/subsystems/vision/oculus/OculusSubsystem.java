@@ -15,15 +15,12 @@ package frc.alotobots.library.subsystems.vision.oculus;
 import static frc.alotobots.library.subsystems.vision.oculus.constants.OculusConstants.*;
 import static frc.alotobots.library.subsystems.vision.oculus.util.OculusStatus.*;
 
-import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.numbers.N1;
-import edu.wpi.first.math.numbers.N3;
+import edu.wpi.first.units.measure.Time;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.alotobots.library.subsystems.vision.localizationfusion.util.PoseSource;
 import frc.alotobots.library.subsystems.vision.oculus.io.OculusIO;
 import frc.alotobots.library.subsystems.vision.oculus.io.OculusIOInputsAutoLogged;
 import lombok.Getter;
@@ -42,7 +39,7 @@ import org.littletonrobotics.junction.Logger;
  * acquisition and alignment 3. Continuous pose updates during match 4. Recovery handling if
  * tracking is lost
  */
-public class OculusSubsystem extends SubsystemBase implements PoseSource {
+public class OculusSubsystem extends SubsystemBase {
   /** Hardware communication interface */
   private final OculusIO io;
 
@@ -357,48 +354,11 @@ public class OculusSubsystem extends SubsystemBase implements PoseSource {
 
   // PoseSource interface implementation
 
-  /**
-   * {@inheritDoc}
-   *
-   * <p>Quest connection is determined by checking if we've received any new Quest timestamp updates
-   * within our timeout window. Small variations in update timing are allowed, only triggering
-   * disconnect on significant delays.
-   */
-  @Override
-  public boolean isConnected() {
-    // If timestamp has changed since last check, update our last update time
-    if (inputs.timestamp != lastTimestamp) {
-      lastQuestUpdateTime = Timer.getTimestamp();
-    }
-
-    // Only consider disconnected if we haven't seen ANY new timestamps
-    // for longer than our timeout period
-    return (Timer.getTimestamp() - lastQuestUpdateTime) < CONNECTION_TIMEOUT;
-  }
-
-  /**
-   * {@inheritDoc}
-   *
-   * <p>Returns field-relative robot pose from Quest SLAM.
-   */
-  @Override
-  public Pose2d getCurrentPose() {
+  public Pose2d getPose() {
     return currentPose;
   }
 
-  /**
-   * {@inheritDoc}
-   *
-   * <p>Returns constant measurement uncertainty for Quest tracking.
-   */
-  @Override
-  public Matrix<N3, N1> getStdDevs() {
-    return OCULUS_STD_DEVS;
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public String getSourceName() {
-    return "Oculus Quest";
+  public Time getTimestamp() {
+    return inputs.timestamp;
   }
 }

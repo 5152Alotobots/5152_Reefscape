@@ -35,14 +35,13 @@ import frc.alotobots.library.subsystems.swervedrive.*;
 import frc.alotobots.library.subsystems.swervedrive.commands.*;
 import frc.alotobots.library.subsystems.swervedrive.io.*;
 import frc.alotobots.library.subsystems.swervedrive.util.PathPlannerManager;
-import frc.alotobots.library.subsystems.vision.localizationfusion.LocalizationFusion;
+// import frc.alotobots.library.subsystems.vision.localizationfusion.LocalizationFusion;
+// import frc.alotobots.library.subsystems.vision.localizationfusion.sources.SingleTagPoseSource;
 import frc.alotobots.library.subsystems.vision.oculus.OculusSubsystem;
 import frc.alotobots.library.subsystems.vision.oculus.io.*;
-import frc.alotobots.library.subsystems.vision.oculus.util.OculusPoseSource;
 import frc.alotobots.library.subsystems.vision.photonvision.apriltag.AprilTagSubsystem;
 import frc.alotobots.library.subsystems.vision.photonvision.apriltag.constants.AprilTagConstants;
 import frc.alotobots.library.subsystems.vision.photonvision.apriltag.io.*;
-import frc.alotobots.library.subsystems.vision.localizationfusion.sources.SingleTagPoseSource;
 import frc.alotobots.reefscape.commands.groups.Climb;
 import frc.alotobots.reefscape.commands.groups.UnClimb;
 import frc.alotobots.reefscape.commands.states.algae.*;
@@ -88,9 +87,9 @@ public class RobotContainer {
   private final CoralIntakeSubsystem coralIntakeSubsystem;
   private final OculusSubsystem oculusSubsystem;
   private final AprilTagSubsystem aprilTagSubsystem;
-  private final LocalizationFusion localizationFusion;
-  private final OculusPoseSource oculusPoseSource;
-  private final SingleTagPoseSource aprilTagPoseSource;
+  //  private final LocalizationFusion localizationFusion;
+  //  private final OculusPoseSource oculusPoseSource;
+  //  private final SingleTagPoseSource aprilTagPoseSource;
   private final BlingSubsystem blingSubsystem;
   private final PathPlannerManager pathPlannerManager;
   private final AutoNamedCommands autoNamedCommands;
@@ -130,16 +129,16 @@ public class RobotContainer {
                     AprilTagConstants.CAMERA_CONFIGS[1], swerveDriveSubsystem::getRotation));
 
         // Create pose sources
-        oculusPoseSource = new OculusPoseSource(oculusSubsystem);
-        aprilTagPoseSource = new SingleTagPoseSource(aprilTagSubsystem);
+        //        oculusPoseSource = new OculusPoseSource(oculusSubsystem);
+        //        aprilTagPoseSource = new SingleTagPoseSource(aprilTagSubsystem);
 
-        localizationFusion =
-            new LocalizationFusion(
-                swerveDriveSubsystem::addVisionMeasurement,
-                oculusPoseSource,
-                aprilTagPoseSource,
-                swerveDriveSubsystem,
-                autoChooser);
+        //        localizationFusion =
+        //            new LocalizationFusion(
+        //                swerveDriveSubsystem::addVisionMeasurement,
+        //                oculusPoseSource,
+        //                aprilTagPoseSource,
+        //                swerveDriveSubsystem,
+        //                autoChooser);
 
         blingSubsystem = new BlingSubsystem(new BlingIOReal());
         break;
@@ -188,15 +187,15 @@ public class RobotContainer {
                     AprilTagConstants.CAMERA_CONFIGS[1], swerveDriveSubsystem::getPose));
 
         // Create pose sources
-        oculusPoseSource = new OculusPoseSource(oculusSubsystem);
-        aprilTagPoseSource = new SingleTagPoseSource(aprilTagSubsystem);
-        localizationFusion =
-            new LocalizationFusion(
-                swerveDriveSubsystem::addVisionMeasurement,
-                oculusPoseSource,
-                aprilTagPoseSource,
-                swerveDriveSubsystem,
-                autoChooser);
+        //        oculusPoseSource = new OculusPoseSource(oculusSubsystem);
+        //        aprilTagPoseSource = new SingleTagPoseSource(aprilTagSubsystem);
+        //        localizationFusion =
+        //            new LocalizationFusion(
+        //                swerveDriveSubsystem::addVisionMeasurement,
+        //                oculusPoseSource,
+        //                aprilTagPoseSource,
+        //                swerveDriveSubsystem,
+        //                autoChooser);
 
         blingSubsystem = new BlingSubsystem(new BlingIOSim());
         break;
@@ -226,15 +225,15 @@ public class RobotContainer {
         aprilTagSubsystem = new AprilTagSubsystem(new AprilTagIO() {}, new AprilTagIO() {});
 
         // Create pose sources
-        oculusPoseSource = new OculusPoseSource(oculusSubsystem);
-        aprilTagPoseSource = new SingleTagPoseSource(aprilTagSubsystem);
-        localizationFusion =
-            new LocalizationFusion(
-                swerveDriveSubsystem::addVisionMeasurement,
-                oculusPoseSource,
-                aprilTagPoseSource,
-                swerveDriveSubsystem,
-                autoChooser);
+        //        oculusPoseSource = new OculusPoseSource(oculusSubsystem);
+        //        aprilTagPoseSource = new SingleTagPoseSource(aprilTagSubsystem);
+        //        localizationFusion =
+        //            new LocalizationFusion(
+        //                swerveDriveSubsystem::addVisionMeasurement,
+        //                oculusPoseSource,
+        //                aprilTagPoseSource,
+        //                swerveDriveSubsystem,
+        //                autoChooser);
 
         blingSubsystem = new BlingSubsystem(new BlingIO() {});
         break;
