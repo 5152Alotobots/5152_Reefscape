@@ -74,6 +74,7 @@ public class WristSubsystem extends SubsystemBase {
   public void runToTargetAngle(Angle angle, boolean hasAlgae) {
     io.setWristPositionMotionMagic(angle, ControlType.ClosedLoop.POSITION.ordinal());
     Logger.recordOutput("Wrist/ControlType", ControlType.ClosedLoop.POSITION);
+    Logger.recordOutput("Wrist/TargetAngle", targetAngle.in(Degrees));
   }
 
   /**

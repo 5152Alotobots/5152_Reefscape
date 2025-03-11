@@ -12,95 +12,227 @@
 */
 package frc.alotobots.reefscape.subsystems.wrist.io;
 
-import static edu.wpi.first.units.Units.*;
+import static edu.wpi.first.units.Units.Amps;
+import static edu.wpi.first.units.Units.Degree;
+import static edu.wpi.first.units.Units.Radians;
+import static edu.wpi.first.units.Units.RadiansPerSecond;
+import static edu.wpi.first.units.Units.Rotations;
+import static edu.wpi.first.units.Units.RotationsPerSecond;
+import static edu.wpi.first.units.Units.RotationsPerSecondPerSecond;
+import static edu.wpi.first.units.Units.Volts;
+import static frc.alotobots.Constants.CanId.WRIST_ENCODER_CAN_ID;
+import static frc.alotobots.Constants.CanId.WRIST_MOTOR_CAN_ID;
 import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.Limits.MAX_ANGLE;
 import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.Limits.MIN_ANGLE;
-import static frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXSimConstants.*;
+import static frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXSimConstants.ARM_LENGTH;
+import static frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXSimConstants.ENCODER_DIRECTION;
+import static frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXSimConstants.ENCODER_MAGNET_OFFSET;
+import static frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXSimConstants.INERTIA_KGM2;
+import static frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXSimConstants.MOTOR_DIRECTION;
+import static frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXSimConstants.ROTOR_TO_SENSOR_RATIO;
+import static frc.alotobots.util.PhoenixUtil.tryUntilOk;
 
-import edu.wpi.first.math.geometry.Rotation2d;
+import com.ctre.phoenix6.configs.CANcoderConfiguration;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.DutyCycleOut;
+import com.ctre.phoenix6.controls.MotionMagicVoltage;
+import com.ctre.phoenix6.controls.PositionVoltage;
+import com.ctre.phoenix6.controls.VelocityVoltage;
+import com.ctre.phoenix6.hardware.CANcoder;
+import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.GravityTypeValue;
+import com.ctre.phoenix6.sim.TalonFXSimState;
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.util.Color8Bit;
+import frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXRealConstants;
+import frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXSimConstants.MotionMagicConstants;
 import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.mechanism.LoggedMechanism2d;
 import org.littletonrobotics.junction.mechanism.LoggedMechanismLigament2d;
 
 /**
- * Simulated implementation of the WristIO interface. Uses WPILib's SingleJointedArmSim for physics
- * simulation and visualization.
+ * Hardware implementation of the WristIO interface using TalonFX motor controller and CANCoder for
+ * real robot operation. This class manages the physical wrist mechanism, handling motor control,
+ * position sensing, and safety limits.
  */
 public class WristIOTalonFXSim implements WristIO {
-  /** Physics simulation of the wrist mechanism */
-  private final SingleJointedArmSim wristSim;
 
-  /** Visualization of the wrist mechanism */
-  @AutoLogOutput private final LoggedMechanism2d wristMech = new LoggedMechanism2d(3, 3);
+  private final TalonFX wristTalon = new TalonFX(WRIST_MOTOR_CAN_ID);
+  private final CANcoder wristEncoder = new CANcoder(WRIST_ENCODER_CAN_ID);
 
-  /** Visual representation of the wrist arm */
-  private final LoggedMechanismLigament2d wristArm =
-      new LoggedMechanismLigament2d("wrist", 0.5, 180, 6, new Color8Bit(Color.kPurple));
+  private final PositionVoltage positionVoltage = new PositionVoltage(0);
+  private final MotionMagicVoltage magicPositionVoltage = new MotionMagicVoltage(0);
+  private final VelocityVoltage velocityVoltage = new VelocityVoltage(0);
+  private final DutyCycleOut dutyCycleOut = new DutyCycleOut(0);
 
-  /** Simulated Falcon 500 motor */
   private final DCMotor motor = DCMotor.getFalcon500(1);
+  private final TalonFXSimState motorSim = wristTalon.getSimState();
 
-  /** Current applied voltage to the simulated motor */
-  private double appliedVolts = 0.0;
+  private final SingleJointedArmSim wristSim =
+      new SingleJointedArmSim(
+          motor,
+          ROTOR_TO_SENSOR_RATIO,
+          INERTIA_KGM2,
+          ARM_LENGTH,
+          0,
+          MAX_ANGLE.in(Radians),
+          true,
+          MIN_ANGLE.in(Radians));
 
-  /** Current active PID slot */
-  private int currentPidSlot = 0;
-
-  /** Current brake mode state */
-  private boolean brakeMode = true;
+  @AutoLogOutput private final LoggedMechanism2d wristMechanism = new LoggedMechanism2d(3, 3);
+  private final LoggedMechanismLigament2d wristLigament =
+      wristMechanism
+          .getRoot("Wrist", 1.5, 1.5)
+          .append(
+              new LoggedMechanismLigament2d(
+                  "Wrist",
+                  ARM_LENGTH,
+                  180 + Math.toDegrees(wristSim.getAngleRads()),
+                  6,
+                  new Color8Bit(Color.kYellow)));
 
   /**
-   * Creates a new WristIOTalonFXSim with a simulated wrist mechanism. Configures the physics
-   * simulation and visualization.
+   * Creates a new WristIOTalonFXReal instance and configures all motor controller and encoder
+   * settings. This includes PID configurations, software limits, current limits, and sensor
+   * settings.
    */
   public WristIOTalonFXSim() {
-    wristMech.getRoot("wrist", 1.5, 1.5).append(wristArm);
+    var wristMotorConfig = new TalonFXConfiguration();
 
-    wristSim =
-        new SingleJointedArmSim(
-            motor, ROTOR_TO_SENSOR_RATIO, INERTIA_KGM2, ARM_LENGTH, 0, 2 * Math.PI, true, 0);
+    configPIDgains(wristMotorConfig);
+
+    wristMotorConfig.MotorOutput.NeutralMode = WristTalonFXRealConstants.MECHANISM_NEUTRAL_MODE;
+
+    wristMotorConfig.SoftwareLimitSwitch.ForwardSoftLimitEnable = false;
+    wristMotorConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = false;
+    wristMotorConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = MAX_ANGLE.in(Rotations);
+    wristMotorConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = MIN_ANGLE.in(Rotations);
+
+    wristMotorConfig.MotorOutput.Inverted = MOTOR_DIRECTION;
+
+    wristMotorConfig.MotionMagic.MotionMagicCruiseVelocity =
+        MotionMagicConstants.CRUISE_VELOCITY.in(RotationsPerSecond);
+    wristMotorConfig.MotionMagic.MotionMagicAcceleration =
+        MotionMagicConstants.ACCELERATION.in(RotationsPerSecondPerSecond);
+    wristMotorConfig.MotionMagic.MotionMagicJerk = MotionMagicConstants.JERK;
+
+    tryUntilOk(5, () -> wristTalon.getConfigurator().apply(wristMotorConfig, 0.25));
+
+    var wristEncoderConfig = new CANcoderConfiguration();
+
+    wristEncoderConfig.MagnetSensor.MagnetOffset = ENCODER_MAGNET_OFFSET;
+    wristEncoderConfig.MagnetSensor.SensorDirection = ENCODER_DIRECTION;
+
+    tryUntilOk(5, () -> wristEncoder.getConfigurator().apply(wristEncoderConfig, 0.25));
   }
 
+  private void configPIDgains(TalonFXConfiguration wristMotorConfig) {
+    // PID configuration for velocity mode (Slot 0)
+    wristMotorConfig.Slot0.kP = WristTalonFXRealConstants.PIDConstants.VelocityPIDConstants.KP;
+    wristMotorConfig.Slot0.kI = WristTalonFXRealConstants.PIDConstants.VelocityPIDConstants.KI;
+    wristMotorConfig.Slot0.kD = WristTalonFXRealConstants.PIDConstants.VelocityPIDConstants.KD;
+    wristMotorConfig.Slot0.GravityType = GravityTypeValue.Arm_Cosine;
+    wristMotorConfig.Slot0.kA = WristTalonFXRealConstants.PIDConstants.VelocityPIDConstants.KA;
+    wristMotorConfig.Slot0.kG = WristTalonFXRealConstants.PIDConstants.VelocityPIDConstants.KG;
+    wristMotorConfig.Slot0.kS = WristTalonFXRealConstants.PIDConstants.VelocityPIDConstants.KS;
+    wristMotorConfig.Slot0.kV = WristTalonFXRealConstants.PIDConstants.VelocityPIDConstants.KV;
+
+    // PID configuration for position mode (Slot 1)
+    wristMotorConfig.Slot1.kP = WristTalonFXRealConstants.PIDConstants.PositionPIDConstants.KP;
+    wristMotorConfig.Slot1.kI = WristTalonFXRealConstants.PIDConstants.PositionPIDConstants.KI;
+    wristMotorConfig.Slot1.kD = WristTalonFXRealConstants.PIDConstants.PositionPIDConstants.KD;
+    wristMotorConfig.Slot1.GravityType = GravityTypeValue.Arm_Cosine;
+    wristMotorConfig.Slot1.kA = WristTalonFXRealConstants.PIDConstants.PositionPIDConstants.KA;
+    wristMotorConfig.Slot1.kG = WristTalonFXRealConstants.PIDConstants.PositionPIDConstants.KG;
+    wristMotorConfig.Slot1.kS = WristTalonFXRealConstants.PIDConstants.PositionPIDConstants.KS;
+    wristMotorConfig.Slot1.kV = WristTalonFXRealConstants.PIDConstants.PositionPIDConstants.KV;
+  }
+
+  /**
+   * Updates the input values for the wrist subsystem by reading the latest status from hardware.
+   * This includes position, velocity, current, voltage, and limit switch states.
+   *
+   * @param inputs The WristIOInputs object to update with the latest hardware state
+   */
   @Override
   public void updateInputs(WristIOInputs inputs) {
-    // Update physics simulation
-    wristSim.update(0.2);
 
-    // Update inputs with simulated values
-    inputs.motorConnected = true;
-    inputs.topLimit = wristSim.getAngleRads() >= MAX_ANGLE.in(Radians);
-    inputs.bottomLimit = wristSim.getAngleRads() <= MIN_ANGLE.in(Radians);
+    wristSim.setInputVoltage(motorSim.getMotorVoltage());
+    wristSim.update(0.02); // Assuming 20ms update rate
+
+    // Sync motor simulation with arm simulation
+    motorSim.setRawRotorPosition(wristSim.getAngleRads());
+    motorSim.setRotorVelocity(wristSim.getVelocityRadPerSec());
+
+    // Update all input values
+    inputs.motorAppliedVolts = Volts.of(motorSim.getMotorVoltage());
+    inputs.motorCurrent = Amps.of(motorSim.getTorqueCurrent());
     inputs.rotationVelocity = RadiansPerSecond.of(wristSim.getVelocityRadPerSec());
-    inputs.motorAppliedVolts = Volts.of(appliedVolts);
     inputs.mechanismAngle = Radians.of(wristSim.getAngleRads());
-    inputs.pidSlot = currentPidSlot;
-    inputs.motorCurrent = Amps.of(wristSim.getCurrentDrawAmps());
+    inputs.topLimit = wristSim.getAngleRads() >= MIN_ANGLE.in(Radians);
+    inputs.bottomLimit = wristSim.getAngleRads() <= MAX_ANGLE.in(Radians);
 
-    // Update visualization
-    wristArm.setAngle(Rotation2d.fromDegrees(inputs.mechanismAngle.in(Degree)));
+    wristLigament.setAngle(Math.toDegrees(wristSim.getAngleRads()));
   }
 
+  /**
+   * Sets the wrist to a target position using closed-loop control.
+   *
+   * @param rotation The target angle to move to
+   * @param pidSlot The PID slot to use (0 for velocity, 1 for position)
+   */
   @Override
-  public void setWristOpenLoop(double percentOutput) {
-    appliedVolts = percentOutput * 13.0;
-    wristSim.setInputVoltage(appliedVolts);
+  public void setWristPosition(Angle rotation, int pidSlot) {
+    var boundedRotation =
+        MathUtil.clamp(rotation.in(Degree), MAX_ANGLE.in(Degree), MIN_ANGLE.in(Degree));
+
+    // Set up the request with appropriate limits
+    wristTalon.setControl(positionVoltage.withPosition(boundedRotation).withSlot(pidSlot));
   }
 
+  /**
+   * Sets the wrist to a target position using closed-loop control and motion magic.
+   *
+   * @param position The target angle to move to
+   * @param pidSlot The PID slot to use (0 for velocity, 1 for position)
+   */
+  @Override
+  public void setWristPositionMotionMagic(Angle position, int pidSlot) {
+
+    // Set up the request with appropriate limits
+    wristTalon.setControl(magicPositionVoltage.withPosition(position).withSlot(pidSlot));
+  }
+
+  /**
+   * Sets the wrist to run at a target velocity using closed-loop control.
+   *
+   * @param velocity The target velocity to move at
+   * @param pidSlot The PID slot to use (0 for velocity, 1 for position)
+   */
   @Override
   public void setWristVelocity(AngularVelocity velocity, int pidSlot) {
 
-    var vel = velocity.in(RotationsPerSecond);
-    wristSim.setInputVoltage(.50 * 13);
+    wristTalon.setControl(velocityVoltage.withVelocity(velocity).withSlot(pidSlot));
   }
 
+  /**
+   * Sets the wrist motor to run in open-loop mode at a specified percentage of maximum output.
+   *
+   * @param percentOutput The motor output percentage (-1.0 to 1.0)
+   */
+  @Override
+  public void setWristOpenLoop(double percentOutput) {
+    wristTalon.setControl(dutyCycleOut.withOutput(percentOutput));
+  }
+
+  /** Stops the wrist motor by setting the motor output to zero. */
   @Override
   public void stop() {
-    appliedVolts = 0.0;
-    wristSim.setInputVoltage(0.0);
+    wristTalon.stopMotor();
   }
 }

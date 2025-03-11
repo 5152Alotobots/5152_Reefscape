@@ -12,18 +12,26 @@
 */
 package frc.alotobots.reefscape.subsystems.elevator.io;
 
-import static edu.wpi.first.units.Units.*;
+import static edu.wpi.first.units.Units.Amps;
+import static edu.wpi.first.units.Units.Meters;
+import static edu.wpi.first.units.Units.MetersPerSecond;
+import static edu.wpi.first.units.Units.MetersPerSecondPerSecond;
+import static edu.wpi.first.units.Units.Rotations;
+import static edu.wpi.first.units.Units.RotationsPerSecond;
+import static edu.wpi.first.units.Units.RotationsPerSecondPerSecond;
+import static edu.wpi.first.units.Units.Volts;
 import static frc.alotobots.Constants.CanId.LEFT_ELEVATOR_CAN_ID;
 import static frc.alotobots.Constants.CanId.RIGHT_ELEVATOR_CAN_ID;
-import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.Limits.*;
 import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.Limits.LIMITS_ENABLED;
-import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorTalonFXRealConstants.*;
-import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorTalonFXRealConstants.MotorSafetyLimits.*;
-import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorTalonFXSimConstants.HardwareConstants.*;
+import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.Limits.MAX_HEIGHT;
+import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.Limits.MIN_HEIGHT;
+import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorTalonFXRealConstants.HEIGHT_PER_ROTATION;
+import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorTalonFXRealConstants.MECHANISM_NEUTRAL_MODE;
+import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorTalonFXSimConstants.HardwareConstants.ELEVATOR_MASS_KG;
+import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorTalonFXSimConstants.HardwareConstants.GEAR_RATIO;
+import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorTalonFXSimConstants.HardwareConstants.PULLEY_RADIUS_M;
 import static frc.alotobots.util.PhoenixUtil.tryUntilOk;
 
-import com.ctre.phoenix6.BaseStatusSignal;
-import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
@@ -36,10 +44,21 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.sim.ChassisReference;
 import com.ctre.phoenix6.sim.TalonFXSimState;
 import edu.wpi.first.math.system.plant.DCMotor;
-import edu.wpi.first.units.measure.*;
+import edu.wpi.first.units.measure.Angle;
+import edu.wpi.first.units.measure.AngularAcceleration;
+import edu.wpi.first.units.measure.AngularVelocity;
+import edu.wpi.first.units.measure.Distance;
+import edu.wpi.first.units.measure.LinearAcceleration;
+import edu.wpi.first.units.measure.LinearVelocity;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.simulation.ElevatorSim;
-import org.littletonrobotics.junction.Logger;
+import edu.wpi.first.wpilibj.util.Color8Bit;
+import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorTalonFXRealConstants.MotionMagicConstants;
+import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorTalonFXRealConstants.PIDConstants;
+import org.littletonrobotics.junction.AutoLogOutput;
+import org.littletonrobotics.junction.mechanism.LoggedMechanism2d;
+import org.littletonrobotics.junction.mechanism.LoggedMechanismLigament2d;
+import org.littletonrobotics.junction.mechanism.LoggedMechanismRoot2d;
 
 /** Motor Control Types */
 public class ElevatorIOTalonFXSim implements ElevatorIO {
@@ -47,32 +66,30 @@ public class ElevatorIOTalonFXSim implements ElevatorIO {
   private final MotionMagicVoltage magicPositionVoltage = new MotionMagicVoltage(0.0);
   private final VelocityVoltage velocityVoltage = new VelocityVoltage(0.0);
 
-  private final ElevatorSim elevatorSim;
-  private final DCMotor motors = DCMotor.getFalcon500(2);
   private final TalonFX leftTalon = new TalonFX(LEFT_ELEVATOR_CAN_ID);
   private final TalonFX rightTalon = new TalonFX(RIGHT_ELEVATOR_CAN_ID);
 
-  private final StatusSignal<Integer> currentPidSlot;
-  private final StatusSignal<Voltage> leftAppliedVoltage;
-  private final StatusSignal<Current> leftAppliedCurrent;
-  private final StatusSignal<AngularVelocity> leftVelocity;
-  private final StatusSignal<AngularAcceleration> leftAcceleration;
-  private final StatusSignal<Angle> leftPosition;
-  private final StatusSignal<Voltage> rightAppliedVoltage;
-  private final StatusSignal<Current> rightAppliedCurrent;
-  private final StatusSignal<AngularVelocity> rightVelocity;
-  private final StatusSignal<AngularAcceleration> rightAcceleration;
-  private final StatusSignal<Angle> rightPosition;
-  private final StatusSignal<Boolean> topSoftLimit;
-  private final StatusSignal<Boolean> bottomSoftLimit;
-
+  private final DCMotor motors = DCMotor.getFalcon500(2);
+  private final ElevatorSim elevatorSim =
+      new ElevatorSim(
+          motors,
+          GEAR_RATIO,
+          ELEVATOR_MASS_KG,
+          PULLEY_RADIUS_M, // Convert circumference to radius
+          MIN_HEIGHT.in(Meters),
+          MAX_HEIGHT.in(Meters),
+          true,
+          0.0);
   private final TalonFXSimState leftSim = leftTalon.getSimState();
   private final TalonFXSimState rightSim = rightTalon.getSimState();
+
+  @AutoLogOutput private final LoggedMechanism2d elevatorMech = new LoggedMechanism2d(3, 3);
+  private final LoggedMechanismRoot2d elevatorRoot = elevatorMech.getRoot("Elevator", 1, 0);
+  private final LoggedMechanismLigament2d elevatorLigament;
 
   public ElevatorIOTalonFXSim() {
     // Left motor config
     var leftConfig = new TalonFXConfiguration();
-
     configPIDGains(leftConfig);
 
     leftConfig.MotorOutput.NeutralMode = MECHANISM_NEUTRAL_MODE;
@@ -93,61 +110,16 @@ public class ElevatorIOTalonFXSim implements ElevatorIO {
             .in(RotationsPerSecondPerSecond);
     leftConfig.MotionMagic.MotionMagicJerk = MotionMagicConstants.JERK;
 
-    // Apply config to left motor
     tryUntilOk(5, () -> leftTalon.getConfigurator().apply(leftConfig, 0.25));
-
-    // Set right motor to be inverted follower
     tryUntilOk(5, () -> rightTalon.setControl(new Follower(leftTalon.getDeviceID(), true)));
 
-    leftSim.Orientation = ChassisReference.Clockwise_Positive;
-    rightSim.Orientation = ChassisReference.CounterClockwise_Positive;
+    leftSim.Orientation = ChassisReference.CounterClockwise_Positive;
+    rightSim.Orientation = ChassisReference.Clockwise_Positive;
 
-    currentPidSlot = leftTalon.getClosedLoopSlot();
+    elevatorLigament =
+        elevatorRoot.append(new LoggedMechanismLigament2d("Elevator", MIN_HEIGHT.in(Meters), 90));
 
-    leftPosition = leftTalon.getPosition();
-    rightPosition = rightTalon.getPosition();
-
-    leftVelocity = leftTalon.getVelocity();
-    rightVelocity = rightTalon.getVelocity();
-
-    leftAcceleration = leftTalon.getAcceleration();
-    rightAcceleration = rightTalon.getAcceleration();
-
-    leftAppliedVoltage = leftTalon.getMotorVoltage();
-    rightAppliedVoltage = rightTalon.getMotorVoltage();
-
-    leftAppliedCurrent = leftTalon.getStatorCurrent();
-    rightAppliedCurrent = rightTalon.getStatorCurrent();
-
-    topSoftLimit = leftTalon.getFault_ForwardSoftLimit();
-    bottomSoftLimit = leftTalon.getFault_ReverseSoftLimit();
-
-    BaseStatusSignal.setUpdateFrequencyForAll(
-        50.0,
-        leftPosition,
-        rightPosition,
-        leftVelocity,
-        rightVelocity,
-        leftAcceleration,
-        rightAcceleration,
-        leftAppliedVoltage,
-        rightAppliedVoltage,
-        leftAppliedCurrent,
-        rightAppliedCurrent,
-        topSoftLimit,
-        bottomSoftLimit,
-        currentPidSlot);
-
-    elevatorSim =
-        new ElevatorSim(
-            motors,
-            GEAR_RATIO,
-            ELEVATOR_MASS_KG,
-            PULLEY_RADIUS_M, // Convert circumference to radius
-            MIN_HEIGHT.in(Meters),
-            MAX_HEIGHT.in(Meters),
-            true,
-            0.0);
+    elevatorLigament.setColor(new Color8Bit(0, 255, 0));
   }
 
   private static void configPIDGains(TalonFXConfiguration leftConfig) {
@@ -189,56 +161,42 @@ public class ElevatorIOTalonFXSim implements ElevatorIO {
 
     elevatorSim.update(0.02); // 50Hz simulation rate
 
-    double[] motorVoltage = {leftSim.getMotorVoltage() /*, rightSim.getMotorVoltage()*/};
-    elevatorSim.setInput(motorVoltage);
-
-    BaseStatusSignal.refreshAll(
-        leftPosition,
-        leftVelocity,
-        leftAcceleration,
-        leftAppliedVoltage,
-        leftAppliedCurrent,
-        topSoftLimit,
-        bottomSoftLimit);
-    BaseStatusSignal.refreshAll(
-        rightPosition, rightVelocity, rightAcceleration, rightAppliedVoltage, rightAppliedCurrent);
-
-    inputs.currentPidSlot = currentPidSlot.getValue();
+    elevatorSim.setInput(leftSim.getMotorVoltage());
 
     // Connected status
     inputs.leftMotorConnected = true;
     inputs.rightMotorConnected = true;
 
     // Limits
-    inputs.topLimit = topSoftLimit.getValue();
-    inputs.bottomLimit = bottomSoftLimit.getValue();
+    inputs.topLimit = elevatorSim.getPositionMeters() > MAX_HEIGHT.in(Meters);
+    inputs.bottomLimit = elevatorSim.getPositionMeters() < MIN_HEIGHT.in(Meters);
 
     // Positions
-    inputs.leftHeight = talonFXToHeight(leftPosition.getValue());
-    inputs.rightHeight = talonFXToHeight(rightPosition.getValue());
-    inputs.leftMotorAngle = leftPosition.getValue();
-    inputs.rightMotorAngle = rightPosition.getValue();
+    inputs.leftHeight = Meters.of(elevatorSim.getPositionMeters());
+    inputs.rightHeight = Meters.of(elevatorSim.getPositionMeters());
+    inputs.leftMotorAngle = heightToTalonFX(Meters.of(elevatorSim.getPositionMeters()));
+    inputs.rightMotorAngle = heightToTalonFX(Meters.of(elevatorSim.getPositionMeters()));
 
     // Velocities
-    inputs.leftVelocity = talonFXToLinearVelocity(leftVelocity.getValue());
-    inputs.rightVelocity = talonFXToLinearVelocity(rightVelocity.getValue());
-
-    // Acceleration
-    inputs.leftAcceleration = talonFXToLinearAcceleration(leftAcceleration.getValue());
-    inputs.rightAcceleration = talonFXToLinearAcceleration(rightAcceleration.getValue());
+    inputs.leftVelocity = MetersPerSecond.of(elevatorSim.getVelocityMetersPerSecond());
+    inputs.rightVelocity = MetersPerSecond.of(elevatorSim.getVelocityMetersPerSecond());
 
     // Volts
-    inputs.leftAppliedVolts = leftAppliedVoltage.getValue();
-    inputs.rightAppliedVolts = rightAppliedVoltage.getValue();
+    inputs.leftAppliedVolts = Volts.of(leftSim.getMotorVoltage());
+    inputs.rightAppliedVolts = Volts.of(rightSim.getMotorVoltage());
 
     // Amps
-    inputs.leftCurrentAmps = leftAppliedCurrent.getValue();
-    inputs.rightCurrentAmps = rightAppliedCurrent.getValue();
+    inputs.leftCurrentAmps = Amps.of(leftSim.getTorqueCurrent());
+    inputs.rightCurrentAmps = Amps.of(rightSim.getTorqueCurrent());
 
-    Logger.recordOutput("ElevatorSim/Height", elevatorSim.getPositionMeters());
-    Logger.recordOutput("ElevatorSim/Input", elevatorSim.getInput());
-    Logger.recordOutput("ElevatorSim/Velocity", elevatorSim.getVelocityMetersPerSecond());
-    Logger.recordOutput("ElevatorSim/Current", elevatorSim.getCurrentDrawAmps());
+    leftSim.setRawRotorPosition(heightToTalonFX(Meters.of(elevatorSim.getPositionMeters())));
+    rightSim.setRawRotorPosition(heightToTalonFX(Meters.of(elevatorSim.getPositionMeters())));
+    leftSim.setRotorVelocity(
+        linearVelocityToTalonFX(MetersPerSecond.of(elevatorSim.getVelocityMetersPerSecond())));
+    rightSim.setRotorVelocity(
+        linearVelocityToTalonFX(MetersPerSecond.of(elevatorSim.getVelocityMetersPerSecond())));
+
+    elevatorLigament.setLength(elevatorSim.getPositionMeters());
   }
 
   /**

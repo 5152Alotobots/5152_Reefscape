@@ -112,9 +112,9 @@ public final class ElevatorTalonFXSimConstants {
   }
 
   public static final class HardwareConstants {
-    public static final double GEAR_RATIO = 10.0;
-    public static final double PULLEY_RADIUS_M = 0.016;
-    public static final double ELEVATOR_MASS_KG = 2.36;
+    public static final double GEAR_RATIO = 15.0;
+    public static final double PULLEY_RADIUS_M = 0.023;
+    public static final double ELEVATOR_MASS_KG = 5;
   }
 
   /** Contains safety limit constants for the elevator motors. */
