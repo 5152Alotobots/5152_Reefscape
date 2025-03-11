@@ -130,7 +130,7 @@ public class CoralIntakeIOTalonFXReal implements CoralIntakeIO {
     // Connected Status
     inputs.intakeOccupied = intakeOccupied.getValue();
     inputs.canRangeConnected = canRangeConnectedDebounce.calculate(canRangeSignals.isOK());
-    inputs.motorConnected = intakeMotor.isConnected();
+    inputs.motorConnected = motorConnectedDebounce.calculate(intakeMotor.isConnected());
     // Positions
     inputs.intakeOccupied = intakeOccupied.getValue();
 
