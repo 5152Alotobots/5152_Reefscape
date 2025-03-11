@@ -21,8 +21,7 @@ import java.util.function.DoubleSupplier;
 
 /**
  * Command that runs the intake in reverse (negative output) to eject game pieces out the front.
- * Runs until manually canceled. The speed is
- * clamped to the maximum allowed eject percentage.
+ * Runs until manually canceled. The speed is clamped to the maximum allowed eject percentage.
  */
 public class CoralIntakeEjectManual extends Command {
   /** The coral intake subsystem being controlled */

@@ -19,7 +19,6 @@ import static edu.wpi.first.units.Units.MetersPerSecondPerSecond;
 import static edu.wpi.first.units.Units.Rotations;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
 import static edu.wpi.first.units.Units.RotationsPerSecondPerSecond;
-import static frc.alotobots.Constants.CanId.ELEVATOR_CANRANGE_ID;
 import static frc.alotobots.Constants.CanId.LEFT_ELEVATOR_CAN_ID;
 import static frc.alotobots.Constants.CanId.RIGHT_ELEVATOR_CAN_ID;
 import static frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants.Limits.LIMITS_ENABLED;
@@ -39,7 +38,6 @@ import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.controls.VelocityVoltage;
-import com.ctre.phoenix6.hardware.CANrange;
 import com.ctre.phoenix6.hardware.ParentDevice;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
@@ -72,70 +70,32 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
   /** The follower TalonFX motor controller for the elevator */
   private final TalonFX rightTalon;
 
-  /** The CANRange sensor for absolute position feedback */
-  private final CANrange canRange;
-
-  /** Position voltage control request for standard position-based control */
+  /** Motor Control Types */
   private final PositionVoltage positionVoltage = new PositionVoltage(0.0);
 
   private final MotionMagicVoltage magicPositionVoltage = new MotionMagicVoltage(0.0);
-
-  /** Velocity voltage control request for standard velocity-based control */
   private final VelocityVoltage velocityVoltage = new VelocityVoltage(0.0);
 
-  /** Status signal for the current PID slot */
+  /** Status signals updated every io update */
   private final StatusSignal<Integer> currentPidSlot;
 
-  /** Status signal for the left motor's applied voltage */
   private final StatusSignal<Voltage> leftAppliedVoltage;
-
-  /** Status signal for the left motor's applied current */
   private final StatusSignal<Current> leftAppliedCurrent;
-
-  /** Status signal for the left motor's velocity */
   private final StatusSignal<AngularVelocity> leftVelocity;
-
-  /** Status signal for the left motor's acceleration */
   private final StatusSignal<AngularAcceleration> leftAcceleration;
-
-  /** Status signal for the left motor's position */
   private final StatusSignal<Angle> leftPosition;
-
-  /** Status signal for the right motor's applied voltage */
   private final StatusSignal<Voltage> rightAppliedVoltage;
-
-  /** Status signal for the right motor's applied current */
   private final StatusSignal<Current> rightAppliedCurrent;
-
-  /** Status signal for the right motor's velocity */
   private final StatusSignal<AngularVelocity> rightVelocity;
-
-  /** Status signal for the right motor's acceleration */
   private final StatusSignal<AngularAcceleration> rightAcceleration;
-
-  /** Status signal for the right motor's position */
   private final StatusSignal<Angle> rightPosition;
-
-  /** Status signal for the CANRange's absolute position measurement */
-  private final StatusSignal<Distance> canRangeDistance;
-
-  /** Status signal for the CANRange's proximity sensor */
-  private final StatusSignal<Boolean> canRangeInProximity;
-
-  /** Status signal indicating if the top soft limit is reached */
   private final StatusSignal<Boolean> topSoftLimit;
-
-  /** Status signal indicating if the bottom soft limit is reached */
   private final StatusSignal<Boolean> bottomSoftLimit;
 
-  /** Debouncer for filtering left motor connection status */
+  /** Debounce for motor connection status */
   private final Debouncer leftConnectedDebounce = new Debouncer(0.5);
 
-  /** Debouncer for filtering right motor connection status */
   private final Debouncer rightConnectedDebounce = new Debouncer(0.5);
-
-  /** Debouncer for filtering CANcoder connection status */
-  private final Debouncer cancoderConnectedDebounce = new Debouncer(0.5);
 
   /**
    * Constructs a new ElevatorIOTalonFXReal instance. Initializes and configures the TalonFX motors
@@ -145,7 +105,6 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
   public ElevatorIOTalonFXReal() {
     leftTalon = new TalonFX(LEFT_ELEVATOR_CAN_ID);
     rightTalon = new TalonFX(RIGHT_ELEVATOR_CAN_ID);
-    canRange = new CANrange(ELEVATOR_CANRANGE_ID);
 
     // Left motor config
     var leftConfig = new TalonFXConfiguration();
@@ -221,14 +180,10 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
     canRangeConfig.ProximityParams.ProximityThreshold = .154;
     canRangeConfig.ProximityParams.ProximityHysteresis = .001;
 
-    // Apply config to CANRange
-    tryUntilOk(5, () -> canRange.getConfigurator().apply(canRangeConfig, 0.25));
-
     currentPidSlot = leftTalon.getClosedLoopSlot();
 
     leftPosition = leftTalon.getPosition();
     rightPosition = rightTalon.getPosition();
-    canRangeDistance = canRange.getDistance();
 
     leftVelocity = leftTalon.getVelocity();
     rightVelocity = rightTalon.getVelocity();
@@ -245,13 +200,10 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
     topSoftLimit = leftTalon.getFault_ForwardSoftLimit();
     bottomSoftLimit = leftTalon.getFault_ReverseSoftLimit();
 
-    canRangeInProximity = canRange.getIsDetected();
-
     BaseStatusSignal.setUpdateFrequencyForAll(
         50.0,
         leftPosition,
         rightPosition,
-        canRangeDistance,
         leftVelocity,
         rightVelocity,
         leftAcceleration,
@@ -262,9 +214,8 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
         rightAppliedCurrent,
         topSoftLimit,
         bottomSoftLimit,
-        currentPidSlot,
-        canRangeInProximity);
-    ParentDevice.optimizeBusUtilizationForAll(leftTalon, rightTalon, canRange);
+        currentPidSlot);
+    ParentDevice.optimizeBusUtilizationForAll(leftTalon, rightTalon);
   }
 
   /**
@@ -275,6 +226,7 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
    */
   @Override
   public void updateInputs(ElevatorIOInputs inputs) {
+    // Update Status Signals
     var leftSignals =
         BaseStatusSignal.refreshAll(
             leftPosition,
@@ -291,15 +243,13 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
             rightAcceleration,
             rightAppliedVoltage,
             rightAppliedCurrent);
-    var canRangeSignals = BaseStatusSignal.refreshAll(canRangeDistance, canRangeInProximity);
 
-    // Current slot
+    // Update Inputs to reflect new status signals
     inputs.currentPidSlot = currentPidSlot.getValue();
 
     // Connected status
     inputs.leftMotorConnected = leftConnectedDebounce.calculate(leftSignals.isOK());
     inputs.rightMotorConnected = rightConnectedDebounce.calculate(rightSignals.isOK());
-    inputs.canrangeConnected = cancoderConnectedDebounce.calculate(canRangeSignals.isOK());
 
     // Limits
     inputs.topLimit = topSoftLimit.getValue();
@@ -310,7 +260,6 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
     inputs.rightHeight = talonFXToHeight(rightPosition.getValue());
     inputs.leftMotorAngle = leftPosition.getValue();
     inputs.rightMotorAngle = rightPosition.getValue();
-    inputs.canrangeDistance = canRangeDistance.getValue();
 
     // Velocities
     inputs.leftVelocity = talonFXToLinearVelocity(leftVelocity.getValue());
@@ -327,8 +276,6 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
     // Amps
     inputs.leftCurrentAmps = leftAppliedCurrent.getValue();
     inputs.rightCurrentAmps = rightAppliedCurrent.getValue();
-
-    inputs.canrangeInProximity = canRangeInProximity.getValue();
   }
 
   /**

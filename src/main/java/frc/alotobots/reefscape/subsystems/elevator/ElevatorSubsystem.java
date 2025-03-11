@@ -74,9 +74,6 @@ public class ElevatorSubsystem extends SubsystemBase {
     io.updateInputs(inputs);
     Logger.processInputs("Elevator", inputs);
     Logger.recordOutput("Elevator/TargetHeight", targetHeight);
-
-    // Automatically check every loop to see if the sensor should reset the position of the elevator
-    handleBottomReset();
   }
 
   /**
@@ -167,23 +164,6 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     // Use debouncer to check if we've been at setpoint for the required duration
     return atTargetHeightDebounce.calculate(inSetPointThreshold);
-  }
-
-  /**
-   * Handles resetting the elevator's position when it reaches the bottom. Uses a debounced bottom
-   * detection to ensure the elevator is stable before resetting. Will only reset once per bottom
-   * detection to prevent multiple resets. The position will not reset again until the elevator
-   * moves away from the bottom and returns.
-   */
-  private void handleBottomReset() {
-    if (atBottomDebounce.calculate(inputs.canrangeInProximity) && !hasReset) {
-      io.resetRotorPositions(MIN_HEIGHT);
-      hasReset = true;
-      Logger.recordOutput("Elevator/PositionReset", true);
-    } else if (!inputs.canrangeInProximity) {
-      hasReset = false;
-      Logger.recordOutput("Elevator/PositionReset", false);
-    }
   }
 
   /**

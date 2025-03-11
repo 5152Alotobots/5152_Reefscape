@@ -70,7 +70,7 @@ public final class ElevatorConstants {
     public static final Distance CORAL_L4_PLACE = Meters.of(1.78);
 
     /** Height for L3 placement */
-    public static final Distance CORAL_L3_PLACE = Meters.of(1.2);
+    public static final Distance CORAL_L3_PLACE = Meters.of(1.23);
 
     /** Height for L2 placement */
     public static final Distance CORAL_L2_PLACE = Meters.of(0.81);
