@@ -60,8 +60,6 @@ public class CoralIntakeIOTalonFXReal implements CoralIntakeIO {
   StatusSignal<AngularVelocity> intakeVelocity;
   StatusSignal<AngularAcceleration> intakeAcceleration;
   StatusSignal<Angle> intakePosition;
-  StatusSignal<Boolean> topSoftLimit;
-  StatusSignal<Boolean> bottomSoftLimit;
 
   StatusSignal<Boolean> intakeOccupied;
 
@@ -86,8 +84,6 @@ public class CoralIntakeIOTalonFXReal implements CoralIntakeIO {
     intakeVelocity = intakeMotor.getVelocity();
     intakeAcceleration = intakeMotor.getAcceleration();
     intakePosition = intakeMotor.getPosition();
-    topSoftLimit = intakeMotor.getFault_ForwardSoftLimit();
-    bottomSoftLimit = intakeMotor.getFault_ReverseSoftLimit();
 
     intakeMotorConfig.MotorOutput.NeutralMode =
         CoralIntakeTalonFXRealConstants.MECHANISM_NEUTRAL_MODE;
