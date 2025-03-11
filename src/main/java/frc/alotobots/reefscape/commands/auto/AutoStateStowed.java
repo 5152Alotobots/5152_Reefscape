@@ -40,8 +40,7 @@ public class AutoStateStowed extends SequentialCommandGroup {
             elevatorSubsystem,
             wristSubsystem,
             ElevatorConstants.Setpoints.CORAL_STOWED,
-            WristConstants.Setpoints.CORAL_STOWED,
-            false),
+            WristConstants.Setpoints.CORAL_STOWED),
         new ElevatorWristHold(elevatorSubsystem, wristSubsystem));
   }
 }

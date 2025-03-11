@@ -16,6 +16,7 @@ import static frc.alotobots.library.subsystems.bling.constants.BlingConstants.BL
 
 import edu.wpi.first.wpilibj2.command.*;
 import frc.alotobots.library.subsystems.bling.BlingSubsystem;
+import frc.alotobots.library.subsystems.bling.commands.BlingCageSwitchActive;
 import frc.alotobots.library.subsystems.bling.commands.BlingClimberReady;
 import frc.alotobots.reefscape.subsystems.climber.ClimberSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
@@ -48,7 +49,9 @@ public class Climb extends SequentialCommandGroup {
         new InstantCommand(climberSubsystem::setPlungerToReceive),
         new InstantCommand(climberSubsystem::enableServos),
         new InstantCommand(climberSubsystem::unlockCage),
-        new WaitUntilCommand(climberSubsystem::getCageSwitches),
+        new ParallelDeadlineGroup(
+            new WaitUntilCommand(climberSubsystem::getCageSwitches),
+            new BlingCageSwitchActive(blingSubsystem, climberSubsystem::getCageSwitchesRaw)),
         new InstantCommand(climberSubsystem::lockCage),
         new InstantCommand(climberSubsystem::setPlungerToPlunge),
         new ScheduleCommand(

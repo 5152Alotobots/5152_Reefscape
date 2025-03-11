@@ -47,4 +47,17 @@ public class ElevatorWristRun extends SequentialCommandGroup {
             new ElevatorRunToHeight(elevatorSubsystem, elevatorHeight).asProxy()),
         new WristRunToAngle(wristSubsystem, wristAngle).asProxy());
   }
+  
+  public ElevatorWristRun(
+      ElevatorSubsystem elevatorSubsystem,
+      WristSubsystem wristSubsystem,
+      Distance elevatorHeight,
+      Angle wristAngle) {
+
+    addCommands(
+        new ParallelCommandGroup(
+            new WristRunToAngle(wristSubsystem, CRUISE).asProxy(),
+            new ElevatorRunToHeight(elevatorSubsystem, elevatorHeight).asProxy()),
+        new WristRunToAngle(wristSubsystem, wristAngle).asProxy());
+  }
 }
