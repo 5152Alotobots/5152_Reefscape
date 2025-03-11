@@ -83,8 +83,8 @@ public class WristTalonFXRealConstants {
   }
 
   public static final class MotionMagicConstants {
-    public static final AngularVelocity CRUISE_VELOCITY = RotationsPerSecond.of(.5);
-    public static final AngularAcceleration ACCELERATION = RotationsPerSecondPerSecond.of(.4);
+    public static final AngularVelocity CRUISE_VELOCITY = RotationsPerSecond.of(1.8);
+    public static final AngularAcceleration ACCELERATION = RotationsPerSecondPerSecond.of(2.5);
     public static final double JERK = 0;
   }
 
@@ -114,5 +114,5 @@ public class WristTalonFXRealConstants {
   public static final int ROTOR_TO_SENSOR_RATIO = 189;
 
   /** Magnet offset for the CANCoder absolute position */
-  public static final double ENCODER_MAGNET_OFFSET = -0.225341796875;
+  public static final double ENCODER_MAGNET_OFFSET = 0.0966796875;
 }

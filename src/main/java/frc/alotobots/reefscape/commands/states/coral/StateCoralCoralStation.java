@@ -57,6 +57,5 @@ public class StateCoralCoralStation extends SequentialCommandGroup {
         new ParallelRaceGroup(
             new BlingCoralWantsPiece(blingSubsystem).asProxy(),
             new CoralIntakeIntake(coralIntakeSubsystem, () -> INTAKE_PERCENTAGE)));
-    // new StateCoralStowed(elevatorSubsystem, wristSubsystem).asProxy());
   }
 }
