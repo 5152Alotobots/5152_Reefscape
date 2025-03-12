@@ -20,8 +20,6 @@ import com.pathplanner.lib.util.swerve.SwerveSetpoint;
 import com.pathplanner.lib.util.swerve.SwerveSetpointGenerator;
 import edu.wpi.first.hal.FRCNetComm.tInstances;
 import edu.wpi.first.hal.FRCNetComm.tResourceType;
-import edu.wpi.first.hal.simulation.DriverStationDataJNI;
-import edu.wpi.first.hal.DriverStationJNI;
 import edu.wpi.first.hal.HAL;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
@@ -413,16 +411,14 @@ public class SwerveDriveSubsystem extends SubsystemBase {
    * @param visionMeasurementStdDevs Standard deviations of vision measurements
    */
   public void addVisionMeasurement(
-          Pose2d visionRobotPoseMeters,
-          double timestampSeconds,
-          Matrix<N3, N1> visionMeasurementStdDevs) {
+      Pose2d visionRobotPoseMeters,
+      double timestampSeconds,
+      Matrix<N3, N1> visionMeasurementStdDevs) {
 
     // Skip if ignoring vision in auto and we're either in auto or disabled
     if (!IGNORE_VISION_IN_AUTO || (DriverStation.isEnabled() && !DriverStation.isAutonomous())) {
       poseEstimator.addVisionMeasurement(
-              visionRobotPoseMeters,
-              timestampSeconds,
-              visionMeasurementStdDevs);
+          visionRobotPoseMeters, timestampSeconds, visionMeasurementStdDevs);
     }
   }
 
