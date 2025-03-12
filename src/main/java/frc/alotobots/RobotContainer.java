@@ -298,15 +298,13 @@ public class RobotContainer {
             elevatorSubsystem,
             wristSubsystem,
             coralIntakeSubsystem,
-            blingSubsystem,
-            coralIntakeReleaseButton));
+            blingSubsystem));
     stateAlgaeL3Button.toggleOnTrue(
         new StateAlgaeRemoveL3(
             elevatorSubsystem,
             wristSubsystem,
             coralIntakeSubsystem,
-            blingSubsystem,
-            coralIntakeReleaseButton));
+            blingSubsystem));
 
     climbButton.toggleOnTrue(
         new Climb(climberSubsystem, elevatorSubsystem, blingSubsystem, () -> -getElevatorAxis()));

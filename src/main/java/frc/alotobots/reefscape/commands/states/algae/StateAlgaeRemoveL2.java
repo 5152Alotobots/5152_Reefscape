@@ -34,14 +34,12 @@ public class StateAlgaeRemoveL2 extends SequentialCommandGroup {
    * @param wristSubsystem The wrist subsystem
    * @param coralIntakeSubsystem The coral intake subsystem
    * @param blingSubsystem The bling subsystem
-   * @param coralIntakeReleaseTrigger The release button trigger
    */
   public StateAlgaeRemoveL2(
       ElevatorSubsystem elevatorSubsystem,
       WristSubsystem wristSubsystem,
       CoralIntakeSubsystem coralIntakeSubsystem,
-      BlingSubsystem blingSubsystem,
-      Trigger coralIntakeReleaseTrigger) {
+      BlingSubsystem blingSubsystem) {
     addCommands(
         new LogCommand("State/State", "ALGAE_L2"),
         new ElevatorWristRun(
