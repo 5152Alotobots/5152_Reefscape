@@ -138,7 +138,7 @@ public class OI {
 
   public static final Trigger coralIntakeIntakeManualButton = driverController.povDown();
   public static final Trigger coralIntakeEjectManualButton = driverController.povUp();
-  
+
   // BACKUP -----------------------------------------------------------
 
   public static final Trigger ejectCoralButton = codriverBackupController.rightBumper();
@@ -154,6 +154,7 @@ public class OI {
   /* Elevator position control triggers */
   /** Trigger for moving the elevator to stow position using backup A button. */
   public static final Trigger elevatorStowButton = codriverBackupController.a();
+
   public static final Trigger elevatorL2Button = codriverBackupController.b();
   public static final Trigger elevatorL3Button = codriverBackupController.x();
   public static final Trigger elevatorL4Button = codriverBackupController.y();

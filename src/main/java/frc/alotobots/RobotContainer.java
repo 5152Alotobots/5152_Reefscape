@@ -259,10 +259,7 @@ public class RobotContainer {
 
     stateCoralCoralStationButton.toggleOnTrue(
         new StateCoralCoralStation(
-            elevatorSubsystem, 
-            wristSubsystem, 
-            coralIntakeSubsystem, 
-            blingSubsystem));
+            elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, blingSubsystem));
     stateCoralL1Button.toggleOnTrue(
         new StateCoralL1(
             elevatorSubsystem,
@@ -296,18 +293,20 @@ public class RobotContainer {
         new StateCoralGround(
             elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, blingSubsystem));
 
-    stateAlgaeL2Button.toggleOnTrue(new StateAlgaeRemoveL2(
-        elevatorSubsystem, 
-        wristSubsystem, 
-        coralIntakeSubsystem, 
-        blingSubsystem, 
-        coralIntakeReleaseButton));
-    stateAlgaeL3Button.toggleOnTrue(new StateAlgaeRemoveL3(
-        elevatorSubsystem, 
-        wristSubsystem, 
-        coralIntakeSubsystem, 
-        blingSubsystem, 
-        coralIntakeReleaseButton));
+    stateAlgaeL2Button.toggleOnTrue(
+        new StateAlgaeRemoveL2(
+            elevatorSubsystem,
+            wristSubsystem,
+            coralIntakeSubsystem,
+            blingSubsystem,
+            coralIntakeReleaseButton));
+    stateAlgaeL3Button.toggleOnTrue(
+        new StateAlgaeRemoveL3(
+            elevatorSubsystem,
+            wristSubsystem,
+            coralIntakeSubsystem,
+            blingSubsystem,
+            coralIntakeReleaseButton));
 
     climbButton.toggleOnTrue(
         new Climb(climberSubsystem, elevatorSubsystem, blingSubsystem, () -> -getElevatorAxis()));
