@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.3855532786885245,
-        "y": 6.93201844262295
+        "x": 4.147745901639344,
+        "y": 6.896055327868852
       },
       "isLocked": false,
       "linkedName": "Start North"
     },
     {
       "anchor": {
-        "x": 3.752151639344262,
-        "y": 5.25373975409836
+        "x": 3.955,
+        "y": 5.433555327868853
       },
       "prevControl": {
-        "x": 2.9250000000000003,
-        "y": 5.925051229508196
+        "x": 3.513230295042496,
+        "y": 6.422175063317387
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,8 +33,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 2.0,
+    "maxVelocity": 1.0,
+    "maxAcceleration": 1.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 460.0,
     "nominalVoltage": 12.0,
