@@ -50,12 +50,14 @@ public class Climb extends SequentialCommandGroup {
         new InstantCommand(climberSubsystem::enableServos),
         new InstantCommand(climberSubsystem::unlockCage),
         new ParallelDeadlineGroup(
-            new WaitUntilCommand(climberSubsystem::getCageSwitches),
-            new BlingCageSwitchActive(blingSubsystem, climberSubsystem::getCageSwitchesRaw)),
+                new WaitUntilCommand(climberSubsystem::getCageSwitches),
+                new BlingCageSwitchActive(blingSubsystem, climberSubsystem::getCageSwitchesRaw))
+            .asProxy(),
         new InstantCommand(climberSubsystem::lockCage),
         new InstantCommand(climberSubsystem::setPlungerToPlunge),
         new ScheduleCommand(
-            new BlingClimberReady(blingSubsystem).withTimeout(BLING_NOTIFICATION_TIME)),
+                new BlingClimberReady(blingSubsystem).withTimeout(BLING_NOTIFICATION_TIME))
+            .asProxy(),
         new ElevatorRunAtClimbVelocity(elevatorSubsystem, input).asProxy());
     addRequirements(climberSubsystem);
   }
