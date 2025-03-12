@@ -76,7 +76,6 @@ import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 public class RobotContainer {
-  //   private final AlgaeIntakeSubsystem algaeIntakeSubsystem;
   private final SwerveDriveSubsystem swerveDriveSubsystem;
   private final ElevatorSubsystem elevatorSubsystem;
   private final WristSubsystem wristSubsystem;
@@ -109,7 +108,6 @@ public class RobotContainer {
         elevatorSubsystem = new ElevatorSubsystem(new ElevatorIOTalonFXReal());
         coralIntakeSubsystem = new CoralIntakeSubsystem(new CoralIntakeIOTalonFXReal());
         wristSubsystem = new WristSubsystem(new WristIOTalonFXReal());
-        // algaeIntakeSubsystem = new AlgaeIntakeSubsystem(new AlgaeIntakeIOTalonFXReal());
         climberSubsystem = new ClimberSubsystem(new ClimberIORevServoReal());
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         autoNamedCommands =
@@ -139,7 +137,6 @@ public class RobotContainer {
 
       case SIM:
         coralIntakeSubsystem = new CoralIntakeSubsystem(new CoralIntakeIO() {});
-        // algaeIntakeSubsystem = new AlgaeIntakeSubsystem(new AlgaeIntakeIO() {});
         Pose2d simStartPose = new Pose2d(3, 3, new Rotation2d(0));
         driveSimulation =
             new SwerveDriveSimulation(
@@ -196,8 +193,6 @@ public class RobotContainer {
       default:
         coralIntakeSubsystem = new CoralIntakeSubsystem(new CoralIntakeIOTalonFXReal());
         climberSubsystem = new ClimberSubsystem(new ClimberIORevServoReal());
-        // algaeIntakeSubsystem = new AlgaeIntakeSubsystem(new AlgaeIntakeIO() {});
-        //
         // Replay mode initialization
         swerveDriveSubsystem =
             new SwerveDriveSubsystem(
