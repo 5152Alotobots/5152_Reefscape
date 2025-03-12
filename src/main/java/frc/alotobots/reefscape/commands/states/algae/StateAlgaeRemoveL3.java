@@ -24,9 +24,7 @@ import frc.alotobots.reefscape.subsystems.wrist.WristSubsystem;
 import frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants;
 
 /**
- * Command sequence for placing game pieces on Level 2. The sequence: 1. Moves elevator and wrist to
- * L2 position simultaneously 2. Waits for release button confirmation 3. Runs eject through 4.
- * Returns to stowed position
+ * Command sequence for removing algae from level 2
  */
 public class StateAlgaeRemoveL3 extends SequentialCommandGroup {
   /**
