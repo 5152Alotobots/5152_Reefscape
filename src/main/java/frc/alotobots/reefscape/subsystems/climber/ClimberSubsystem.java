@@ -63,6 +63,15 @@ public class ClimberSubsystem extends SubsystemBase {
     return cageDebouncer.calculate(io.getCageSwitches());
   }
 
+  /**
+   * Gets the state of the cage limit switches.
+   *
+   * @return true if the cage switches are activated
+   */
+  public boolean getCageSwitchesRaw() {
+    return io.getCageSwitches();
+  }
+
   /** Enables both the plunger and locking servos. */
   public void enableServos() {
     io.enablePlungerServo();

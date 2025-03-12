@@ -53,7 +53,7 @@ public class AutoNamedCommands {
     commands.put("AutoStateL2", new AutoStateL2(elevatorSubsystem, wristSubsystem));
     commands.put("AutoStateL3", new AutoStateL3(elevatorSubsystem, wristSubsystem));
     commands.put("AutoStateL4", new AutoStateL4(elevatorSubsystem, wristSubsystem));
-    // commands.put("AutoStateStowed", new AutoStateStowed(elevatorSubsystem, wristSubsystem));
+    commands.put("AutoStateStowed", new AutoStateStowed(elevatorSubsystem, wristSubsystem));
     commands.put(
         "AutoStateCoralStation", new AutoStateCoralStation(elevatorSubsystem, wristSubsystem));
 
@@ -70,6 +70,26 @@ public class AutoNamedCommands {
         "CoralIntakeIntake",
         new CoralIntakeIntake(
             coralIntakeSubsystem, () -> CoralIntakeConstants.Setpoints.OpenLoop.INTAKE_PERCENTAGE));
+    commands.put(
+        "CoralIntakeEjectPassive",
+        new CoralIntakeEject(
+            coralIntakeSubsystem,
+            () -> (CoralIntakeConstants.Setpoints.OpenLoop.EJECT_PERCENTAGE * .75)));
+    commands.put(
+        "CoralIntakeEjectThroughPassive",
+        new CoralIntakeEjectThrough(
+            coralIntakeSubsystem,
+            () -> (CoralIntakeConstants.Setpoints.OpenLoop.EJECT_PERCENTAGE * .75)));
+    commands.put(
+        "CoralIntakeEjectAggressive",
+        new CoralIntakeEject(
+            coralIntakeSubsystem,
+            () -> (CoralIntakeConstants.Setpoints.OpenLoop.EJECT_PERCENTAGE * 1.25)));
+    commands.put(
+        "CoralIntakeEjectThroughAggressive",
+        new CoralIntakeEjectThrough(
+            coralIntakeSubsystem,
+            () -> (CoralIntakeConstants.Setpoints.OpenLoop.EJECT_PERCENTAGE * 1.25)));
 
     NamedCommands.registerCommands(commands);
   }

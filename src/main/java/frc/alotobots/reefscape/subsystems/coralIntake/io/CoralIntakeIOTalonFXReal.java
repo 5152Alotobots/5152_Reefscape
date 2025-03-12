@@ -97,6 +97,7 @@ public class CoralIntakeIOTalonFXReal implements CoralIntakeIO {
         MotorSafetyLimits.STATOR_AMP_LIMIT.in(Amps);
     intakeMotorConfig.CurrentLimits.StatorCurrentLimitEnable = true;
 
+    intakeMotorConfig.OpenLoopRamps.DutyCycleOpenLoopRampPeriod = .5;
     intakeMotorConfig.MotorOutput.Inverted = CoralIntakeTalonFXRealConstants.MOTOR_DIRECTION;
 
     tryUntilOk(5, () -> intakeMotor.getConfigurator().apply(intakeMotorConfig, 0.25));
@@ -114,7 +115,8 @@ public class CoralIntakeIOTalonFXReal implements CoralIntakeIO {
 
     intakeOccupied = canRange.getIsDetected();
 
-    BaseStatusSignal.setUpdateFrequencyForAll(50.0,
+    BaseStatusSignal.setUpdateFrequencyForAll(
+        50.0,
         intakeOccupied,
         intakeAppliedCurrent,
         intakeAppliedVoltage,
