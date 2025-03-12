@@ -734,7 +734,8 @@ public class LocalizationFusion extends SubsystemBase implements StateTransition
    */
   private void handleDisabledPoseValidation() {
     // Skip disabled validation if match has started
-    if (DriverStation.getMatchTime() > 0) {
+    if ((DriverStation.isFMSAttached() && DriverStation.getMatchTime() < 150)
+        || (!DriverStation.isFMSAttached() && DriverStation.getMatchTime() > 0)) {
       return;
     }
 
@@ -1096,16 +1097,10 @@ public class LocalizationFusion extends SubsystemBase implements StateTransition
                 .withTitle("Auto Selection Changed")
                 .withDescription("Updating robot position for new auto: " + currentAutoSelection)
                 .withDisplaySeconds(3.0));
+        // On auto change always update pose to start path, then check for vision sources
+        swerveDriveSubsystem.setPose(autoPose);
 
-        // If we don't have Quest or Tag initialized, directly set pose on swerve
-        if (!questInitialized && !tagInitialized) {
-          swerveDriveSubsystem.setPose(autoPose);
-          lastValidatedPose = autoPose;
-          hasAutoPose = true;
-          Logger.recordOutput(
-              "LocalizationFusion/Event",
-              "Directly setting swerve pose - no initialized pose sources");
-        } else if (resetToPose(autoPose)) {
+        if (resetToPose(autoPose)) {
           state.transitionTo(LocalizationState.State.RESETTING);
           lastValidatedPose = autoPose;
           hasAutoPose = true;

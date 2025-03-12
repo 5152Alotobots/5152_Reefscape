@@ -23,7 +23,7 @@ public interface AprilTagIO {
   public static class AprilTagIOInputs {
     public boolean connected = false;
     public SingleTagObservation[] singleTagObservations = new SingleTagObservation[0];
-    public int singleTagId = -1;
+    public int[] singleTagIds = new int[0];
     public MultiTagObservation[] multiTagObservations = new MultiTagObservation[0];
     public int[] multiTagIds = new int[0];
     public Rotation2d[] singleTagHeadingBuffer = new Rotation2d[0];

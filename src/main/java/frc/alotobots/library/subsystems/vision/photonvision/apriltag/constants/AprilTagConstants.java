@@ -54,14 +54,17 @@ public class AprilTagConstants {
   // Standard deviation baselines, for 1 meter distance and 1 tag
   // (Adjusted automatically based on distance and # of tags)
   // LOWER = TRUST MORE
-  public static double LINEAR_STD_DEV_BASE = 0.02; // Meters
-  public static double ANGULAR_STD_DEV_BASE = 0.06; // Radians
+  public static double MULTI_TAG_LINEAR_STD_DEV_BASE = 0.02; // Meters
+  public static double MULTI_TAG_ANGULAR_STD_DEV_BASE = 0.06; // Radians
+
+  public static double SINGLE_TAG_LINEAR_STD_DEV_BASE = 0.06; // Meters
+  public static double SINGLE_TAG_ANGULAR_STD_DEV_BASE =
+      1000; // DO NOT USE FOR HEADING CORRECTION! MAKES LOOP!!!
 
   // Standard deviation multipliers for each camera
   // (Adjust to trust some cameras more than others)
   // SHOULD NEVER BE LESS THAN 1.0, NUMBERS GREATER THAN 1 = TRUST LESS
   public static double[] CAMERA_STD_DEV_FACTORS = new double[] {1.0, 1.0};
-  public static final double SINGLE_TAG_STD_DEV_FACTOR = 1.5; // Higher uncertainty for single tag
 
   // Basic Filtering
   public static double MULTITAG_MAX_AMBIGUITY = 0.3;

@@ -241,8 +241,8 @@ public class AprilTagSubsystem extends SubsystemBase implements PoseSource {
     }
 
     // Process single tag ID if present
-    if (inputs[cameraIndex].singleTagId > 0) {
-      var tagPose = APRIL_TAG_LAYOUT.getTagPose(inputs[cameraIndex].singleTagId);
+    for (int tagId : inputs[cameraIndex].singleTagIds) {
+      var tagPose = APRIL_TAG_LAYOUT.getTagPose(tagId);
       tagPose.ifPresent(singleTagPoses::add);
     }
   }
@@ -326,8 +326,8 @@ public class AprilTagSubsystem extends SubsystemBase implements PoseSource {
   private void updateLatestPoseFromMultiTag(
       AprilTagIO.MultiTagObservation observation, int cameraIndex) {
     double stdDevFactor = Math.pow(observation.averageTagDistance(), 2.0) / observation.tagCount();
-    double linearStdDev = LINEAR_STD_DEV_BASE * stdDevFactor;
-    double angularStdDev = ANGULAR_STD_DEV_BASE * stdDevFactor;
+    double linearStdDev = MULTI_TAG_LINEAR_STD_DEV_BASE * stdDevFactor;
+    double angularStdDev = MULTI_TAG_ANGULAR_STD_DEV_BASE * stdDevFactor;
 
     if (cameraIndex < CAMERA_STD_DEV_FACTORS.length) {
       linearStdDev *= CAMERA_STD_DEV_FACTORS[cameraIndex];
@@ -341,9 +341,9 @@ public class AprilTagSubsystem extends SubsystemBase implements PoseSource {
   private void updateLatestPoseFromSingleTag(
       AprilTagIO.SingleTagObservation observation, int cameraIndex) {
     // Higher uncertainty for single tag observations - increases with distance
-    double stdDevFactor = Math.pow(observation.tagDistance(), 2.0) * SINGLE_TAG_STD_DEV_FACTOR;
-    double linearStdDev = LINEAR_STD_DEV_BASE * stdDevFactor;
-    double angularStdDev = ANGULAR_STD_DEV_BASE * stdDevFactor;
+    double stdDevFactor = Math.pow(observation.tagDistance(), 2.0);
+    double linearStdDev = SINGLE_TAG_LINEAR_STD_DEV_BASE * stdDevFactor;
+    double angularStdDev = SINGLE_TAG_ANGULAR_STD_DEV_BASE * stdDevFactor;
 
     if (cameraIndex < CAMERA_STD_DEV_FACTORS.length) {
       linearStdDev *= CAMERA_STD_DEV_FACTORS[cameraIndex];

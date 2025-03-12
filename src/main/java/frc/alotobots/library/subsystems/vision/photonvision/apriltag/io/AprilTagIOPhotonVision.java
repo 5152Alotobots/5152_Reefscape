@@ -16,6 +16,7 @@ import static frc.alotobots.library.subsystems.vision.photonvision.apriltag.cons
 
 import edu.wpi.first.math.geometry.*;
 import edu.wpi.first.math.interpolation.TimeInterpolatableBuffer;
+import edu.wpi.first.wpilibj.Timer;
 import frc.alotobots.library.subsystems.vision.photonvision.apriltag.constants.CameraConfig;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -48,6 +49,7 @@ public class AprilTagIOPhotonVision implements AprilTagIO {
 
   @Override
   public void updateInputs(AprilTagIOInputs inputs) {
+    singleTagHeadingBuffer.addSample(Timer.getTimestamp(), yawSupplier.get());
     inputs.connected = camera.isConnected();
     inputs.singleTagHeadingBuffer =
         singleTagHeadingBuffer
@@ -59,12 +61,13 @@ public class AprilTagIOPhotonVision implements AprilTagIO {
 
     // Read new camera observations
     Set<Short> multiTagIds = new HashSet<>();
+    Set<Integer> singleTagIds = new HashSet<>();
     List<MultiTagObservation> multiTagObservations = new LinkedList<>();
     List<SingleTagObservation> singleTagObservations = new LinkedList<>();
 
     for (var result : camera.getAllUnreadResults()) {
       processMultiTagObservations(result, multiTagIds, multiTagObservations);
-      processSingleTagObservations(result, inputs, singleTagObservations);
+      processSingleTagObservations(result, singleTagIds, singleTagObservations);
     }
 
     // Save pose observations to inputs object
@@ -78,11 +81,18 @@ public class AprilTagIOPhotonVision implements AprilTagIO {
       inputs.multiTagObservations[i] = multiTagObservations.get(i);
     }
 
-    // Save tag IDs to inputs objects
+    // Save multi tag IDs to inputs objects
     inputs.multiTagIds = new int[multiTagIds.size()];
     int i = 0;
     for (int id : multiTagIds) {
       inputs.multiTagIds[i++] = id;
+    }
+
+    // Save single tag IDs to inputs objects
+    inputs.singleTagIds = new int[singleTagIds.size()];
+    int j = 0;
+    for (int id : singleTagIds) {
+      inputs.singleTagIds[j++] = id;
     }
   }
 
@@ -120,10 +130,9 @@ public class AprilTagIOPhotonVision implements AprilTagIO {
 
   private void processSingleTagObservations(
       PhotonPipelineResult result,
-      AprilTagIOInputs inputs,
+      Set<Integer> singleTagIds,
       List<SingleTagObservation> singleTagObservations) {
-    if (result.hasTargets()
-        && APRIL_TAG_LAYOUT.getTagPose(result.getBestTarget().getFiducialId()).isPresent()) {
+    if (result.hasTargets()) {
 
       var bestTarget = result.getBestTarget();
 
@@ -153,33 +162,36 @@ public class AprilTagIOPhotonVision implements AprilTagIO {
             headingSample.plus(
                 robotToCamera.getRotation().toRotation2d().plus(cameraToTagTranslation.getAngle()));
 
-        Pose2d tagPose = APRIL_TAG_LAYOUT.getTagPose(bestTarget.getFiducialId()).get().toPose2d();
+        if (APRIL_TAG_LAYOUT.getTagPose(bestTarget.getFiducialId()).isPresent()) {
+          Pose2d tagPose = APRIL_TAG_LAYOUT.getTagPose(bestTarget.getFiducialId()).get().toPose2d();
 
-        Translation2d fieldToCameraTranslation =
-            new Pose2d(tagPose.getTranslation(), cameraToTagRotation.plus(Rotation2d.kPi))
-                .transformBy(new Transform2d(cameraToTagTranslation.getNorm(), 0, Rotation2d.kZero))
-                .getTranslation();
+          Translation2d fieldToCameraTranslation =
+              new Pose2d(tagPose.getTranslation(), cameraToTagRotation.plus(Rotation2d.kPi))
+                  .transformBy(
+                      new Transform2d(cameraToTagTranslation.getNorm(), 0, Rotation2d.kZero))
+                  .getTranslation();
 
-        Pose2d robotPose =
-            new Pose2d(
-                    fieldToCameraTranslation,
-                    headingSample.plus(robotToCamera.getRotation().toRotation2d()))
-                .transformBy(
-                    new Transform2d(
-                        new Pose3d(robotToCamera.getTranslation(), robotToCamera.getRotation())
-                            .toPose2d(),
-                        Pose2d.kZero));
+          Pose2d robotPose =
+              new Pose2d(
+                      fieldToCameraTranslation,
+                      headingSample.plus(robotToCamera.getRotation().toRotation2d()))
+                  .transformBy(
+                      new Transform2d(
+                          new Pose3d(robotToCamera.getTranslation(), robotToCamera.getRotation())
+                              .toPose2d(),
+                          Pose2d.kZero));
 
-        robotPose = new Pose2d(robotPose.getTranslation(), headingSample);
+          robotPose = new Pose2d(robotPose.getTranslation(), headingSample);
 
-        inputs.singleTagId = bestTarget.getFiducialId();
+          singleTagIds.add(bestTarget.getFiducialId());
 
-        singleTagObservations.add(
-            new SingleTagObservation(
-                result.getTimestampSeconds(),
-                robotPose,
-                bestTarget.poseAmbiguity,
-                cameraToTagTranslation.getNorm()));
+          singleTagObservations.add(
+              new SingleTagObservation(
+                  result.getTimestampSeconds(),
+                  robotPose,
+                  bestTarget.poseAmbiguity,
+                  cameraToTagTranslation.getNorm()));
+        }
       }
     }
   }
