@@ -11,13 +11,13 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "N_ReefNE_NC_ReefNW 1"
+                  "pathName": "S_ReefSWL1_NC_ReefSEL1 1"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "AutoStateL4"
+                  "name": "AutoStateL1"
                 }
               }
             ]
@@ -26,7 +26,7 @@
         {
           "type": "named",
           "data": {
-            "name": "CoralIntakeEjectThrough"
+            "name": "CoralIntakeEject"
           }
         },
         {
@@ -36,7 +36,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "N_ReefNE_NC_ReefNW 2"
+                  "pathName": "S_ReefSWL1_NC_ReefSEL1 2"
                 }
               },
               {
@@ -61,13 +61,13 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "N_ReefNE_NC_ReefNW 3"
+                  "pathName": "S_ReefSWL1_NC_ReefSEL1 3"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "AutoStateL4"
+                  "name": "AutoStateL1"
                 }
               }
             ]
@@ -76,7 +76,7 @@
         {
           "type": "named",
           "data": {
-            "name": "CoralIntakeEjectThrough"
+            "name": "CoralIntakeEject"
           }
         }
       ]

@@ -3,15 +3,18 @@
   "robotLength": 0.88,
   "holonomicMode": true,
   "pathFolders": [
+    "AutoDrive",
+    "BasicMeters",
     "Battle Creek",
     "BenAutos",
-    "AutoDrive",
+    "TwoPiece",
     "Positions",
     "Test2025",
     "Three Piece"
   ],
   "autoFolders": [
     "Just Leave",
+    "BasicMeters",
     "One Piece",
     "Three Piece",
     "Two Piece"
@@ -21,14 +24,14 @@
   "defaultMaxAngVel": 540.0,
   "defaultMaxAngAccel": 460.0,
   "defaultNominalVoltage": 12.0,
-  "robotMass": 54.4,
-  "robotMOI": 2.55,
+  "robotMass": 59.1,
+  "robotMOI": 6.79453,
   "robotTrackwidth": 0.546,
   "driveWheelRadius": 0.0471,
   "driveGearing": 5.878,
   "maxDriveSpeed": 5.2,
   "driveMotorType": "falcon500",
-  "driveCurrentLimit": 120.0,
+  "driveCurrentLimit": 70.0,
   "wheelCOF": 1.2,
   "flModuleX": 0.24,
   "flModuleY": 0.275,
@@ -40,5 +43,7 @@
   "brModuleY": -0.275,
   "bumperOffsetX": 0.0,
   "bumperOffsetY": 0.0,
-  "robotFeatures": []
+  "robotFeatures": [
+    "{\"name\":\"Rectangle\",\"type\":\"rounded_rect\",\"data\":{\"center\":{\"x\":0.38,\"y\":0.01},\"size\":{\"width\":0.19,\"length\":0.1},\"borderRadius\":0.0,\"strokeWidth\":0.02,\"filled\":false}}"
+  ]
 }
