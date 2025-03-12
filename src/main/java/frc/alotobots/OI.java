@@ -128,22 +128,18 @@ public class OI {
   public static final Trigger stateCoralL1Button = codriverController.a();
 
   public static final Trigger coralIntakeReleaseButton = codriverController.rightTrigger();
-  public static final Trigger algaeIntakeReleaseButton = codriverController.leftTrigger();
 
-  public static final Trigger stateAlgaeL3L4Button = codriverController.povLeft();
-  public static final Trigger stateAlgaeL2L3Button = codriverController.povRight();
-  public static final Trigger stateAlgaeGroundButton = codriverController.povUp();
+  public static final Trigger stateAlgaeL3Button = codriverController.povLeft();
+  public static final Trigger stateAlgaeL2Button = codriverController.povRight();
   public static final Trigger stateCoralGroundButton = codriverController.povDown();
-  public static final Trigger stateAlgaeNetButton = codriverController.back();
-  public static final Trigger stateAlgaeProcessorButton = codriverController.start();
 
   public static final Trigger climbButton = driverController.start();
   public static final Trigger unClimbButton = driverController.back();
 
   public static final Trigger coralIntakeIntakeManualButton = driverController.povDown();
   public static final Trigger coralIntakeEjectManualButton = driverController.povUp();
+
   // BACKUP -----------------------------------------------------------
-  /* Backup control triggers */
 
   public static final Trigger ejectCoralButton = codriverBackupController.rightBumper();
 
@@ -151,26 +147,16 @@ public class OI {
   public static final Trigger coralIntakeEjectThroughButton = codriverBackupController.start();
 
   /* Wrist position control triggers */
-  /** Trigger for moving the wrist to L4 coral position using backup D-pad up. */
   public static final Trigger wristL4coralButton = codriverBackupController.povUp();
-
-  /** Trigger for moving the wrist to L2/L3 coral position using backup D-pad right. */
   public static final Trigger wristL2and3coralButton = codriverBackupController.povRight();
-
-  /** Trigger for moving the wrist to ground position using backup D-pad left. */
   public static final Trigger wristGroundButton = codriverBackupController.povLeft();
 
   /* Elevator position control triggers */
   /** Trigger for moving the elevator to stow position using backup A button. */
   public static final Trigger elevatorStowButton = codriverBackupController.a();
 
-  /** Trigger for moving the elevator to L2 position using backup B button. */
   public static final Trigger elevatorL2Button = codriverBackupController.b();
-
-  /** Trigger for moving the elevator to L3 position using backup X button. */
   public static final Trigger elevatorL3Button = codriverBackupController.x();
-
-  /** Trigger for moving the elevator to L4 position using backup Y button. */
   public static final Trigger elevatorL4Button = codriverBackupController.y();
 
   /**

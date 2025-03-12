@@ -47,7 +47,7 @@ public final class ElevatorTalonFXRealConstants {
       public static final double KA = 0.0;
 
       /** Gravity compensation gain */
-      public static final double KG = 0.16;
+      public static final double KG = 0.19;
 
       /** Static friction compensation */
       public static final double KS = 0.0;
@@ -71,7 +71,7 @@ public final class ElevatorTalonFXRealConstants {
       public static final double KA = 0.0;
 
       /** Gravity compensation gain */
-      public static final double KG = 0.16;
+      public static final double KG = 0.19;
 
       /** Static friction compensation */
       public static final double KS = 0.19;
@@ -106,8 +106,8 @@ public final class ElevatorTalonFXRealConstants {
   }
 
   public static final class MotionMagicConstants {
-    public static final LinearVelocity CRUISE_VELOCITY = MetersPerSecond.of(1.8);
-    public static final LinearAcceleration ACCELERATION = MetersPerSecondPerSecond.of(1.5);
+    public static final LinearVelocity CRUISE_VELOCITY = MetersPerSecond.of(1.65);
+    public static final LinearAcceleration ACCELERATION = MetersPerSecondPerSecond.of(2.9);
     public static final double JERK = 0;
   }
 

@@ -46,6 +46,8 @@ import frc.alotobots.library.subsystems.vision.photonvision.apriltag.util.AprilT
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.io.*;
 import frc.alotobots.reefscape.commands.groups.Climb;
 import frc.alotobots.reefscape.commands.groups.UnClimb;
+import frc.alotobots.reefscape.commands.states.algae.StateAlgaeRemoveL2;
+import frc.alotobots.reefscape.commands.states.algae.StateAlgaeRemoveL3;
 import frc.alotobots.reefscape.commands.states.coral.*;
 import frc.alotobots.reefscape.subsystems.climber.ClimberSubsystem;
 import frc.alotobots.reefscape.subsystems.climber.commands.ClimberDisableServos;
@@ -289,10 +291,22 @@ public class RobotContainer {
             blingSubsystem,
             coralIntakeReleaseButton));
     stateCoralStowedButton.toggleOnTrue(new StateCoralStowed(elevatorSubsystem, wristSubsystem));
-
     stateCoralGroundButton.toggleOnTrue(
         new StateCoralGround(
             elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, blingSubsystem));
+
+    stateAlgaeL2Button.toggleOnTrue(
+        new StateAlgaeRemoveL2(
+            elevatorSubsystem,
+            wristSubsystem,
+            coralIntakeSubsystem,
+            blingSubsystem));
+    stateAlgaeL3Button.toggleOnTrue(
+        new StateAlgaeRemoveL3(
+            elevatorSubsystem,
+            wristSubsystem,
+            coralIntakeSubsystem,
+            blingSubsystem));
 
     climbButton.toggleOnTrue(
         new Climb(climberSubsystem, elevatorSubsystem, blingSubsystem, () -> -getElevatorAxis()));
