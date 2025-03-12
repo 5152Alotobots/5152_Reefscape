@@ -14,9 +14,11 @@ package frc.alotobots.reefscape.commands.states.coral;
 
 import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeConstants.Setpoints.OpenLoop.INTAKE_PERCENTAGE;
 
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.alotobots.library.commands.util.LogCommand;
 import frc.alotobots.library.subsystems.bling.BlingSubsystem;
+import frc.alotobots.library.subsystems.bling.commands.BlingCoralWantsPiece;
 import frc.alotobots.reefscape.commands.groups.ElevatorWristRun;
 import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeIntake;
@@ -52,10 +54,8 @@ public class StateCoralCoralStation extends SequentialCommandGroup {
             ElevatorConstants.Setpoints.CORAL_CORAL_STATION,
             WristConstants.Setpoints.CORAL_CORAL_STATION,
             false),
-        new CoralIntakeIntake(coralIntakeSubsystem, () -> INTAKE_PERCENTAGE));
-    // new ParallelRaceGroup(
-    // new BlingCoralWantsPiece(blingSubsystem).asProxy(),
-    // new CoralIntakeIntake(coralIntakeSubsystem, () -> INTAKE_PERCENTAGE)));
-    // new StateCoralStowed(elevatorSubsystem, wristSubsystem).asProxy());
+        new ParallelRaceGroup(
+            new BlingCoralWantsPiece(blingSubsystem).asProxy(),
+            new CoralIntakeIntake(coralIntakeSubsystem, () -> INTAKE_PERCENTAGE)));
   }
 }

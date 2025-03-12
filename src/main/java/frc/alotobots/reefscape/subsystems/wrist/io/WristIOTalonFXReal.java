@@ -208,13 +208,11 @@ public class WristIOTalonFXReal implements WristIO {
   /**
    * Sets the wrist to a target position using closed-loop control.
    *
-   * @param rotation The target angle to move to
+   * @param position The target angle to move to
    * @param pidSlot The PID slot to use (0 for velocity, 1 for position)
    */
   @Override
-  public void setWristPosition(Angle rotation, int pidSlot) {
-    var boundedRotation =
-        MathUtil.clamp(rotation.in(Degree), MAX_ANGLE.in(Degree), MIN_ANGLE.in(Degree));
+  public void setWristPosition(Angle position, int pidSlot) {
 
     // Set up the request with appropriate limits
     wristTalon.setControl(positionVoltage.withPosition(boundedRotation).withSlot(pidSlot));

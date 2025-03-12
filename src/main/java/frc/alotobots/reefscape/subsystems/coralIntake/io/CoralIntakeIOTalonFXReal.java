@@ -114,8 +114,14 @@ public class CoralIntakeIOTalonFXReal implements CoralIntakeIO {
 
     intakeOccupied = canRange.getIsDetected();
 
-    BaseStatusSignal.setUpdateFrequencyForAll(50.0, intakeOccupied);
-    ParentDevice.optimizeBusUtilizationForAll(canRange);
+    BaseStatusSignal.setUpdateFrequencyForAll(50.0,
+        intakeOccupied,
+        intakeAppliedCurrent,
+        intakeAppliedVoltage,
+        intakeAcceleration,
+        intakeVelocity,
+        currentPidSlot);
+    ParentDevice.optimizeBusUtilizationForAll(canRange, intakeMotor);
   }
 
   /**

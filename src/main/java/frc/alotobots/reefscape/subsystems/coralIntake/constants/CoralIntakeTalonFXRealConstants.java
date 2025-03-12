@@ -20,7 +20,7 @@ import edu.wpi.first.units.measure.Current;
 import lombok.experimental.UtilityClass;
 
 /**
- * Constants for the physical intake subsystem using Vortex motors. Contains PID constants for
+ * Constants for the physical intake subsystem using TalonFX motors. Contains PID constants for
  * different control modes and motor safety limits.
  */
 @UtilityClass
@@ -28,7 +28,7 @@ public final class CoralIntakeTalonFXRealConstants {
 
   /** Contains PID and motion control constants for different control modes. */
   public static final class PIDConstants {
-    /** Vortex-specific PID and motion control constants for velocity (Velocity mode). */
+    /** TalonFX-specific PID and motion control constants for velocity (Velocity mode). */
     public static final class VelocityPIDConstants {
       /** Velocity control proportional gain */
       public static final double KP = 0.1;
