@@ -109,78 +109,77 @@ public class AprilTagIOPhotonVision implements AprilTagIO {
 
       // Add observation
       multiTagObservations.add(
-              new MultiTagObservation(
-                      result.getTimestampSeconds(), // Timestamp
-                      robotPose, // 3D pose estimate
-                      multitagResult.estimatedPose.ambiguity, // Ambiguity
-                      multitagResult.fiducialIDsUsed.size(), // Tag count
-                      totalTagDistance / result.targets.size()));
+          new MultiTagObservation(
+              result.getTimestampSeconds(), // Timestamp
+              robotPose, // 3D pose estimate
+              multitagResult.estimatedPose.ambiguity, // Ambiguity
+              multitagResult.fiducialIDsUsed.size(), // Tag count
+              totalTagDistance / result.targets.size()));
     }
   }
-  private void processSingleTagObservations(PhotonPipelineResult result, AprilTagIOInputs inputs,
+
+  private void processSingleTagObservations(
+      PhotonPipelineResult result,
+      AprilTagIOInputs inputs,
       List<SingleTagObservation> singleTagObservations) {
     if (result.hasTargets()
-            && APRIL_TAG_LAYOUT.getTagPose(result.getBestTarget().getFiducialId()).isPresent()) {
+        && APRIL_TAG_LAYOUT.getTagPose(result.getBestTarget().getFiducialId()).isPresent()) {
 
       var bestTarget = result.getBestTarget();
 
       Translation2d cameraToTagTranslation =
-              new Pose3d(
-                      Translation3d.kZero,
-                      new Rotation3d(
-                              0,
-                              -Math.toRadians(bestTarget.getPitch()),
-                              -Math.toRadians(bestTarget.getYaw())))
-                      .transformBy(
-                              new Transform3d(
-                                      new Translation3d(
-                                              bestTarget.getBestCameraToTarget().getTranslation().getNorm(), 0, 0),
-                                      Rotation3d.kZero))
-                      .getTranslation()
-                      .rotateBy(
-                              new Rotation3d(
-                                      robotToCamera.getRotation().getX(), robotToCamera.getRotation().getY(), 0))
-                      .toTranslation2d();
+          new Pose3d(
+                  Translation3d.kZero,
+                  new Rotation3d(
+                      0,
+                      -Math.toRadians(bestTarget.getPitch()),
+                      -Math.toRadians(bestTarget.getYaw())))
+              .transformBy(
+                  new Transform3d(
+                      new Translation3d(
+                          bestTarget.getBestCameraToTarget().getTranslation().getNorm(), 0, 0),
+                      Rotation3d.kZero))
+              .getTranslation()
+              .rotateBy(
+                  new Rotation3d(
+                      robotToCamera.getRotation().getX(), robotToCamera.getRotation().getY(), 0))
+              .toTranslation2d();
 
       if (singleTagHeadingBuffer.getSample(result.getTimestampSeconds()).isPresent()) {
         Rotation2d headingSample =
-                singleTagHeadingBuffer.getSample(result.getTimestampSeconds()).get();
+            singleTagHeadingBuffer.getSample(result.getTimestampSeconds()).get();
 
         Rotation2d cameraToTagRotation =
-                headingSample.plus(
-                        robotToCamera
-                                .getRotation()
-                                .toRotation2d()
-                                .plus(cameraToTagTranslation.getAngle()));
+            headingSample.plus(
+                robotToCamera.getRotation().toRotation2d().plus(cameraToTagTranslation.getAngle()));
 
         Pose2d tagPose = APRIL_TAG_LAYOUT.getTagPose(bestTarget.getFiducialId()).get().toPose2d();
 
         Translation2d fieldToCameraTranslation =
-                new Pose2d(tagPose.getTranslation(), cameraToTagRotation.plus(Rotation2d.kPi))
-                        .transformBy(
-                                new Transform2d(cameraToTagTranslation.getNorm(), 0, Rotation2d.kZero))
-                        .getTranslation();
+            new Pose2d(tagPose.getTranslation(), cameraToTagRotation.plus(Rotation2d.kPi))
+                .transformBy(new Transform2d(cameraToTagTranslation.getNorm(), 0, Rotation2d.kZero))
+                .getTranslation();
 
         Pose2d robotPose =
-                new Pose2d(
-                        fieldToCameraTranslation,
-                        headingSample.plus(robotToCamera.getRotation().toRotation2d()))
-                        .transformBy(
-                                new Transform2d(
-                                        new Pose3d(robotToCamera.getTranslation(), robotToCamera.getRotation())
-                                                .toPose2d(),
-                                        Pose2d.kZero));
+            new Pose2d(
+                    fieldToCameraTranslation,
+                    headingSample.plus(robotToCamera.getRotation().toRotation2d()))
+                .transformBy(
+                    new Transform2d(
+                        new Pose3d(robotToCamera.getTranslation(), robotToCamera.getRotation())
+                            .toPose2d(),
+                        Pose2d.kZero));
 
         robotPose = new Pose2d(robotPose.getTranslation(), headingSample);
 
         inputs.singleTagId = bestTarget.getFiducialId();
 
         singleTagObservations.add(
-                new SingleTagObservation(
-                        result.getTimestampSeconds(),
-                        robotPose,
-                        bestTarget.poseAmbiguity,
-                        cameraToTagTranslation.getNorm()));
+            new SingleTagObservation(
+                result.getTimestampSeconds(),
+                robotPose,
+                bestTarget.poseAmbiguity,
+                cameraToTagTranslation.getNorm()));
       }
     }
   }

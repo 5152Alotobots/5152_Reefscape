@@ -31,8 +31,6 @@ import frc.alotobots.library.subsystems.vision.photonvision.apriltag.io.AprilTag
 import frc.alotobots.library.subsystems.vision.photonvision.apriltag.io.AprilTagIOInputsAutoLogged;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.function.Consumer;
-
 import org.littletonrobotics.junction.Logger;
 
 public class AprilTagSubsystem extends SubsystemBase implements PoseSource {
@@ -53,7 +51,7 @@ public class AprilTagSubsystem extends SubsystemBase implements PoseSource {
   private boolean hasValidSingleTagPose = false;
   private double lastSingleTagPoseTimestamp = 0.0;
 
-  public AprilTagSubsystem(Consumer<Pose3d> singleTagConsumer, AprilTagIO... io) {
+  public AprilTagSubsystem(AprilTagIO... io) {
     this.io = io;
     this.inputs = new AprilTagIOInputsAutoLogged[io.length];
     for (int i = 0; i < inputs.length; i++) {
@@ -63,9 +61,9 @@ public class AprilTagSubsystem extends SubsystemBase implements PoseSource {
     this.disconnectedAlerts = new Alert[io.length];
     for (int i = 0; i < inputs.length; i++) {
       disconnectedAlerts[i] =
-              new Alert(
-                      "Vision camera " + CAMERA_CONFIGS[i].name() + " is disconnected.",
-                      AlertType.kWarning);
+          new Alert(
+              "Vision camera " + CAMERA_CONFIGS[i].name() + " is disconnected.",
+              AlertType.kWarning);
     }
 
     validateConfiguration();
@@ -79,19 +77,10 @@ public class AprilTagSubsystem extends SubsystemBase implements PoseSource {
 
   @Override
   public Pose2d getCurrentPose() {
-    double timeSinceLastPose = Timer.getTimestamp() - lastMultiTagPoseTimestamp;
-    if (timeSinceLastPose > POSE_TIMEOUT) {
-      return null; // Return null if pose is stale
+    if (!hasValidMultiTagPose && !hasValidSingleTagPose) {
+      return null; // Return null if no valid poses
     }
-    return hasValidMultiTagPose ? latestMultiTagPose : null;
-  }
-
-  public Pose2d getSingleTagPose() {
-    double timeSinceLastPose = Timer.getTimestamp() - lastSingleTagPoseTimestamp;
-    if (timeSinceLastPose > POSE_TIMEOUT) {
-      return null; // Return null if pose is stale
-    }
-    return hasValidSingleTagPose ? latestSingleTagPose : null;
+    return hasValidMultiTagPose ? latestMultiTagPose : latestSingleTagPose;
   }
 
   @Override
@@ -135,54 +124,56 @@ public class AprilTagSubsystem extends SubsystemBase implements PoseSource {
 
     // Process camera data
     processCameraData(
-            allMultiTagPoses,
-            allMultiTagRobotPoses,
-            allMultiTagRobotPosesAccepted,
-            allMultiTagRobotPosesRejected,
-            allSingleTagPoses,
-            allSingleTagRobotPoses,
-            allSingleTagRobotPosesAccepted,
-            allSingleTagRobotPosesRejected);
+        allMultiTagPoses,
+        allMultiTagRobotPoses,
+        allMultiTagRobotPosesAccepted,
+        allMultiTagRobotPosesRejected,
+        allSingleTagPoses,
+        allSingleTagRobotPoses,
+        allSingleTagRobotPosesAccepted,
+        allSingleTagRobotPosesRejected);
 
     // Log summary data
     logSummaryData(
-            allMultiTagPoses,
-            allMultiTagRobotPoses,
-            allMultiTagRobotPosesAccepted,
-            allMultiTagRobotPosesRejected,
-            allSingleTagPoses,
-            allSingleTagRobotPoses,
-            allSingleTagRobotPosesAccepted,
-            allSingleTagRobotPosesRejected);
+        allMultiTagPoses,
+        allMultiTagRobotPoses,
+        allMultiTagRobotPosesAccepted,
+        allMultiTagRobotPosesRejected,
+        allSingleTagPoses,
+        allSingleTagRobotPoses,
+        allSingleTagRobotPosesAccepted,
+        allSingleTagRobotPosesRejected);
 
     // Log pose staleness
     double timeSinceLastMultiTagPose = Timer.getTimestamp() - lastMultiTagPoseTimestamp;
     Logger.recordOutput("Vision/AprilTag/MultiTag/TimeSinceLastPose", timeSinceLastMultiTagPose);
-    Logger.recordOutput("Vision/AprilTag/MultiTag/PoseStale", timeSinceLastMultiTagPose > POSE_TIMEOUT);
+    Logger.recordOutput(
+        "Vision/AprilTag/MultiTag/PoseStale", timeSinceLastMultiTagPose > POSE_TIMEOUT);
 
     double timeSinceLastSingleTagPose = Timer.getTimestamp() - lastSingleTagPoseTimestamp;
     Logger.recordOutput("Vision/AprilTag/SingleTag/TimeSinceLastPose", timeSinceLastSingleTagPose);
-    Logger.recordOutput("Vision/AprilTag/SingleTag/PoseStale", timeSinceLastSingleTagPose > POSE_TIMEOUT);
+    Logger.recordOutput(
+        "Vision/AprilTag/SingleTag/PoseStale", timeSinceLastSingleTagPose > POSE_TIMEOUT);
   }
 
   private void validateConfiguration() {
     for (double factor : CAMERA_STD_DEV_FACTORS) {
       if (factor < 1.0) {
         throw new IllegalArgumentException(
-                "[AprilTagSubsystem] STD factor must be >= 1.0, but was: " + factor);
+            "[AprilTagSubsystem] STD factor must be >= 1.0, but was: " + factor);
       }
     }
   }
 
   private void processCameraData(
-          List<Pose3d> allMultiTagPoses,
-          List<Pose3d> allMultiTagRobotPoses,
-          List<Pose3d> allMultiTagRobotPosesAccepted,
-          List<Pose3d> allMultiTagRobotPosesRejected,
-          List<Pose3d> allSingleTagPoses,
-          List<Pose3d> allSingleTagRobotPoses,
-          List<Pose3d> allSingleTagRobotPosesAccepted,
-          List<Pose3d> allSingleTagRobotPosesRejected) {
+      List<Pose3d> allMultiTagPoses,
+      List<Pose3d> allMultiTagRobotPoses,
+      List<Pose3d> allMultiTagRobotPosesAccepted,
+      List<Pose3d> allMultiTagRobotPosesRejected,
+      List<Pose3d> allSingleTagPoses,
+      List<Pose3d> allSingleTagRobotPoses,
+      List<Pose3d> allSingleTagRobotPosesAccepted,
+      List<Pose3d> allSingleTagRobotPosesRejected) {
 
     for (int cameraIndex = 0; cameraIndex < io.length; cameraIndex++) {
       // Split tag poses by type
@@ -203,29 +194,26 @@ public class AprilTagSubsystem extends SubsystemBase implements PoseSource {
 
       // Process multi-tag observations
       processMultiTagPoseObservations(
-              cameraIndex,
-              multiTagRobotPoses,
-              multiTagRobotPosesAccepted,
-              multiTagRobotPosesRejected);
+          cameraIndex, multiTagRobotPoses, multiTagRobotPosesAccepted, multiTagRobotPosesRejected);
 
       // Process single-tag observations
       processSingleTagPoseObservations(
-              cameraIndex,
-              singleTagRobotPoses,
-              singleTagRobotPosesAccepted,
-              singleTagRobotPosesRejected);
+          cameraIndex,
+          singleTagRobotPoses,
+          singleTagRobotPosesAccepted,
+          singleTagRobotPosesRejected);
 
       // Log camera data with separated lists
       logCameraData(
-              cameraIndex,
-              multiTagPoses,
-              singleTagPoses,
-              multiTagRobotPoses,
-              multiTagRobotPosesAccepted,
-              multiTagRobotPosesRejected,
-              singleTagRobotPoses,
-              singleTagRobotPosesAccepted,
-              singleTagRobotPosesRejected);
+          cameraIndex,
+          multiTagPoses,
+          singleTagPoses,
+          multiTagRobotPoses,
+          multiTagRobotPosesAccepted,
+          multiTagRobotPosesRejected,
+          singleTagRobotPoses,
+          singleTagRobotPosesAccepted,
+          singleTagRobotPosesRejected);
 
       // Accumulate all results
       allMultiTagPoses.addAll(multiTagPoses);
@@ -241,9 +229,7 @@ public class AprilTagSubsystem extends SubsystemBase implements PoseSource {
   }
 
   private void processTagPoses(
-          int cameraIndex,
-          List<Pose3d> multiTagPoses,
-          List<Pose3d> singleTagPoses) {
+      int cameraIndex, List<Pose3d> multiTagPoses, List<Pose3d> singleTagPoses) {
 
     // Process multi-tag IDs
     for (int tagId : inputs[cameraIndex].multiTagIds) {
@@ -259,10 +245,10 @@ public class AprilTagSubsystem extends SubsystemBase implements PoseSource {
   }
 
   private void processMultiTagPoseObservations(
-          int cameraIndex,
-          List<Pose3d> robotPoses,
-          List<Pose3d> robotPosesAccepted,
-          List<Pose3d> robotPosesRejected) {
+      int cameraIndex,
+      List<Pose3d> robotPoses,
+      List<Pose3d> robotPosesAccepted,
+      List<Pose3d> robotPosesRejected) {
 
     for (var observation : inputs[cameraIndex].multiTagObservations) {
       boolean rejectPose = shouldRejectMultiTagPose(observation);
@@ -281,15 +267,16 @@ public class AprilTagSubsystem extends SubsystemBase implements PoseSource {
   }
 
   private void processSingleTagPoseObservations(
-          int cameraIndex,
-          List<Pose3d> robotPoses,
-          List<Pose3d> robotPosesAccepted,
-          List<Pose3d> robotPosesRejected) {
+      int cameraIndex,
+      List<Pose3d> robotPoses,
+      List<Pose3d> robotPosesAccepted,
+      List<Pose3d> robotPosesRejected) {
 
     for (var observation : inputs[cameraIndex].singleTagObservations) {
       boolean rejectPose = shouldRejectSingleTagPose(observation);
 
-      Pose3d singleTagPose = new Pose3d(
+      Pose3d singleTagPose =
+          new Pose3d(
               observation.pose().getX(),
               observation.pose().getY(),
               0.0,
@@ -316,24 +303,25 @@ public class AprilTagSubsystem extends SubsystemBase implements PoseSource {
 
   private boolean shouldRejectMultiTagPose(AprilTagIO.MultiTagObservation observation) {
     return observation.tagCount() == 0
-            || (observation.tagCount() == 1 && observation.ambiguity() > MULTITAG_MAX_AMBIGUITY)
-            || Math.abs(observation.pose().getZ()) > MAX_Z_ERROR
-            || observation.pose().getX() < 0.0
-            || observation.pose().getX() > APRIL_TAG_LAYOUT.getFieldLength()
-            || observation.pose().getY() < 0.0
-            || observation.pose().getY() > APRIL_TAG_LAYOUT.getFieldWidth();
+        || (observation.tagCount() == 1 && observation.ambiguity() > MULTITAG_MAX_AMBIGUITY)
+        || Math.abs(observation.pose().getZ()) > MAX_Z_ERROR
+        || observation.pose().getX() < 0.0
+        || observation.pose().getX() > APRIL_TAG_LAYOUT.getFieldLength()
+        || observation.pose().getY() < 0.0
+        || observation.pose().getY() > APRIL_TAG_LAYOUT.getFieldWidth();
   }
 
   private boolean shouldRejectSingleTagPose(AprilTagIO.SingleTagObservation observation) {
     return observation.ambiguity() > SINGLE_TAG_MAX_AMBIGUITY
-            || observation.tagDistance() > SINGLE_TAG_MAX_DISTANCE
-            || observation.pose().getX() < 0.0
-            || observation.pose().getX() > APRIL_TAG_LAYOUT.getFieldLength()
-            || observation.pose().getY() < 0.0
-            || observation.pose().getY() > APRIL_TAG_LAYOUT.getFieldWidth();
+        || observation.tagDistance() > SINGLE_TAG_MAX_DISTANCE
+        || observation.pose().getX() < 0.0
+        || observation.pose().getX() > APRIL_TAG_LAYOUT.getFieldLength()
+        || observation.pose().getY() < 0.0
+        || observation.pose().getY() > APRIL_TAG_LAYOUT.getFieldWidth();
   }
 
-  private void updateLatestPoseFromMultiTag(AprilTagIO.MultiTagObservation observation, int cameraIndex) {
+  private void updateLatestPoseFromMultiTag(
+      AprilTagIO.MultiTagObservation observation, int cameraIndex) {
     double stdDevFactor = Math.pow(observation.averageTagDistance(), 2.0) / observation.tagCount();
     double linearStdDev = LINEAR_STD_DEV_BASE * stdDevFactor;
     double angularStdDev = ANGULAR_STD_DEV_BASE * stdDevFactor;
@@ -347,7 +335,8 @@ public class AprilTagSubsystem extends SubsystemBase implements PoseSource {
     latestMultiTagStdDevs = VecBuilder.fill(linearStdDev, linearStdDev, angularStdDev);
   }
 
-  private void updateLatestPoseFromSingleTag(AprilTagIO.SingleTagObservation observation, int cameraIndex) {
+  private void updateLatestPoseFromSingleTag(
+      AprilTagIO.SingleTagObservation observation, int cameraIndex) {
     // Higher uncertainty for single tag observations - increases with distance
     double stdDevFactor = Math.pow(observation.tagDistance(), 2.0) * SINGLE_TAG_STD_DEV_FACTOR;
     double linearStdDev = LINEAR_STD_DEV_BASE * stdDevFactor;
@@ -363,56 +352,71 @@ public class AprilTagSubsystem extends SubsystemBase implements PoseSource {
   }
 
   private void logCameraData(
-          int cameraIndex,
-          List<Pose3d> multiTagPoses,
-          List<Pose3d> singleTagPoses,
-          List<Pose3d> multiTagRobotPoses,
-          List<Pose3d> multiTagRobotPosesAccepted,
-          List<Pose3d> multiTagRobotPosesRejected,
-          List<Pose3d> singleTagRobotPoses,
-          List<Pose3d> singleTagRobotPosesAccepted,
-          List<Pose3d> singleTagRobotPosesRejected) {
+      int cameraIndex,
+      List<Pose3d> multiTagPoses,
+      List<Pose3d> singleTagPoses,
+      List<Pose3d> multiTagRobotPoses,
+      List<Pose3d> multiTagRobotPosesAccepted,
+      List<Pose3d> multiTagRobotPosesRejected,
+      List<Pose3d> singleTagRobotPoses,
+      List<Pose3d> singleTagRobotPosesAccepted,
+      List<Pose3d> singleTagRobotPosesRejected) {
 
     String cameraPrefix = "Vision/AprilTag/Camera" + CAMERA_CONFIGS[cameraIndex].name();
 
-    // Log only split data (no backward compatibility)
     Logger.recordOutput(cameraPrefix + "/MultiTag/Poses", multiTagPoses.toArray(new Pose3d[0]));
-    Logger.recordOutput(cameraPrefix + "/MultiTag/RobotPoses", multiTagRobotPoses.toArray(new Pose3d[0]));
     Logger.recordOutput(
-            cameraPrefix + "/MultiTag/RobotPosesAccepted", multiTagRobotPosesAccepted.toArray(new Pose3d[0]));
+        cameraPrefix + "/MultiTag/RobotPoses", multiTagRobotPoses.toArray(new Pose3d[0]));
     Logger.recordOutput(
-            cameraPrefix + "/MultiTag/RobotPosesRejected", multiTagRobotPosesRejected.toArray(new Pose3d[0]));
+        cameraPrefix + "/MultiTag/RobotPosesAccepted",
+        multiTagRobotPosesAccepted.toArray(new Pose3d[0]));
+    Logger.recordOutput(
+        cameraPrefix + "/MultiTag/RobotPosesRejected",
+        multiTagRobotPosesRejected.toArray(new Pose3d[0]));
 
     Logger.recordOutput(cameraPrefix + "/SingleTag/Poses", singleTagPoses.toArray(new Pose3d[0]));
-    Logger.recordOutput(cameraPrefix + "/SingleTag/RobotPoses", singleTagRobotPoses.toArray(new Pose3d[0]));
     Logger.recordOutput(
-            cameraPrefix + "/SingleTag/RobotPosesAccepted", singleTagRobotPosesAccepted.toArray(new Pose3d[0]));
+        cameraPrefix + "/SingleTag/RobotPoses", singleTagRobotPoses.toArray(new Pose3d[0]));
     Logger.recordOutput(
-            cameraPrefix + "/SingleTag/RobotPosesRejected", singleTagRobotPosesRejected.toArray(new Pose3d[0]));
+        cameraPrefix + "/SingleTag/RobotPosesAccepted",
+        singleTagRobotPosesAccepted.toArray(new Pose3d[0]));
+    Logger.recordOutput(
+        cameraPrefix + "/SingleTag/RobotPosesRejected",
+        singleTagRobotPosesRejected.toArray(new Pose3d[0]));
   }
 
   private void logSummaryData(
-          List<Pose3d> allMultiTagPoses,
-          List<Pose3d> allMultiTagRobotPoses,
-          List<Pose3d> allMultiTagRobotPosesAccepted,
-          List<Pose3d> allMultiTagRobotPosesRejected,
-          List<Pose3d> allSingleTagPoses,
-          List<Pose3d> allSingleTagRobotPoses,
-          List<Pose3d> allSingleTagRobotPosesAccepted,
-          List<Pose3d> allSingleTagRobotPosesRejected) {
+      List<Pose3d> allMultiTagPoses,
+      List<Pose3d> allMultiTagRobotPoses,
+      List<Pose3d> allMultiTagRobotPosesAccepted,
+      List<Pose3d> allMultiTagRobotPosesRejected,
+      List<Pose3d> allSingleTagPoses,
+      List<Pose3d> allSingleTagRobotPoses,
+      List<Pose3d> allSingleTagRobotPosesAccepted,
+      List<Pose3d> allSingleTagRobotPosesRejected) {
 
-    Logger.recordOutput("Vision/AprilTag/Summary/MultiTag/Poses", allMultiTagPoses.toArray(new Pose3d[0]));
-    Logger.recordOutput("Vision/AprilTag/Summary/MultiTag/RobotPoses", allMultiTagRobotPoses.toArray(new Pose3d[0]));
     Logger.recordOutput(
-            "Vision/AprilTag/Summary/MultiTag/RobotPosesAccepted", allMultiTagRobotPosesAccepted.toArray(new Pose3d[0]));
+        "Vision/AprilTag/Summary/MultiTag/Poses", allMultiTagPoses.toArray(new Pose3d[0]));
     Logger.recordOutput(
-            "Vision/AprilTag/Summary/MultiTag/RobotPosesRejected", allMultiTagRobotPosesRejected.toArray(new Pose3d[0]));
+        "Vision/AprilTag/Summary/MultiTag/RobotPoses",
+        allMultiTagRobotPoses.toArray(new Pose3d[0]));
+    Logger.recordOutput(
+        "Vision/AprilTag/Summary/MultiTag/RobotPosesAccepted",
+        allMultiTagRobotPosesAccepted.toArray(new Pose3d[0]));
+    Logger.recordOutput(
+        "Vision/AprilTag/Summary/MultiTag/RobotPosesRejected",
+        allMultiTagRobotPosesRejected.toArray(new Pose3d[0]));
 
-    Logger.recordOutput("Vision/AprilTag/Summary/SingleTag/Poses", allSingleTagPoses.toArray(new Pose3d[0]));
-    Logger.recordOutput("Vision/AprilTag/Summary/SingleTag/RobotPoses", allSingleTagRobotPoses.toArray(new Pose3d[0]));
     Logger.recordOutput(
-            "Vision/AprilTag/Summary/SingleTag/RobotPosesAccepted", allSingleTagRobotPosesAccepted.toArray(new Pose3d[0]));
+        "Vision/AprilTag/Summary/SingleTag/Poses", allSingleTagPoses.toArray(new Pose3d[0]));
     Logger.recordOutput(
-            "Vision/AprilTag/Summary/SingleTag/RobotPosesRejected", allSingleTagRobotPosesRejected.toArray(new Pose3d[0]));
+        "Vision/AprilTag/Summary/SingleTag/RobotPoses",
+        allSingleTagRobotPoses.toArray(new Pose3d[0]));
+    Logger.recordOutput(
+        "Vision/AprilTag/Summary/SingleTag/RobotPosesAccepted",
+        allSingleTagRobotPosesAccepted.toArray(new Pose3d[0]));
+    Logger.recordOutput(
+        "Vision/AprilTag/Summary/SingleTag/RobotPosesRejected",
+        allSingleTagRobotPosesRejected.toArray(new Pose3d[0]));
   }
 }
