@@ -73,7 +73,7 @@ public class WristSubsystem extends SubsystemBase {
    * @param angle The target angle for the wrist
    */
   public void runToTargetAngle(Angle angle) {
-    targetAngle = angle;
+    targetAngle = Degrees.of(MathUtil.clamp(angle.in(Degrees), MIN_ANGLE.in(Degrees), MAX_ANGLE.in(Degrees)));
     io.setWristPositionMotionMagic(angle, ControlType.ClosedLoop.POSITION.ordinal());
     Logger.recordOutput("Wrist/ControlType", ControlType.ClosedLoop.POSITION);
   }
@@ -135,17 +135,15 @@ public class WristSubsystem extends SubsystemBase {
    */
   public boolean isAtTargetAngle() {
     // Check if current angle is within threshold of target
-    Logger.recordOutput("Temp/targetAngle", targetAngle.in(Degrees));
-    Logger.recordOutput("Temp/MechAngle", inputs.mechanismAngle);
 
     Angle error = targetAngle.minus(inputs.mechanismAngle);
 
-    Logger.recordOutput("Temp/error", error);
+    Logger.recordOutput("Wrist/error", error);
 
     boolean inSetPointThreshold =
         error.abs(Degree) < AT_TARGET_ANGLE_POSITION_THRESHOLD.in(Degrees);
 
-    Logger.recordOutput("Temp/inSetPointThreshold", inSetPointThreshold);
+    Logger.recordOutput("Wrist/inSetPointThreshold", inSetPointThreshold);
 
     // Use debouncer to check if we've been at setpoint for the required duration
     return atTargetAngleDebounce.calculate(inSetPointThreshold);
