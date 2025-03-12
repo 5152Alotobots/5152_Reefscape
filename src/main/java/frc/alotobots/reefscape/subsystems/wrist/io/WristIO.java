@@ -70,10 +70,10 @@ public interface WristIO {
   /**
    * Sets the wrist to run to a target position using closed-loop control.
    *
-   * @param rotation The target angle to move to
+   * @param position The target angle to move to
    * @param pidSlot The PID slot to use (0 for velocity, 1 for position)
    */
-  public default void setWristPosition(Angle rotation, int pidSlot) {}
+  public default void setWristPosition(Angle position, int pidSlot) {}
 
   /**
    * Sets the wrist to run at a target velocity using closed-loop control.
