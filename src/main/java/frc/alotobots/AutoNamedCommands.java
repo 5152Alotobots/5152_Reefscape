@@ -53,9 +53,8 @@ public class AutoNamedCommands {
     commands.put("AutoStateL2", new AutoStateL2(elevatorSubsystem, wristSubsystem));
     commands.put("AutoStateL3", new AutoStateL3(elevatorSubsystem, wristSubsystem));
     commands.put("AutoStateL4", new AutoStateL4(elevatorSubsystem, wristSubsystem));
-    // commands.put("AutoStateStowed", new AutoStateStowed(elevatorSubsystem, wristSubsystem));
-    commands.put(
-        "AutoStateCoralStation", new AutoStateCoralStation(elevatorSubsystem, wristSubsystem));
+    commands.put("AutoStateStowed", new AutoStateStowed(elevatorSubsystem, wristSubsystem));
+    commands.put("AutoStateCoralStation", new AutoStateCoralStation(elevatorSubsystem, wristSubsystem));
 
     // Coral Intake Commands
     commands.put(
