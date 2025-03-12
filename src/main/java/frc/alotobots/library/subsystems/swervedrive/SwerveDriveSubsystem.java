@@ -19,6 +19,8 @@ import com.pathplanner.lib.util.swerve.SwerveSetpoint;
 import com.pathplanner.lib.util.swerve.SwerveSetpointGenerator;
 import edu.wpi.first.hal.FRCNetComm.tInstances;
 import edu.wpi.first.hal.FRCNetComm.tResourceType;
+import edu.wpi.first.hal.simulation.DriverStationDataJNI;
+import edu.wpi.first.hal.DriverStationJNI;
 import edu.wpi.first.hal.HAL;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
@@ -407,8 +409,20 @@ public class SwerveDriveSubsystem extends SubsystemBase {
       Pose2d visionRobotPoseMeters,
       double timestampSeconds,
       Matrix<N3, N1> visionMeasurementStdDevs) {
-    poseEstimator.addVisionMeasurement(
-        visionRobotPoseMeters, timestampSeconds, visionMeasurementStdDevs);
+      
+      if(!DriverStation.isEnabled()) {
+        poseEstimator.addVisionMeasurement(
+          visionRobotPoseMeters, 
+          timestampSeconds, 
+          visionMeasurementStdDevs);
+      } else {
+        if (!DriverStation.isAutonomous()) {
+         poseEstimator.addVisionMeasurement(
+          visionRobotPoseMeters, 
+          timestampSeconds, 
+          visionMeasurementStdDevs);   
+        }
+      }
   }
 
   /**
