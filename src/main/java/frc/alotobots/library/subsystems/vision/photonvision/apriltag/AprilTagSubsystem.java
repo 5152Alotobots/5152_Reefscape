@@ -85,7 +85,10 @@ public class AprilTagSubsystem extends SubsystemBase implements PoseSource {
 
   @Override
   public Matrix<N3, N1> getStdDevs() {
-    return latestMultiTagStdDevs;
+    if (!hasValidMultiTagPose && !hasValidSingleTagPose) {
+      return null; // Return null if no valid poses
+    }
+    return hasValidMultiTagPose ? latestMultiTagStdDevs : latestSingleTagStdDevs;
   }
 
   @Override

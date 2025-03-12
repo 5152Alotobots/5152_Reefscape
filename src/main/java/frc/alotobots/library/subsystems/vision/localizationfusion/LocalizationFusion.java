@@ -487,7 +487,7 @@ public class LocalizationFusion extends SubsystemBase implements StateTransition
     }
 
     Pose2d tagPose = tagSource.getCurrentPose();
-    if (tagPose != null) {
+    if (tagPose != null && tagSource.getStdDevs() != null) {
       poseConsumer.accept(tagPose, currentTime, tagSource.getStdDevs());
     }
   }
