@@ -128,7 +128,8 @@ implements <a href="BlingIO.html" title="interface in frc.alotobots.library.subs
 <div class="block">Clears the current animation, stopping any running patterns.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#clearSolidColor()" class="member-name-link">clearSolidColor</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#clearSolidColor(int,int)" class="member-name-link">clearSolidColor</a><wbr>(int&nbsp;from,
+ int&nbsp;to)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Clears the current solid color, turning off all LEDs.</div>
 </div>
@@ -138,7 +139,9 @@ implements <a href="BlingIO.html" title="interface in frc.alotobots.library.subs
 <div class="block">Sets a new animation pattern for the LEDs.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setSolidColor(frc.alotobots.library.subsystems.bling.io.BlingIO.LoggedColor)" class="member-name-link">setSolidColor</a><wbr>(<a href="BlingIO.LoggedColor.html" title="class in frc.alotobots.library.subsystems.bling.io">BlingIO.LoggedColor</a>&nbsp;color)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setSolidColor(frc.alotobots.library.subsystems.bling.io.BlingIO.LoggedColor,int,int)" class="member-name-link">setSolidColor</a><wbr>(<a href="BlingIO.LoggedColor.html" title="class in frc.alotobots.library.subsystems.bling.io">BlingIO.LoggedColor</a>&nbsp;color,
+ int&nbsp;from,
+ int&nbsp;to)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the LEDs to display a solid color.</div>
 </div>
@@ -220,28 +223,31 @@ implements <a href="BlingIO.html" title="interface in frc.alotobots.library.subs
 </section>
 </li>
 <li>
-<section class="detail" id="setSolidColor(frc.alotobots.library.subsystems.bling.io.BlingIO.LoggedColor)">
+<section class="detail" id="setSolidColor(frc.alotobots.library.subsystems.bling.io.BlingIO.LoggedColor,int,int)">
 <h3>setSolidColor</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setSolidColor</span><wbr><span class="parameters">(<a href="BlingIO.LoggedColor.html" title="class in frc.alotobots.library.subsystems.bling.io">BlingIO.LoggedColor</a>&nbsp;color)</span></div>
-<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="BlingIO.html#setSolidColor(frc.alotobots.library.subsystems.bling.io.BlingIO.LoggedColor)">BlingIO</a></code></span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setSolidColor</span><wbr><span class="parameters">(<a href="BlingIO.LoggedColor.html" title="class in frc.alotobots.library.subsystems.bling.io">BlingIO.LoggedColor</a>&nbsp;color,
+ int&nbsp;from,
+ int&nbsp;to)</span></div>
+<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="BlingIO.html#setSolidColor(frc.alotobots.library.subsystems.bling.io.BlingIO.LoggedColor,int,int)">BlingIO</a></code></span></div>
 <div class="block">Sets the LEDs to display a solid color.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="BlingIO.html#setSolidColor(frc.alotobots.library.subsystems.bling.io.BlingIO.LoggedColor)">setSolidColor</a></code>&nbsp;in interface&nbsp;<code><a href="BlingIO.html" title="interface in frc.alotobots.library.subsystems.bling.io">BlingIO</a></code></dd>
+<dd><code><a href="BlingIO.html#setSolidColor(frc.alotobots.library.subsystems.bling.io.BlingIO.LoggedColor,int,int)">setSolidColor</a></code>&nbsp;in interface&nbsp;<code><a href="BlingIO.html" title="interface in frc.alotobots.library.subsystems.bling.io">BlingIO</a></code></dd>
 <dt>Parameters:</dt>
 <dd><code>color</code> - The color to display</dd>
 </dl>
 </section>
 </li>
 <li>
-<section class="detail" id="clearSolidColor()">
+<section class="detail" id="clearSolidColor(int,int)">
 <h3>clearSolidColor</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">clearSolidColor</span>()</div>
-<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="BlingIO.html#clearSolidColor()">BlingIO</a></code></span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">clearSolidColor</span><wbr><span class="parameters">(int&nbsp;from,
+ int&nbsp;to)</span></div>
+<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="BlingIO.html#clearSolidColor(int,int)">BlingIO</a></code></span></div>
 <div class="block">Clears the current solid color, turning off all LEDs.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="BlingIO.html#clearSolidColor()">clearSolidColor</a></code>&nbsp;in interface&nbsp;<code><a href="BlingIO.html" title="interface in frc.alotobots.library.subsystems.bling.io">BlingIO</a></code></dd>
+<dd><code><a href="BlingIO.html#clearSolidColor(int,int)">clearSolidColor</a></code>&nbsp;in interface&nbsp;<code><a href="BlingIO.html" title="interface in frc.alotobots.library.subsystems.bling.io">BlingIO</a></code></dd>
 </dl>
 </section>
 </li>

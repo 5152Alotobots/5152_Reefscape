@@ -40,13 +40,13 @@ loadScripts(document, 'script');</script>
 <ul class="sub-nav-list">
 <li>Summary:&nbsp;</li>
 <li><a href="#nested-class-summary">Nested</a>&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field-summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor-summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-summary">Method</a></li>
 </ul>
 <ul class="sub-nav-list">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field-detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor-detail">Constr</a>&nbsp;|&nbsp;</li>
 <li>Method</li>
 </ul>
@@ -71,10 +71,10 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">ElevatorTalonFXSimConstants</span>
+<div class="type-signature"><span class="modifiers">public final class </span><span class="element-name type-name-label">ElevatorTalonFXSimConstants</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
-<div class="block">Constants for the simulated elevator subsystem using TalonFX motors. Contains PID constants for
- different game piece modes and physical configuration parameters.</div>
+<div class="block">Constants for the physical elevator subsystem using TalonFX motors. Contains PID constants for
+ different control modes and motor safety limits.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -88,31 +88,47 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Class</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static final class&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="ElevatorTalonFXSimConstants.CagePIDConstants.html" class="type-name-link" title="class in frc.alotobots.reefscape.subsystems.elevator.constants">ElevatorTalonFXSimConstants.CagePIDConstants</a></code></div>
+<div class="col-second even-row-color"><code><a href="ElevatorTalonFXSimConstants.HardwareConstants.html" class="type-name-link" title="class in frc.alotobots.reefscape.subsystems.elevator.constants">ElevatorTalonFXSimConstants.HardwareConstants</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static final class&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="ElevatorTalonFXSimConstants.MotionMagicConstants.html" class="type-name-link" title="class in frc.alotobots.reefscape.subsystems.elevator.constants">ElevatorTalonFXSimConstants.MotionMagicConstants</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static final class&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="ElevatorTalonFXSimConstants.MotorSafetyLimits.html" class="type-name-link" title="class in frc.alotobots.reefscape.subsystems.elevator.constants">ElevatorTalonFXSimConstants.MotorSafetyLimits</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">TalonFX-specific PID and motion control constants for cage game piece (Cage mode).</div>
+<div class="block">Contains safety limit constants for the elevator motors.</div>
 </div>
 <div class="col-first odd-row-color"><code>static final class&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="ElevatorTalonFXSimConstants.CoralAlgaePIDConstants.html" class="type-name-link" title="class in frc.alotobots.reefscape.subsystems.elevator.constants">ElevatorTalonFXSimConstants.CoralAlgaePIDConstants</a></code></div>
+<div class="col-second odd-row-color"><code><a href="ElevatorTalonFXSimConstants.PIDConstants.html" class="type-name-link" title="class in frc.alotobots.reefscape.subsystems.elevator.constants">ElevatorTalonFXSimConstants.PIDConstants</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">TalonFX-specific PID and motion control constants for coral/algae game piece (Coral/Algae
- mode).</div>
+<div class="block">Contains PID and motion control constants for different control modes.</div>
 </div>
-<div class="col-first even-row-color"><code>static final class&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="ElevatorTalonFXSimConstants.EmptyPIDConstants.html" class="type-name-link" title="class in frc.alotobots.reefscape.subsystems.elevator.constants">ElevatorTalonFXSimConstants.EmptyPIDConstants</a></code></div>
+</div>
+</section>
+</li>
+<!-- =========== FIELD SUMMARY =========== -->
+<li>
+<section class="field-summary" id="field-summary">
+<h2>Field Summary</h2>
+<div class="caption"><span>Fields</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Field</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static final double</code></div>
+<div class="col-second even-row-color"><code><a href="#HEIGHT_PER_ROTATION" class="member-name-link">HEIGHT_PER_ROTATION</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">TalonFX-specific PID and motion control constants for no game piece (Empty mode).</div>
+<div class="block">Regression used to calculate height of motor.</div>
 </div>
-<div class="col-first odd-row-color"><code>static final class&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="ElevatorTalonFXSimConstants.HardwareConfig.html" class="type-name-link" title="class in frc.alotobots.reefscape.subsystems.elevator.constants">ElevatorTalonFXSimConstants.HardwareConfig</a></code></div>
+<div class="col-first odd-row-color"><code>static final com.ctre.phoenix6.signals.InvertedValue</code></div>
+<div class="col-second odd-row-color"><code><a href="#LEFT_MOTOR_DIRECTION" class="member-name-link">LEFT_MOTOR_DIRECTION</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">TalonFX-specific hardware configuration constants defining the mechanical properties of the
- elevator system.</div>
+<div class="block">Direction of the left motor rotation</div>
 </div>
-<div class="col-first even-row-color"><code>static final class&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="ElevatorTalonFXSimConstants.Mechanics.html" class="type-name-link" title="class in frc.alotobots.reefscape.subsystems.elevator.constants">ElevatorTalonFXSimConstants.Mechanics</a></code></div>
+<div class="col-first even-row-color"><code>static final com.ctre.phoenix6.signals.NeutralModeValue</code></div>
+<div class="col-second even-row-color"><code><a href="#MECHANISM_NEUTRAL_MODE" class="member-name-link">MECHANISM_NEUTRAL_MODE</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">Physical dimensions and mechanical configuration of the elevator system.</div>
+<div class="block">Neutral mode (brake/coast) setting for the mechanism</div>
 </div>
 </div>
 </section>
@@ -143,6 +159,43 @@ loadScripts(document, 'script');</script>
 </section>
 <section class="details">
 <ul class="details-list">
+<!-- ============ FIELD DETAIL =========== -->
+<li>
+<section class="field-details" id="field-detail">
+<h2>Field Details</h2>
+<ul class="member-list">
+<li>
+<section class="detail" id="LEFT_MOTOR_DIRECTION">
+<h3>LEFT_MOTOR_DIRECTION</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">com.ctre.phoenix6.signals.InvertedValue</span>&nbsp;<span class="element-name">LEFT_MOTOR_DIRECTION</span></div>
+<div class="block">Direction of the left motor rotation</div>
+</section>
+</li>
+<li>
+<section class="detail" id="MECHANISM_NEUTRAL_MODE">
+<h3>MECHANISM_NEUTRAL_MODE</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">com.ctre.phoenix6.signals.NeutralModeValue</span>&nbsp;<span class="element-name">MECHANISM_NEUTRAL_MODE</span></div>
+<div class="block">Neutral mode (brake/coast) setting for the mechanism</div>
+</section>
+</li>
+<li>
+<section class="detail" id="HEIGHT_PER_ROTATION">
+<h3>HEIGHT_PER_ROTATION</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">HEIGHT_PER_ROTATION</span></div>
+<div class="block">Regression used to calculate height of motor. (Should be linear) Rotations:Meters</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../../../../../../constant-values.html#frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorTalonFXSimConstants.HEIGHT_PER_ROTATION">Constant Field Values</a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+</ul>
+</section>
+</li>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 <li>
 <section class="constructor-details" id="constructor-detail">

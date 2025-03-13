@@ -43,7 +43,7 @@ loadScripts(document, 'script');</script>
 <div>
 <ul class="sub-nav-list">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested-class-summary">Nested</a>&nbsp;|&nbsp;</li>
 <li><a href="#field-summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor-summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-summary">Method</a></li>
@@ -78,11 +78,36 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">OI</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
 <div class="block">The Operator Interface (OI) class handles all driver control inputs and button mappings. This
- class provides methods to access controller inputs and defines button bindings for commanding the
- robot.</div>
+ class manages three Xbox controllers:
+
+ <ul>
+   <li>Driver Controller: Primary robot movement and speed control
+   <li>Co-Driver Controller: State-based controls and shared subsystem control
+   <li>Co-Driver Backup Controller: Manual subsystem controls and redundant options
+ </ul>
+
+ The class provides static methods to access controller inputs and defines button bindings for
+ commanding various robot subsystems and states.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+<li>
+<section class="nested-class-summary" id="nested-class-summary">
+<h2>Nested Class Summary</h2>
+<div class="caption"><span>Nested Classes</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Class</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static final class&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="OI.AxisLimits.html" class="type-name-link" title="class in frc.alotobots">OI.AxisLimits</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Groups axis-related constants together for better organization.</div>
+</div>
+</div>
+</section>
+</li>
 <!-- =========== FIELD SUMMARY =========== -->
 <li>
 <section class="field-summary" id="field-summary">
@@ -92,36 +117,92 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>static final double</code></div>
-<div class="col-second even-row-color"><code><a href="#DEADBAND" class="member-name-link">DEADBAND</a></code></div>
+<div class="col-first even-row-color"><code>static final <a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></code></div>
+<div class="col-second even-row-color"><code><a href="#climbButton" class="member-name-link">climbButton</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static final <a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#coralIntakeEjectManualButton" class="member-name-link">coralIntakeEjectManualButton</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static final <a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></code></div>
+<div class="col-second even-row-color"><code><a href="#coralIntakeEjectThroughButton" class="member-name-link">coralIntakeEjectThroughButton</a></code></div>
 <div class="col-last even-row-color">
+<div class="block">Trigger for activating the coral eject-through function</div>
+</div>
+<div class="col-first odd-row-color"><code>static final <a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#coralIntakeIntakeManualButton" class="member-name-link">coralIntakeIntakeManualButton</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static final <a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></code></div>
+<div class="col-second even-row-color"><code><a href="#coralIntakeReleaseButton" class="member-name-link">coralIntakeReleaseButton</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static final double</code></div>
+<div class="col-second odd-row-color"><code><a href="#DEADBAND" class="member-name-link">DEADBAND</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">The minimum value that joystick inputs must exceed to be registered.</div>
 </div>
-<div class="col-first odd-row-color"><code>static <a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></code></div>
+<div class="col-first even-row-color"><code>static final <a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></code></div>
+<div class="col-second even-row-color"><code><a href="#ejectCoralButton" class="member-name-link">ejectCoralButton</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static final <a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></code></div>
 <div class="col-second odd-row-color"><code><a href="#elevatorL2Button" class="member-name-link">elevatorL2Button</a></code></div>
-<div class="col-last odd-row-color">
-<div class="block">Sets the elevator to L2 position</div>
-</div>
-<div class="col-first even-row-color"><code>static <a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static final <a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></code></div>
 <div class="col-second even-row-color"><code><a href="#elevatorL3Button" class="member-name-link">elevatorL3Button</a></code></div>
-<div class="col-last even-row-color">
-<div class="block">Sets the elevator to L3 position</div>
-</div>
-<div class="col-first odd-row-color"><code>static <a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static final <a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></code></div>
 <div class="col-second odd-row-color"><code><a href="#elevatorL4Button" class="member-name-link">elevatorL4Button</a></code></div>
-<div class="col-last odd-row-color">
-<div class="block">Sets the elevator to L4 position</div>
-</div>
-<div class="col-first even-row-color"><code>static <a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static final <a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></code></div>
 <div class="col-second even-row-color"><code><a href="#elevatorStowButton" class="member-name-link">elevatorStowButton</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">Sets the elevator to stow position</div>
+<div class="block">Trigger for moving the elevator to stow position using backup A button.</div>
 </div>
-<div class="col-first odd-row-color"><code>static final <a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></code></div>
+<div class="col-first odd-row-color"><code>static final <a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></code></div>
 <div class="col-second odd-row-color"><code><a href="#hasDriverInput" class="member-name-link">hasDriverInput</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">Trigger for when the driver is using the controller sticks to control the chassis</div>
+<div class="block">Trigger that activates when the driver is using the chassis control sticks.</div>
 </div>
+<div class="col-first even-row-color"><code>static final <a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></code></div>
+<div class="col-second even-row-color"><code><a href="#resetGyroButton" class="member-name-link">resetGyroButton</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static final <a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#stateAlgaeL2Button" class="member-name-link">stateAlgaeL2Button</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static final <a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></code></div>
+<div class="col-second even-row-color"><code><a href="#stateAlgaeL3Button" class="member-name-link">stateAlgaeL3Button</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static final <a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#stateCoralCoralStationButton" class="member-name-link">stateCoralCoralStationButton</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static final <a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></code></div>
+<div class="col-second even-row-color"><code><a href="#stateCoralGroundButton" class="member-name-link">stateCoralGroundButton</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static final <a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#stateCoralL1Button" class="member-name-link">stateCoralL1Button</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static final <a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></code></div>
+<div class="col-second even-row-color"><code><a href="#stateCoralL2Button" class="member-name-link">stateCoralL2Button</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static final <a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#stateCoralL3Button" class="member-name-link">stateCoralL3Button</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static final <a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></code></div>
+<div class="col-second even-row-color"><code><a href="#stateCoralL4Button" class="member-name-link">stateCoralL4Button</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static final <a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#stateCoralStowedButton" class="member-name-link">stateCoralStowedButton</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static final <a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></code></div>
+<div class="col-second even-row-color"><code><a href="#unClimbButton" class="member-name-link">unClimbButton</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static final <a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#wristGroundButton" class="member-name-link">wristGroundButton</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static final <a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></code></div>
+<div class="col-second even-row-color"><code><a href="#wristL2and3coralButton" class="member-name-link">wristL2and3coralButton</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static final <a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#wristL4coralButton" class="member-name-link">wristL4coralButton</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -152,32 +233,39 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static double</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getElevatorAxis()" class="member-name-link">getElevatorAxis</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Gets the open loop elevator input from the co-driver controller</div>
+<div class="block">Gets the manual elevator control input by selecting the larger magnitude input between the two
+ co-driver controllers.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static double</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getRotationAxis()" class="member-name-link">getRotationAxis</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Gets the rotation input from the driver's controller.</div>
+<div class="block">Gets the rotation input from the driver's right stick.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static double</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getTranslateForwardAxis()" class="member-name-link">getTranslateForwardAxis</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Gets the forward/backward translation input from the driver's controller.</div>
+<div class="block">Gets the forward/backward translation input from the driver's left stick.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static double</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getTranslateStrafeAxis()" class="member-name-link">getTranslateStrafeAxis</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Gets the left/right translation input from the driver's controller.</div>
+<div class="block">Gets the left/right translation input from the driver's left stick.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static double</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getTurboSpeedTrigger()" class="member-name-link">getTurboSpeedTrigger</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Gets the turbo (fast) speed control input value.</div>
+<div class="block">Gets the turbo (fast) speed control input from the driver's right trigger.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static double</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getTurtleSpeedTrigger()" class="member-name-link">getTurtleSpeedTrigger</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Gets the turtle (slow) speed control input value.</div>
+<div class="block">Gets the turtle (slow) speed control input from the driver's left trigger.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static double</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getWristAxis()" class="member-name-link">getWristAxis</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Gets the manual wrist control input by selecting the larger magnitude input between the two
+ co-driver controllers.</div>
 </div>
 </div>
 </div>
@@ -200,8 +288,9 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="DEADBAND">
 <h3>DEADBAND</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">DEADBAND</span></div>
-<div class="block">The minimum value that joystick inputs must exceed to be registered. Used to prevent drift and
- unintended movement.</div>
+<div class="block">The minimum value that joystick inputs must exceed to be registered. This deadband prevents
+ unintended movement from controller drift and provides a stable neutral position for the
+ controls.</div>
 <dl class="notes">
 <dt>See Also:</dt>
 <dd>
@@ -215,36 +304,155 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="hasDriverInput">
 <h3>hasDriverInput</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></span>&nbsp;<span class="element-name">hasDriverInput</span></div>
-<div class="block">Trigger for when the driver is using the controller sticks to control the chassis</div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></span>&nbsp;<span class="element-name">hasDriverInput</span></div>
+<div class="block">Trigger that activates when the driver is using the chassis control sticks. Combines X/Y
+ translation and rotation inputs with deadband application to detect intentional driver input.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="resetGyroButton">
+<h3>resetGyroButton</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></span>&nbsp;<span class="element-name">resetGyroButton</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="stateCoralCoralStationButton">
+<h3>stateCoralCoralStationButton</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></span>&nbsp;<span class="element-name">stateCoralCoralStationButton</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="stateCoralStowedButton">
+<h3>stateCoralStowedButton</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></span>&nbsp;<span class="element-name">stateCoralStowedButton</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="stateCoralL4Button">
+<h3>stateCoralL4Button</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></span>&nbsp;<span class="element-name">stateCoralL4Button</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="stateCoralL3Button">
+<h3>stateCoralL3Button</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></span>&nbsp;<span class="element-name">stateCoralL3Button</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="stateCoralL2Button">
+<h3>stateCoralL2Button</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></span>&nbsp;<span class="element-name">stateCoralL2Button</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="stateCoralL1Button">
+<h3>stateCoralL1Button</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></span>&nbsp;<span class="element-name">stateCoralL1Button</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="coralIntakeReleaseButton">
+<h3>coralIntakeReleaseButton</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></span>&nbsp;<span class="element-name">coralIntakeReleaseButton</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="stateAlgaeL3Button">
+<h3>stateAlgaeL3Button</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></span>&nbsp;<span class="element-name">stateAlgaeL3Button</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="stateAlgaeL2Button">
+<h3>stateAlgaeL2Button</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></span>&nbsp;<span class="element-name">stateAlgaeL2Button</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="stateCoralGroundButton">
+<h3>stateCoralGroundButton</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></span>&nbsp;<span class="element-name">stateCoralGroundButton</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="climbButton">
+<h3>climbButton</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></span>&nbsp;<span class="element-name">climbButton</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="unClimbButton">
+<h3>unClimbButton</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></span>&nbsp;<span class="element-name">unClimbButton</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="coralIntakeIntakeManualButton">
+<h3>coralIntakeIntakeManualButton</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></span>&nbsp;<span class="element-name">coralIntakeIntakeManualButton</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="coralIntakeEjectManualButton">
+<h3>coralIntakeEjectManualButton</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></span>&nbsp;<span class="element-name">coralIntakeEjectManualButton</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="ejectCoralButton">
+<h3>ejectCoralButton</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></span>&nbsp;<span class="element-name">ejectCoralButton</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="coralIntakeEjectThroughButton">
+<h3>coralIntakeEjectThroughButton</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></span>&nbsp;<span class="element-name">coralIntakeEjectThroughButton</span></div>
+<div class="block">Trigger for activating the coral eject-through function</div>
+</section>
+</li>
+<li>
+<section class="detail" id="wristL4coralButton">
+<h3>wristL4coralButton</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></span>&nbsp;<span class="element-name">wristL4coralButton</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="wristL2and3coralButton">
+<h3>wristL2and3coralButton</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></span>&nbsp;<span class="element-name">wristL2and3coralButton</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="wristGroundButton">
+<h3>wristGroundButton</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></span>&nbsp;<span class="element-name">wristGroundButton</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="elevatorStowButton">
 <h3>elevatorStowButton</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></span>&nbsp;<span class="element-name">elevatorStowButton</span></div>
-<div class="block">Sets the elevator to stow position</div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></span>&nbsp;<span class="element-name">elevatorStowButton</span></div>
+<div class="block">Trigger for moving the elevator to stow position using backup A button.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="elevatorL2Button">
 <h3>elevatorL2Button</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></span>&nbsp;<span class="element-name">elevatorL2Button</span></div>
-<div class="block">Sets the elevator to L2 position</div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></span>&nbsp;<span class="element-name">elevatorL2Button</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="elevatorL3Button">
 <h3>elevatorL3Button</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></span>&nbsp;<span class="element-name">elevatorL3Button</span></div>
-<div class="block">Sets the elevator to L3 position</div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></span>&nbsp;<span class="element-name">elevatorL3Button</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="elevatorL4Button">
 <h3>elevatorL4Button</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></span>&nbsp;<span class="element-name">elevatorL4Button</span></div>
-<div class="block">Sets the elevator to L4 position</div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/button/Trigger.html" title="class or interface in edu.wpi.first.wpilibj2.command.button" class="external-link">Trigger</a></span>&nbsp;<span class="element-name">elevatorL4Button</span></div>
 </section>
 </li>
 </ul>
@@ -273,7 +481,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getTranslateForwardAxis()">
 <h3>getTranslateForwardAxis</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">getTranslateForwardAxis</span>()</div>
-<div class="block">Gets the forward/backward translation input from the driver's controller.</div>
+<div class="block">Gets the forward/backward translation input from the driver's left stick.</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>Value between -1.0 (backward) and 1.0 (forward)</dd>
@@ -284,7 +492,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getTranslateStrafeAxis()">
 <h3>getTranslateStrafeAxis</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">getTranslateStrafeAxis</span>()</div>
-<div class="block">Gets the left/right translation input from the driver's controller.</div>
+<div class="block">Gets the left/right translation input from the driver's left stick.</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>Value between -1.0 (left) and 1.0 (right)</dd>
@@ -295,7 +503,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getRotationAxis()">
 <h3>getRotationAxis</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">getRotationAxis</span>()</div>
-<div class="block">Gets the rotation input from the driver's controller.</div>
+<div class="block">Gets the rotation input from the driver's right stick.</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>Value between -1.0 (counter-clockwise) and 1.0 (clockwise)</dd>
@@ -306,10 +514,11 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getTurtleSpeedTrigger()">
 <h3>getTurtleSpeedTrigger</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">getTurtleSpeedTrigger</span>()</div>
-<div class="block">Gets the turtle (slow) speed control input value.</div>
+<div class="block">Gets the turtle (slow) speed control input from the driver's left trigger. Used to enable
+ precise, slow movement for delicate operations.</div>
 <dl class="notes">
 <dt>Returns:</dt>
-<dd>Value between 0.0 and 1.0</dd>
+<dd>Value between 0.0 (not pressed) and 1.0 (fully pressed)</dd>
 </dl>
 </section>
 </li>
@@ -317,10 +526,11 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getTurboSpeedTrigger()">
 <h3>getTurboSpeedTrigger</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">getTurboSpeedTrigger</span>()</div>
-<div class="block">Gets the turbo (fast) speed control input value.</div>
+<div class="block">Gets the turbo (fast) speed control input from the driver's right trigger. Used to enable
+ maximum speed movement for quick traversal.</div>
 <dl class="notes">
 <dt>Returns:</dt>
-<dd>Value between 0.0 and 1.0</dd>
+<dd>Value between 0.0 (not pressed) and 1.0 (fully pressed)</dd>
 </dl>
 </section>
 </li>
@@ -328,10 +538,23 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getElevatorAxis()">
 <h3>getElevatorAxis</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">getElevatorAxis</span>()</div>
-<div class="block">Gets the open loop elevator input from the co-driver controller</div>
+<div class="block">Gets the manual elevator control input by selecting the larger magnitude input between the two
+ co-driver controllers. Applies deadband after selection.</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>Value between -1.0 (down) and 1.0 (up)</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getWristAxis()">
+<h3>getWristAxis</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">getWristAxis</span>()</div>
+<div class="block">Gets the manual wrist control input by selecting the larger magnitude input between the two
+ co-driver controllers. Applies deadband after selection.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>Value between -1.0 and 1.0</dd>
 </dl>
 </section>
 </li>

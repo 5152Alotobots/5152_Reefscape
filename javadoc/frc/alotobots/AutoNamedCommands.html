@@ -77,9 +77,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">AutoNamedCommands</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
-<div class="block">Utility class for registering named commands with PathPlanner's autonomous functionality. This
- class manages a collection of commands that can be referenced by name in PathPlanner autonomous
- routines.</div>
+<div class="block">Registers and manages named commands for autonomous routines.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -91,8 +89,12 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">AutoNamedCommands</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem,frc.alotobots.reefscape.subsystems.wrist.WristSubsystem,frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem)" class="member-name-link">AutoNamedCommands</a><wbr>(<a href="reefscape/subsystems/elevator/ElevatorSubsystem.html" title="class in frc.alotobots.reefscape.subsystems.elevator">ElevatorSubsystem</a>&nbsp;elevatorSubsystem,
+ <a href="reefscape/subsystems/wrist/WristSubsystem.html" title="class in frc.alotobots.reefscape.subsystems.wrist">WristSubsystem</a>&nbsp;wristSubsystem,
+ <a href="reefscape/subsystems/coralIntake/CoralIntakeSubsystem.html" title="class in frc.alotobots.reefscape.subsystems.coralIntake">CoralIntakeSubsystem</a>&nbsp;coralIntakeSubsystem)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Constructs command registration manager with required subsystems.</div>
+</div>
 </div>
 </section>
 </li>
@@ -101,16 +103,16 @@ loadScripts(document, 'script');</script>
 <section class="method-summary" id="method-summary">
 <h2>Method Summary</h2>
 <div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab1" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab1', 3)" class="table-tab">Static Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
 <div id="method-summary-table.tabpanel" role="tabpanel" aria-labelledby="method-summary-table-tab0">
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#setupNamedCommands()" class="member-name-link">setupNamedCommands</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Registers all predefined commands with PathPlanner's NamedCommands system.</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#registerCommands()" class="member-name-link">registerCommands</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Registers all available autonomous commands with PathPlanner.</div>
 </div>
 </div>
 </div>
@@ -130,9 +132,12 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;()">
+<section class="detail" id="&lt;init&gt;(frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem,frc.alotobots.reefscape.subsystems.wrist.WristSubsystem,frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem)">
 <h3>AutoNamedCommands</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">AutoNamedCommands</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">AutoNamedCommands</span><wbr><span class="parameters">(<a href="reefscape/subsystems/elevator/ElevatorSubsystem.html" title="class in frc.alotobots.reefscape.subsystems.elevator">ElevatorSubsystem</a>&nbsp;elevatorSubsystem,
+ <a href="reefscape/subsystems/wrist/WristSubsystem.html" title="class in frc.alotobots.reefscape.subsystems.wrist">WristSubsystem</a>&nbsp;wristSubsystem,
+ <a href="reefscape/subsystems/coralIntake/CoralIntakeSubsystem.html" title="class in frc.alotobots.reefscape.subsystems.coralIntake">CoralIntakeSubsystem</a>&nbsp;coralIntakeSubsystem)</span></div>
+<div class="block">Constructs command registration manager with required subsystems.</div>
 </section>
 </li>
 </ul>
@@ -144,12 +149,10 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="setupNamedCommands()">
-<h3>setupNamedCommands</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setupNamedCommands</span>()</div>
-<div class="block">Registers all predefined commands with PathPlanner's NamedCommands system. This method should
- be called during swerve initialization to ensure all commands are available for autonomous
- routines.</div>
+<section class="detail" id="registerCommands()">
+<h3>registerCommands</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">registerCommands</span>()</div>
+<div class="block">Registers all available autonomous commands with PathPlanner.</div>
 </section>
 </li>
 </ul>

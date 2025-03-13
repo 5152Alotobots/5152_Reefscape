@@ -88,13 +88,16 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Class</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static final class&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="ElevatorTalonFXRealConstants.MotorSafetyLimits.html" class="type-name-link" title="class in frc.alotobots.reefscape.subsystems.elevator.constants">ElevatorTalonFXRealConstants.MotorSafetyLimits</a></code></div>
-<div class="col-last even-row-color">
+<div class="col-second even-row-color"><code><a href="ElevatorTalonFXRealConstants.MotionMagicConstants.html" class="type-name-link" title="class in frc.alotobots.reefscape.subsystems.elevator.constants">ElevatorTalonFXRealConstants.MotionMagicConstants</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static final class&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="ElevatorTalonFXRealConstants.MotorSafetyLimits.html" class="type-name-link" title="class in frc.alotobots.reefscape.subsystems.elevator.constants">ElevatorTalonFXRealConstants.MotorSafetyLimits</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">Contains safety limit constants for the elevator motors.</div>
 </div>
-<div class="col-first odd-row-color"><code>static final class&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="ElevatorTalonFXRealConstants.PIDConstants.html" class="type-name-link" title="class in frc.alotobots.reefscape.subsystems.elevator.constants">ElevatorTalonFXRealConstants.PIDConstants</a></code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code>static final class&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="ElevatorTalonFXRealConstants.PIDConstants.html" class="type-name-link" title="class in frc.alotobots.reefscape.subsystems.elevator.constants">ElevatorTalonFXRealConstants.PIDConstants</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">Contains PID and motion control constants for different control modes.</div>
 </div>
 </div>
@@ -109,14 +112,19 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>static final com.ctre.phoenix6.signals.InvertedValue</code></div>
-<div class="col-second even-row-color"><code><a href="#LEFT_MOTOR_DIRECTION" class="member-name-link">LEFT_MOTOR_DIRECTION</a></code></div>
+<div class="col-first even-row-color"><code>static final double</code></div>
+<div class="col-second even-row-color"><code><a href="#HEIGHT_PER_ROTATION" class="member-name-link">HEIGHT_PER_ROTATION</a></code></div>
 <div class="col-last even-row-color">
+<div class="block">Regression used to calculate height of motor.</div>
+</div>
+<div class="col-first odd-row-color"><code>static final com.ctre.phoenix6.signals.InvertedValue</code></div>
+<div class="col-second odd-row-color"><code><a href="#LEFT_MOTOR_DIRECTION" class="member-name-link">LEFT_MOTOR_DIRECTION</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">Direction of the left motor rotation</div>
 </div>
-<div class="col-first odd-row-color"><code>static final com.ctre.phoenix6.signals.NeutralModeValue</code></div>
-<div class="col-second odd-row-color"><code><a href="#MECHANISM_NEUTRAL_MODE" class="member-name-link">MECHANISM_NEUTRAL_MODE</a></code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code>static final com.ctre.phoenix6.signals.NeutralModeValue</code></div>
+<div class="col-second even-row-color"><code><a href="#MECHANISM_NEUTRAL_MODE" class="member-name-link">MECHANISM_NEUTRAL_MODE</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">Neutral mode (brake/coast) setting for the mechanism</div>
 </div>
 </div>
@@ -165,6 +173,21 @@ loadScripts(document, 'script');</script>
 <h3>MECHANISM_NEUTRAL_MODE</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">com.ctre.phoenix6.signals.NeutralModeValue</span>&nbsp;<span class="element-name">MECHANISM_NEUTRAL_MODE</span></div>
 <div class="block">Neutral mode (brake/coast) setting for the mechanism</div>
+</section>
+</li>
+<li>
+<section class="detail" id="HEIGHT_PER_ROTATION">
+<h3>HEIGHT_PER_ROTATION</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">HEIGHT_PER_ROTATION</span></div>
+<div class="block">Regression used to calculate height of motor. (Should be linear) Rotations:Meters</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../../../../../../constant-values.html#frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorTalonFXRealConstants.HEIGHT_PER_ROTATION">Constant Field Values</a></li>
+</ul>
+</dd>
+</dl>
 </section>
 </li>
 </ul>

@@ -90,11 +90,14 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Class</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static class&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="PhoenixUtil.TalonFXMotorControllerSim.html" class="type-name-link" title="class in frc.alotobots.util">PhoenixUtil.TalonFXMotorControllerSim</a></code></div>
+<div class="col-second even-row-color"><code><a href="PhoenixUtil.ConfigStatus.html" class="type-name-link" title="class in frc.alotobots.util">PhoenixUtil.ConfigStatus</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static class&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="PhoenixUtil.TalonFXMotorControllerWithRemoteCancoderSim.html" class="type-name-link" title="class in frc.alotobots.util">PhoenixUtil.TalonFXMotorControllerWithRemoteCancoderSim</a></code></div>
+<div class="col-second odd-row-color"><code><a href="PhoenixUtil.TalonFXMotorControllerSim.html" class="type-name-link" title="class in frc.alotobots.util">PhoenixUtil.TalonFXMotorControllerSim</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static class&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="PhoenixUtil.TalonFXMotorControllerWithRemoteCancoderSim.html" class="type-name-link" title="class in frc.alotobots.util">PhoenixUtil.TalonFXMotorControllerWithRemoteCancoderSim</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -125,11 +128,11 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static double[]</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getSimulationOdometryTimeStamps()" class="member-name-link">getSimulationOdometryTimeStamps</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static com.ctre.phoenix6.StatusCode</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#tryUntilOk(int,java.util.function.Supplier)" class="member-name-link">tryUntilOk</a><wbr>(int&nbsp;maxAttempts,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Supplier.html" title="class or interface in java.util.function" class="external-link">Supplier</a>&lt;com.ctre.phoenix6.StatusCode&gt;&nbsp;command)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Attempts to run the command until no error is produced.</div>
+<div class="block">Attempts to run the command until no error is produced or max attempts are reached.</div>
 </div>
 </div>
 </div>
@@ -165,9 +168,17 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="tryUntilOk(int,java.util.function.Supplier)">
 <h3>tryUntilOk</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">tryUntilOk</span><wbr><span class="parameters">(int&nbsp;maxAttempts,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">com.ctre.phoenix6.StatusCode</span>&nbsp;<span class="element-name">tryUntilOk</span><wbr><span class="parameters">(int&nbsp;maxAttempts,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Supplier.html" title="class or interface in java.util.function" class="external-link">Supplier</a>&lt;com.ctre.phoenix6.StatusCode&gt;&nbsp;command)</span></div>
-<div class="block">Attempts to run the command until no error is produced.</div>
+<div class="block">Attempts to run the command until no error is produced or max attempts are reached. Records the
+ result for diagnostic tracking.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>maxAttempts</code> - Maximum number of attempts to try the command</dd>
+<dd><code>command</code> - The command to execute</dd>
+<dt>Returns:</dt>
+<dd>The final status code</dd>
+</dl>
 </section>
 </li>
 <li>

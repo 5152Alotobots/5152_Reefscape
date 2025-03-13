@@ -71,18 +71,18 @@ loadScripts(document, 'script');</script>
 <h1 title="Class ElevatorSubsystem" class="title">Class ElevatorSubsystem</h1>
 </div>
 <div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
-<div class="inheritance"><a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/SubsystemBase.html" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">edu.wpi.first.wpilibj2.command.SubsystemBase</a>
+<div class="inheritance"><a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/SubsystemBase.html" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">edu.wpi.first.wpilibj2.command.SubsystemBase</a>
 <div class="inheritance">frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem</div>
 </div>
 </div>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code><a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/util/sendable/Sendable.html" title="class or interface in edu.wpi.first.util.sendable" class="external-link">Sendable</a></code>, <code><a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/Subsystem.html" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">Subsystem</a></code></dd>
+<dd><code><a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/util/sendable/Sendable.html" title="class or interface in edu.wpi.first.util.sendable" class="external-link">Sendable</a></code>, <code><a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/Subsystem.html" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">Subsystem</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">ElevatorSubsystem</span>
-<span class="extends-implements">extends <a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/SubsystemBase.html" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">SubsystemBase</a></span></div>
+<span class="extends-implements">extends <a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/SubsystemBase.html" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">SubsystemBase</a></span></div>
 <div class="block">The Elevator subsystem controls the vertical movement of the robot's elevator mechanism. This
  subsystem manages closed-loop position control, closed-loop velocity control, and open loop
  control</div>
@@ -115,7 +115,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>edu.wpi.first.units.measure.Distance</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/units/measure/Distance.html" title="class or interface in edu.wpi.first.units.measure" class="external-link">Distance</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCurrentHeight()" class="member-name-link">getCurrentHeight</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Retrieves the current height of the elevator.</div>
@@ -136,32 +136,38 @@ loadScripts(document, 'script');</script>
 <div class="block">Controls the elevator using direct percent output (open-loop control).</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#runToTargetPosition(edu.wpi.first.units.measure.Distance)" class="member-name-link">runToTargetPosition</a><wbr>(edu.wpi.first.units.measure.Distance&nbsp;height)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#runToClimbingVelocity(edu.wpi.first.units.measure.LinearVelocity)" class="member-name-link">runToClimbingVelocity</a><wbr>(<a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/units/measure/LinearVelocity.html" title="class or interface in edu.wpi.first.units.measure" class="external-link">LinearVelocity</a>&nbsp;velocity)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Controls the elevator to move to a specified height using closed-loop position control.</div>
+<div class="block">Controls the elevator to move to a specified velocity using closed-loop climbing velocity
+ control.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#runToTargetVelocity(edu.wpi.first.units.measure.LinearVelocity)" class="member-name-link">runToTargetVelocity</a><wbr>(edu.wpi.first.units.measure.LinearVelocity&nbsp;velocity)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#runToTargetPosition(edu.wpi.first.units.measure.Distance)" class="member-name-link">runToTargetPosition</a><wbr>(<a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/units/measure/Distance.html" title="class or interface in edu.wpi.first.units.measure" class="external-link">Distance</a>&nbsp;height)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Controls the elevator to move to a specified velocity using closed-loop velocity control.</div>
+<div class="block">Controls the elevator to move to a specified height using closed-loop position control.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#stop()" class="member-name-link">stop</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#runToTargetVelocity(edu.wpi.first.units.measure.LinearVelocity)" class="member-name-link">runToTargetVelocity</a><wbr>(<a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/units/measure/LinearVelocity.html" title="class or interface in edu.wpi.first.units.measure" class="external-link">LinearVelocity</a>&nbsp;velocity)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Controls the elevator to move to a specified velocity using closed-loop velocity control.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#stop()" class="member-name-link">stop</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Stops elevator movement and enables brake mode to maintain position.</div>
 </div>
 </div>
 </div>
 </div>
 <div class="inherited-list">
-<h3 id="methods-inherited-from-class-edu.wpi.first.wpilibj2.command.SubsystemBase">Methods inherited from class&nbsp;edu.wpi.first.wpilibj2.command.<a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/SubsystemBase.html" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">SubsystemBase</a></h3>
-<code><a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/SubsystemBase.html#addChild(java.lang.String,edu.wpi.first.util.sendable.Sendable)" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">addChild</a>, <a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/SubsystemBase.html#getName()" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">getName</a>, <a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/SubsystemBase.html#getSubsystem()" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">getSubsystem</a>, <a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/SubsystemBase.html#initSendable(edu.wpi.first.util.sendable.SendableBuilder)" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">initSendable</a>, <a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/SubsystemBase.html#setName(java.lang.String)" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">setName</a>, <a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/SubsystemBase.html#setSubsystem(java.lang.String)" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">setSubsystem</a></code></div>
+<h3 id="methods-inherited-from-class-edu.wpi.first.wpilibj2.command.SubsystemBase">Methods inherited from class&nbsp;edu.wpi.first.wpilibj2.command.<a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/SubsystemBase.html" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">SubsystemBase</a></h3>
+<code><a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/SubsystemBase.html#addChild(java.lang.String,edu.wpi.first.util.sendable.Sendable)" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">addChild</a>, <a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/SubsystemBase.html#getName()" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">getName</a>, <a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/SubsystemBase.html#getSubsystem()" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">getSubsystem</a>, <a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/SubsystemBase.html#initSendable(edu.wpi.first.util.sendable.SendableBuilder)" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">initSendable</a>, <a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/SubsystemBase.html#setName(java.lang.String)" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">setName</a>, <a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/SubsystemBase.html#setSubsystem(java.lang.String)" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">setSubsystem</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
 <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
 <div class="inherited-list">
-<h3 id="methods-inherited-from-class-edu.wpi.first.wpilibj2.command.Subsystem">Methods inherited from interface&nbsp;edu.wpi.first.wpilibj2.command.<a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/Subsystem.html" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">Subsystem</a></h3>
-<code><a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/Subsystem.html#defer(java.util.function.Supplier)" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">defer</a>, <a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/Subsystem.html#getCurrentCommand()" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">getCurrentCommand</a>, <a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/Subsystem.html#getDefaultCommand()" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">getDefaultCommand</a>, <a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/Subsystem.html#register()" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">register</a>, <a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/Subsystem.html#removeDefaultCommand()" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">removeDefaultCommand</a>, <a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/Subsystem.html#run(java.lang.Runnable)" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">run</a>, <a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/Subsystem.html#runEnd(java.lang.Runnable,java.lang.Runnable)" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">runEnd</a>, <a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/Subsystem.html#runOnce(java.lang.Runnable)" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">runOnce</a>, <a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/Subsystem.html#setDefaultCommand(edu.wpi.first.wpilibj2.command.Command)" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">setDefaultCommand</a>, <a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/Subsystem.html#simulationPeriodic()" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">simulationPeriodic</a>, <a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/Subsystem.html#startEnd(java.lang.Runnable,java.lang.Runnable)" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">startEnd</a>, <a href="https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/Subsystem.html#startRun(java.lang.Runnable,java.lang.Runnable)" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">startRun</a></code></div>
+<h3 id="methods-inherited-from-class-edu.wpi.first.wpilibj2.command.Subsystem">Methods inherited from interface&nbsp;edu.wpi.first.wpilibj2.command.<a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/Subsystem.html" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">Subsystem</a></h3>
+<code><a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/Subsystem.html#defer(java.util.function.Supplier)" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">defer</a>, <a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/Subsystem.html#getCurrentCommand()" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">getCurrentCommand</a>, <a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/Subsystem.html#getDefaultCommand()" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">getDefaultCommand</a>, <a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/Subsystem.html#register()" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">register</a>, <a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/Subsystem.html#removeDefaultCommand()" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">removeDefaultCommand</a>, <a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/Subsystem.html#run(java.lang.Runnable)" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">run</a>, <a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/Subsystem.html#runEnd(java.lang.Runnable,java.lang.Runnable)" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">runEnd</a>, <a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/Subsystem.html#runOnce(java.lang.Runnable)" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">runOnce</a>, <a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/Subsystem.html#setDefaultCommand(edu.wpi.first.wpilibj2.command.Command)" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">setDefaultCommand</a>, <a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/Subsystem.html#simulationPeriodic()" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">simulationPeriodic</a>, <a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/Subsystem.html#startEnd(java.lang.Runnable,java.lang.Runnable)" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">startEnd</a>, <a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/Subsystem.html#startRun(java.lang.Runnable,java.lang.Runnable)" title="class or interface in edu.wpi.first.wpilibj2.command" class="external-link">startRun</a></code></div>
 </section>
 </li>
 </ul>
@@ -203,7 +209,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="runToTargetPosition(edu.wpi.first.units.measure.Distance)">
 <h3>runToTargetPosition</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">runToTargetPosition</span><wbr><span class="parameters">(edu.wpi.first.units.measure.Distance&nbsp;height)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">runToTargetPosition</span><wbr><span class="parameters">(<a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/units/measure/Distance.html" title="class or interface in edu.wpi.first.units.measure" class="external-link">Distance</a>&nbsp;height)</span></div>
 <div class="block">Controls the elevator to move to a specified height using closed-loop position control.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -215,12 +221,25 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="runToTargetVelocity(edu.wpi.first.units.measure.LinearVelocity)">
 <h3>runToTargetVelocity</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">runToTargetVelocity</span><wbr><span class="parameters">(edu.wpi.first.units.measure.LinearVelocity&nbsp;velocity)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">runToTargetVelocity</span><wbr><span class="parameters">(<a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/units/measure/LinearVelocity.html" title="class or interface in edu.wpi.first.units.measure" class="external-link">LinearVelocity</a>&nbsp;velocity)</span></div>
 <div class="block">Controls the elevator to move to a specified velocity using closed-loop velocity control.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>velocity</code> - Target velocity in meters per second, automatically constrained between
-     -MAX_SPEED and MAX_SPEED</dd>
+     -MAX_OPERATOR_VELOCITY and MAX_OPERATOR_VELOCITY</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="runToClimbingVelocity(edu.wpi.first.units.measure.LinearVelocity)">
+<h3>runToClimbingVelocity</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">runToClimbingVelocity</span><wbr><span class="parameters">(<a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/units/measure/LinearVelocity.html" title="class or interface in edu.wpi.first.units.measure" class="external-link">LinearVelocity</a>&nbsp;velocity)</span></div>
+<div class="block">Controls the elevator to move to a specified velocity using closed-loop climbing velocity
+ control.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>velocity</code> - Target velocity in meters per second, automatically constrained between
+     -MAX_OPERATOR_VELOCITY and MAX_OPERATOR_VELOCITY</dd>
 </dl>
 </section>
 </li>
@@ -247,7 +266,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getCurrentHeight()">
 <h3>getCurrentHeight</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">edu.wpi.first.units.measure.Distance</span>&nbsp;<span class="element-name">getCurrentHeight</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/units/measure/Distance.html" title="class or interface in edu.wpi.first.units.measure" class="external-link">Distance</a></span>&nbsp;<span class="element-name">getCurrentHeight</span>()</div>
 <div class="block">Retrieves the current height of the elevator.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -259,8 +278,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="isAtTargetHeight()">
 <h3>isAtTargetHeight</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isAtTargetHeight</span>()</div>
-<div class="block">Checks if the elevator is stably at its target height for a minimum duration. Uses position and
- time thresholds defined in ElevatorConstants.</div>
+<div class="block">Checks if the elevator is stably at its target height for a minimum duration.</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>true if the elevator has maintained its target height within tolerance</dd>

@@ -125,23 +125,34 @@ implements <a href="ElevatorIO.html" title="interface in frc.alotobots.reefscape
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setElevatorBrakeMode(boolean)" class="member-name-link">setElevatorBrakeMode</a><wbr>(boolean&nbsp;brake)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#resetRotorPositions(edu.wpi.first.units.measure.Distance)" class="member-name-link">resetRotorPositions</a><wbr>(<a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/units/measure/Distance.html" title="class or interface in edu.wpi.first.units.measure" class="external-link">Distance</a>&nbsp;height)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Sets the brake mode for the elevator motors.</div>
+<div class="block">Resets the rotor sensors of both motors to be equal to the given height</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setElevatorOpenLoop(double)" class="member-name-link">setElevatorOpenLoop</a><wbr>(double&nbsp;percentOutput)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setElevatorBrakeMode(boolean)" class="member-name-link">setElevatorBrakeMode</a><wbr>(boolean&nbsp;brake)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Sets the elevator motors to run in open-loop mode at the specified output percentage.</div>
+<div class="block">Sets the brake mode for the elevator motors.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setElevatorPosition(edu.wpi.first.units.measure.Distance,int)" class="member-name-link">setElevatorPosition</a><wbr>(edu.wpi.first.units.measure.Distance&nbsp;position,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setElevatorOpenLoop(double)" class="member-name-link">setElevatorOpenLoop</a><wbr>(double&nbsp;percentOutput)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the elevator motors to run in open-loop mode at the specified output percentage.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setElevatorPosition(edu.wpi.first.units.measure.Distance,int)" class="member-name-link">setElevatorPosition</a><wbr>(<a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/units/measure/Distance.html" title="class or interface in edu.wpi.first.units.measure" class="external-link">Distance</a>&nbsp;position,
+ int&nbsp;pidSlot)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the elevator to a specific position using closed-loop control.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setElevatorPositionMotionMagic(edu.wpi.first.units.measure.Distance,int)" class="member-name-link">setElevatorPositionMotionMagic</a><wbr>(<a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/units/measure/Distance.html" title="class or interface in edu.wpi.first.units.measure" class="external-link">Distance</a>&nbsp;position,
  int&nbsp;pidSlot)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the elevator to a specific position using closed-loop control.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setElevatorVelocity(edu.wpi.first.units.measure.LinearVelocity,int)" class="member-name-link">setElevatorVelocity</a><wbr>(edu.wpi.first.units.measure.LinearVelocity&nbsp;velocity,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setElevatorVelocity(edu.wpi.first.units.measure.LinearVelocity,int)" class="member-name-link">setElevatorVelocity</a><wbr>(<a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/units/measure/LinearVelocity.html" title="class or interface in edu.wpi.first.units.measure" class="external-link">LinearVelocity</a>&nbsp;velocity,
  int&nbsp;pidSlot)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the elevator to a specific velocity using closed-loop control.</div>
@@ -207,7 +218,7 @@ implements <a href="ElevatorIO.html" title="interface in frc.alotobots.reefscape
 <li>
 <section class="detail" id="setElevatorPosition(edu.wpi.first.units.measure.Distance,int)">
 <h3>setElevatorPosition</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setElevatorPosition</span><wbr><span class="parameters">(edu.wpi.first.units.measure.Distance&nbsp;position,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setElevatorPosition</span><wbr><span class="parameters">(<a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/units/measure/Distance.html" title="class or interface in edu.wpi.first.units.measure" class="external-link">Distance</a>&nbsp;position,
  int&nbsp;pidSlot)</span></div>
 <div class="block">Sets the elevator to a specific position using closed-loop control.</div>
 <dl class="notes">
@@ -220,9 +231,24 @@ implements <a href="ElevatorIO.html" title="interface in frc.alotobots.reefscape
 </section>
 </li>
 <li>
+<section class="detail" id="setElevatorPositionMotionMagic(edu.wpi.first.units.measure.Distance,int)">
+<h3>setElevatorPositionMotionMagic</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setElevatorPositionMotionMagic</span><wbr><span class="parameters">(<a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/units/measure/Distance.html" title="class or interface in edu.wpi.first.units.measure" class="external-link">Distance</a>&nbsp;position,
+ int&nbsp;pidSlot)</span></div>
+<div class="block">Sets the elevator to a specific position using closed-loop control.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="ElevatorIO.html#setElevatorPositionMotionMagic(edu.wpi.first.units.measure.Distance,int)">setElevatorPositionMotionMagic</a></code>&nbsp;in interface&nbsp;<code><a href="ElevatorIO.html" title="interface in frc.alotobots.reefscape.subsystems.elevator.io">ElevatorIO</a></code></dd>
+<dt>Parameters:</dt>
+<dd><code>position</code> - The target position as a Distance unit</dd>
+<dd><code>pidSlot</code> - The PID slot to use (0 for velocity mode, 1 for position mode)</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="setElevatorVelocity(edu.wpi.first.units.measure.LinearVelocity,int)">
 <h3>setElevatorVelocity</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setElevatorVelocity</span><wbr><span class="parameters">(edu.wpi.first.units.measure.LinearVelocity&nbsp;velocity,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setElevatorVelocity</span><wbr><span class="parameters">(<a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/units/measure/LinearVelocity.html" title="class or interface in edu.wpi.first.units.measure" class="external-link">LinearVelocity</a>&nbsp;velocity,
  int&nbsp;pidSlot)</span></div>
 <div class="block">Sets the elevator to a specific velocity using closed-loop control.</div>
 <dl class="notes">
@@ -257,6 +283,19 @@ implements <a href="ElevatorIO.html" title="interface in frc.alotobots.reefscape
 <dd><code><a href="ElevatorIO.html#setElevatorBrakeMode(boolean)">setElevatorBrakeMode</a></code>&nbsp;in interface&nbsp;<code><a href="ElevatorIO.html" title="interface in frc.alotobots.reefscape.subsystems.elevator.io">ElevatorIO</a></code></dd>
 <dt>Parameters:</dt>
 <dd><code>brake</code> - true to enable brake mode, false for coast mode</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="resetRotorPositions(edu.wpi.first.units.measure.Distance)">
+<h3>resetRotorPositions</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">resetRotorPositions</span><wbr><span class="parameters">(<a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/units/measure/Distance.html" title="class or interface in edu.wpi.first.units.measure" class="external-link">Distance</a>&nbsp;height)</span></div>
+<div class="block">Resets the rotor sensors of both motors to be equal to the given height</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="ElevatorIO.html#resetRotorPositions(edu.wpi.first.units.measure.Distance)">resetRotorPositions</a></code>&nbsp;in interface&nbsp;<code><a href="ElevatorIO.html" title="interface in frc.alotobots.reefscape.subsystems.elevator.io">ElevatorIO</a></code></dd>
+<dt>Parameters:</dt>
+<dd><code>height</code> - The height off the floor the elevator is at</dd>
 </dl>
 </section>
 </li>
