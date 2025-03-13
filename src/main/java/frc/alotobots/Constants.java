@@ -14,7 +14,7 @@ package frc.alotobots;
 
 import edu.wpi.first.wpilibj.RobotBase;
 import frc.alotobots.library.subsystems.swervedrive.constants.TunerConstants;
-import frc.alotobots.library.subsystems.swervedrive.constants.mk4i2023.TunerConstants2023;
+import frc.alotobots.library.subsystems.swervedrive.constants.mk4i2025.TunerConstants2025;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -41,7 +41,7 @@ public final class Constants {
   }
 
   /** Global tuning constants for the swerve drive. */
-  public static final TunerConstants tunerConstants = new TunerConstants2023();
+  public static final TunerConstants tunerConstants = new TunerConstants2025();
 
   /**
    * CAN bus device ID assignments. This class maps CAN IDs for all motors, sensors and other

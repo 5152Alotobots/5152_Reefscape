@@ -153,7 +153,7 @@ public class OI {
 
   /** Cycles the selected branch one to the right */
   public static Trigger cycleSelectedBranchRightButton = driverController.povRight();
-  
+
   // CODRIVER -----------------------------------------------------------
   public static final Trigger stateCoralCoralStationButton = codriverController.rightBumper();
   public static final Trigger stateCoralStowedButton = codriverController.leftBumper();
