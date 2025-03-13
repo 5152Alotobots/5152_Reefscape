@@ -93,8 +93,8 @@ public class AutoCycleSubsystem extends SubsystemBase {
     state.logTargetPoses(reefPose, coralStationPose);
 
     // Update the field widget with the target poses
-      reefPose.ifPresent(pose2d -> field.getObject("ReefTarget").setPoses(pose2d));
-      coralStationPose.ifPresent(pose2d -> field.getObject("CoralStationTarget").setPoses(pose2d));
+      reefPose.ifPresent(pose2d -> field.getObject("ReefTarget").setPose(pose2d));
+      coralStationPose.ifPresent(pose2d -> field.getObject("CoralStationTarget").setPose(pose2d));
   }
 
   /**
