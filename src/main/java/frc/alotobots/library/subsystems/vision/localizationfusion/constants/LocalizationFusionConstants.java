@@ -21,6 +21,8 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class LocalizationFusionConstants {
 
+  public static final boolean IGNORE_VISION_IN_AUTO = true;
+
   /**
    * Constants related to pose validation and thresholds. Defines distance and rotation thresholds
    * for validating poses from different sources.
