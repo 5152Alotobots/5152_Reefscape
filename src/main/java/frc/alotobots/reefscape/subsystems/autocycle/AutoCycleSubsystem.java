@@ -14,8 +14,12 @@ package frc.alotobots.reefscape.subsystems.autocycle;
 
 import static frc.alotobots.reefscape.subsystems.autocycle.constants.AutoCycleConstants.*;
 
+import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.trajectory.PathPlannerTrajectory;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -49,6 +53,7 @@ public class AutoCycleSubsystem extends SubsystemBase {
   @Getter private final PathPlannerManager pathPlannerManager;
   private final SwerveDriveSubsystem swerveDriveSubsystem;
   private final Supplier<ChassisSpeeds> manualControlChassisSpeeds;
+  private final Field2d field = new Field2d();
 
   /**
    * Creates a new AutoCycleSubsystem.
@@ -73,6 +78,9 @@ public class AutoCycleSubsystem extends SubsystemBase {
    */
   @Override
   public void periodic() {
+    // Log robot to field widget for drivers
+    field.setRobotPose(swerveDriveSubsystem.getPose());
+
     state.logState();
     // Get end poses for currently selected paths
     Optional<Pose2d> reefPose =
@@ -83,6 +91,10 @@ public class AutoCycleSubsystem extends SubsystemBase {
 
     // Log the poses using existing method
     state.logTargetPoses(reefPose, coralStationPose);
+
+    // Update the field widget with the target poses
+      reefPose.ifPresent(pose2d -> field.getObject("ReefTarget").setPoses(pose2d));
+      coralStationPose.ifPresent(pose2d -> field.getObject("CoralStationTarget").setPoses(pose2d));
   }
 
   /**

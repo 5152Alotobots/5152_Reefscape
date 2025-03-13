@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.14707048819056,
-        "y": 5.495545398649405
+        "x": 5.227984030735413,
+        "y": 5.6356917653574765
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 4.962934899669935,
-        "y": 5.180082534501132
+        "x": 5.00175,
+        "y": 5.28275
       },
       "prevControl": {
-        "x": 5.087934899669935,
-        "y": 5.396588885447241
+        "x": 5.12675,
+        "y": 5.499256350946109
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "BranchApproach_J"
     }
   ],
   "rotationTargets": [],
@@ -47,7 +47,7 @@
   "reversed": false,
   "folder": "AutoDrive",
   "idealStartingState": {
-    "velocity": 4.5,
+    "velocity": 3.0,
     "rotation": -119.99999999999999
   },
   "useDefaultConstraints": true

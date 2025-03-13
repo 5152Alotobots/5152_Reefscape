@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.827566719697662,
-        "y": 5.501707837556475
+        "x": 3.746653177152808,
+        "y": 5.641854204264547
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 4.007211777940109,
-        "y": 5.181118491219049
+        "x": 3.9679303278688525,
+        "y": 5.2597336065573765
       },
       "prevControl": {
-        "x": 3.8822117779401086,
-        "y": 5.3976248421651585
+        "x": 3.8429303278688525,
+        "y": 5.476239957503486
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "BranchApproach_K"
     }
   ],
   "rotationTargets": [],
@@ -47,7 +47,7 @@
   "reversed": false,
   "folder": "AutoDrive",
   "idealStartingState": {
-    "velocity": 4.5,
+    "velocity": 3.0,
     "rotation": -59.99999999999999
   },
   "useDefaultConstraints": true
