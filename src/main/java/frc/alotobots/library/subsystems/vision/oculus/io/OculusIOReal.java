@@ -43,6 +43,15 @@ public class OculusIOReal implements OculusIO {
   /** Subscriber for battery percentage updates */
   private final DoubleSubscriber questBatteryPercent;
 
+  /** Subscriber for heartbeat requests */
+  private final DoubleSubscriber heartbeatRequestSub;
+
+  /** Publisher for heartbeat responses */
+  private final DoublePublisher heartbeatResponsePub;
+
+  /** Last processed heartbeat request ID */
+  private double lastProcessedHeartbeatId = 0;
+
   /** Publisher for pose reset commands */
   private final DoubleArrayPublisher resetPosePub;
 
@@ -63,7 +72,8 @@ public class OculusIOReal implements OculusIO {
     questEulerAngles =
         nt4Table.getFloatArrayTopic("eulerAngles").subscribe(new float[] {0.0f, 0.0f, 0.0f});
     questBatteryPercent = nt4Table.getDoubleTopic("batteryPercent").subscribe(-1.0);
-
+    heartbeatRequestSub = nt4Table.getDoubleTopic("heartbeat/quest_to_robot").subscribe(0.0);
+    heartbeatResponsePub = nt4Table.getDoubleTopic("heartbeat/robot_to_quest").publish();
     resetPosePub = nt4Table.getDoubleArrayTopic("resetpose").publish();
   }
 
@@ -76,6 +86,7 @@ public class OculusIOReal implements OculusIO {
     inputs.frameCount = (int) questFrameCount.get();
     inputs.batteryPercent = questBatteryPercent.get();
     inputs.misoValue = (int) questMiso.get();
+    processHeartbeat();
   }
 
   @Override
@@ -86,5 +97,17 @@ public class OculusIOReal implements OculusIO {
   @Override
   public void setResetPose(double x, double y, double rotation) {
     resetPosePub.set(new double[] {x, y, rotation});
+  }
+
+  /** Process heartbeat requests from Quest and respond with the same ID */
+  private void processHeartbeat() {
+    double requestId = heartbeatRequestSub.get();
+
+    // Only respond to new requests to avoid flooding
+    if (requestId > 0 && requestId != lastProcessedHeartbeatId) {
+      // Echo back the same ID as response
+      heartbeatResponsePub.set(requestId);
+      lastProcessedHeartbeatId = requestId;
+    }
   }
 }
