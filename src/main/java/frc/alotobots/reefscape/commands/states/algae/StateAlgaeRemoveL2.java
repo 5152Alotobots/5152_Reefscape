@@ -13,7 +13,6 @@
 package frc.alotobots.reefscape.commands.states.algae;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.alotobots.library.commands.util.LogCommand;
 import frc.alotobots.library.subsystems.bling.BlingSubsystem;
 import frc.alotobots.reefscape.commands.groups.ElevatorWristRun;
@@ -23,9 +22,7 @@ import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants;
 import frc.alotobots.reefscape.subsystems.wrist.WristSubsystem;
 import frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants;
 
-/**
- * Command sequence for removing algae from level 2
- */
+/** Command sequence for removing algae from level 2 */
 public class StateAlgaeRemoveL2 extends SequentialCommandGroup {
   /**
    * Creates a new StateL2 command.
