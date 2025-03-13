@@ -79,10 +79,9 @@ public class WristConstants {
     public static final Angle CORAL_GROUND_INTAKE = Degrees.of(-7);
 
     /** Height for L2/L3 algae pickup */
-    public static final Angle ALGAE_L2L3_PICKUP = Degrees.of(-17);
+    public static final Angle ALGAE_L2_REMOVAL = Degrees.of(0);
 
-    /** Height for L3/L4 algae pickup */
-    public static final Angle ALGAE_L3L4_PICKUP = Degrees.of(-17);
+    public static final Angle ALGAE_L3_REMOVAL = Degrees.of(0);
 
     /** Height for stowed algae */
     public static final Angle ALGAE_STOWED = Degrees.of(85);

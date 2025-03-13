@@ -46,7 +46,8 @@ import frc.alotobots.library.subsystems.vision.photonvision.apriltag.util.AprilT
 import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.io.*;
 import frc.alotobots.reefscape.commands.groups.Climb;
 import frc.alotobots.reefscape.commands.groups.UnClimb;
-import frc.alotobots.reefscape.commands.states.algae.*;
+import frc.alotobots.reefscape.commands.states.algae.StateAlgaeRemoveL2;
+import frc.alotobots.reefscape.commands.states.algae.StateAlgaeRemoveL3;
 import frc.alotobots.reefscape.commands.states.coral.*;
 import frc.alotobots.reefscape.subsystems.climber.ClimberSubsystem;
 import frc.alotobots.reefscape.subsystems.climber.commands.ClimberDisableServos;
@@ -57,7 +58,7 @@ import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEjectM
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEjectThrough;
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeIntakeManual;
 import frc.alotobots.reefscape.subsystems.coralIntake.io.CoralIntakeIO;
-import frc.alotobots.reefscape.subsystems.coralIntake.io.CoralIntakeIOVortexReal;
+import frc.alotobots.reefscape.subsystems.coralIntake.io.CoralIntakeIOTalonFXReal;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.commands.DefaultElevatorRunAtVelocity;
 import frc.alotobots.reefscape.subsystems.elevator.commands.ElevatorRunToHeight;
@@ -77,7 +78,6 @@ import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 public class RobotContainer {
-  //   private final AlgaeIntakeSubsystem algaeIntakeSubsystem;
   private final SwerveDriveSubsystem swerveDriveSubsystem;
   private final ElevatorSubsystem elevatorSubsystem;
   private final WristSubsystem wristSubsystem;
@@ -108,10 +108,8 @@ public class RobotContainer {
                 new ModuleIOTalonFXReal(ModulePosition.BACK_LEFT.index),
                 new ModuleIOTalonFXReal(ModulePosition.BACK_RIGHT.index));
         elevatorSubsystem = new ElevatorSubsystem(new ElevatorIOTalonFXReal());
-        coralIntakeSubsystem = new CoralIntakeSubsystem(new CoralIntakeIOVortexReal());
-        wristSubsystem =
-            new WristSubsystem(new WristIOTalonFXReal(elevatorSubsystem::getCurrentHeight));
-        // algaeIntakeSubsystem = new AlgaeIntakeSubsystem(new AlgaeIntakeIOTalonFXReal());
+        coralIntakeSubsystem = new CoralIntakeSubsystem(new CoralIntakeIOTalonFXReal());
+        wristSubsystem = new WristSubsystem(new WristIOTalonFXReal());
         climberSubsystem = new ClimberSubsystem(new ClimberIORevServoReal());
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         autoNamedCommands =
@@ -141,7 +139,6 @@ public class RobotContainer {
 
       case SIM:
         coralIntakeSubsystem = new CoralIntakeSubsystem(new CoralIntakeIO() {});
-        // algaeIntakeSubsystem = new AlgaeIntakeSubsystem(new AlgaeIntakeIO() {});
         Pose2d simStartPose = new Pose2d(3, 3, new Rotation2d(0));
         driveSimulation =
             new SwerveDriveSimulation(
@@ -196,10 +193,8 @@ public class RobotContainer {
         break;
 
       default:
-        coralIntakeSubsystem = new CoralIntakeSubsystem(new CoralIntakeIOVortexReal());
+        coralIntakeSubsystem = new CoralIntakeSubsystem(new CoralIntakeIOTalonFXReal());
         climberSubsystem = new ClimberSubsystem(new ClimberIORevServoReal());
-        // algaeIntakeSubsystem = new AlgaeIntakeSubsystem(new AlgaeIntakeIO() {});
-
         // Replay mode initialization
         swerveDriveSubsystem =
             new SwerveDriveSubsystem(
@@ -246,7 +241,6 @@ public class RobotContainer {
     blingSubsystem.setDefaultCommand(
         new NoAllianceWaiting(blingSubsystem).andThen(new SetToAllianceColor(blingSubsystem)));
     climberSubsystem.setDefaultCommand(new ClimberDisableServos(climberSubsystem));
-    // algaeIntakeSubsystem.setDefaultCommand(new DefaultAlgaeIntakeHold(algaeIntakeSubsystem));
   }
 
   /** Contains button based commands */
@@ -262,9 +256,7 @@ public class RobotContainer {
         Seconds.of(30));
     new Trigger(coralIntakeSubsystem::isIntakeOccupied)
         .onTrue(new BlingCoralHasPiece(blingSubsystem).withTimeout(BLING_NOTIFICATION_TIME));
-    // new Trigger(algaeIntakeSubsystem::isIntakeOccupied)
-    // .onTrue(new BlingAlgaeHasPiece(blingSubsystem).withTimeout(BLING_NOTIFICATION_TIME));
-    // Coral
+
     stateCoralCoralStationButton.toggleOnTrue(
         new StateCoralCoralStation(
             elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, blingSubsystem));
@@ -297,10 +289,22 @@ public class RobotContainer {
             blingSubsystem,
             coralIntakeReleaseButton));
     stateCoralStowedButton.toggleOnTrue(new StateCoralStowed(elevatorSubsystem, wristSubsystem));
-
     stateCoralGroundButton.toggleOnTrue(
         new StateCoralGround(
             elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, blingSubsystem));
+
+    stateAlgaeL2Button.toggleOnTrue(
+        new StateAlgaeRemoveL2(
+            elevatorSubsystem,
+            wristSubsystem,
+            coralIntakeSubsystem,
+            blingSubsystem));
+    stateAlgaeL3Button.toggleOnTrue(
+        new StateAlgaeRemoveL3(
+            elevatorSubsystem,
+            wristSubsystem,
+            coralIntakeSubsystem,
+            blingSubsystem));
 
     climbButton.toggleOnTrue(
         new Climb(climberSubsystem, elevatorSubsystem, blingSubsystem, () -> -getElevatorAxis()));
@@ -326,11 +330,11 @@ public class RobotContainer {
         new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.CORAL_L4_PLACE));
     // Wrist
     wristL4coralButton.toggleOnTrue(
-        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.CORAL_L4_PLACE, false));
+        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.CORAL_L4_PLACE));
     wristL2and3coralButton.toggleOnTrue(
-        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.CORAL_L3_PLACE, false));
+        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.CORAL_L3_PLACE));
     wristGroundButton.toggleOnTrue(
-        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.CORAL_GROUND_INTAKE, false));
+        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.CORAL_GROUND_INTAKE));
   }
 
   private void configureAutoChooser() {

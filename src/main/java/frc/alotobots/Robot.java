@@ -134,6 +134,7 @@ public class Robot extends LoggedRobot {
    */
   @Override
   public void teleopInit() {
+    CommandScheduler.getInstance().cancelAll();
     if (autonomousCommand != null) {
       autonomousCommand.cancel();
     }

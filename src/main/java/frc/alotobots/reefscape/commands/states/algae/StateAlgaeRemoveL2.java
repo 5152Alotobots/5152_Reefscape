@@ -13,29 +13,39 @@
 package frc.alotobots.reefscape.commands.states.algae;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.alotobots.library.commands.util.LogCommand;
+import frc.alotobots.library.subsystems.bling.BlingSubsystem;
 import frc.alotobots.reefscape.commands.groups.ElevatorWristRun;
+import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants;
 import frc.alotobots.reefscape.subsystems.wrist.WristSubsystem;
 import frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants;
 
-/** Command sequence for stowing with algae. */
-public class StateAlgaeStowed extends SequentialCommandGroup {
+/**
+ * Command sequence for removing algae from level 2
+ */
+public class StateAlgaeRemoveL2 extends SequentialCommandGroup {
   /**
-   * Creates a new StateAlgaeStowed command.
+   * Creates a new StateL2 command.
    *
    * @param elevatorSubsystem The elevator subsystem
    * @param wristSubsystem The wrist subsystem
+   * @param coralIntakeSubsystem The coral intake subsystem
+   * @param blingSubsystem The bling subsystem
    */
-  public StateAlgaeStowed(ElevatorSubsystem elevatorSubsystem, WristSubsystem wristSubsystem) {
+  public StateAlgaeRemoveL2(
+      ElevatorSubsystem elevatorSubsystem,
+      WristSubsystem wristSubsystem,
+      CoralIntakeSubsystem coralIntakeSubsystem,
+      BlingSubsystem blingSubsystem) {
     addCommands(
-        new LogCommand("State/State", "ALGAE_STOWED"),
+        new LogCommand("State/State", "ALGAE_L2"),
         new ElevatorWristRun(
             elevatorSubsystem,
             wristSubsystem,
-            ElevatorConstants.Setpoints.ALGAE_STOWED,
-            WristConstants.Setpoints.ALGAE_STOWED,
-            true));
+            ElevatorConstants.Setpoints.ALGAE_L2_REMOVAL,
+            WristConstants.Setpoints.ALGAE_L2_REMOVAL));
   }
 }
