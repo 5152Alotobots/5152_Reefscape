@@ -112,6 +112,9 @@ public class BlingConstants {
     /** Color setting for red alliance */
     public static final BlingIO.LoggedColor RED_ALLIANCE_COLOR = new BlingIO.LoggedColor(255, 0, 0);
 
+    /** Cage Color */
+    public static final BlingIO.LoggedColor CAGE_SWITCH_COLOR = new BlingIO.LoggedColor(0, 255, 0);
+
     /** Color setting for no alliance selected */
     public static final BlingIO.LoggedColor NO_ALLIANCE_COLOR =
         new BlingIO.LoggedColor(255, 255, 0);

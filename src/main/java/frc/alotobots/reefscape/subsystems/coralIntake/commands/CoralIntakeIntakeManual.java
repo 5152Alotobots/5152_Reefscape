@@ -10,43 +10,38 @@
 *
 * Source code must be publicly available on GitHub or an alternative web accessible site
 */
-package frc.alotobots.reefscape.subsystems.algaeintake.commands;
+package frc.alotobots.reefscape.subsystems.coralIntake.commands;
 
-import static frc.alotobots.reefscape.subsystems.algaeintake.constants.AlgaeIntakeConstants.Limits.MAX_OPEN_LOOP_INTAKE_PERCENTAGE;
+import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeConstants.Limits.MAX_OPEN_LOOP_INTAKE_PERCENTAGE;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.alotobots.reefscape.subsystems.algaeintake.AlgaeIntakeSubsystem;
+import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
 import java.util.function.DoubleSupplier;
 
 /**
- * Command that runs the algae intake to collect game pieces by pulling them inward using positive
- * motor output. Automatically ends when a game piece is detected by the intake sensor. The speed is
+ * Command that runs the intake to collect game pieces by pulling them inward using positive motor
+ * output. Automatically ends when a game piece is detected by the intake sensor. The speed is
  * clamped to the maximum allowed intake percentage.
  */
-public class AlgaeIntakeIntakeOpenLoop extends Command {
-  /** The algae intake subsystem being controlled */
-  private final AlgaeIntakeSubsystem algaeIntakeSubsystem;
+public class CoralIntakeIntakeManual extends Command {
+  /** The coral intake subsystem being controlled */
+  private final CoralIntakeSubsystem coralIntakeSubsystem;
 
-  /** The input for controlling intake speed */
+  /** The input for controlling intake speed (positive values pull inward) */
   private final DoubleSupplier input;
 
-  private final Trigger stop;
-
   /**
-   * Creates a new AlgaeIntakeIntakeOpenLoop command.
+   * Creates a new CoralIntakeIntake command.
    *
-   * @param algaeIntakeSubsystem The intake subsystem to control
-   * @param input Supplier for the intake speed (0.0 to MAX_OPEN_LOOP_INTAKE_PERCENTAGE) Positive
+   * @param coralIntakeSubsystem The intake subsystem to control
+   * @param input Supplier for the intake speed (0.0 to MAX_OPEN_LOOP_INTAKE_PERCENTAGE). Positive
    *     values pull inward.
    */
-  public AlgaeIntakeIntakeOpenLoop(
-      AlgaeIntakeSubsystem algaeIntakeSubsystem, Trigger stop, DoubleSupplier input) {
-    this.stop = stop;
-    this.algaeIntakeSubsystem = algaeIntakeSubsystem;
+  public CoralIntakeIntakeManual(CoralIntakeSubsystem coralIntakeSubsystem, DoubleSupplier input) {
+    this.coralIntakeSubsystem = coralIntakeSubsystem;
     this.input = input;
-    addRequirements(algaeIntakeSubsystem);
+    addRequirements(coralIntakeSubsystem);
   }
 
   /**
@@ -56,7 +51,7 @@ public class AlgaeIntakeIntakeOpenLoop extends Command {
   @Override
   public void execute() {
     double adjustedOutput = MathUtil.clamp(input.getAsDouble(), 0, MAX_OPEN_LOOP_INTAKE_PERCENTAGE);
-    algaeIntakeSubsystem.runAtPercentOutput(adjustedOutput);
+    coralIntakeSubsystem.runAtPercentOutput(adjustedOutput);
   }
 
   /**
@@ -66,7 +61,7 @@ public class AlgaeIntakeIntakeOpenLoop extends Command {
    */
   @Override
   public void end(boolean interrupted) {
-    algaeIntakeSubsystem.stop();
+    coralIntakeSubsystem.stop();
   }
 
   /**
@@ -76,6 +71,6 @@ public class AlgaeIntakeIntakeOpenLoop extends Command {
    */
   @Override
   public boolean isFinished() {
-    return stop.getAsBoolean() || algaeIntakeSubsystem.isIntakeOccupied();
+    return false;
   }
 }

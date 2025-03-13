@@ -42,10 +42,16 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "AutoStateCoralStation\r"
+                  "name": "AutoStateCoralStation"
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "CoralIntakeIntake"
           }
         },
         {

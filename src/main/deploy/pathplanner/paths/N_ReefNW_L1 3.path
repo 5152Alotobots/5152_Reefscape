@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.7792008196721311,
-        "y": 6.692264344262294
+        "x": 1.4396624576304595,
+        "y": 7.06110889264551
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.779200819672131,
-        "y": 6.692264344262294
+        "x": 2.439662457630458,
+        "y": 7.06110889264551
       },
       "isLocked": false,
       "linkedName": "North Left Station"
     },
     {
       "anchor": {
-        "x": 3.7641393442622952,
-        "y": 5.301690573770491
+        "x": 3.7161885245901636,
+        "y": 5.46
       },
       "prevControl": {
-        "x": 2.6972336065573774,
-        "y": 6.7761782786885245
+        "x": 2.6492827868852458,
+        "y": 6.934487704918033
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Experimental L1 NE"
+      "linkedName": "Reef_NEL1"
     }
   ],
   "rotationTargets": [],
@@ -33,7 +33,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 2.0,
+    "maxVelocity": 1.0,
     "maxAcceleration": 1.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 460.0,

@@ -27,35 +27,21 @@ public class WristRunToAngle extends Command {
   /** The target angle for the wrist to reach */
   private final Angle angle;
 
-  private final boolean hasAlgae;
-
   /**
    * Creates a new WristRunToAngle command.
    *
    * @param wristSubsystem The wrist subsystem to control
    * @param angle The desired angle for the wrist to reach
-   * @param hasAlgae Whether the robot has algae [TEMPORARY]
-   */
-  public WristRunToAngle(WristSubsystem wristSubsystem, Angle angle, boolean hasAlgae) {
-    this.wristSubsystem = wristSubsystem;
-    this.angle = angle;
-    this.hasAlgae = hasAlgae;
-    addRequirements(wristSubsystem);
-  }
-
-  /**
-   * Creates a new WristRunToAngle command that ends after reaching target.
-   *
-   * @param wristSubsystem The wrist subsystem to control
-   * @param angle The desired angle for the wrist to reach
    */
   public WristRunToAngle(WristSubsystem wristSubsystem, Angle angle) {
-    this(wristSubsystem, angle, false);
+    this.wristSubsystem = wristSubsystem;
+    this.angle = angle;
+    addRequirements(wristSubsystem);
   }
 
   @Override
   public void initialize() {
-    wristSubsystem.runToTargetAngle(angle, hasAlgae);
+    wristSubsystem.runToTargetAngle(angle);
   }
 
   @Override

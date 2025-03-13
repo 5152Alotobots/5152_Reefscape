@@ -34,6 +34,8 @@ import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.Alert;
 import edu.wpi.first.wpilibj.Alert.AlertType;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
@@ -85,6 +87,8 @@ public class SwerveDriveSubsystem extends SubsystemBase {
   /** Raw rotation from the gyro */
   private Rotation2d rawGyroRotation = new Rotation2d();
 
+  private Field2d feild = new Field2d();
+
   /** Last recorded module positions for delta tracking */
   private SwerveModulePosition[] lastModulePositions =
       new SwerveModulePosition[] {
@@ -114,6 +118,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
       ModuleIO blModuleIO,
       ModuleIO brModuleIO) {
     this.gyroIO = gyroIO;
+    Shuffleboard.getTab("Prematch").add("Robot Pose", feild);
 
     // Initialize modules
     modules[0] = new Module(flModuleIO, 0, Constants.tunerConstants.getFrontLeft());
@@ -149,6 +154,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
   /** Periodic update function handling odometry updates and module states. */
   @Override
   public void periodic() {
+    feild.setRobotPose(getPose());
     odometryLock.lock();
     gyroIO.updateInputs(gyroInputs);
     Logger.processInputs("Drive/Gyro", gyroInputs);

@@ -1,0 +1,25 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "TestingWith2MetersForward"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "TestingWith2MetersForward&Back"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "BasicMeters",
+  "choreoAuto": false
+}

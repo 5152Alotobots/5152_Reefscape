@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 5.226639344262295,
-        "y": 5.313678278688524
+        "x": 4.967,
+        "y": 5.241752049180327
       },
       "prevControl": {
-        "x": 5.334528688524591,
-        "y": 6.548411885245901
+        "x": 5.074889344262296,
+        "y": 6.476485655737704
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -90.0
+    "rotation": -91.78651159290365
   },
   "reversed": false,
   "folder": "Battle Creek",

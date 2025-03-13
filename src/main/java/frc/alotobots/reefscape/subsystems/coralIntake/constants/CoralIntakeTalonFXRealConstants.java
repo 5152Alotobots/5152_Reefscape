@@ -10,7 +10,7 @@
 *
 * Source code must be publicly available on GitHub or an alternative web accessible site
 */
-package frc.alotobots.reefscape.subsystems.algaeintake.constants;
+package frc.alotobots.reefscape.subsystems.coralIntake.constants;
 
 import static edu.wpi.first.units.Units.Amps;
 
@@ -20,56 +20,44 @@ import edu.wpi.first.units.measure.Current;
 import lombok.experimental.UtilityClass;
 
 /**
- * Constants for the physical algae intake subsystem using TalonFX motors. Contains PID constants
- * for different control modes and motor safety limits.
+ * Constants for the physical intake subsystem using TalonFX motors. Contains PID constants for
+ * different control modes and motor safety limits.
  */
 @UtilityClass
-public final class AlgaeIntakeTalonFXRealConstants {
+public final class CoralIntakeTalonFXRealConstants {
 
   /** Contains PID and motion control constants for different control modes. */
   public static final class PIDConstants {
     /** TalonFX-specific PID and motion control constants for velocity (Velocity mode). */
     public static final class VelocityPIDConstants {
-      /** Position control proportional gain */
+      /** Velocity control proportional gain */
       public static final double KP = 0.1;
 
-      /** Position control integral gain */
+      /** Velocity control integral gain */
       public static final double KI = 0.0;
 
-      /** Position control derivative gain */
+      /** Velocity control derivative gain */
       public static final double KD = 0.0;
 
-      /** Acceleration feedforward gain */
-      public static final double KA = 0.0;
-
-      /** Gravity compensation gain */
-      public static final double KG = 0.14;
-
-      /** Static friction compensation */
-      public static final double KS = 0.0;
-
-      /** Velocity feedforward gain */
-      public static final double KV = 0.11;
+      /** Velocity control feedforward gain (Important for REV's half-baked velocity control) */
+      public static final double KF = 0.0;
     }
   }
 
-  /** Contains safety limit constants for the elevator motors. */
+  /** Contains safety limit constants for the intake motor. */
   public static final class MotorSafetyLimits {
     /** Maximum forward torque current limit in amperes */
-    public static final Current TORQUE_FORWARD_AMP_LIMIT = Amps.of(35);
+    public static final Current TORQUE_FORWARD_AMP_LIMIT = Amps.of(20);
 
     /** Maximum reverse torque current limit in amperes */
-    public static final Current TORQUE_REVERSE_AMP_LIMIT = Amps.of(-35);
+    public static final Current TORQUE_REVERSE_AMP_LIMIT = Amps.of(-20);
 
     /** Maximum stator current limit in amperes */
     public static final Current STATOR_AMP_LIMIT = Amps.of(20);
   }
 
   /** Direction of the left motor rotation */
-  public static final InvertedValue LEFT_MOTOR_DIRECTION = InvertedValue.Clockwise_Positive;
-
-  /** Direction of the right motor rotation */
-  public static final boolean RIGHT_MOTOR_INVERTED = true;
+  public static final InvertedValue MOTOR_DIRECTION = InvertedValue.Clockwise_Positive;
 
   /** Neutral mode (brake/coast) setting for the mechanism */
   public static final NeutralModeValue MECHANISM_NEUTRAL_MODE = NeutralModeValue.Brake;

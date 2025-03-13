@@ -26,13 +26,7 @@
         {
           "type": "named",
           "data": {
-            "name": "CoralIntakeEjectThrough"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": " AutoStateStowed"
+            "name": "CoralIntakeEject"
           }
         }
       ]

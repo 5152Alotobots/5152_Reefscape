@@ -26,6 +26,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.alotobots.library.subsystems.swervedrive.SwerveDriveSubsystem;
 import frc.alotobots.library.subsystems.vision.localizationfusion.constants.LocalizationFusionConstants;
 import frc.alotobots.library.subsystems.vision.localizationfusion.util.LocalizationState;
 import frc.alotobots.library.subsystems.vision.localizationfusion.util.PoseVisionConsumer;
@@ -56,6 +57,8 @@ public class LocalizationFusion extends SubsystemBase implements StateTransition
 
   /** State machine managing transitions between different localization states. */
   private final LocalizationState state;
+
+  private final SwerveDriveSubsystem swerveDriveSubsystem;
 
   /** Auto chooser for fallback pose setting */
   LoggedDashboardChooser<Command> autoChooser;
@@ -155,10 +158,12 @@ public class LocalizationFusion extends SubsystemBase implements StateTransition
       PoseVisionConsumer poseConsumer,
       OculusPoseSource oculusSource,
       AprilTagPoseSource aprilTagSource,
+      SwerveDriveSubsystem swerveDriveSubsystem,
       LoggedDashboardChooser<Command> autoChooser) {
     this.poseConsumer = poseConsumer;
     this.oculusSource = oculusSource;
     this.tagSource = aprilTagSource;
+    this.swerveDriveSubsystem = swerveDriveSubsystem;
     this.autoChooser = autoChooser;
     this.state = new LocalizationState(this);
     initializeConnectionState();
@@ -190,6 +195,8 @@ public class LocalizationFusion extends SubsystemBase implements StateTransition
    * </pre>
    */
   private void setupShuffleboardLogging() {
+    prematchTab.addString("Localization State", () -> state.getCurrentState().getDescription());
+
     prematchTab
         .addBoolean("Quest Ready", () -> oculusSource.isConnected() && questInitialized)
         .withSize(2, 1)
@@ -1090,7 +1097,15 @@ public class LocalizationFusion extends SubsystemBase implements StateTransition
                 .withDescription("Updating robot position for new auto: " + currentAutoSelection)
                 .withDisplaySeconds(3.0));
 
-        if (resetToPose(autoPose)) {
+        // If we don't have Quest or Tag initialized, directly set pose on swerve
+        if (!questInitialized && !tagInitialized) {
+          swerveDriveSubsystem.setPose(autoPose);
+          lastValidatedPose = autoPose;
+          hasAutoPose = true;
+          Logger.recordOutput(
+              "LocalizationFusion/Event",
+              "Directly setting swerve pose - no initialized pose sources");
+        } else if (resetToPose(autoPose)) {
           state.transitionTo(LocalizationState.State.RESETTING);
           lastValidatedPose = autoPose;
           hasAutoPose = true;

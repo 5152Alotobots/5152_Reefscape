@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.5943647540983608,
-        "y": 0.7103995901639337
+        "x": 1.3994612068965517,
+        "y": 1.2449892241379303
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.6264374771090997,
-        "y": 0.20257473310393026
+        "x": 1.4315339299072907,
+        "y": 0.7371643670779269
       },
       "isLocked": false,
       "linkedName": "South Left Station"
     },
     {
       "anchor": {
-        "x": 3.668237704918033,
-        "y": 2.940112704918032
+        "x": 3.784160204882524,
+        "y": 2.9376246228281895
       },
       "prevControl": {
-        "x": 1.819670659090943,
-        "y": 2.797485370612235
+        "x": 1.935593159055434,
+        "y": 2.7949972885223926
       },
       "nextControl": null,
       "isLocked": false,
@@ -48,7 +48,7 @@
   "folder": "Battle Creek",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -130.0
+    "rotation": -125.00000000000001
   },
   "useDefaultConstraints": true
 }

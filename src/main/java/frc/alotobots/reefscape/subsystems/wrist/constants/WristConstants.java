@@ -58,10 +58,10 @@ public class WristConstants {
     public static final Angle CRUISE = Degrees.of(90);
 
     /** Angle when wrist is fully retracted/stowed */
-    public static final Angle CORAL_STOWED = Degrees.of(115);
+    public static final Angle CORAL_STOWED = Degrees.of(85);
 
     /** Angle for picking up from coral station */
-    public static final Angle CORAL_CORAL_STATION = Degrees.of(45);
+    public static final Angle CORAL_CORAL_STATION = Degrees.of(31.1);
 
     /** Angle for L4 placement */
     public static final Angle CORAL_L4_PLACE = Degrees.of(90);
@@ -79,10 +79,9 @@ public class WristConstants {
     public static final Angle CORAL_GROUND_INTAKE = Degrees.of(-7);
 
     /** Height for L2/L3 algae pickup */
-    public static final Angle ALGAE_L2L3_PICKUP = Degrees.of(-17);
+    public static final Angle ALGAE_L2_REMOVAL = Degrees.of(0);
 
-    /** Height for L3/L4 algae pickup */
-    public static final Angle ALGAE_L3L4_PICKUP = Degrees.of(-17);
+    public static final Angle ALGAE_L3_REMOVAL = Degrees.of(0);
 
     /** Height for stowed algae */
     public static final Angle ALGAE_STOWED = Degrees.of(85);
@@ -92,5 +91,8 @@ public class WristConstants {
 
     /** Height for algae processor */
     public static final Angle ALGAE_NET = Degrees.of(60);
+
+    /** Height for algae processor */
+    public static final Angle ALGAE_GROUND_INTAKE = Degrees.of(1);
   }
 }

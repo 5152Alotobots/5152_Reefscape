@@ -39,12 +39,32 @@ public class ElevatorWristRun extends SequentialCommandGroup {
       WristSubsystem wristSubsystem,
       Distance elevatorHeight,
       Angle wristAngle,
-      boolean hasAlgae) {
+      boolean disableCruise) {
+
+    if (disableCruise) {
+      addCommands(
+          new ParallelCommandGroup(
+              new WristRunToAngle(wristSubsystem, wristAngle).asProxy(),
+              new ElevatorRunToHeight(elevatorSubsystem, elevatorHeight).asProxy()));
+    } else {
+      addCommands(
+          new ParallelCommandGroup(
+              new WristRunToAngle(wristSubsystem, CRUISE).asProxy(),
+              new ElevatorRunToHeight(elevatorSubsystem, elevatorHeight).asProxy()),
+          new WristRunToAngle(wristSubsystem, wristAngle).asProxy());
+    }
+  }
+
+  public ElevatorWristRun(
+      ElevatorSubsystem elevatorSubsystem,
+      WristSubsystem wristSubsystem,
+      Distance elevatorHeight,
+      Angle wristAngle) {
 
     addCommands(
         new ParallelCommandGroup(
-            new WristRunToAngle(wristSubsystem, CRUISE, hasAlgae).asProxy(),
+            new WristRunToAngle(wristSubsystem, CRUISE).asProxy(),
             new ElevatorRunToHeight(elevatorSubsystem, elevatorHeight).asProxy()),
-        new WristRunToAngle(wristSubsystem, wristAngle, hasAlgae).asProxy());
+        new WristRunToAngle(wristSubsystem, wristAngle).asProxy());
   }
 }

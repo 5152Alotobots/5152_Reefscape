@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.7641393442622952,
-        "y": 5.301690573770491
+        "x": 3.96,
+        "y": 5.433555327868853
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.733196721311476,
-        "y": 5.984989754098359
+        "x": 2.9290573770491806,
+        "y": 6.116854508196721
       },
       "isLocked": false,
       "linkedName": "Experimental L1 NE"
     },
     {
       "anchor": {
-        "x": 0.7792008196721311,
-        "y": 6.692264344262294
+        "x": 1.4396624576304595,
+        "y": 7.06110889264551
       },
       "prevControl": {
-        "x": 1.677479508196721,
-        "y": 6.5373032786885235
+        "x": 2.3986788510730808,
+        "y": 7.52862938444879
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,7 +33,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 2.0,
+    "maxVelocity": 1.0,
     "maxAcceleration": 1.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 460.0,
@@ -48,7 +48,7 @@
   "folder": "Battle Creek",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -29.999999999999996
+    "rotation": -90.0
   },
   "useDefaultConstraints": false
 }
