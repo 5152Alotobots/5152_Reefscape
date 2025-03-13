@@ -127,6 +127,9 @@ public class OI {
   /** Enable pathfinding */
   public static Trigger enablePathfindingButton = driverController.leftStick();
 
+  /** Precision align */
+  public static Trigger pathfindPrecisionAlignToReefButton = driverController.rightStick();
+
   /** Enable auto pathfinding */
   // public static Trigger enableFullAutoPathfindingButton = driverController.start();
 
