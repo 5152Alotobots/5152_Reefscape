@@ -50,7 +50,7 @@ public class LocalizationFusionConstants {
   @UtilityClass
   public class AutoRealignConstants {
     /** Whether auto-realignment should be enabled. */
-    public static final boolean ENABLED = true;
+    public static final boolean ENABLED = false;
 
     /** Threshold for auto-realignment when pose error exceeds this value (meters). */
     public static final double THRESHOLD = 0.1;
