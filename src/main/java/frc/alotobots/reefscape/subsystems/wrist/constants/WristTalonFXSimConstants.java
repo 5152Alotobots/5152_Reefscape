@@ -29,8 +29,8 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class WristTalonFXSimConstants {
   public static final class MotionMagicConstants {
-    public static final AngularVelocity CRUISE_VELOCITY = RotationsPerSecond.of(.5);
-    public static final AngularAcceleration ACCELERATION = RotationsPerSecondPerSecond.of(.4);
+    public static final AngularVelocity CRUISE_VELOCITY = RotationsPerSecond.of(7);
+    public static final AngularAcceleration ACCELERATION = RotationsPerSecondPerSecond.of(15);
     public static final double JERK = 0;
   }
 

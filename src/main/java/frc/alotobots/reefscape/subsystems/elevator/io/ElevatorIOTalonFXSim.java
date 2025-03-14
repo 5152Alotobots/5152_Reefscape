@@ -52,13 +52,9 @@ import edu.wpi.first.units.measure.LinearAcceleration;
 import edu.wpi.first.units.measure.LinearVelocity;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.simulation.ElevatorSim;
-import edu.wpi.first.wpilibj.util.Color8Bit;
 import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorTalonFXRealConstants.MotionMagicConstants;
 import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorTalonFXRealConstants.PIDConstants;
-import org.littletonrobotics.junction.AutoLogOutput;
-import org.littletonrobotics.junction.mechanism.LoggedMechanism2d;
-import org.littletonrobotics.junction.mechanism.LoggedMechanismLigament2d;
-import org.littletonrobotics.junction.mechanism.LoggedMechanismRoot2d;
+import frc.alotobots.reefscape.util.MechanismManager;
 
 /** Motor Control Types */
 public class ElevatorIOTalonFXSim implements ElevatorIO {
@@ -82,10 +78,6 @@ public class ElevatorIOTalonFXSim implements ElevatorIO {
           0.0);
   private final TalonFXSimState leftSim = leftTalon.getSimState();
   private final TalonFXSimState rightSim = rightTalon.getSimState();
-
-  @AutoLogOutput private final LoggedMechanism2d elevatorMech = new LoggedMechanism2d(3, 3);
-  private final LoggedMechanismRoot2d elevatorRoot = elevatorMech.getRoot("Elevator", 1, 0);
-  private final LoggedMechanismLigament2d elevatorLigament;
 
   public ElevatorIOTalonFXSim() {
     // Left motor config
@@ -115,11 +107,6 @@ public class ElevatorIOTalonFXSim implements ElevatorIO {
 
     leftSim.Orientation = ChassisReference.CounterClockwise_Positive;
     rightSim.Orientation = ChassisReference.Clockwise_Positive;
-
-    elevatorLigament =
-        elevatorRoot.append(new LoggedMechanismLigament2d("Elevator", MIN_HEIGHT.in(Meters), 90));
-
-    elevatorLigament.setColor(new Color8Bit(0, 255, 0));
   }
 
   private static void configPIDGains(TalonFXConfiguration leftConfig) {
@@ -196,7 +183,7 @@ public class ElevatorIOTalonFXSim implements ElevatorIO {
     rightSim.setRotorVelocity(
         linearVelocityToTalonFX(MetersPerSecond.of(elevatorSim.getVelocityMetersPerSecond())));
 
-    elevatorLigament.setLength(elevatorSim.getPositionMeters());
+    MechanismManager.updateElevatorMech(inputs.leftHeight);
   }
 
   /**

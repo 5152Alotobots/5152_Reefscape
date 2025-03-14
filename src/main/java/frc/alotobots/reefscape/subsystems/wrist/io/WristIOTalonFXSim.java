@@ -13,7 +13,6 @@
 package frc.alotobots.reefscape.subsystems.wrist.io;
 
 import static edu.wpi.first.units.Units.Amps;
-import static edu.wpi.first.units.Units.Degree;
 import static edu.wpi.first.units.Units.Radians;
 import static edu.wpi.first.units.Units.RadiansPerSecond;
 import static edu.wpi.first.units.Units.Rotations;
@@ -24,12 +23,10 @@ import static frc.alotobots.Constants.CanId.WRIST_ENCODER_CAN_ID;
 import static frc.alotobots.Constants.CanId.WRIST_MOTOR_CAN_ID;
 import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.Limits.MAX_ANGLE;
 import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.Limits.MIN_ANGLE;
+import static frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXRealConstants.ROTOR_TO_SENSOR_RATIO;
 import static frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXSimConstants.ARM_LENGTH;
-import static frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXSimConstants.ENCODER_DIRECTION;
-import static frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXSimConstants.ENCODER_MAGNET_OFFSET;
 import static frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXSimConstants.INERTIA_KGM2;
 import static frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXSimConstants.MOTOR_DIRECTION;
-import static frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXSimConstants.ROTOR_TO_SENSOR_RATIO;
 import static frc.alotobots.util.PhoenixUtil.tryUntilOk;
 
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
@@ -40,20 +37,20 @@ import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
 import com.ctre.phoenix6.signals.GravityTypeValue;
+import com.ctre.phoenix6.signals.SensorDirectionValue;
+import com.ctre.phoenix6.sim.CANcoderSimState;
+import com.ctre.phoenix6.sim.ChassisReference;
 import com.ctre.phoenix6.sim.TalonFXSimState;
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
-import edu.wpi.first.wpilibj.util.Color;
-import edu.wpi.first.wpilibj.util.Color8Bit;
 import frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXRealConstants;
 import frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXSimConstants.MotionMagicConstants;
-import org.littletonrobotics.junction.AutoLogOutput;
-import org.littletonrobotics.junction.mechanism.LoggedMechanism2d;
-import org.littletonrobotics.junction.mechanism.LoggedMechanismLigament2d;
+import frc.alotobots.reefscape.util.MechanismManager;
 
 /**
  * Hardware implementation of the WristIO interface using TalonFX motor controller and CANCoder for
@@ -64,6 +61,7 @@ public class WristIOTalonFXSim implements WristIO {
 
   private final TalonFX wristTalon = new TalonFX(WRIST_MOTOR_CAN_ID);
   private final CANcoder wristEncoder = new CANcoder(WRIST_ENCODER_CAN_ID);
+  private final CANcoderSimState encoderSim = wristEncoder.getSimState();
 
   private final PositionVoltage positionVoltage = new PositionVoltage(0);
   private final MotionMagicVoltage magicPositionVoltage = new MotionMagicVoltage(0);
@@ -79,22 +77,10 @@ public class WristIOTalonFXSim implements WristIO {
           ROTOR_TO_SENSOR_RATIO,
           INERTIA_KGM2,
           ARM_LENGTH,
-          0,
+          MIN_ANGLE.in(Radians),
           MAX_ANGLE.in(Radians),
-          true,
-          MIN_ANGLE.in(Radians));
-
-  @AutoLogOutput private final LoggedMechanism2d wristMechanism = new LoggedMechanism2d(3, 3);
-  private final LoggedMechanismLigament2d wristLigament =
-      wristMechanism
-          .getRoot("Wrist", 1.5, 1.5)
-          .append(
-              new LoggedMechanismLigament2d(
-                  "Wrist",
-                  ARM_LENGTH,
-                  180 + Math.toDegrees(wristSim.getAngleRads()),
-                  6,
-                  new Color8Bit(Color.kYellow)));
+          false,
+          0);
 
   /**
    * Creates a new WristIOTalonFXReal instance and configures all motor controller and encoder
@@ -112,6 +98,9 @@ public class WristIOTalonFXSim implements WristIO {
     wristMotorConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = false;
     wristMotorConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = MAX_ANGLE.in(Rotations);
     wristMotorConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = MIN_ANGLE.in(Rotations);
+    wristMotorConfig.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.RemoteCANcoder;
+    wristMotorConfig.Feedback.FeedbackRemoteSensorID = WRIST_ENCODER_CAN_ID;
+    wristMotorConfig.Feedback.RotorToSensorRatio = ROTOR_TO_SENSOR_RATIO;
 
     wristMotorConfig.MotorOutput.Inverted = MOTOR_DIRECTION;
 
@@ -121,14 +110,15 @@ public class WristIOTalonFXSim implements WristIO {
         MotionMagicConstants.ACCELERATION.in(RotationsPerSecondPerSecond);
     wristMotorConfig.MotionMagic.MotionMagicJerk = MotionMagicConstants.JERK;
 
+    // Configure CANcoder for simulation
+    var encoderConfig = new CANcoderConfiguration();
+    encoderConfig.MagnetSensor.SensorDirection = SensorDirectionValue.CounterClockwise_Positive;
+
+    motorSim.Orientation = ChassisReference.Clockwise_Positive;
+    encoderSim.Orientation = ChassisReference.CounterClockwise_Positive;
+
     tryUntilOk(5, () -> wristTalon.getConfigurator().apply(wristMotorConfig, 0.25));
-
-    var wristEncoderConfig = new CANcoderConfiguration();
-
-    wristEncoderConfig.MagnetSensor.MagnetOffset = ENCODER_MAGNET_OFFSET;
-    wristEncoderConfig.MagnetSensor.SensorDirection = ENCODER_DIRECTION;
-
-    tryUntilOk(5, () -> wristEncoder.getConfigurator().apply(wristEncoderConfig, 0.25));
+    tryUntilOk(5, () -> wristEncoder.getConfigurator().apply(encoderConfig, 0.25));
   }
 
   private void configPIDgains(TalonFXConfiguration wristMotorConfig) {
@@ -161,38 +151,43 @@ public class WristIOTalonFXSim implements WristIO {
    */
   @Override
   public void updateInputs(WristIOInputs inputs) {
+    motorSim.setSupplyVoltage(RobotController.getBatteryVoltage());
+    encoderSim.setSupplyVoltage(RobotController.getBatteryVoltage());
 
     wristSim.setInputVoltage(motorSim.getMotorVoltage());
     wristSim.update(0.02); // Assuming 20ms update rate
 
     // Sync motor simulation with arm simulation
-    motorSim.setRawRotorPosition(wristSim.getAngleRads());
-    motorSim.setRotorVelocity(wristSim.getVelocityRadPerSec());
+    motorSim.setRawRotorPosition((wristSim.getAngleRads() / (2 * Math.PI)) * ROTOR_TO_SENSOR_RATIO);
+    motorSim.setRotorVelocity(
+        (wristSim.getVelocityRadPerSec() / (2 * Math.PI)) * ROTOR_TO_SENSOR_RATIO);
+
+    // Update the CANcoder simulation with the mechanism position
+    encoderSim.setRawPosition(wristSim.getAngleRads() / (2 * Math.PI));
+    encoderSim.setVelocity(wristSim.getVelocityRadPerSec() / (2 * Math.PI));
 
     // Update all input values
     inputs.motorAppliedVolts = Volts.of(motorSim.getMotorVoltage());
     inputs.motorCurrent = Amps.of(motorSim.getTorqueCurrent());
     inputs.rotationVelocity = RadiansPerSecond.of(wristSim.getVelocityRadPerSec());
     inputs.mechanismAngle = Radians.of(wristSim.getAngleRads());
-    inputs.topLimit = wristSim.getAngleRads() >= MIN_ANGLE.in(Radians);
-    inputs.bottomLimit = wristSim.getAngleRads() <= MAX_ANGLE.in(Radians);
+    inputs.topLimit = wristSim.getAngleRads() >= MAX_ANGLE.in(Radians);
+    inputs.bottomLimit = wristSim.getAngleRads() <= MIN_ANGLE.in(Radians);
 
-    wristLigament.setAngle(Math.toDegrees(wristSim.getAngleRads()));
+    MechanismManager.updateWristMech(inputs.mechanismAngle);
   }
 
   /**
    * Sets the wrist to a target position using closed-loop control.
    *
-   * @param rotation The target angle to move to
+   * @param position The target angle to move to
    * @param pidSlot The PID slot to use (0 for velocity, 1 for position)
    */
   @Override
-  public void setWristPosition(Angle rotation, int pidSlot) {
-    var boundedRotation =
-        MathUtil.clamp(rotation.in(Degree), MAX_ANGLE.in(Degree), MIN_ANGLE.in(Degree));
+  public void setWristPosition(Angle position, int pidSlot) {
 
     // Set up the request with appropriate limits
-    wristTalon.setControl(positionVoltage.withPosition(boundedRotation).withSlot(pidSlot));
+    wristTalon.setControl(positionVoltage.withPosition(position).withSlot(pidSlot));
   }
 
   /**
@@ -203,6 +198,7 @@ public class WristIOTalonFXSim implements WristIO {
    */
   @Override
   public void setWristPositionMotionMagic(Angle position, int pidSlot) {
+    // Get current angle to determine if we need to apply limits
 
     // Set up the request with appropriate limits
     wristTalon.setControl(magicPositionVoltage.withPosition(position).withSlot(pidSlot));
@@ -216,7 +212,6 @@ public class WristIOTalonFXSim implements WristIO {
    */
   @Override
   public void setWristVelocity(AngularVelocity velocity, int pidSlot) {
-
     wristTalon.setControl(velocityVoltage.withVelocity(velocity).withSlot(pidSlot));
   }
 
@@ -227,6 +222,9 @@ public class WristIOTalonFXSim implements WristIO {
    */
   @Override
   public void setWristOpenLoop(double percentOutput) {
+
+    // Determine if we should activate limits
+
     wristTalon.setControl(dutyCycleOut.withOutput(percentOutput));
   }
 

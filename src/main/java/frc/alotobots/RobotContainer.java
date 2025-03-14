@@ -95,7 +95,6 @@ public class RobotContainer {
   private SwerveDriveSimulation driveSimulation;
 
   public RobotContainer() {
-
     switch (Constants.currentMode) {
       case REAL:
         // Real robot hardware initialization
@@ -295,16 +294,10 @@ public class RobotContainer {
 
     stateAlgaeL2Button.toggleOnTrue(
         new StateAlgaeRemoveL2(
-            elevatorSubsystem,
-            wristSubsystem,
-            coralIntakeSubsystem,
-            blingSubsystem));
+            elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, blingSubsystem));
     stateAlgaeL3Button.toggleOnTrue(
         new StateAlgaeRemoveL3(
-            elevatorSubsystem,
-            wristSubsystem,
-            coralIntakeSubsystem,
-            blingSubsystem));
+            elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, blingSubsystem));
 
     climbButton.toggleOnTrue(
         new Climb(climberSubsystem, elevatorSubsystem, blingSubsystem, () -> -getElevatorAxis()));

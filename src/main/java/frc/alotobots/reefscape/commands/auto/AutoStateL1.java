@@ -40,8 +40,7 @@ public class AutoStateL1 extends SequentialCommandGroup {
             elevatorSubsystem,
             wristSubsystem,
             ElevatorConstants.Setpoints.CORAL_L1_PLACE,
-            WristConstants.Setpoints.CORAL_L1_PLACE,
-            false),
+            WristConstants.Setpoints.CORAL_L1_PLACE),
         new ElevatorWristHold(elevatorSubsystem, wristSubsystem));
   }
 }

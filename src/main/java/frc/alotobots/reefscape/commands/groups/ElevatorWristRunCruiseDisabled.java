@@ -12,8 +12,6 @@
 */
 package frc.alotobots.reefscape.commands.groups;
 
-import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.Setpoints.CRUISE;
-
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
@@ -23,7 +21,7 @@ import frc.alotobots.reefscape.subsystems.elevator.commands.ElevatorRunToHeight;
 import frc.alotobots.reefscape.subsystems.wrist.WristSubsystem;
 import frc.alotobots.reefscape.subsystems.wrist.commands.WristRunToAngle;
 
-public class ElevatorWristRun extends SequentialCommandGroup {
+public class ElevatorWristRunCruiseDisabled extends SequentialCommandGroup {
   /**
    * Creates a new ElevatorWristRun command group that moves both the elevator and wrist to
    * specified positions one after the other. Runs the wrist first, then the elevator. Proxies the
@@ -34,16 +32,14 @@ public class ElevatorWristRun extends SequentialCommandGroup {
    * @param wristSubsystem The wrist subsystem
    * @param wristAngle Target angle for the wrist
    */
-  public ElevatorWristRun(
+  public ElevatorWristRunCruiseDisabled(
       ElevatorSubsystem elevatorSubsystem,
       WristSubsystem wristSubsystem,
       Distance elevatorHeight,
       Angle wristAngle) {
-
     addCommands(
         new ParallelCommandGroup(
-            new WristRunToAngle(wristSubsystem, CRUISE).asProxy(),
-            new ElevatorRunToHeight(elevatorSubsystem, elevatorHeight).asProxy()),
-        new WristRunToAngle(wristSubsystem, wristAngle).asProxy());
+            new WristRunToAngle(wristSubsystem, wristAngle).asProxy(),
+            new ElevatorRunToHeight(elevatorSubsystem, elevatorHeight).asProxy()));
   }
 }
