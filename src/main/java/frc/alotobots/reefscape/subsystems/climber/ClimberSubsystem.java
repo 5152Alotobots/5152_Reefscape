@@ -107,10 +107,12 @@ public class ClimberSubsystem extends SubsystemBase {
   }
 
   public void lockElevator() {
+    Logger.recordOutput("Temp/locking", true);
     io.setElevatorLockingServoLocked(true);
   }
 
   public void unlockElevator() {
+    Logger.recordOutput("Temp/locking", false);
     io.setElevatorLockingServoLocked(false);
   }
 

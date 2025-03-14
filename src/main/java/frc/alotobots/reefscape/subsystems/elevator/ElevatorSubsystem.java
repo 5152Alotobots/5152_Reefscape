@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIO;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIOInputsAutoLogged;
 import frc.alotobots.reefscape.util.ControlType;
+import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
 
 /**
@@ -136,6 +137,7 @@ public class ElevatorSubsystem extends SubsystemBase {
    *
    * @return true if the elevator is at or below MIN_CLIMB_HEIGHT, false otherwise
    */
+  @AutoLogOutput(key = "Elevator/MinClimbHeight")
   public boolean isAtMinClimbHeight() {
     return inputs.leftHeight.lte(MIN_CLIMB_HEIGHT);
   }
