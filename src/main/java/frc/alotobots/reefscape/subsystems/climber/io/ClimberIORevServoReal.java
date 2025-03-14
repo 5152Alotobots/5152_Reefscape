@@ -36,6 +36,14 @@ public class ClimberIORevServoReal implements ClimberIO {
   /** Channel for the locking servo */
   private final ServoChannel lockingServoChannel = servoHub.getServoChannel(LOCKING_SERVO_ID);
 
+  /** Channel for the locking servo */
+  private final ServoChannel elevatorLockingLeftServoChannel =
+      servoHub.getServoChannel(ELEVATOR_LOCKING_SERVO_ID_LEFT);
+
+  /** Channel for the locking servo */
+  private final ServoChannel elevatorLockingRightServoChannel =
+      servoHub.getServoChannel(ELEVATOR_LOCKING_SERVO_ID_RIGHT);
+
   /** First limit switch for detecting cage position */
   private final DigitalInput cageSwitch1 = new DigitalInput(CAGE_SWITCH_1_ID);
 
@@ -114,6 +122,18 @@ public class ClimberIORevServoReal implements ClimberIO {
     lockingServoChannel.setPowered(false);
   }
 
+  @Override
+  public void enableElevatorLockingServo() {
+    elevatorLockingLeftServoChannel.setEnabled(true);
+    elevatorLockingRightServoChannel.setEnabled(true);
+  }
+
+  @Override
+  public void disableElevatorLockingServo() {
+    elevatorLockingLeftServoChannel.setEnabled(false);
+    elevatorLockingRightServoChannel.setEnabled(false);
+  }
+
   /**
    * Sets the plunger servo position based on an angle.
    *
@@ -139,5 +159,21 @@ public class ClimberIORevServoReal implements ClimberIO {
   public void setLockingServoLocked(boolean lockingServoLocked) {
     if (lockingServoLocked) lockingServoChannel.setPulseWidth(LOCKING_SERVO_CLOSED_PW);
     else lockingServoChannel.setPulseWidth(LOCKING_SERVO_OPEN_PW);
+  }
+
+  /**
+   * Sets the elevator locking servo to either locked or unlocked position for the elevator.
+   *
+   * @param elevatorLockingServoLocked true to lock, false to unlock
+   */
+  @Override
+  public void setElevatorLockingServoLocked(boolean elevatorLockingServoLocked) {
+    if (elevatorLockingServoLocked) {
+      elevatorLockingLeftServoChannel.setPulseWidth(ELEVATOR_LOCKING_LEFT_SERVO_CLOSED_PW);
+      elevatorLockingRightServoChannel.setPulseWidth(ELEVATOR_LOCKING_RIGHT_SERVO_CLOSED_PW);
+    } else {
+      elevatorLockingLeftServoChannel.setPulseWidth(ELEVATOR_LOCKING_LEFT_SERVO_OPEN_PW);
+      elevatorLockingRightServoChannel.setPulseWidth(ELEVATOR_LOCKING_RIGHT_SERVO_OPEN_PW);
+    }
   }
 }

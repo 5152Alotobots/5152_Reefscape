@@ -26,6 +26,14 @@ public final class ClimberRevServoRealConstants {
   /** The channel ID for the locking servo */
   public static final ServoChannel.ChannelId LOCKING_SERVO_ID = ServoChannel.ChannelId.kChannelId0;
 
+  /** The channel ID for the locking servo left */
+  public static final ServoChannel.ChannelId ELEVATOR_LOCKING_SERVO_ID_LEFT =
+      ServoChannel.ChannelId.kChannelId5;
+
+  /** The channel ID for the locking servo right */
+  public static final ServoChannel.ChannelId ELEVATOR_LOCKING_SERVO_ID_RIGHT =
+      ServoChannel.ChannelId.kChannelId4;
+
   /** The ID for the first cage limit switch */
   public static final int CAGE_SWITCH_1_ID = 0;
 
@@ -43,4 +51,12 @@ public final class ClimberRevServoRealConstants {
 
   /** The pulse width for the locking servo in the closed position */
   public static final int LOCKING_SERVO_CLOSED_PW = 1376;
+
+  public static final int ELEVATOR_LOCKING_LEFT_SERVO_OPEN_PW = 1994;
+
+  public static final int ELEVATOR_LOCKING_LEFT_SERVO_CLOSED_PW = 1376;
+
+  public static final int ELEVATOR_LOCKING_RIGHT_SERVO_OPEN_PW = 1994;
+
+  public static final int ELEVATOR_LOCKING_RIGHT_SERVO_CLOSED_PW = 1376;
 }

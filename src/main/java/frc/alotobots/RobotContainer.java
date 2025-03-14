@@ -320,7 +320,8 @@ public class RobotContainer {
             elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, blingSubsystem));
 
     climbButton.toggleOnTrue(
-        new Climb(climberSubsystem, elevatorSubsystem, blingSubsystem, () -> -getElevatorAxis()));
+        new Climb(climberSubsystem, elevatorSubsystem, blingSubsystem, () -> -getElevatorAxis())
+            .andThen(new InstantCommand(climberSubsystem::lockElevator)));
     unClimbButton.onTrue(new UnClimb(climberSubsystem));
 
     // Auto Cycle Coral Station Controls

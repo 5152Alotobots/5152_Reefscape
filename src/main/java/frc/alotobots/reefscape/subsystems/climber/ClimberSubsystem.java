@@ -76,12 +76,14 @@ public class ClimberSubsystem extends SubsystemBase {
   public void enableServos() {
     io.enablePlungerServo();
     io.enableLockingServo();
+    io.enableElevatorLockingServo();
   }
 
   /** Disables both the plunger and locking servos. */
   public void disableServos() {
     io.disablePlungerServo();
     io.disableLockingServo();
+    io.disableElevatorLockingServo();
   }
 
   /**
@@ -104,6 +106,14 @@ public class ClimberSubsystem extends SubsystemBase {
     io.setLockingServoLocked(false);
   }
 
+  public void lockElevator() {
+    io.setElevatorLockingServoLocked(true);
+  }
+
+  public void unlockElevator() {
+    io.setElevatorLockingServoLocked(false);
+  }
+
   /** Enables only the plunger servo. */
   public void enablePlungerServo() {
     io.enablePlungerServo();
@@ -122,6 +132,14 @@ public class ClimberSubsystem extends SubsystemBase {
   /** Disables only the locking servo. */
   public void disableLockingServo() {
     io.disableLockingServo();
+  }
+
+  public void enableElevatorLockingServo() {
+    io.enableElevatorLockingServo();
+  }
+
+  public void disableElevatorLockingServo() {
+    io.disableElevatorLockingServo();
   }
 
   /** Sets the plunger servo to its receive position (180 degrees). */

@@ -33,7 +33,8 @@ public class UnClimb extends SequentialCommandGroup {
         new InstantCommand(climberSubsystem::setPlungerToReceive),
         new InstantCommand(climberSubsystem::unlockCage),
         new WaitCommand(.5),
-        new InstantCommand(climberSubsystem::disableServos));
+        new InstantCommand(climberSubsystem::disableServos),
+        new InstantCommand(climberSubsystem::unlockElevator));
     addRequirements(climberSubsystem);
   }
 }
