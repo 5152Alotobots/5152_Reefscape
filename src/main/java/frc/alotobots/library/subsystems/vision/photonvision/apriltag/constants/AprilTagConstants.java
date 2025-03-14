@@ -54,10 +54,10 @@ public class AprilTagConstants {
   // Standard deviation baselines, for 1 meter distance and 1 tag
   // (Adjusted automatically based on distance and # of tags)
   // LOWER = TRUST MORE
-  public static double MULTI_TAG_LINEAR_STD_DEV_BASE = 0.02; // Meters
+  public static double MULTI_TAG_LINEAR_STD_DEV_BASE = 0.08; // Meters
   public static double MULTI_TAG_ANGULAR_STD_DEV_BASE = 1000; // Radians
 
-  public static double SINGLE_TAG_LINEAR_STD_DEV_BASE = 0.06; // Meters
+  public static double SINGLE_TAG_LINEAR_STD_DEV_BASE = 0.12; // Meters
   public static double SINGLE_TAG_ANGULAR_STD_DEV_BASE =
       1000; // DO NOT USE FOR HEADING CORRECTION! MAKES LOOP!!!
 
