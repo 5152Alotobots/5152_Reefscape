@@ -84,12 +84,12 @@ public class AutoNamedCommands {
         "CoralIntakeEjectAggressive",
         new CoralIntakeEject(
             coralIntakeSubsystem,
-            () -> (CoralIntakeConstants.Setpoints.OpenLoop.EJECT_PERCENTAGE * 1.25)));
+            () -> (CoralIntakeConstants.Setpoints.OpenLoop.EJECT_PERCENTAGE * 1.5)));
     commands.put(
         "CoralIntakeEjectThroughAggressive",
         new CoralIntakeEjectThrough(
             coralIntakeSubsystem,
-            () -> (CoralIntakeConstants.Setpoints.OpenLoop.EJECT_PERCENTAGE * 1.25)));
+            () -> (CoralIntakeConstants.Setpoints.OpenLoop.EJECT_PERCENTAGE * 1.5)));
 
     NamedCommands.registerCommands(commands);
   }

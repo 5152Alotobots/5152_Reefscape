@@ -11,28 +11,22 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "N_ReefSE"
+                  "pathName": "StationaryTest"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "AutoStateL4"
+                  "name": "AutoStateCoralStation"
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "CoralIntakeEjectThrough"
           }
         }
       ]
     }
   },
-  "resetOdom": false,
-  "folder": "One Piece",
+  "resetOdom": true,
+  "folder": "BasicMeters",
   "choreoAuto": false
 }

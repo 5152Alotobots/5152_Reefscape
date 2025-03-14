@@ -11,13 +11,13 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "N_ReefNE_NC_ReefNW 1"
+                  "pathName": "N_ReefNW_L1 1"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "AutoStateL4"
+                  "name": "AutoStateL1"
                 }
               }
             ]
@@ -26,7 +26,7 @@
         {
           "type": "named",
           "data": {
-            "name": "CoralIntakeEjectThrough"
+            "name": "CoralIntakeEject"
           }
         },
         {
@@ -36,13 +36,26 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "N_ReefNE_NC_ReefNW 2"
+                  "pathName": "N_ReefNW_L1 2"
                 }
               },
               {
-                "type": "named",
+                "type": "sequential",
                 "data": {
-                  "name": "AutoStateCoralStation"
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 1.0
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "AutoStateCoralStation"
+                      }
+                    }
+                  ]
                 }
               }
             ]
@@ -61,13 +74,13 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "N_ReefNE_NC_ReefNW 3"
+                  "pathName": "N_ReefNW_L1 3"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "AutoStateL4"
+                  "name": "AutoStateL1"
                 }
               }
             ]
@@ -76,7 +89,7 @@
         {
           "type": "named",
           "data": {
-            "name": "CoralIntakeEjectThrough"
+            "name": "CoralIntakeEject"
           }
         }
       ]

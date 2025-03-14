@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.0,
-        "y": 7.0
+        "x": 3.725592672413793,
+        "y": 2.7579202586206897
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.9138032531941658,
-        "y": 7.0
+        "x": 3.158243534482758,
+        "y": 2.4364224137931023
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Reef_SEL1"
     },
     {
       "anchor": {
-        "x": 6.0,
-        "y": 7.0
+        "x": 1.3994612068965517,
+        "y": 1.2449892241379303
       },
       "prevControl": {
-        "x": 5.0,
-        "y": 7.0
+        "x": 1.928987068965517,
+        "y": 1.717780172413793
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "South Left Station"
     }
   ],
   "rotationTargets": [],
@@ -33,7 +33,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.0,
+    "maxVelocity": 2.0,
     "maxAcceleration": 1.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 460.0,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -125.00000000000001
   },
   "reversed": false,
-  "folder": "BasicMeters",
+  "folder": "TwoPiece",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 29.999999999999996
   },
   "useDefaultConstraints": false
 }

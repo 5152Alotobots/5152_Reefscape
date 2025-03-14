@@ -87,6 +87,7 @@ public class CoralIntakeIOTalonFXReal implements CoralIntakeIO {
 
     intakeMotorConfig.MotorOutput.NeutralMode =
         CoralIntakeTalonFXRealConstants.MECHANISM_NEUTRAL_MODE;
+    intakeMotorConfig.OpenLoopRamps.DutyCycleOpenLoopRampPeriod = .5;
 
     intakeMotorConfig.TorqueCurrent.PeakForwardTorqueCurrent =
         MotorSafetyLimits.TORQUE_FORWARD_AMP_LIMIT.in(Amps);
@@ -96,8 +97,7 @@ public class CoralIntakeIOTalonFXReal implements CoralIntakeIO {
     intakeMotorConfig.CurrentLimits.StatorCurrentLimit =
         MotorSafetyLimits.STATOR_AMP_LIMIT.in(Amps);
     intakeMotorConfig.CurrentLimits.StatorCurrentLimitEnable = true;
-
-    intakeMotorConfig.OpenLoopRamps.DutyCycleOpenLoopRampPeriod = .5;
+    
     intakeMotorConfig.MotorOutput.Inverted = CoralIntakeTalonFXRealConstants.MOTOR_DIRECTION;
 
     tryUntilOk(5, () -> intakeMotor.getConfigurator().apply(intakeMotorConfig, 0.25));
