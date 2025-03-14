@@ -113,7 +113,7 @@ public final class ElevatorTalonFXSimConstants {
 
   public static final class HardwareConstants {
     public static final double GEAR_RATIO = 15.0;
-    public static final double PULLEY_RADIUS_M = 0.023;
+    public static final double PULLEY_RADIUS_M = 0.04;
     public static final double ELEVATOR_MASS_KG = 5;
   }
 
