@@ -100,7 +100,6 @@ public class RobotContainer {
   private SwerveDriveSimulation driveSimulation;
 
   public RobotContainer() {
-
     switch (Constants.currentMode) {
       case REAL:
         // Real robot hardware initialization
