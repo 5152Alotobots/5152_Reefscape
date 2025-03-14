@@ -33,7 +33,7 @@ public final class ClimberRevServoRealConstants {
   public static final int CAGE_SWITCH_2_ID = 1;
 
   /** The pulse width for the plunger servo at 0 degrees */
-  public static final int PLUNGER_SERVO_0_PW = 650;
+  public static final int PLUNGER_SERVO_0_PW = 600;
 
   /** The pulse width for the plunger servo at 180 degrees */
   public static final int PLUNGER_SERVO_180_PW = 2500;
