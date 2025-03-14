@@ -55,7 +55,7 @@ public class AprilTagConstants {
   // (Adjusted automatically based on distance and # of tags)
   // LOWER = TRUST MORE
   public static double LINEAR_STD_DEV_BASE = 0.02; // Meters
-  public static double ANGULAR_STD_DEV_BASE = 0.06; // Radians
+  public static double ANGULAR_STD_DEV_BASE = 1000; // Radians
 
   // Standard deviation multipliers for each camera
   // (Adjust to trust some cameras more than others)
