@@ -117,18 +117,17 @@ public class OI {
   }
 
   /* State-based play control triggers */
-  public static final Trigger resetGyroButton =
-      driverController.leftStick().and(driverController.rightStick());
+  public static final Trigger resetGyroButton = driverController.rightStick();
   // DRIVER -----------------------------------------------------------
   public static final Trigger climbButton = driverController.start();
   public static final Trigger unClimbButton = driverController.back();
 
   // Auto Drive
   /** Enable pathfinding */
-  public static Trigger enablePathfindingButton = driverController.povUp();
+  public static Trigger enablePathfindingButton = driverController.leftStick();
 
   /** Precision align */
-  public static Trigger pathfindPrecisionAlignToReefButton = driverController.povDown();
+  // public static Trigger pathfindPrecisionAlignToReefButton = driverController.povDown();
 
   /** Enable auto pathfinding */
   // public static Trigger enableFullAutoPathfindingButton = driverController.start();
