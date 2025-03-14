@@ -330,9 +330,10 @@ public class RobotContainer {
     // Enabled state
     enablePathfindingButton.onTrue(autoCycleSubsystem.togglePathfinding());
     pathfindPrecisionAlignToReefButton.toggleOnTrue(
-            pathPlannerManager.getPathEndPose(autoCycleSubsystem.getState().getSelectedReefBranchPathName())
-                    .map(endPose -> new DrivePrecisionAlign(swerveDriveSubsystem).getCommand(endPose))
-                    .orElse(Commands.none()));
+        pathPlannerManager
+            .getPathEndPose(autoCycleSubsystem.getState().getSelectedReefBranchPathName())
+            .map(endPose -> new DrivePrecisionAlign(swerveDriveSubsystem).getCommand(endPose))
+            .orElse(Commands.none()));
 
     // enableFullAutoPathfindingButton.onTrue(new FullAutoCycle(autoCycleSubsystem).repeatedly());
 

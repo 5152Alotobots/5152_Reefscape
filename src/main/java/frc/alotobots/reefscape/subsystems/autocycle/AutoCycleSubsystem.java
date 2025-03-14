@@ -14,12 +14,8 @@ package frc.alotobots.reefscape.subsystems.autocycle;
 
 import static frc.alotobots.reefscape.subsystems.autocycle.constants.AutoCycleConstants.*;
 
-import com.pathplanner.lib.commands.PathPlannerAuto;
-import com.pathplanner.lib.trajectory.PathPlannerTrajectory;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -34,7 +30,6 @@ import frc.alotobots.reefscape.subsystems.autocycle.util.AutoCycleState;
 import java.util.Optional;
 import java.util.function.Supplier;
 import lombok.Getter;
-import org.littletonrobotics.junction.Logger;
 
 /**
  * Subsystem that manages automated navigation to reef and coral station targets. Provides methods
@@ -98,8 +93,8 @@ public class AutoCycleSubsystem extends SubsystemBase {
     state.logTargetPoses(reefPose, coralStationPose);
 
     // Update the field widget with the target poses
-      reefPose.ifPresent(pose2d -> field.getObject("ReefTarget").setPose(pose2d));
-      coralStationPose.ifPresent(pose2d -> field.getObject("CoralStationTarget").setPose(pose2d));
+    reefPose.ifPresent(pose2d -> field.getObject("ReefTarget").setPose(pose2d));
+    coralStationPose.ifPresent(pose2d -> field.getObject("CoralStationTarget").setPose(pose2d));
   }
 
   /**
