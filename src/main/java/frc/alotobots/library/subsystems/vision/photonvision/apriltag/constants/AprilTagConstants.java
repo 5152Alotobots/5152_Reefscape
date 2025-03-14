@@ -55,7 +55,7 @@ public class AprilTagConstants {
   // (Adjusted automatically based on distance and # of tags)
   // LOWER = TRUST MORE
   public static double MULTI_TAG_LINEAR_STD_DEV_BASE = 0.02; // Meters
-  public static double MULTI_TAG_ANGULAR_STD_DEV_BASE = 0.06; // Radians
+  public static double MULTI_TAG_ANGULAR_STD_DEV_BASE = 1000; // Radians
 
   public static double SINGLE_TAG_LINEAR_STD_DEV_BASE = 0.06; // Meters
   public static double SINGLE_TAG_ANGULAR_STD_DEV_BASE =
