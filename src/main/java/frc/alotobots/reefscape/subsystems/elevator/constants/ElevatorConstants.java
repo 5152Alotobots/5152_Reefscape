@@ -40,6 +40,9 @@ public final class ElevatorConstants {
     /** Minimum allowed height */
     public static final Distance MIN_HEIGHT = Meters.of(0.23);
 
+    /** Minimum allowed height */
+    public static final Distance MIN_CLIMB_HEIGHT = Meters.of(0.42);
+
     /** Maximum open loop percent output */
     public static final double MAX_OPEN_LOOP_PERCENTAGE = 0.5;
 

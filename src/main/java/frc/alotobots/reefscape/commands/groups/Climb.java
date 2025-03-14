@@ -58,7 +58,11 @@ public class Climb extends SequentialCommandGroup {
         new ScheduleCommand(
                 new BlingClimberReady(blingSubsystem).withTimeout(BLING_NOTIFICATION_TIME))
             .asProxy(),
-        new ElevatorRunAtClimbVelocity(elevatorSubsystem, input).asProxy());
+        new ParallelCommandGroup(
+            new ElevatorRunAtClimbVelocity(elevatorSubsystem, input).asProxy(),
+            new SequentialCommandGroup(
+                new WaitUntilCommand(elevatorSubsystem::isAtMinClimbHeight),
+                new InstantCommand(climberSubsystem::lockElevator))));
     addRequirements(climberSubsystem);
   }
 }
