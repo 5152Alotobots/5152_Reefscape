@@ -88,9 +88,9 @@ public class RobotContainer {
   private final CoralIntakeSubsystem coralIntakeSubsystem;
   private final OculusSubsystem oculusSubsystem;
   private final AprilTagSubsystem aprilTagSubsystem;
-  private final LocalizationFusion localizationFusion;
-  private final OculusPoseSource oculusPoseSource;
-  private final AprilTagPoseSource aprilTagPoseSource;
+//  private final LocalizationFusion localizationFusion;
+//  private final OculusPoseSource oculusPoseSource;
+//  private final AprilTagPoseSource aprilTagPoseSource;
   private final AutoCycleSubsystem autoCycleSubsystem;
   private final BlingSubsystem blingSubsystem;
   private final PathPlannerManager pathPlannerManager;
@@ -126,22 +126,23 @@ public class RobotContainer {
         oculusSubsystem = new OculusSubsystem(new OculusIOReal());
         aprilTagSubsystem =
             new AprilTagSubsystem(
+                    swerveDriveSubsystem::addVisionMeasurement,
                 new AprilTagIOPhotonVision(
                     AprilTagConstants.CAMERA_CONFIGS[0], swerveDriveSubsystem::getRotation),
                 new AprilTagIOPhotonVision(
                     AprilTagConstants.CAMERA_CONFIGS[1], swerveDriveSubsystem::getRotation));
 
         // Create pose sources
-        oculusPoseSource = new OculusPoseSource(oculusSubsystem);
-        aprilTagPoseSource = new AprilTagPoseSource(aprilTagSubsystem);
+//        oculusPoseSource = new OculusPoseSource(oculusSubsystem);
+//        aprilTagPoseSource = new AprilTagPoseSource(aprilTagSubsystem);
 
-        localizationFusion =
-            new LocalizationFusion(
-                swerveDriveSubsystem::addVisionMeasurement,
-                oculusPoseSource,
-                aprilTagPoseSource,
-                swerveDriveSubsystem,
-                autoChooser);
+//        localizationFusion =
+//            new LocalizationFusion(
+//                swerveDriveSubsystem::addVisionMeasurement,
+//                oculusPoseSource,
+//                aprilTagPoseSource,
+//                swerveDriveSubsystem,
+//                autoChooser);
 
         blingSubsystem = new BlingSubsystem(new BlingIOReal());
         break;
@@ -187,21 +188,22 @@ public class RobotContainer {
         oculusSubsystem = new OculusSubsystem(new OculusIOSim(driveSimulation));
         aprilTagSubsystem =
             new AprilTagSubsystem(
+                    swerveDriveSubsystem::addVisionMeasurement,
                 new AprilTagIOPhotonVisionSim(
                     AprilTagConstants.CAMERA_CONFIGS[0], swerveDriveSubsystem::getPose),
                 new AprilTagIOPhotonVisionSim(
                     AprilTagConstants.CAMERA_CONFIGS[1], swerveDriveSubsystem::getPose));
 
         // Create pose sources
-        oculusPoseSource = new OculusPoseSource(oculusSubsystem);
-        aprilTagPoseSource = new AprilTagPoseSource(aprilTagSubsystem);
-        localizationFusion =
-            new LocalizationFusion(
-                swerveDriveSubsystem::addVisionMeasurement,
-                oculusPoseSource,
-                aprilTagPoseSource,
-                swerveDriveSubsystem,
-                autoChooser);
+//        oculusPoseSource = new OculusPoseSource(oculusSubsystem);
+//        aprilTagPoseSource = new AprilTagPoseSource(aprilTagSubsystem);
+//        localizationFusion =
+//            new LocalizationFusion(
+//                swerveDriveSubsystem::addVisionMeasurement,
+//                oculusPoseSource,
+//                aprilTagPoseSource,
+//                swerveDriveSubsystem,
+//                autoChooser);
 
         blingSubsystem = new BlingSubsystem(new BlingIOSim());
         break;
@@ -230,18 +232,18 @@ public class RobotContainer {
                 () -> DriveCalculator.getChassisSpeeds(swerveDriveSubsystem));
 
         oculusSubsystem = new OculusSubsystem(new OculusIO() {});
-        aprilTagSubsystem = new AprilTagSubsystem(new AprilTagIO() {}, new AprilTagIO() {});
+        aprilTagSubsystem = new AprilTagSubsystem(swerveDriveSubsystem::addVisionMeasurement, new AprilTagIO() {}, new AprilTagIO() {});
 
         // Create pose sources
-        oculusPoseSource = new OculusPoseSource(oculusSubsystem);
-        aprilTagPoseSource = new AprilTagPoseSource(aprilTagSubsystem);
-        localizationFusion =
-            new LocalizationFusion(
-                swerveDriveSubsystem::addVisionMeasurement,
-                oculusPoseSource,
-                aprilTagPoseSource,
-                swerveDriveSubsystem,
-                autoChooser);
+//        oculusPoseSource = new OculusPoseSource(oculusSubsystem);
+//        aprilTagPoseSource = new AprilTagPoseSource(aprilTagSubsystem);
+//        localizationFusion =
+//            new LocalizationFusion(
+//                swerveDriveSubsystem::addVisionMeasurement,
+//                oculusPoseSource,
+//                aprilTagPoseSource,
+//                swerveDriveSubsystem,
+//                autoChooser);
 
         blingSubsystem = new BlingSubsystem(new BlingIO() {});
         break;

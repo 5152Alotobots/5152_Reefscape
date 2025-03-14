@@ -95,7 +95,7 @@
       ]
     }
   },
-  "resetOdom": false,
+  "resetOdom": true,
   "folder": "Two Piece",
   "choreoAuto": false
 }

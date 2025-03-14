@@ -38,6 +38,7 @@ public class AprilTagPoseSource implements PoseSource {
    * Creates a new AprilTagPoseSource.
    *
    * @param subsystem The AprilTag subsystem to wrap
+   * @deprecated
    */
   public AprilTagPoseSource(AprilTagSubsystem subsystem) {
     this.subsystem = subsystem;
@@ -51,7 +52,7 @@ public class AprilTagPoseSource implements PoseSource {
    */
   @Override
   public boolean isConnected() {
-    return subsystem.isConnected();
+    return false;
   }
 
   /**
@@ -62,7 +63,7 @@ public class AprilTagPoseSource implements PoseSource {
    */
   @Override
   public Pose2d getCurrentPose() {
-    return subsystem.getCurrentPose();
+    return null;
   }
 
   /**
@@ -73,7 +74,7 @@ public class AprilTagPoseSource implements PoseSource {
    */
   @Override
   public Matrix<N3, N1> getStdDevs() {
-    return subsystem.getStdDevs();
+    return null;
   }
 
   /** {@inheritDoc} */
@@ -84,6 +85,6 @@ public class AprilTagPoseSource implements PoseSource {
 
   @Override
   public Time getTimestamp() {
-    return subsystem.getTimestamp();
+    return null;
   }
 }
