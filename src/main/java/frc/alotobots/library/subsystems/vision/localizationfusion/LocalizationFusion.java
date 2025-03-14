@@ -12,6 +12,7 @@
 */
 package frc.alotobots.library.subsystems.vision.localizationfusion;
 
+import static edu.wpi.first.units.Units.Seconds;
 import static frc.alotobots.library.subsystems.vision.localizationfusion.constants.LocalizationFusionConstants.InitializationRequirements.*;
 import static frc.alotobots.library.subsystems.vision.localizationfusion.constants.LocalizationFusionConstants.Timing.*;
 import static frc.alotobots.library.subsystems.vision.localizationfusion.constants.LocalizationFusionConstants.ValidationThresholds.*;
@@ -278,7 +279,6 @@ public class LocalizationFusion extends SubsystemBase implements StateTransition
     }
 
     // State-specific handling
-    double currentTime = Timer.getTimestamp();
     switch (state.getCurrentState()) {
       case RESETTING:
         handleResettingState();
@@ -287,10 +287,10 @@ public class LocalizationFusion extends SubsystemBase implements StateTransition
         handleEmergencyState();
         break;
       case QUEST_PRIMARY:
-        handleQuestPrimaryState(currentTime);
+        handleQuestPrimaryState(oculusSource.getTimestamp().in(Seconds));
         break;
       case TAG_BACKUP:
-        handleTagBackupState(currentTime);
+        handleTagBackupState(tagSource.getTimestamp().in(Seconds));
         break;
       case UNINITIALIZED:
         handleUninitializedState();

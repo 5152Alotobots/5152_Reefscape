@@ -12,6 +12,7 @@
 */
 package frc.alotobots.library.subsystems.vision.photonvision.apriltag;
 
+import static edu.wpi.first.units.Units.Seconds;
 import static frc.alotobots.library.subsystems.vision.photonvision.apriltag.constants.AprilTagConstants.*;
 
 import edu.wpi.first.math.Matrix;
@@ -22,6 +23,7 @@ import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
+import edu.wpi.first.units.measure.Time;
 import edu.wpi.first.wpilibj.Alert;
 import edu.wpi.first.wpilibj.Alert.AlertType;
 import edu.wpi.first.wpilibj.Timer;
@@ -39,6 +41,7 @@ public class AprilTagSubsystem extends SubsystemBase implements PoseSource {
   private final AprilTagIOInputsAutoLogged[] inputs;
   private final Alert[] disconnectedAlerts;
 
+  private Time latestTimestamp = Seconds.zero();
   private Pose2d latestMultiTagPose = null;
   private Vector<N3> latestMultiTagStdDevs = null;
   private boolean hasValidMultiTagPose = false;
@@ -94,6 +97,11 @@ public class AprilTagSubsystem extends SubsystemBase implements PoseSource {
   @Override
   public String getSourceName() {
     return "AprilTag";
+  }
+
+  @Override
+  public Time getTimestamp() {
+    return latestTimestamp;
   }
 
   @Override
@@ -336,6 +344,7 @@ public class AprilTagSubsystem extends SubsystemBase implements PoseSource {
 
     latestMultiTagPose = observation.pose().toPose2d();
     latestMultiTagStdDevs = VecBuilder.fill(linearStdDev, linearStdDev, angularStdDev);
+    latestTimestamp = Seconds.of(observation.timestamp());
   }
 
   private void updateLatestPoseFromSingleTag(

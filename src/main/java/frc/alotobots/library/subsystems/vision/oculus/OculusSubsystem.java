@@ -12,6 +12,7 @@
 */
 package frc.alotobots.library.subsystems.vision.oculus;
 
+import static edu.wpi.first.units.Units.Seconds;
 import static frc.alotobots.library.subsystems.vision.oculus.constants.OculusConstants.*;
 import static frc.alotobots.library.subsystems.vision.oculus.util.OculusStatus.*;
 
@@ -21,6 +22,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
+import edu.wpi.first.units.measure.Time;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.alotobots.library.subsystems.vision.localizationfusion.util.PoseSource;
@@ -400,5 +402,10 @@ public class OculusSubsystem extends SubsystemBase implements PoseSource {
   @Override
   public String getSourceName() {
     return "Oculus Quest";
+  }
+
+  @Override
+  public Time getTimestamp() {
+    return Seconds.of(lastQuestUpdateTime);
   }
 }
