@@ -310,10 +310,16 @@ public class RobotContainer {
 
     alignLeftBranchButton.toggleOnTrue(
         new AlignToReefBranch(
-            swerveDriveSubsystem, AlignToReefBranch.ReefBranchSide.LEFT, FieldConstants.Level.L4).withTimeout(1));
+                swerveDriveSubsystem,
+                AlignToReefBranch.ReefBranchSide.LEFT,
+                FieldConstants.Level.L4)
+            .withTimeout(1));
     alignRightBranchButton.toggleOnTrue(
         new AlignToReefBranch(
-            swerveDriveSubsystem, AlignToReefBranch.ReefBranchSide.RIGHT, FieldConstants.Level.L4).withTimeout(1));
+                swerveDriveSubsystem,
+                AlignToReefBranch.ReefBranchSide.RIGHT,
+                FieldConstants.Level.L4)
+            .withTimeout(1));
 
     // BACKUP -----------------------------------------------------------------------------
     // Coral Intake

@@ -37,6 +37,7 @@ import edu.wpi.first.wpilibj.Alert.AlertType;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
@@ -88,7 +89,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
   /** Raw rotation from the gyro */
   private Rotation2d rawGyroRotation = new Rotation2d();
 
-  private Field2d feild = new Field2d();
+  private Field2d field = new Field2d();
 
   /** Last recorded module positions for delta tracking */
   private SwerveModulePosition[] lastModulePositions =
@@ -122,7 +123,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
       ModuleIO blModuleIO,
       ModuleIO brModuleIO) {
     this.gyroIO = gyroIO;
-    Shuffleboard.getTab("Prematch").add("Robot Pose", feild);
+    Shuffleboard.getTab("Prematch").add("Robot Pose", field);
 
     // Initialize modules
     modules[0] = new Module(flModuleIO, 0, Constants.tunerConstants.getFrontLeft());
@@ -155,10 +156,16 @@ public class SwerveDriveSubsystem extends SubsystemBase {
                 (voltage) -> runCharacterization(voltage.in(Volts)), null, this));
   }
 
+  /** Logs the auto align target pose to the dashboard for field */
+  public void logAutoAlignTargetPose(Pose2d target) {
+    field.getObject("AutoAlignTargetPose").setPose(target);
+  }
+
   /** Periodic update function handling odometry updates and module states. */
   @Override
   public void periodic() {
-    feild.setRobotPose(getPose());
+    field.setRobotPose(getPose());
+    SmartDashboard.putData("SwerveDriveField", field);
     odometryLock.lock();
     gyroIO.updateInputs(gyroInputs);
     Logger.processInputs("Drive/Gyro", gyroInputs);

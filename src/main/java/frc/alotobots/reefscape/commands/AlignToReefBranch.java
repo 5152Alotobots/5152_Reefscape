@@ -58,7 +58,7 @@ public class AlignToReefBranch extends Command {
     this.side = side;
     this.swerveDriveSubsystem = swerveDriveSubsystem;
     this.branchLevel = branchLevel;
-    this.request = new DrivePrecisionAlign(swerveDriveSubsystem, 0.08);
+    this.request = new DrivePrecisionAlign(swerveDriveSubsystem, 0.03);
     addRequirements(swerveDriveSubsystem);
   }
 
@@ -76,6 +76,8 @@ public class AlignToReefBranch extends Command {
       // Convert to Pose2d for alignment
       targetPose = targetBranchPose.toPose2d();
 
+      // Put on dash
+      swerveDriveSubsystem.logAutoAlignTargetPose(targetPose);
       // Check if we're already within alignment tolerance
       if (isAlreadyAligned(currentPose, targetBranchPose)) {
         return;
