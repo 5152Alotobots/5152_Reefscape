@@ -152,15 +152,13 @@ public class FieldConstants {
   }
 
   static {
-    // Initialize all positions (assuming heading is from center of reef; ex. 0deg is 180deg field
-    // relative)
-    // Branches (Center of end cap)
+    // Branches (swerve position for aligning)
     // L2
     addBranchPose(
         ReefBranch.A,
         Level.L2,
         new Pose3d(
-            3.71,
+            3.15,
             4.19,
             .788,
             new Rotation3d(0, Units.degreesToRadians(125), Units.degreesToRadians(0))));
@@ -168,7 +166,7 @@ public class FieldConstants {
         ReefBranch.B,
         Level.L2,
         new Pose3d(
-            3.71,
+            3.15,
             3.862,
             .788,
             new Rotation3d(0, Units.degreesToRadians(125), Units.degreesToRadians(0))));
@@ -176,80 +174,80 @@ public class FieldConstants {
         ReefBranch.C,
         Level.L2,
         new Pose3d(
-            3.939,
-            3.434,
+            3.309,
+            2.383,
             .788,
             new Rotation3d(0, Units.degreesToRadians(125), Units.degreesToRadians(60))));
     addBranchPose(
         ReefBranch.D,
         Level.L2,
         new Pose3d(
-            4.243,
-            3.269,
+            3.640,
+            2.201,
             .788,
             new Rotation3d(0, Units.degreesToRadians(125), Units.degreesToRadians(60))));
     addBranchPose(
         ReefBranch.E,
         Level.L2,
         new Pose3d(
-            4.736,
-            3.272,
+            4.992,
+            2.757,
             .788,
             new Rotation3d(0, Units.degreesToRadians(125), Units.degreesToRadians(120))));
     addBranchPose(
         ReefBranch.F,
         Level.L2,
         new Pose3d(
-            5.02,
-            3.435,
+            5.285,
+            2.943,
             .788,
             new Rotation3d(0, Units.degreesToRadians(125), Units.degreesToRadians(120))));
     addBranchPose(
         ReefBranch.G,
         Level.L2,
         new Pose3d(
-            5.267,
-            3.862,
+            5.821,
+            3.855,
             .788,
             new Rotation3d(0, Units.degreesToRadians(125), Units.degreesToRadians(180))));
     addBranchPose(
         ReefBranch.H,
         Level.L2,
         new Pose3d(
-            5.267,
-            4.19,
+            5.811,
+            4.185,
             .788,
             new Rotation3d(0, Units.degreesToRadians(125), Units.degreesToRadians(180))));
     addBranchPose(
         ReefBranch.I,
         Level.L2,
         new Pose3d(
-            5.02,
-            4.615,
+            5.304,
+            5.097,
             .788,
             new Rotation3d(0, Units.degreesToRadians(125), Units.degreesToRadians(-120))));
     addBranchPose(
         ReefBranch.J,
         Level.L2,
         new Pose3d(
-            4.737,
-            4.783,
+            5.002,
+            5.283,
             .788,
             new Rotation3d(0, Units.degreesToRadians(125), Units.degreesToRadians(-120))));
     addBranchPose(
         ReefBranch.K,
         Level.L2,
         new Pose3d(
-            4.782,
-            4.243,
+            3.968,
+            5.26,
             .788,
             new Rotation3d(0, Units.degreesToRadians(125), Units.degreesToRadians(-60))));
     addBranchPose(
         ReefBranch.L,
         Level.L2,
         new Pose3d(
-            3.959,
-            4.616,
+            3.680,
+            5.092,
             .788,
             new Rotation3d(0, Units.degreesToRadians(125), Units.degreesToRadians(-60))));
     // L3
@@ -257,7 +255,7 @@ public class FieldConstants {
         ReefBranch.A,
         Level.L3,
         new Pose3d(
-            3.71,
+            3.15,
             4.19,
             1.179,
             new Rotation3d(0, Units.degreesToRadians(125), Units.degreesToRadians(0))));
@@ -265,7 +263,7 @@ public class FieldConstants {
         ReefBranch.B,
         Level.L3,
         new Pose3d(
-            3.71,
+            3.15,
             3.862,
             1.179,
             new Rotation3d(0, Units.degreesToRadians(125), Units.degreesToRadians(0))));
@@ -273,80 +271,80 @@ public class FieldConstants {
         ReefBranch.C,
         Level.L3,
         new Pose3d(
-            3.939,
-            3.434,
+            3.309,
+            2.383,
             1.179,
             new Rotation3d(0, Units.degreesToRadians(125), Units.degreesToRadians(60))));
     addBranchPose(
         ReefBranch.D,
         Level.L3,
         new Pose3d(
-            4.243,
-            3.269,
+            3.640,
+            2.201,
             1.179,
             new Rotation3d(0, Units.degreesToRadians(125), Units.degreesToRadians(60))));
     addBranchPose(
         ReefBranch.E,
         Level.L3,
         new Pose3d(
-            4.736,
-            3.272,
+            4.992,
+            2.757,
             1.179,
             new Rotation3d(0, Units.degreesToRadians(125), Units.degreesToRadians(120))));
     addBranchPose(
         ReefBranch.F,
         Level.L3,
         new Pose3d(
-            5.02,
-            3.435,
+            5.285,
+            2.943,
             1.179,
             new Rotation3d(0, Units.degreesToRadians(125), Units.degreesToRadians(120))));
     addBranchPose(
         ReefBranch.G,
         Level.L3,
         new Pose3d(
-            5.267,
-            3.862,
+            5.821,
+            3.855,
             1.179,
             new Rotation3d(0, Units.degreesToRadians(125), Units.degreesToRadians(180))));
     addBranchPose(
         ReefBranch.H,
         Level.L3,
         new Pose3d(
-            5.267,
-            4.19,
+            5.811,
+            4.185,
             1.179,
             new Rotation3d(0, Units.degreesToRadians(125), Units.degreesToRadians(180))));
     addBranchPose(
         ReefBranch.I,
         Level.L3,
         new Pose3d(
-            5.02,
-            4.615,
+            5.304,
+            5.097,
             1.179,
             new Rotation3d(0, Units.degreesToRadians(125), Units.degreesToRadians(-120))));
     addBranchPose(
         ReefBranch.J,
         Level.L3,
         new Pose3d(
-            4.737,
-            4.783,
+            5.002,
+            5.283,
             1.179,
             new Rotation3d(0, Units.degreesToRadians(125), Units.degreesToRadians(-120))));
     addBranchPose(
         ReefBranch.K,
         Level.L3,
         new Pose3d(
-            4.782,
-            4.243,
+            3.968,
+            5.26,
             1.179,
             new Rotation3d(0, Units.degreesToRadians(125), Units.degreesToRadians(-60))));
     addBranchPose(
         ReefBranch.L,
         Level.L3,
         new Pose3d(
-            3.959,
-            4.616,
+            3.680,
+            5.092,
             1.179,
             new Rotation3d(0, Units.degreesToRadians(125), Units.degreesToRadians(-60))));
     // L4
@@ -354,7 +352,7 @@ public class FieldConstants {
         ReefBranch.A,
         Level.L4,
         new Pose3d(
-            3.71,
+            3.15,
             4.19,
             1.829,
             new Rotation3d(0, Units.degreesToRadians(90), Units.degreesToRadians(0))));
@@ -362,7 +360,7 @@ public class FieldConstants {
         ReefBranch.B,
         Level.L4,
         new Pose3d(
-            3.71,
+            3.15,
             3.862,
             1.829,
             new Rotation3d(0, Units.degreesToRadians(90), Units.degreesToRadians(0))));
@@ -370,82 +368,82 @@ public class FieldConstants {
         ReefBranch.C,
         Level.L4,
         new Pose3d(
-            3.939,
-            3.434,
+            3.309,
+            2.383,
             1.829,
             new Rotation3d(0, Units.degreesToRadians(90), Units.degreesToRadians(60))));
     addBranchPose(
         ReefBranch.D,
         Level.L4,
         new Pose3d(
-            4.243,
-            3.269,
+            3.640,
+            2.201,
             1.829,
             new Rotation3d(0, Units.degreesToRadians(90), Units.degreesToRadians(60))));
     addBranchPose(
         ReefBranch.E,
         Level.L4,
         new Pose3d(
-            4.736,
-            3.272,
+            4.992,
+            2.757,
             1.829,
             new Rotation3d(0, Units.degreesToRadians(90), Units.degreesToRadians(120))));
     addBranchPose(
         ReefBranch.F,
         Level.L4,
         new Pose3d(
-            5.02,
-            3.435,
+            5.285,
+            2.943,
             1.829,
             new Rotation3d(0, Units.degreesToRadians(90), Units.degreesToRadians(120))));
     addBranchPose(
         ReefBranch.G,
         Level.L4,
         new Pose3d(
-            5.267,
-            3.862,
+            5.821,
+            3.855,
             1.829,
             new Rotation3d(0, Units.degreesToRadians(90), Units.degreesToRadians(180))));
     addBranchPose(
         ReefBranch.H,
         Level.L4,
         new Pose3d(
-            5.267,
-            4.19,
+            5.811,
+            4.185,
             1.829,
             new Rotation3d(0, Units.degreesToRadians(90), Units.degreesToRadians(180))));
     addBranchPose(
         ReefBranch.I,
         Level.L4,
         new Pose3d(
-            5.02,
-            4.615,
+            5.304,
+            5.097,
             1.829,
             new Rotation3d(0, Units.degreesToRadians(90), Units.degreesToRadians(-120))));
     addBranchPose(
         ReefBranch.J,
         Level.L4,
         new Pose3d(
-            4.737,
-            4.783,
+            5.002,
+            5.283,
             1.829,
             new Rotation3d(0, Units.degreesToRadians(90), Units.degreesToRadians(-120))));
     addBranchPose(
         ReefBranch.K,
         Level.L4,
         new Pose3d(
-            4.782,
-            4.243,
+            3.968,
+            5.26,
             1.829,
             new Rotation3d(0, Units.degreesToRadians(90), Units.degreesToRadians(-60))));
     addBranchPose(
         ReefBranch.L,
         Level.L4,
         new Pose3d(
-            3.959,
-            4.616,
+            3.680,
+            5.092,
             1.829,
-            new Rotation3d(0, Units.degreesToRadians(125), Units.degreesToRadians(-60))));
+            new Rotation3d(0, Units.degreesToRadians(90), Units.degreesToRadians(-60))));
 
     // Reef algae
     addReefAlgaePose(
@@ -592,5 +590,398 @@ public class FieldConstants {
    */
   private void addFloorPose(GamePieceFloorPosition position, Pose3d bluePose) {
     floorPoses.put(position, new FieldPose(bluePose));
+  }
+
+  /**
+   * Determines if a branch is a "left" branch (A, C, E, G, I, K).
+   *
+   * @param branch The reef branch to check
+   * @return true if the branch is a left branch, false otherwise
+   */
+  public boolean isLeftBranch(ReefBranch branch) {
+    // Left branches are A, C, E, G, I, K (odd indices in the enum)
+    return branch.ordinal() % 2 == 0;
+  }
+
+  /**
+   * Determines if a branch is a "right" branch (B, D, F, H, J, L).
+   *
+   * @param branch The reef branch to check
+   * @return true if the branch is a right branch, false otherwise
+   */
+  public boolean isRightBranch(ReefBranch branch) {
+    // Right branches are B, D, F, H, J, L (even indices in the enum)
+    return branch.ordinal() % 2 == 1;
+  }
+
+  /**
+   * Gets all left branch poses for the blue alliance at a specific level.
+   *
+   * @param level The height level for the branches
+   * @return An array of Pose3d objects for all left branches (A, C, E, G, I, K) at the specified
+   *     level
+   */
+  public Pose3d[] getLeftBranchesBlue(Level level) {
+    Pose3d[] leftBranches = new Pose3d[6];
+    int index = 0;
+
+    for (ReefBranch branch : ReefBranch.values()) {
+      if (isLeftBranch(branch)) {
+        leftBranches[index++] = getBranchBlue(branch, level);
+      }
+    }
+
+    return leftBranches;
+  }
+
+  /**
+   * Gets all right branch poses for the blue alliance at a specific level.
+   *
+   * @param level The height level for the branches
+   * @return An array of Pose3d objects for all right branches (B, D, F, H, J, L) at the specified
+   *     level
+   */
+  public Pose3d[] getRightBranchesBlue(Level level) {
+    Pose3d[] rightBranches = new Pose3d[6];
+    int index = 0;
+
+    for (ReefBranch branch : ReefBranch.values()) {
+      if (isRightBranch(branch)) {
+        rightBranches[index++] = getBranchBlue(branch, level);
+      }
+    }
+
+    return rightBranches;
+  }
+
+  /**
+   * Gets all left branch poses for the red alliance at a specific level.
+   *
+   * @param level The height level for the branches
+   * @return An array of Pose3d objects for all left branches (A, C, E, G, I, K) at the specified
+   *     level
+   */
+  public Pose3d[] getLeftBranchesRed(Level level) {
+    Pose3d[] leftBranches = new Pose3d[6];
+    int index = 0;
+
+    for (ReefBranch branch : ReefBranch.values()) {
+      if (isLeftBranch(branch)) {
+        leftBranches[index++] = getBranchRed(branch, level);
+      }
+    }
+
+    return leftBranches;
+  }
+
+  /**
+   * Gets all right branch poses for the red alliance at a specific level.
+   *
+   * @param level The height level for the branches
+   * @return An array of Pose3d objects for all right branches (B, D, F, H, J, L) at the specified
+   *     level
+   */
+  public Pose3d[] getRightBranchesRed(Level level) {
+    Pose3d[] rightBranches = new Pose3d[6];
+    int index = 0;
+
+    for (ReefBranch branch : ReefBranch.values()) {
+      if (isRightBranch(branch)) {
+        rightBranches[index++] = getBranchRed(branch, level);
+      }
+    }
+
+    return rightBranches;
+  }
+
+  /**
+   * Gets a specific left branch pose for the blue alliance at a specific level.
+   *
+   * @param leftIndex The index of the left branch (0-5, where 0=A, 1=C, 2=E, 3=G, 4=I, 5=K)
+   * @param level The height level for the branch
+   * @return The Pose3d for the specified left branch on the blue alliance side
+   * @throws IllegalArgumentException if leftIndex is out of bounds
+   */
+  public Pose3d getLeftBranchBlue(int leftIndex, Level level) {
+    if (leftIndex < 0 || leftIndex > 5) {
+      throw new IllegalArgumentException("Left branch index must be between 0 and 5 inclusive");
+    }
+
+    ReefBranch[] leftBranches = {
+      ReefBranch.A, ReefBranch.C, ReefBranch.E,
+      ReefBranch.G, ReefBranch.I, ReefBranch.K
+    };
+
+    return getBranchBlue(leftBranches[leftIndex], level);
+  }
+
+  /**
+   * Gets a specific right branch pose for the blue alliance at a specific level.
+   *
+   * @param rightIndex The index of the right branch (0-5, where 0=B, 1=D, 2=F, 3=H, 4=J, 5=L)
+   * @param level The height level for the branch
+   * @return The Pose3d for the specified right branch on the blue alliance side
+   * @throws IllegalArgumentException if rightIndex is out of bounds
+   */
+  public Pose3d getRightBranchBlue(int rightIndex, Level level) {
+    if (rightIndex < 0 || rightIndex > 5) {
+      throw new IllegalArgumentException("Right branch index must be between 0 and 5 inclusive");
+    }
+
+    ReefBranch[] rightBranches = {
+      ReefBranch.B, ReefBranch.D, ReefBranch.F,
+      ReefBranch.H, ReefBranch.J, ReefBranch.L
+    };
+
+    return getBranchBlue(rightBranches[rightIndex], level);
+  }
+
+  /**
+   * Gets a specific left branch pose for the red alliance at a specific level.
+   *
+   * @param leftIndex The index of the left branch (0-5, where 0=A, 1=C, 2=E, 3=G, 4=I, 5=K)
+   * @param level The height level for the branch
+   * @return The Pose3d for the specified left branch on the red alliance side
+   * @throws IllegalArgumentException if leftIndex is out of bounds
+   */
+  public Pose3d getLeftBranchRed(int leftIndex, Level level) {
+    if (leftIndex < 0 || leftIndex > 5) {
+      throw new IllegalArgumentException("Left branch index must be between 0 and 5 inclusive");
+    }
+
+    ReefBranch[] leftBranches = {
+      ReefBranch.A, ReefBranch.C, ReefBranch.E,
+      ReefBranch.G, ReefBranch.I, ReefBranch.K
+    };
+
+    return getBranchRed(leftBranches[leftIndex], level);
+  }
+
+  /**
+   * Gets a specific right branch pose for the red alliance at a specific level.
+   *
+   * @param rightIndex The index of the right branch (0-5, where 0=B, 1=D, 2=F, 3=H, 4=J, 5=L)
+   * @param level The height level for the branch
+   * @return The Pose3d for the specified right branch on the red alliance side
+   * @throws IllegalArgumentException if rightIndex is out of bounds
+   */
+  public Pose3d getRightBranchRed(int rightIndex, Level level) {
+    if (rightIndex < 0 || rightIndex > 5) {
+      throw new IllegalArgumentException("Right branch index must be between 0 and 5 inclusive");
+    }
+
+    ReefBranch[] rightBranches = {
+      ReefBranch.B, ReefBranch.D, ReefBranch.F,
+      ReefBranch.H, ReefBranch.J, ReefBranch.L
+    };
+
+    return getBranchRed(rightBranches[rightIndex], level);
+  }
+
+  /**
+   * Gets the closest left branch pose to a given pose for the blue alliance at a specific level.
+   *
+   * @param robotPose The current robot pose (Pose2d)
+   * @param level The height level for the branches
+   * @return The closest left branch (A, C, E, G, I, K) Pose3d
+   */
+  public Pose3d getClosestLeftBranchBlue(Pose2d robotPose, Level level) {
+    ReefBranch closestBranch = null;
+    double minDistance = Double.MAX_VALUE;
+
+    // Check all left branches (A, C, E, G, I, K)
+    for (ReefBranch branch : ReefBranch.values()) {
+      if (isLeftBranch(branch)) {
+        Pose3d branchPose = getBranchBlue(branch, level);
+        double distance =
+            robotPose
+                .getTranslation()
+                .getDistance(new Translation2d(branchPose.getX(), branchPose.getY()));
+
+        if (distance < minDistance) {
+          minDistance = distance;
+          closestBranch = branch;
+        }
+      }
+    }
+
+    return getBranchBlue(closestBranch, level);
+  }
+
+  /**
+   * Gets the closest right branch pose to a given pose for the blue alliance at a specific level.
+   *
+   * @param robotPose The current robot pose (Pose2d)
+   * @param level The height level for the branches
+   * @return The closest right branch (B, D, F, H, J, L) Pose3d
+   */
+  public Pose3d getClosestRightBranchBlue(Pose2d robotPose, Level level) {
+    ReefBranch closestBranch = null;
+    double minDistance = Double.MAX_VALUE;
+
+    // Check all right branches (B, D, F, H, J, L)
+    for (ReefBranch branch : ReefBranch.values()) {
+      if (isRightBranch(branch)) {
+        Pose3d branchPose = getBranchBlue(branch, level);
+        double distance =
+            robotPose
+                .getTranslation()
+                .getDistance(new Translation2d(branchPose.getX(), branchPose.getY()));
+
+        if (distance < minDistance) {
+          minDistance = distance;
+          closestBranch = branch;
+        }
+      }
+    }
+
+    return getBranchBlue(closestBranch, level);
+  }
+
+  /**
+   * Gets the closest left branch pose to a given pose for the red alliance at a specific level.
+   *
+   * @param robotPose The current robot pose (Pose2d)
+   * @param level The height level for the branches
+   * @return The closest left branch (A, C, E, G, I, K) Pose3d
+   */
+  public Pose3d getClosestLeftBranchRed(Pose2d robotPose, Level level) {
+    ReefBranch closestBranch = null;
+    double minDistance = Double.MAX_VALUE;
+
+    // Check all left branches (A, C, E, G, I, K)
+    for (ReefBranch branch : ReefBranch.values()) {
+      if (isLeftBranch(branch)) {
+        Pose3d branchPose = getBranchRed(branch, level);
+        double distance =
+            robotPose
+                .getTranslation()
+                .getDistance(new Translation2d(branchPose.getX(), branchPose.getY()));
+
+        if (distance < minDistance) {
+          minDistance = distance;
+          closestBranch = branch;
+        }
+      }
+    }
+
+    return getBranchRed(closestBranch, level);
+  }
+
+  /**
+   * Gets the closest right branch pose to a given pose for the red alliance at a specific level.
+   *
+   * @param robotPose The current robot pose (Pose2d)
+   * @param level The height level for the branches
+   * @return The closest right branch (B, D, F, H, J, L) Pose3d
+   */
+  public Pose3d getClosestRightBranchRed(Pose2d robotPose, Level level) {
+    ReefBranch closestBranch = null;
+    double minDistance = Double.MAX_VALUE;
+
+    // Check all right branches (B, D, F, H, J, L)
+    for (ReefBranch branch : ReefBranch.values()) {
+      if (isRightBranch(branch)) {
+        Pose3d branchPose = getBranchRed(branch, level);
+        double distance =
+            robotPose
+                .getTranslation()
+                .getDistance(new Translation2d(branchPose.getX(), branchPose.getY()));
+
+        if (distance < minDistance) {
+          minDistance = distance;
+          closestBranch = branch;
+        }
+      }
+    }
+
+    return getBranchRed(closestBranch, level);
+  }
+
+  /**
+   * Gets the closest branch (of any type) pose to a given pose for the blue alliance at a specific
+   * level.
+   *
+   * @param robotPose The current robot pose (Pose2d)
+   * @param level The height level for the branches
+   * @return The closest branch Pose3d
+   */
+  public Pose3d getClosestBranchBlue(Pose2d robotPose, Level level) {
+    ReefBranch closestBranch = null;
+    double minDistance = Double.MAX_VALUE;
+
+    // Check all branches
+    for (ReefBranch branch : ReefBranch.values()) {
+      Pose3d branchPose = getBranchBlue(branch, level);
+      double distance =
+          robotPose
+              .getTranslation()
+              .getDistance(new Translation2d(branchPose.getX(), branchPose.getY()));
+
+      if (distance < minDistance) {
+        minDistance = distance;
+        closestBranch = branch;
+      }
+    }
+
+    return getBranchBlue(closestBranch, level);
+  }
+
+  /**
+   * Gets the closest branch (of any type) pose to a given pose for the red alliance at a specific
+   * level.
+   *
+   * @param robotPose The current robot pose (Pose2d)
+   * @param level The height level for the branches
+   * @return The closest branch Pose3d
+   */
+  public Pose3d getClosestBranchRed(Pose2d robotPose, Level level) {
+    ReefBranch closestBranch = null;
+    double minDistance = Double.MAX_VALUE;
+
+    // Check all branches
+    for (ReefBranch branch : ReefBranch.values()) {
+      Pose3d branchPose = getBranchRed(branch, level);
+      double distance =
+          robotPose
+              .getTranslation()
+              .getDistance(new Translation2d(branchPose.getX(), branchPose.getY()));
+
+      if (distance < minDistance) {
+        minDistance = distance;
+        closestBranch = branch;
+      }
+    }
+
+    return getBranchRed(closestBranch, level);
+  }
+
+  /**
+   * Gets the branch identifier (ReefBranch enum) for the closest branch to a given pose.
+   *
+   * @param robotPose The current robot pose (Pose2d)
+   * @param level The height level for the branches
+   * @param isBlue Whether to use blue alliance positions (true) or red alliance positions (false)
+   * @return The closest ReefBranch enum value
+   */
+  public ReefBranch getClosestBranchIdentifier(Pose2d robotPose, Level level, boolean isBlue) {
+    ReefBranch closestBranch = null;
+    double minDistance = Double.MAX_VALUE;
+
+    // Check all branches
+    for (ReefBranch branch : ReefBranch.values()) {
+      Pose3d branchPose = isBlue ? getBranchBlue(branch, level) : getBranchRed(branch, level);
+      double distance =
+          robotPose
+              .getTranslation()
+              .getDistance(new Translation2d(branchPose.getX(), branchPose.getY()));
+
+      if (distance < minDistance) {
+        minDistance = distance;
+        closestBranch = branch;
+      }
+    }
+
+    return closestBranch;
   }
 }

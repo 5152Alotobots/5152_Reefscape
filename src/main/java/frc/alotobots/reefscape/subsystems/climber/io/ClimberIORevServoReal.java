@@ -126,12 +126,16 @@ public class ClimberIORevServoReal implements ClimberIO {
   public void enableElevatorLockingServo() {
     elevatorLockingLeftServoChannel.setEnabled(true);
     elevatorLockingRightServoChannel.setEnabled(true);
+    elevatorLockingRightServoChannel.setPowered(true);
+    elevatorLockingLeftServoChannel.setPowered(true);
   }
 
   @Override
   public void disableElevatorLockingServo() {
     elevatorLockingLeftServoChannel.setEnabled(false);
     elevatorLockingRightServoChannel.setEnabled(false);
+    elevatorLockingLeftServoChannel.setPowered(false);
+    elevatorLockingRightServoChannel.setPowered(false);
   }
 
   /**

@@ -62,7 +62,8 @@ public class Climb extends SequentialCommandGroup {
             new ElevatorRunAtClimbVelocity(elevatorSubsystem, input).asProxy(),
             new SequentialCommandGroup(
                 new WaitUntilCommand(elevatorSubsystem::isAtMinClimbHeight),
-                new InstantCommand(climberSubsystem::lockElevator))));
+                new InstantCommand(climberSubsystem::lockElevator),
+                new WaitCommand(0.5))));
     addRequirements(climberSubsystem);
   }
 }

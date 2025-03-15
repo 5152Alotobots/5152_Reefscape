@@ -34,21 +34,19 @@ import frc.alotobots.library.subsystems.bling.util.BlingUtil;
 import frc.alotobots.library.subsystems.swervedrive.*;
 import frc.alotobots.library.subsystems.swervedrive.commands.*;
 import frc.alotobots.library.subsystems.swervedrive.io.*;
-import frc.alotobots.library.subsystems.swervedrive.util.DriveCalculator;
 import frc.alotobots.library.subsystems.swervedrive.util.PathPlannerManager;
 import frc.alotobots.library.subsystems.vision.oculus.OculusSubsystem;
 import frc.alotobots.library.subsystems.vision.oculus.io.*;
 import frc.alotobots.library.subsystems.vision.photonvision.apriltag.AprilTagSubsystem;
 import frc.alotobots.library.subsystems.vision.photonvision.apriltag.constants.AprilTagConstants;
 import frc.alotobots.library.subsystems.vision.photonvision.apriltag.io.*;
+import frc.alotobots.reefscape.FieldConstants;
+import frc.alotobots.reefscape.commands.AlignToReefBranch;
 import frc.alotobots.reefscape.commands.groups.Climb;
 import frc.alotobots.reefscape.commands.groups.UnClimb;
 import frc.alotobots.reefscape.commands.states.algae.StateAlgaeRemoveL2;
 import frc.alotobots.reefscape.commands.states.algae.StateAlgaeRemoveL3;
 import frc.alotobots.reefscape.commands.states.coral.*;
-import frc.alotobots.reefscape.subsystems.autocycle.AutoCycleSubsystem;
-import frc.alotobots.reefscape.subsystems.autocycle.commands.PathfindToCoralStation;
-import frc.alotobots.reefscape.subsystems.autocycle.commands.PathfindToReef;
 import frc.alotobots.reefscape.subsystems.climber.ClimberSubsystem;
 import frc.alotobots.reefscape.subsystems.climber.commands.ClimberDisableServos;
 import frc.alotobots.reefscape.subsystems.climber.io.ClimberIORevServoReal;
@@ -88,7 +86,6 @@ public class RobotContainer {
   //  private final LocalizationFusion localizationFusion;
   //  private final OculusPoseSource oculusPoseSource;
   //  private final AprilTagPoseSource aprilTagPoseSource;
-  private final AutoCycleSubsystem autoCycleSubsystem;
   private final BlingSubsystem blingSubsystem;
   private final PathPlannerManager pathPlannerManager;
   private final AutoNamedCommands autoNamedCommands;
@@ -115,11 +112,6 @@ public class RobotContainer {
         autoNamedCommands =
             new AutoNamedCommands(elevatorSubsystem, wristSubsystem, coralIntakeSubsystem);
         configureAutoChooser();
-        autoCycleSubsystem =
-            new AutoCycleSubsystem(
-                pathPlannerManager,
-                swerveDriveSubsystem,
-                () -> DriveCalculator.getChassisSpeeds(swerveDriveSubsystem));
         oculusSubsystem = new OculusSubsystem(new OculusIOReal());
         aprilTagSubsystem =
             new AprilTagSubsystem(
@@ -176,11 +168,6 @@ public class RobotContainer {
         autoNamedCommands =
             new AutoNamedCommands(elevatorSubsystem, wristSubsystem, coralIntakeSubsystem);
         configureAutoChooser();
-        autoCycleSubsystem =
-            new AutoCycleSubsystem(
-                pathPlannerManager,
-                swerveDriveSubsystem,
-                () -> DriveCalculator.getChassisSpeeds(swerveDriveSubsystem));
 
         oculusSubsystem = new OculusSubsystem(new OculusIOSim(driveSimulation));
         aprilTagSubsystem =
@@ -222,11 +209,6 @@ public class RobotContainer {
         autoNamedCommands =
             new AutoNamedCommands(elevatorSubsystem, wristSubsystem, coralIntakeSubsystem);
         configureAutoChooser();
-        autoCycleSubsystem =
-            new AutoCycleSubsystem(
-                pathPlannerManager,
-                swerveDriveSubsystem,
-                () -> DriveCalculator.getChassisSpeeds(swerveDriveSubsystem));
 
         oculusSubsystem = new OculusSubsystem(new OculusIO() {});
         aprilTagSubsystem =
@@ -323,37 +305,15 @@ public class RobotContainer {
             elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, blingSubsystem));
 
     climbButton.toggleOnTrue(
-        new Climb(climberSubsystem, elevatorSubsystem, blingSubsystem, () -> -getElevatorAxis())
-            .andThen(new InstantCommand(climberSubsystem::lockElevator)));
+        new Climb(climberSubsystem, elevatorSubsystem, blingSubsystem, () -> -getElevatorAxis()));
     unClimbButton.onTrue(new UnClimb(climberSubsystem));
 
-    // Auto Cycle Coral Station Controls
-
-    // Enabled state
-    enablePathfindingButton.onTrue(autoCycleSubsystem.togglePathfinding());
-    // pathfindPrecisionAlignToReefButton.toggleOnTrue(
-    //     pathPlannerManager
-    //         .getPathEndPose(autoCycleSubsystem.getState().getSelectedReefBranchPathName())
-    //         .map(endPose -> new DrivePrecisionAlign(swerveDriveSubsystem).getCommand(endPose))
-    //         .orElse(Commands.none()));
-
-    // enableFullAutoPathfindingButton.onTrue(new FullAutoCycle(autoCycleSubsystem).repeatedly());
-
-    cycleCoralStationSideLeftButton.onTrue(autoCycleSubsystem.cycleCoralStationSideLeft());
-    cycleCoralStationSideRightButton.onTrue(autoCycleSubsystem.cycleCoralStationSideRight());
-    cycleCoralStationPickupPositionLeftButton.onTrue(
-        autoCycleSubsystem.cycleCoralStationPositionLeft());
-    cycleCoralStationPickupPositionRightButton.onTrue(
-        autoCycleSubsystem.cycleCoralStationPositionRight());
-    pathfindToSelectedCoralStationButton.toggleOnTrue(
-        new PathfindToCoralStation(
-            autoCycleSubsystem, () -> DriveCalculator.getChassisSpeeds(swerveDriveSubsystem)));
-    // Auto Cycle Reef Branch Controls
-    cycleSelectedBranchRightButton.onTrue(autoCycleSubsystem.cycleReefBranchRight());
-    cycleSelectedBranchLeftButton.onTrue(autoCycleSubsystem.cycleReefBranchLeft());
-    pathfindToSelectedReefBranchButton.toggleOnTrue(
-        new PathfindToReef(
-            autoCycleSubsystem, () -> DriveCalculator.getChassisSpeeds(swerveDriveSubsystem)));
+    alignLeftBranchButton.toggleOnTrue(
+        new AlignToReefBranch(
+            swerveDriveSubsystem, AlignToReefBranch.ReefBranchSide.LEFT, FieldConstants.Level.L4));
+    alignRightBranchButton.toggleOnTrue(
+        new AlignToReefBranch(
+            swerveDriveSubsystem, AlignToReefBranch.ReefBranchSide.RIGHT, FieldConstants.Level.L4));
 
     // BACKUP -----------------------------------------------------------------------------
     // Coral Intake
