@@ -306,7 +306,7 @@ public class RobotContainer {
 
     climbButton.toggleOnTrue(
         new Climb(climberSubsystem, elevatorSubsystem, blingSubsystem, () -> -getElevatorAxis()));
-    unClimbButton.onTrue(new UnClimb(climberSubsystem));
+    unClimbButton.onTrue(new UnClimb(climberSubsystem, elevatorSubsystem));
 
     alignLeftBranchButton.toggleOnTrue(
         new AlignToReefBranch(

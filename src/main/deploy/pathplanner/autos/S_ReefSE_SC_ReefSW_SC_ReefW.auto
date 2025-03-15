@@ -132,7 +132,7 @@
       ]
     }
   },
-  "resetOdom": false,
+  "resetOdom": true,
   "folder": "Three Piece",
   "choreoAuto": false
 }

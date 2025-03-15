@@ -13,7 +13,7 @@
       ]
     }
   },
-  "resetOdom": false,
+  "resetOdom": true,
   "folder": "Just Leave",
   "choreoAuto": false
 }

@@ -52,9 +52,9 @@ public final class ClimberRevServoRealConstants {
   /** The pulse width for the locking servo in the closed position */
   public static final int LOCKING_SERVO_CLOSED_PW = 1376;
 
-  public static final int ELEVATOR_LOCKING_LEFT_SERVO_OPEN_PW = 1557;
+  public static final int ELEVATOR_LOCKING_LEFT_SERVO_OPEN_PW = 2000;
 
-  public static final int ELEVATOR_LOCKING_LEFT_SERVO_CLOSED_PW = 1393;
+  public static final int ELEVATOR_LOCKING_LEFT_SERVO_CLOSED_PW = 750;
   // TODO: NOT IN USE
   public static final int ELEVATOR_LOCKING_RIGHT_SERVO_OPEN_PW = 1994;
 
