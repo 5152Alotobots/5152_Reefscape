@@ -33,7 +33,7 @@ public class AlignToReefBranch extends Command {
     RIGHT
   }
 
-  private final Distance ALIGN_ALLOW_DISTANCE = Meters.of(0.1); // Allowable distance for alignment
+  private final Distance ALIGN_ALLOW_DISTANCE = Meters.of(0.25); // Allowable distance for alignment
   private final Angle HEADING_MATCH_REQUIREMENT = Degrees.of(30); // Allowable heading difference
 
   private final ReefBranchSide side;
@@ -58,7 +58,7 @@ public class AlignToReefBranch extends Command {
     this.side = side;
     this.swerveDriveSubsystem = swerveDriveSubsystem;
     this.branchLevel = branchLevel;
-    this.request = new DrivePrecisionAlign(swerveDriveSubsystem);
+    this.request = new DrivePrecisionAlign(swerveDriveSubsystem, 0.08);
     addRequirements(swerveDriveSubsystem);
   }
 
