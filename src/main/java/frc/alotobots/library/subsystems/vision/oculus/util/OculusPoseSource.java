@@ -16,6 +16,7 @@ import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
+import edu.wpi.first.units.measure.Time;
 import frc.alotobots.library.subsystems.vision.localizationfusion.util.PoseSource;
 import frc.alotobots.library.subsystems.vision.oculus.OculusSubsystem;
 import frc.alotobots.library.subsystems.vision.oculus.constants.OculusConstants;
@@ -80,5 +81,10 @@ public class OculusPoseSource implements PoseSource {
   @Override
   public String getSourceName() {
     return "Oculus Quest";
+  }
+
+  @Override
+  public Time getTimestamp() {
+    return subsystem.getTimestamp();
   }
 }

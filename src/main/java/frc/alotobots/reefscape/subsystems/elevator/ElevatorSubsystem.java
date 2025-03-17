@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIO;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIOInputsAutoLogged;
 import frc.alotobots.reefscape.util.ControlType;
+import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
 
 /**
@@ -116,8 +117,29 @@ public class ElevatorSubsystem extends SubsystemBase {
                 velocity.in(MetersPerSecond),
                 -MAX_OPERATOR_VELOCITY.in(MetersPerSecond),
                 MAX_OPERATOR_VELOCITY.in(MetersPerSecond)));
+
+    if (isAtMinClimbHeight()) {
+      adjustedVelocity =
+          MetersPerSecond.of(
+              MathUtil.clamp(
+                  adjustedVelocity.in(MetersPerSecond),
+                  MetersPerSecond.zero().in(MetersPerSecond),
+                  MAX_VELOCITY_NEAR_LIMIT.in(MetersPerSecond)));
+    }
+
     io.setElevatorVelocity(adjustedVelocity, ControlType.ClosedLoop.VELOCITY_CLIMB.ordinal());
     Logger.recordOutput("Elevator/ControlType", ControlType.ClosedLoop.VELOCITY_CLIMB);
+  }
+
+  /**
+   * Checks if the elevator is at or below the minimum climbing height. This can be used both for
+   * velocity limiting and as a command end condition.
+   *
+   * @return true if the elevator is at or below MIN_CLIMB_HEIGHT, false otherwise
+   */
+  @AutoLogOutput(key = "Elevator/MinClimbHeight")
+  public boolean isAtMinClimbHeight() {
+    return inputs.leftHeight.lte(MIN_CLIMB_HEIGHT);
   }
 
   /**

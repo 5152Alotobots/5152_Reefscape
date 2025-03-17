@@ -35,15 +35,13 @@ import frc.alotobots.library.subsystems.swervedrive.*;
 import frc.alotobots.library.subsystems.swervedrive.commands.*;
 import frc.alotobots.library.subsystems.swervedrive.io.*;
 import frc.alotobots.library.subsystems.swervedrive.util.PathPlannerManager;
-import frc.alotobots.library.subsystems.vision.localizationfusion.LocalizationFusion;
 import frc.alotobots.library.subsystems.vision.oculus.OculusSubsystem;
 import frc.alotobots.library.subsystems.vision.oculus.io.*;
-import frc.alotobots.library.subsystems.vision.oculus.util.OculusPoseSource;
 import frc.alotobots.library.subsystems.vision.photonvision.apriltag.AprilTagSubsystem;
 import frc.alotobots.library.subsystems.vision.photonvision.apriltag.constants.AprilTagConstants;
 import frc.alotobots.library.subsystems.vision.photonvision.apriltag.io.*;
-import frc.alotobots.library.subsystems.vision.photonvision.apriltag.util.AprilTagPoseSource;
-import frc.alotobots.library.subsystems.vision.photonvision.objectdetection.io.*;
+import frc.alotobots.reefscape.FieldConstants;
+import frc.alotobots.reefscape.commands.AlignToReefBranch;
 import frc.alotobots.reefscape.commands.groups.Climb;
 import frc.alotobots.reefscape.commands.groups.UnClimb;
 import frc.alotobots.reefscape.commands.states.algae.StateAlgaeRemoveL2;
@@ -85,9 +83,9 @@ public class RobotContainer {
   private final CoralIntakeSubsystem coralIntakeSubsystem;
   private final OculusSubsystem oculusSubsystem;
   private final AprilTagSubsystem aprilTagSubsystem;
-  private final LocalizationFusion localizationFusion;
-  private final OculusPoseSource oculusPoseSource;
-  private final AprilTagPoseSource aprilTagPoseSource;
+  //  private final LocalizationFusion localizationFusion;
+  //  private final OculusPoseSource oculusPoseSource;
+  //  private final AprilTagPoseSource aprilTagPoseSource;
   private final BlingSubsystem blingSubsystem;
   private final PathPlannerManager pathPlannerManager;
   private final AutoNamedCommands autoNamedCommands;
@@ -95,7 +93,6 @@ public class RobotContainer {
   private SwerveDriveSimulation driveSimulation;
 
   public RobotContainer() {
-
     switch (Constants.currentMode) {
       case REAL:
         // Real robot hardware initialization
@@ -115,24 +112,26 @@ public class RobotContainer {
         autoNamedCommands =
             new AutoNamedCommands(elevatorSubsystem, wristSubsystem, coralIntakeSubsystem);
         configureAutoChooser();
-
         oculusSubsystem = new OculusSubsystem(new OculusIOReal());
         aprilTagSubsystem =
             new AprilTagSubsystem(
-                new AprilTagIOPhotonVision(AprilTagConstants.CAMERA_CONFIGS[0]),
-                new AprilTagIOPhotonVision(AprilTagConstants.CAMERA_CONFIGS[1]));
+                swerveDriveSubsystem::addVisionMeasurement,
+                new AprilTagIOPhotonVision(
+                    AprilTagConstants.CAMERA_CONFIGS[0], swerveDriveSubsystem::getRotation),
+                new AprilTagIOPhotonVision(
+                    AprilTagConstants.CAMERA_CONFIGS[1], swerveDriveSubsystem::getRotation));
 
         // Create pose sources
-        oculusPoseSource = new OculusPoseSource(oculusSubsystem);
-        aprilTagPoseSource = new AprilTagPoseSource(aprilTagSubsystem);
+        //        oculusPoseSource = new OculusPoseSource(oculusSubsystem);
+        //        aprilTagPoseSource = new AprilTagPoseSource(aprilTagSubsystem);
 
-        localizationFusion =
-            new LocalizationFusion(
-                swerveDriveSubsystem::addVisionMeasurement,
-                oculusPoseSource,
-                aprilTagPoseSource,
-                swerveDriveSubsystem,
-                autoChooser);
+        //        localizationFusion =
+        //            new LocalizationFusion(
+        //                swerveDriveSubsystem::addVisionMeasurement,
+        //                oculusPoseSource,
+        //                aprilTagPoseSource,
+        //                swerveDriveSubsystem,
+        //                autoChooser);
 
         blingSubsystem = new BlingSubsystem(new BlingIOReal());
         break;
@@ -173,21 +172,22 @@ public class RobotContainer {
         oculusSubsystem = new OculusSubsystem(new OculusIOSim(driveSimulation));
         aprilTagSubsystem =
             new AprilTagSubsystem(
+                swerveDriveSubsystem::addVisionMeasurement,
                 new AprilTagIOPhotonVisionSim(
                     AprilTagConstants.CAMERA_CONFIGS[0], swerveDriveSubsystem::getPose),
                 new AprilTagIOPhotonVisionSim(
                     AprilTagConstants.CAMERA_CONFIGS[1], swerveDriveSubsystem::getPose));
 
         // Create pose sources
-        oculusPoseSource = new OculusPoseSource(oculusSubsystem);
-        aprilTagPoseSource = new AprilTagPoseSource(aprilTagSubsystem);
-        localizationFusion =
-            new LocalizationFusion(
-                swerveDriveSubsystem::addVisionMeasurement,
-                oculusPoseSource,
-                aprilTagPoseSource,
-                swerveDriveSubsystem,
-                autoChooser);
+        //        oculusPoseSource = new OculusPoseSource(oculusSubsystem);
+        //        aprilTagPoseSource = new AprilTagPoseSource(aprilTagSubsystem);
+        //        localizationFusion =
+        //            new LocalizationFusion(
+        //                swerveDriveSubsystem::addVisionMeasurement,
+        //                oculusPoseSource,
+        //                aprilTagPoseSource,
+        //                swerveDriveSubsystem,
+        //                autoChooser);
 
         blingSubsystem = new BlingSubsystem(new BlingIOSim());
         break;
@@ -211,18 +211,22 @@ public class RobotContainer {
         configureAutoChooser();
 
         oculusSubsystem = new OculusSubsystem(new OculusIO() {});
-        aprilTagSubsystem = new AprilTagSubsystem(new AprilTagIO() {}, new AprilTagIO() {});
+        aprilTagSubsystem =
+            new AprilTagSubsystem(
+                swerveDriveSubsystem::addVisionMeasurement,
+                new AprilTagIO() {},
+                new AprilTagIO() {});
 
         // Create pose sources
-        oculusPoseSource = new OculusPoseSource(oculusSubsystem);
-        aprilTagPoseSource = new AprilTagPoseSource(aprilTagSubsystem);
-        localizationFusion =
-            new LocalizationFusion(
-                swerveDriveSubsystem::addVisionMeasurement,
-                oculusPoseSource,
-                aprilTagPoseSource,
-                swerveDriveSubsystem,
-                autoChooser);
+        //        oculusPoseSource = new OculusPoseSource(oculusSubsystem);
+        //        aprilTagPoseSource = new AprilTagPoseSource(aprilTagSubsystem);
+        //        localizationFusion =
+        //            new LocalizationFusion(
+        //                swerveDriveSubsystem::addVisionMeasurement,
+        //                oculusPoseSource,
+        //                aprilTagPoseSource,
+        //                swerveDriveSubsystem,
+        //                autoChooser);
 
         blingSubsystem = new BlingSubsystem(new BlingIO() {});
         break;
@@ -295,20 +299,27 @@ public class RobotContainer {
 
     stateAlgaeL2Button.toggleOnTrue(
         new StateAlgaeRemoveL2(
-            elevatorSubsystem,
-            wristSubsystem,
-            coralIntakeSubsystem,
-            blingSubsystem));
+            elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, blingSubsystem));
     stateAlgaeL3Button.toggleOnTrue(
         new StateAlgaeRemoveL3(
-            elevatorSubsystem,
-            wristSubsystem,
-            coralIntakeSubsystem,
-            blingSubsystem));
+            elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, blingSubsystem));
 
     climbButton.toggleOnTrue(
         new Climb(climberSubsystem, elevatorSubsystem, blingSubsystem, () -> -getElevatorAxis()));
-    unClimbButton.onTrue(new UnClimb(climberSubsystem));
+    unClimbButton.onTrue(new UnClimb(climberSubsystem, elevatorSubsystem));
+
+    alignLeftBranchButton.toggleOnTrue(
+        new AlignToReefBranch(
+                swerveDriveSubsystem,
+                AlignToReefBranch.ReefBranchSide.LEFT,
+                FieldConstants.Level.L4)
+            .withTimeout(1));
+    alignRightBranchButton.toggleOnTrue(
+        new AlignToReefBranch(
+                swerveDriveSubsystem,
+                AlignToReefBranch.ReefBranchSide.RIGHT,
+                FieldConstants.Level.L4)
+            .withTimeout(1));
 
     // BACKUP -----------------------------------------------------------------------------
     // Coral Intake

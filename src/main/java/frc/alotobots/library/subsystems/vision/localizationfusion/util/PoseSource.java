@@ -16,6 +16,7 @@ import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
+import edu.wpi.first.units.measure.Time;
 
 /**
  * Standardized interface for pose estimation sources in the robot localization system.
@@ -75,4 +76,6 @@ public interface PoseSource {
    * @return String identifier for this pose source
    */
   String getSourceName();
+
+  Time getTimestamp();
 }

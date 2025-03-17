@@ -34,7 +34,7 @@ public class AprilTagConstants {
         // Front Left
         new Transform3d(
             new Translation3d(0.285, 0.23, 0.225),
-            new Rotation3d(0, Math.toRadians(-10), Math.toRadians(24.7))),
+            new Rotation3d(0, Math.toRadians(-10), Math.toRadians(-8.06))),
         // Front Right
         new Transform3d(
             new Translation3d(0.29, -0.23, 0.225),
@@ -54,8 +54,12 @@ public class AprilTagConstants {
   // Standard deviation baselines, for 1 meter distance and 1 tag
   // (Adjusted automatically based on distance and # of tags)
   // LOWER = TRUST MORE
-  public static double LINEAR_STD_DEV_BASE = 0.02; // Meters
-  public static double ANGULAR_STD_DEV_BASE = 0.06; // Radians
+  public static double MULTI_TAG_LINEAR_STD_DEV_BASE = 0.08; // Meters
+  public static double MULTI_TAG_ANGULAR_STD_DEV_BASE = 1000; // Radians
+
+  public static double SINGLE_TAG_LINEAR_STD_DEV_BASE = 0.12; // Meters
+  public static double SINGLE_TAG_ANGULAR_STD_DEV_BASE =
+      1000; // DO NOT USE FOR HEADING CORRECTION! MAKES LOOP!!!
 
   // Standard deviation multipliers for each camera
   // (Adjust to trust some cameras more than others)
@@ -63,8 +67,12 @@ public class AprilTagConstants {
   public static double[] CAMERA_STD_DEV_FACTORS = new double[] {1.0, 1.0};
 
   // Basic Filtering
-  public static double MAX_AMBIGUITY = 0.3;
+  public static double MULTITAG_MAX_AMBIGUITY = 0.3;
   public static double MAX_Z_ERROR = 0.75;
+
+  // Constants for single tag processing
+  public static final double SINGLE_TAG_MAX_AMBIGUITY = 0.2;
+  public static final double SINGLE_TAG_MAX_DISTANCE = 4.0; // meters
 
   /** Time after which a pose is considered stale (seconds) */
   public static final double POSE_TIMEOUT = 0.06;

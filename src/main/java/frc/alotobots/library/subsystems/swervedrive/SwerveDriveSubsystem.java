@@ -13,6 +13,7 @@
 package frc.alotobots.library.subsystems.swervedrive;
 
 import static edu.wpi.first.units.Units.*;
+import static frc.alotobots.library.subsystems.vision.localizationfusion.constants.LocalizationFusionConstants.IGNORE_VISION_IN_AUTO;
 
 import com.pathplanner.lib.util.DriveFeedforwards;
 import com.pathplanner.lib.util.swerve.SwerveSetpoint;
@@ -36,6 +37,7 @@ import edu.wpi.first.wpilibj.Alert.AlertType;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
@@ -87,7 +89,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
   /** Raw rotation from the gyro */
   private Rotation2d rawGyroRotation = new Rotation2d();
 
-  private Field2d feild = new Field2d();
+  private Field2d field = new Field2d();
 
   /** Last recorded module positions for delta tracking */
   private SwerveModulePosition[] lastModulePositions =
@@ -100,6 +102,9 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
   /** Pose estimator for odometry */
   private SwerveDrivePoseEstimator poseEstimator =
+      new SwerveDrivePoseEstimator(kinematics, rawGyroRotation, lastModulePositions, new Pose2d());
+
+  private SwerveDrivePoseEstimator precisionAlignPoseEstimator =
       new SwerveDrivePoseEstimator(kinematics, rawGyroRotation, lastModulePositions, new Pose2d());
 
   /**
@@ -118,7 +123,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
       ModuleIO blModuleIO,
       ModuleIO brModuleIO) {
     this.gyroIO = gyroIO;
-    Shuffleboard.getTab("Prematch").add("Robot Pose", feild);
+    Shuffleboard.getTab("Prematch").add("Robot Pose", field);
 
     // Initialize modules
     modules[0] = new Module(flModuleIO, 0, Constants.tunerConstants.getFrontLeft());
@@ -151,10 +156,16 @@ public class SwerveDriveSubsystem extends SubsystemBase {
                 (voltage) -> runCharacterization(voltage.in(Volts)), null, this));
   }
 
+  /** Logs the auto align target pose to the dashboard for field */
+  public void logAutoAlignTargetPose(Pose2d target) {
+    field.getObject("AutoAlignTargetPose").setPose(target);
+  }
+
   /** Periodic update function handling odometry updates and module states. */
   @Override
   public void periodic() {
-    feild.setRobotPose(getPose());
+    field.setRobotPose(getPose());
+    SmartDashboard.putData("SwerveDriveField", field);
     odometryLock.lock();
     gyroIO.updateInputs(gyroInputs);
     Logger.processInputs("Drive/Gyro", gyroInputs);
@@ -200,6 +211,8 @@ public class SwerveDriveSubsystem extends SubsystemBase {
       }
 
       poseEstimator.updateWithTime(sampleTimestamps[i], rawGyroRotation, modulePositions);
+      precisionAlignPoseEstimator.updateWithTime(
+          sampleTimestamps[i], rawGyroRotation, modulePositions);
     }
 
     gyroDisconnectedAlert.set(!gyroInputs.connected && Constants.currentMode != Mode.SIM);
@@ -373,7 +386,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
    *
    * @return Current robot pose
    */
-  @AutoLogOutput(key = "Odometry/Robot")
+  @AutoLogOutput(key = "Drive/Pose")
   public Pose2d getPose() {
     return poseEstimator.getEstimatedPosition();
   }
@@ -394,6 +407,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
    */
   public void setPose(Pose2d pose) {
     poseEstimator.resetPosition(rawGyroRotation, getModulePositions(), pose);
+    precisionAlignPoseEstimator.resetPosition(rawGyroRotation, getModulePositions(), pose);
   }
 
   /**
@@ -407,8 +421,12 @@ public class SwerveDriveSubsystem extends SubsystemBase {
       Pose2d visionRobotPoseMeters,
       double timestampSeconds,
       Matrix<N3, N1> visionMeasurementStdDevs) {
-    poseEstimator.addVisionMeasurement(
-        visionRobotPoseMeters, timestampSeconds, visionMeasurementStdDevs);
+
+    // Skip if ignoring vision in auto and we're either in auto or disabled
+    if (!IGNORE_VISION_IN_AUTO || (DriverStation.isEnabled() && !DriverStation.isAutonomous())) {
+      poseEstimator.addVisionMeasurement(
+          visionRobotPoseMeters, timestampSeconds, visionMeasurementStdDevs);
+    }
   }
 
   /**

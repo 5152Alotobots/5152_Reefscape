@@ -90,6 +90,12 @@ public interface ClimberIO {
   /** Disables the plunger servo. */
   public default void disablePlungerServo() {}
 
+  /** Enables the elevator locking servo */
+  public default void enableElevatorLockingServo() {}
+
+  /** Disables the elevator locking servo */
+  public default void disableElevatorLockingServo() {}
+
   /**
    * Sets the position of the plunger servo.
    *
@@ -103,4 +109,6 @@ public interface ClimberIO {
    * @param lockingServoLocked true to lock, false to unlock
    */
   public default void setLockingServoLocked(boolean lockingServoLocked) {}
+
+  public default void setElevatorLockingServoLocked(boolean elevatorLockingServoLocked) {}
 }

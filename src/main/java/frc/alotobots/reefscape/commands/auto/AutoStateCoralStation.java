@@ -15,7 +15,7 @@ package frc.alotobots.reefscape.commands.auto;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.alotobots.library.commands.util.LogCommand;
 import frc.alotobots.reefscape.commands.groups.ElevatorWristHold;
-import frc.alotobots.reefscape.commands.groups.ElevatorWristRun;
+import frc.alotobots.reefscape.commands.groups.ElevatorWristRunAuto;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants;
 import frc.alotobots.reefscape.subsystems.wrist.WristSubsystem;
@@ -36,12 +36,11 @@ public class AutoStateCoralStation extends SequentialCommandGroup {
   public AutoStateCoralStation(ElevatorSubsystem elevatorSubsystem, WristSubsystem wristSubsystem) {
     addCommands(
         new LogCommand("State/State", "AUTO_CORAL_CORAL_STATION"),
-        new ElevatorWristRun(
+        new ElevatorWristRunAuto(
             elevatorSubsystem,
             wristSubsystem,
             ElevatorConstants.Setpoints.CORAL_CORAL_STATION,
-            WristConstants.Setpoints.CORAL_CORAL_STATION,
-            false),
+            WristConstants.Setpoints.CORAL_CORAL_STATION),
         new ElevatorWristHold(elevatorSubsystem, wristSubsystem));
   }
 }

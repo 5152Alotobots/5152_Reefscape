@@ -21,20 +21,16 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import frc.alotobots.Constants;
 import frc.alotobots.library.subsystems.swervedrive.SwerveDriveSubsystem;
 import java.util.function.Supplier;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Handles precision alignment requests to a target pose using PathPlanner's holonomic drive
- * controller. Only attempts alignment when the robot is within a specified radius of the target.
+ * controller.
  */
 public class DrivePrecisionAlign {
   /** The swerve drive subsystem used for robot movement */
   private final SwerveDriveSubsystem swerveDriveSubsystem;
-
-  /** The radius within which alignment will be attempted (meters) */
-  private final double alignmentRadius;
-
-  /** The position tolerance for considering alignment complete (meters) */
-  private final double positionTolerance;
 
   /** The PathPlanner controller for holonomic movement */
   private final PPHolonomicDriveController controller;
@@ -42,32 +38,45 @@ public class DrivePrecisionAlign {
   /** The trajectory state representing the target position and orientation */
   private final PathPlannerTrajectoryState targetTrajectoryState;
 
+  /** The position tolerance for considering alignment complete (meters) */
+  private final double positionTolerance;
+
   /**
-   * Creates a new PrecisionAlignRequest handler with custom alignment parameters.
+   * The current target pose being tracked -- SETTER -- Sets the current target pose.
+   *
+   * <p>-- GETTER -- Gets the current target pose being tracked.
+   *
+   * @param targetPose The target pose to set
+   * @return The current target pose
+   */
+  @Getter @Setter private Pose2d currentTargetPose;
+
+  /**
+   * Creates a new PrecisionAlignRequest handler.
    *
    * @param swerveDriveSubsystem The drive subsystem
-   * @param alignmentRadius The radius within which alignment will be attempted (meters)
+   */
+  /**
+   * Creates a new PrecisionAlignRequest handler.
+   *
+   * @param swerveDriveSubsystem The drive subsystem
    * @param positionTolerance The position tolerance for considering alignment complete (meters)
    */
-  public DrivePrecisionAlign(
-      SwerveDriveSubsystem swerveDriveSubsystem, double alignmentRadius, double positionTolerance) {
+  public DrivePrecisionAlign(SwerveDriveSubsystem swerveDriveSubsystem, double positionTolerance) {
     this.swerveDriveSubsystem = swerveDriveSubsystem;
-    this.alignmentRadius = alignmentRadius;
     this.positionTolerance = positionTolerance;
     this.controller = Constants.tunerConstants.getHolonomicDriveController();
     this.targetTrajectoryState = new PathPlannerTrajectoryState();
+    this.currentTargetPose = new Pose2d(); // Initialize with default pose
   }
 
   /**
-   * Creates a new PrecisionAlignRequest handler with default parameters.
+   * Creates a new PrecisionAlignRequest handler with default tolerance.
    *
    * @param swerveDriveSubsystem The drive subsystem
    */
   public DrivePrecisionAlign(SwerveDriveSubsystem swerveDriveSubsystem) {
-    this(
-        swerveDriveSubsystem,
-        Constants.tunerConstants.getPrecisionAlignAllowRadius(),
-        Constants.tunerConstants.getPrecisionAlignTolerance());
+    this(swerveDriveSubsystem, Constants.tunerConstants.getPrecisionAlignTolerance());
   }
 
   /** Called to initialize the request handler. */
@@ -82,19 +91,34 @@ public class DrivePrecisionAlign {
    */
   public void applyRequest(Supplier<Pose2d> targetPose) {
     Pose2d currentPose = swerveDriveSubsystem.getPose();
-    Pose2d target = targetPose.get();
-    double distance = currentPose.getTranslation().getDistance(target.getTranslation());
+    this.currentTargetPose = targetPose.get();
 
-    // Only execute alignment if within radius
-    if (distance <= alignmentRadius) {
-      targetTrajectoryState.pose = target;
-      ChassisSpeeds speeds =
-          controller.calculateRobotRelativeSpeeds(currentPose, targetTrajectoryState);
+    targetTrajectoryState.pose = currentTargetPose;
+    ChassisSpeeds speeds =
+        controller.calculateRobotRelativeSpeeds(currentPose, targetTrajectoryState);
 
-      swerveDriveSubsystem.runVelocity(speeds);
-    } else {
-      swerveDriveSubsystem.stop();
-    }
+    swerveDriveSubsystem.runVelocity(speeds);
+  }
+
+  /**
+   * Checks if the robot is near the current target pose within the position tolerance.
+   *
+   * @return True if the robot is within the position tolerance of the current target
+   */
+  public boolean isNearTarget() {
+    return isNearTarget(this.currentTargetPose);
+  }
+
+  /**
+   * Checks if the robot is near the specified target pose within the position tolerance.
+   *
+   * @param targetPose The target pose to check against
+   * @return True if the robot is within the position tolerance of the target
+   */
+  public boolean isNearTarget(Pose2d targetPose) {
+    Pose2d currentPose = swerveDriveSubsystem.getPose();
+    double distance = currentPose.getTranslation().getDistance(targetPose.getTranslation());
+    return distance < positionTolerance;
   }
 
   /**
@@ -106,15 +130,7 @@ public class DrivePrecisionAlign {
   public Command getCommand(Supplier<Pose2d> targetPose) {
     return Commands.run(() -> applyRequest(targetPose), swerveDriveSubsystem)
         .beforeStarting(this::setup)
-        .until(
-            () -> {
-              Pose2d currentPose = swerveDriveSubsystem.getPose();
-              Pose2d target = targetPose.get();
-              double distance = currentPose.getTranslation().getDistance(target.getTranslation());
-
-              // End if outside radius or within tolerance
-              return distance > alignmentRadius || distance < positionTolerance;
-            });
+        .until(this::isNearTarget);
   }
 
   /**
@@ -124,6 +140,7 @@ public class DrivePrecisionAlign {
    * @return A command that will execute the precision alignment
    */
   public Command getCommand(Pose2d targetPose) {
+    setCurrentTargetPose(targetPose);
     return getCommand(() -> targetPose);
   }
 }
