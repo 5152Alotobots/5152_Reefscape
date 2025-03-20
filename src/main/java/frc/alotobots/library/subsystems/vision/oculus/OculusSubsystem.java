@@ -46,11 +46,13 @@ public class OculusSubsystem extends SubsystemBase {
   /** Hardware communication interface */
   private final OculusIO io;
 
+  /** Consumer for pose updates from the Oculus */
   private final OculusConsumer oculusConsumer;
 
   /** Logged inputs from Quest hardware */
   private final OculusIOInputsAutoLogged inputs = new OculusIOInputsAutoLogged();
 
+  /** Transform offset applied when using ROBOT_SIDE reset strategy */
   private Transform2d offsetTransform = new Transform2d();
 
   /**
@@ -59,6 +61,7 @@ public class OculusSubsystem extends SubsystemBase {
    * <p>Initializes communication with Quest hardware and prepares logging systems. The subsystem
    * starts in an uninitialized state requiring pose calibration.
    *
+   * @param oculusConsumer Consumer that receives pose updates from the headset
    * @param io Interface for Quest hardware communication
    */
   public OculusSubsystem(OculusConsumer oculusConsumer, OculusIO io) {
@@ -83,26 +86,49 @@ public class OculusSubsystem extends SubsystemBase {
     processPose();
   }
 
+  /**
+   * Returns the battery percentage of the connected Quest headset.
+   *
+   * @return Battery percentage (0-100)
+   */
   public double getBatteryPercent() {
     return inputs.batteryPercent;
   }
 
+  /**
+   * Returns the timestamp of the most recent pose update.
+   *
+   * @return Timestamp in seconds
+   */
   public double getTimestamp() {
     return inputs.timestamp;
   }
 
+  /**
+   * Checks if the Quest headset is currently connected.
+   *
+   * @return True if connected, false otherwise
+   */
   public boolean isConnected() {
     return inputs.connected;
   }
 
+  /**
+   * Gets the current robot pose as estimated by the Quest headset. This incorporates all transforms
+   * and offsets to convert from headset to robot coordinates.
+   *
+   * @return Field-relative robot pose
+   */
   @AutoLogOutput(key = "Oculus/Pose")
   public Pose2d getPose() {
     return getOculusPose().transformBy(ROBOT_TO_OCULUS.inverse()).plus(offsetTransform);
   }
 
   /**
-   * Does a "hard reset" of the oculus pose. This should be called PRIOR to the start of the match
-   * to avoid latency associated with resetting the Oculus side pose.
+   * Resets the pose tracking system to a specified position. Must be called only when the robot is
+   * disabled to avoid interrupting tracking during a match.
+   *
+   * @param pose The new reference pose
    */
   public void resetPose(Pose2d pose) {
     if (DriverStation.isEnabled()) {
@@ -124,6 +150,12 @@ public class OculusSubsystem extends SubsystemBase {
     }
   }
 
+  /**
+   * Updates the transform offset used in ROBOT_SIDE pose reset strategy. Has no effect if using a
+   * different pose reset strategy.
+   *
+   * @param pose The new reference pose for calculating offset
+   */
   public void updateTransform(Pose2d pose) {
     if (!POSE_RESET_STRATEGY.equals(PoseResetStrategy.ROBOT_SIDE)) {
       Logger.recordOutput(
@@ -135,6 +167,10 @@ public class OculusSubsystem extends SubsystemBase {
     offsetTransform = new Transform2d(pose.getTranslation(), pose.getRotation());
   }
 
+  /**
+   * Processes the current pose data and forwards it to the consumer if connected. This enables
+   * integration with pose estimation systems.
+   */
   private void processPose() {
     if (inputs.connected) {
       Pose2d pose = getPose();
@@ -145,15 +181,32 @@ public class OculusSubsystem extends SubsystemBase {
     }
   }
 
+  /**
+   * Converts the raw Oculus yaw to a Rotation2d object. Applies necessary coordinate system
+   * transformations.
+   *
+   * @return Rotation2d representing the headset's yaw
+   */
   private Rotation2d getOculusYaw() {
     return Rotation2d.fromDegrees(-inputs.eulerAngles[1]);
   }
 
+  /**
+   * Converts the raw Oculus position to a Translation2d object. Maps Unity coordinate system to FRC
+   * coordinate system.
+   *
+   * @return Translation2d representing the headset's position
+   */
   private Translation2d getOculusTranslation() {
     float[] oculusPosition = inputs.position;
     return new Translation2d(oculusPosition[2], -oculusPosition[0]);
   }
 
+  /**
+   * Combines Oculus position and orientation into a unified Pose2d.
+   *
+   * @return Raw Pose2d from the headset's perspective
+   */
   private Pose2d getOculusPose() {
     return new Pose2d(getOculusTranslation(), getOculusYaw());
   }
@@ -173,8 +226,8 @@ public class OculusSubsystem extends SubsystemBase {
      * @param visionMeasurementStdDevs Standard deviations for the measurement (x, y, theta)
      */
     public void accept(
-            Pose2d visionRobotPoseMeters,
-            double timestampSeconds,
-            Matrix<N3, N1> visionMeasurementStdDevs);
+        Pose2d visionRobotPoseMeters,
+        double timestampSeconds,
+        Matrix<N3, N1> visionMeasurementStdDevs);
   }
 }
