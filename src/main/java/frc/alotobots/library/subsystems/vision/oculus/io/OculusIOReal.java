@@ -101,6 +101,7 @@ public class OculusIOReal implements OculusIO {
     inputs.batteryPercent = questBatteryPercent.get();
     inputs.misoValue = (int) questMiso.get();
     processHeartbeat();
+    cleanupResponses();
   }
 
   @Override

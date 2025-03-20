@@ -15,10 +15,13 @@ package frc.alotobots.library.subsystems.vision.oculus;
 import static frc.alotobots.library.subsystems.vision.oculus.constants.OculusConstants.*;
 import static frc.alotobots.library.subsystems.vision.oculus.util.OculusStatus.*;
 
+import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.numbers.N1;
+import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.alotobots.library.subsystems.vision.oculus.io.OculusIO;
@@ -43,6 +46,8 @@ public class OculusSubsystem extends SubsystemBase {
   /** Hardware communication interface */
   private final OculusIO io;
 
+  private final OculusConsumer oculusConsumer;
+
   /** Logged inputs from Quest hardware */
   private final OculusIOInputsAutoLogged inputs = new OculusIOInputsAutoLogged();
 
@@ -56,8 +61,9 @@ public class OculusSubsystem extends SubsystemBase {
    *
    * @param io Interface for Quest hardware communication
    */
-  public OculusSubsystem(OculusIO io) {
+  public OculusSubsystem(OculusConsumer oculusConsumer, OculusIO io) {
     this.io = io;
+    this.oculusConsumer = oculusConsumer;
     Logger.recordOutput("Oculus/status", "Initialized");
   }
 
@@ -72,6 +78,9 @@ public class OculusSubsystem extends SubsystemBase {
   public void periodic() {
     io.updateInputs(inputs);
     Logger.processInputs("Oculus", inputs);
+
+    // Add to Kalman filter
+    processPose();
   }
 
   public double getBatteryPercent() {
@@ -126,6 +135,16 @@ public class OculusSubsystem extends SubsystemBase {
     offsetTransform = new Transform2d(pose.getTranslation(), pose.getRotation());
   }
 
+  private void processPose() {
+    if (inputs.connected) {
+      Pose2d pose = getPose();
+      double timestamp = getTimestamp();
+
+      // Call the consumer with the new pose
+      oculusConsumer.accept(pose, timestamp, OCULUS_STD_DEVS);
+    }
+  }
+
   private Rotation2d getOculusYaw() {
     return Rotation2d.fromDegrees(-inputs.eulerAngles[1]);
   }
@@ -137,5 +156,25 @@ public class OculusSubsystem extends SubsystemBase {
 
   private Pose2d getOculusPose() {
     return new Pose2d(getOculusTranslation(), getOculusYaw());
+  }
+
+  /**
+   * Functional interface for components that consume Oculus vision measurements.
+   *
+   * <p>Typically implemented by subsystems that handle pose estimation/odometry.
+   */
+  @FunctionalInterface
+  public static interface OculusConsumer {
+    /**
+     * Accepts a vision measurement from the Oculus subsystem.
+     *
+     * @param visionRobotPoseMeters Field-relative pose of the robot in meters
+     * @param timestampSeconds Timestamp when the measurement was taken, in seconds
+     * @param visionMeasurementStdDevs Standard deviations for the measurement (x, y, theta)
+     */
+    public void accept(
+            Pose2d visionRobotPoseMeters,
+            double timestampSeconds,
+            Matrix<N3, N1> visionMeasurementStdDevs);
   }
 }
