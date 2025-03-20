@@ -16,6 +16,7 @@ import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
+import edu.wpi.first.units.measure.Time;
 import frc.alotobots.library.subsystems.vision.localizationfusion.util.PoseSource;
 import frc.alotobots.library.subsystems.vision.photonvision.apriltag.AprilTagSubsystem;
 
@@ -37,6 +38,7 @@ public class AprilTagPoseSource implements PoseSource {
    * Creates a new AprilTagPoseSource.
    *
    * @param subsystem The AprilTag subsystem to wrap
+   * @deprecated
    */
   public AprilTagPoseSource(AprilTagSubsystem subsystem) {
     this.subsystem = subsystem;
@@ -50,7 +52,7 @@ public class AprilTagPoseSource implements PoseSource {
    */
   @Override
   public boolean isConnected() {
-    return subsystem.isConnected();
+    return false;
   }
 
   /**
@@ -61,7 +63,7 @@ public class AprilTagPoseSource implements PoseSource {
    */
   @Override
   public Pose2d getCurrentPose() {
-    return subsystem.getCurrentPose();
+    return null;
   }
 
   /**
@@ -72,12 +74,17 @@ public class AprilTagPoseSource implements PoseSource {
    */
   @Override
   public Matrix<N3, N1> getStdDevs() {
-    return subsystem.getStdDevs();
+    return null;
   }
 
   /** {@inheritDoc} */
   @Override
   public String getSourceName() {
     return "AprilTag";
+  }
+
+  @Override
+  public Time getTimestamp() {
+    return null;
   }
 }

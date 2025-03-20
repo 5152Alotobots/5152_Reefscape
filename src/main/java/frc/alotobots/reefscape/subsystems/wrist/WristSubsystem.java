@@ -78,6 +78,7 @@ public class WristSubsystem extends SubsystemBase {
     targetAngle = adjustedAngle;
     io.setWristPositionMotionMagic(adjustedAngle, ControlType.ClosedLoop.POSITION.ordinal());
     Logger.recordOutput("Wrist/ControlType", ControlType.ClosedLoop.POSITION);
+    Logger.recordOutput("Wrist/TargetAngle", targetAngle.in(Degrees));
   }
 
   /**

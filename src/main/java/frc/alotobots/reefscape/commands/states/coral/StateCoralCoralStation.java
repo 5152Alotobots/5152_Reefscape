@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.alotobots.library.commands.util.LogCommand;
 import frc.alotobots.library.subsystems.bling.BlingSubsystem;
 import frc.alotobots.library.subsystems.bling.commands.BlingCoralWantsPiece;
-import frc.alotobots.reefscape.commands.groups.ElevatorWristRun;
+import frc.alotobots.reefscape.commands.groups.ElevatorWristRunCruiseDisabled;
 import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeIntake;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
@@ -48,12 +48,11 @@ public class StateCoralCoralStation extends SequentialCommandGroup {
       BlingSubsystem blingSubsystem) {
     addCommands(
         new LogCommand("State/State", "CORAL_CORAL_STATION"),
-        new ElevatorWristRun(
+        new ElevatorWristRunCruiseDisabled(
             elevatorSubsystem,
             wristSubsystem,
             ElevatorConstants.Setpoints.CORAL_CORAL_STATION,
-            WristConstants.Setpoints.CORAL_CORAL_STATION,
-            true),
+            WristConstants.Setpoints.CORAL_CORAL_STATION),
         new ParallelRaceGroup(
             new BlingCoralWantsPiece(blingSubsystem).asProxy(),
             new CoralIntakeIntake(coralIntakeSubsystem, () -> INTAKE_PERCENTAGE)));

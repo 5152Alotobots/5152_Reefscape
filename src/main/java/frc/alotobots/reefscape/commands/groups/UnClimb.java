@@ -14,6 +14,9 @@ package frc.alotobots.reefscape.commands.groups;
 
 import edu.wpi.first.wpilibj2.command.*;
 import frc.alotobots.reefscape.subsystems.climber.ClimberSubsystem;
+import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
+import frc.alotobots.reefscape.subsystems.elevator.commands.ElevatorRunToHeight;
+import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants;
 
 /**
  * A sequential command group that handles the unclimbing sequence. This command executes a series
@@ -27,9 +30,12 @@ public class UnClimb extends SequentialCommandGroup {
    *
    * @param climberSubsystem The climber subsystem to control
    */
-  public UnClimb(ClimberSubsystem climberSubsystem) {
+  public UnClimb(ClimberSubsystem climberSubsystem, ElevatorSubsystem elevatorSubsystem) {
     addCommands(
         new InstantCommand(climberSubsystem::enableServos),
+        new InstantCommand(climberSubsystem::unlockElevator),
+        new WaitCommand(.5),
+        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.CLIMB).asProxy(),
         new InstantCommand(climberSubsystem::setPlungerToReceive),
         new InstantCommand(climberSubsystem::unlockCage),
         new WaitCommand(.5),

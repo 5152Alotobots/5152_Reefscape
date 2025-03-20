@@ -21,6 +21,8 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class LocalizationFusionConstants {
 
+  public static final boolean IGNORE_VISION_IN_AUTO = true;
+
   /**
    * Constants related to pose validation and thresholds. Defines distance and rotation thresholds
    * for validating poses from different sources.
@@ -48,7 +50,7 @@ public class LocalizationFusionConstants {
   @UtilityClass
   public class AutoRealignConstants {
     /** Whether auto-realignment should be enabled. */
-    public static final boolean ENABLED = true;
+    public static final boolean ENABLED = false;
 
     /** Threshold for auto-realignment when pose error exceeds this value (meters). */
     public static final double THRESHOLD = 0.1;

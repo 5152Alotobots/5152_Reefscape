@@ -19,6 +19,7 @@ import com.pathplanner.lib.trajectory.PathPlannerTrajectory;
 import com.pathplanner.lib.util.FlippingUtil;
 import com.pathplanner.lib.util.PathPlannerLogging;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.units.measure.LinearVelocity;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -29,6 +30,7 @@ import frc.alotobots.library.subsystems.swervedrive.SwerveDriveSubsystem;
 import frc.alotobots.util.LocalADStarAK;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Supplier;
 import org.littletonrobotics.junction.Logger;
 
 /**
@@ -107,6 +109,42 @@ public class PathPlannerManager {
       return pathCommand;
     } catch (Exception e) {
       String errorMessage = "Failed to load path: " + pathName;
+      return new PrintCommand(errorMessage + " Not following path!");
+    }
+  }
+
+  /**
+   * Creates a command to pathfind to and then follow a path with driver override capability.
+   *
+   * @param pathName The path name to follow after pathfinding to it
+   * @param driverInput Supplier for driver's requested chassis speeds
+   * @param smoothTransition Whether to smoothly transition between autonomous and driver control
+   * @return The command to be scheduled
+   */
+  public Command getPathfindThenFollowPathCommandWithOverride(
+      String pathName, Supplier<ChassisSpeeds> driverInput, boolean smoothTransition) {
+
+    try {
+      PathPlannerPath path = PathPlannerPath.fromPathFile(pathName);
+      var constraints = Constants.tunerConstants.getPathfindingConstraints();
+
+      return new PathfindThenFollowPathWithDriveOverride(
+          path,
+          constraints,
+          driveSubsystem::getPose,
+          driveSubsystem::getChassisSpeeds,
+          (speeds, ff) -> driveSubsystem.runVelocityWithSetpointGen(speeds),
+          Constants.tunerConstants.getHolonomicDriveController(),
+          Constants.tunerConstants.getPathPlannerConfig(),
+          AutoBuilder::shouldFlip,
+          driverInput,
+          0.1, // deadband - now applies to chassis speeds magnitudes
+          smoothTransition,
+          0.2,
+          driveSubsystem);
+    } catch (Exception e) {
+      String errorMessage = "Failed to load path: " + pathName;
+      Logger.recordOutput("PathPlanner/Error", errorMessage);
       return new PrintCommand(errorMessage + " Not following path!");
     }
   }

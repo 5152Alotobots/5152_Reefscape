@@ -26,7 +26,7 @@ public class AprilTagIOPhotonVisionSim extends AprilTagIOPhotonVision {
   private final PhotonCameraSim cameraSim;
 
   public AprilTagIOPhotonVisionSim(CameraConfig config, Supplier<Pose2d> poseSupplier) {
-    super(config);
+    super(config, () -> poseSupplier.get().getRotation());
     this.poseSupplier = poseSupplier;
 
     // Initialize vision sim

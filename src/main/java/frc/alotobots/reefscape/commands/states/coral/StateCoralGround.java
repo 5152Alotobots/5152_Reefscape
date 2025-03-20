@@ -52,8 +52,7 @@ public class StateCoralGround extends SequentialCommandGroup {
             elevatorSubsystem,
             wristSubsystem,
             ElevatorConstants.Setpoints.CORAL_GROUND_PLACE,
-            WristConstants.Setpoints.CORAL_GROUND_INTAKE,
-            false),
+            WristConstants.Setpoints.CORAL_GROUND_INTAKE),
         new ParallelRaceGroup(
             new BlingCoralWantsPiece(blingSubsystem).asProxy(),
             new CoralIntakeIntake(coralIntakeSubsystem, () -> INTAKE_PERCENTAGE)),

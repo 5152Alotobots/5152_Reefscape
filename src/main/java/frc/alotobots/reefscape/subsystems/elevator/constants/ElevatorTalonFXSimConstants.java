@@ -106,15 +106,15 @@ public final class ElevatorTalonFXSimConstants {
   }
 
   public static final class MotionMagicConstants {
-    public static final LinearVelocity CRUISE_VELOCITY = MetersPerSecond.of(1.0);
-    public static final LinearAcceleration ACCELERATION = MetersPerSecondPerSecond.of(0.8);
+    public static final LinearVelocity CRUISE_VELOCITY = MetersPerSecond.of(1.65);
+    public static final LinearAcceleration ACCELERATION = MetersPerSecondPerSecond.of(2.9);
     public static final double JERK = 0;
   }
 
   public static final class HardwareConstants {
-    public static final double GEAR_RATIO = 10.0;
-    public static final double PULLEY_RADIUS_M = 0.016;
-    public static final double ELEVATOR_MASS_KG = 2.36;
+    public static final double GEAR_RATIO = 15.0;
+    public static final double PULLEY_RADIUS_M = 0.04;
+    public static final double ELEVATOR_MASS_KG = 5;
   }
 
   /** Contains safety limit constants for the elevator motors. */

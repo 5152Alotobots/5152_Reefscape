@@ -117,9 +117,16 @@ public class OI {
   }
 
   /* State-based play control triggers */
-  public static final Trigger resetGyroButton =
-      driverController.leftStick().and(driverController.rightStick());
+  public static final Trigger resetGyroButton = driverController.rightStick();
+  // DRIVER -----------------------------------------------------------
+  public static final Trigger climbButton = driverController.start();
+  public static final Trigger unClimbButton = driverController.back();
 
+  // Auto Drive
+  public static final Trigger alignLeftBranchButton = driverController.povLeft();
+  public static final Trigger alignRightBranchButton = driverController.povRight();
+
+  // CODRIVER -----------------------------------------------------------
   public static final Trigger stateCoralCoralStationButton = codriverController.rightBumper();
   public static final Trigger stateCoralStowedButton = codriverController.leftBumper();
   public static final Trigger stateCoralL4Button = codriverController.y();
@@ -133,8 +140,7 @@ public class OI {
   public static final Trigger stateAlgaeL2Button = codriverController.povRight();
   public static final Trigger stateCoralGroundButton = codriverController.povDown();
 
-  public static final Trigger climbButton = driverController.start();
-  public static final Trigger unClimbButton = driverController.back();
+  // END CODRIVER -----------------------------------------------------------
 
   public static final Trigger coralIntakeIntakeManualButton = driverController.povDown();
   public static final Trigger coralIntakeEjectManualButton = driverController.povUp();

@@ -55,6 +55,7 @@ import edu.wpi.first.units.measure.LinearVelocity;
 import edu.wpi.first.units.measure.Voltage;
 import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorTalonFXRealConstants;
 import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorTalonFXRealConstants.MotionMagicConstants;
+import frc.alotobots.reefscape.util.MechanismManager;
 
 /**
  * Hardware implementation of the Elevator subsystem using TalonFX motors and a CANRange sensor.
@@ -276,6 +277,8 @@ public class ElevatorIOTalonFXReal implements ElevatorIO {
     // Amps
     inputs.leftCurrentAmps = leftAppliedCurrent.getValue();
     inputs.rightCurrentAmps = rightAppliedCurrent.getValue();
+
+    MechanismManager.updateElevatorMech(inputs.leftHeight);
   }
 
   /**

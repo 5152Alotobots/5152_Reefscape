@@ -64,7 +64,7 @@
       ]
     }
   },
-  "resetOdom": false,
+  "resetOdom": true,
   "folder": "One Piece",
   "choreoAuto": false
 }
