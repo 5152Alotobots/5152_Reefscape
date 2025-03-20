@@ -12,15 +12,19 @@
 */
 package frc.alotobots.library.subsystems.vision.oculus.io;
 
+import static edu.wpi.first.units.Units.Milliseconds;
 import static frc.alotobots.library.subsystems.vision.oculus.constants.OculusConstants.*;
+import static frc.alotobots.library.subsystems.vision.oculus.util.OculusStatus.Miso.*;
+import static frc.alotobots.library.subsystems.vision.oculus.util.OculusStatus.Mosi.*;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Quaternion;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
-import frc.alotobots.library.subsystems.vision.oculus.constants.OculusConstants;
+import edu.wpi.first.wpilibj.Timer;
 import java.util.Random;
 import org.ironmaple.simulation.drivesims.SwerveDriveSimulation;
+import org.littletonrobotics.junction.Logger;
 
 /** Simulation implementation of OculusIO that provides realistic noisy measurements. */
 public class OculusIOSim implements OculusIO {
@@ -29,9 +33,9 @@ public class OculusIOSim implements OculusIO {
   private double simulationTimeSeconds = 0.0;
   private static final double UPDATE_PERIOD_SECONDS = 1.0 / 120.0; // 120Hz update rate
 
-  // Current MOSI command state
-  private int currentMosiValue = 0;
-  private int currentMisoValue = 0;
+  // Current command state
+  private int currentMosiValue = COMMAND_CLEAR;
+  private int currentMisoValue = STATUS_READY;
 
   // Target pose for reset operations
   private Pose2d resetTargetPose = new Pose2d();
@@ -42,12 +46,17 @@ public class OculusIOSim implements OculusIO {
   // Transform representing the offset between where Quest thinks it is vs actual position
   private Transform2d poseOffset = new Transform2d();
 
+  // Heartbeat simulation
+  private double lastHeartbeatTime = 0.0;
+  private double lastProcessedHeartbeatId = 0.0;
+
   public OculusIOSim(SwerveDriveSimulation swerveDriveSimulation) {
     this.swerveDriveSimulation = swerveDriveSimulation;
+    this.lastHeartbeatTime = Timer.getTimestamp();
   }
 
   /** Updates the base physics simulation pose that the Oculus measurements will be derived from. */
-  public void updateSimPose() {
+  private void updateSimPose() {
     // Get actual robot pose from physics
     Pose2d physicsPose = swerveDriveSimulation.getSimulatedDriveTrainPose();
 
@@ -56,16 +65,12 @@ public class OculusIOSim implements OculusIO {
 
     // Transform robot pose to headset pose
     // This simulates where the headset actually is relative to robot center
-    // The subsystem will later apply the inverse of this transform to get back to robot pose
-    currentPose = offsetPose; // .transformBy(OculusConstants.ROBOT_TO_OCULUS.inverse());
+    currentPose = offsetPose;
 
     // Add noise based on standard deviations
-    double noiseX =
-        random.nextGaussian() * (OculusConstants.OCULUS_STD_DEVS.get(0, 0) / SIM_TRUST_TRANSLATION);
-    double noiseY =
-        random.nextGaussian() * (OculusConstants.OCULUS_STD_DEVS.get(1, 0) / SIM_TRUST_TRANSLATION);
-    double noiseRot =
-        random.nextGaussian() * (OculusConstants.OCULUS_STD_DEVS.get(2, 0) / SIM_TRUST_ROTATION);
+    double noiseX = random.nextGaussian() * (OCULUS_STD_DEVS.get(0, 0) / SIM_TRUST_TRANSLATION);
+    double noiseY = random.nextGaussian() * (OCULUS_STD_DEVS.get(1, 0) / SIM_TRUST_TRANSLATION);
+    double noiseRot = random.nextGaussian() * (OCULUS_STD_DEVS.get(2, 0) / SIM_TRUST_ROTATION);
 
     currentPose =
         new Pose2d(
@@ -102,7 +107,6 @@ public class OculusIOSim implements OculusIO {
         };
 
     // Convert to quaternion using WPILib
-    // The Quaternion constructor takes (w, x, y, z)
     // For a pure yaw rotation:
     // w = cos(angle/2)
     // z = sin(angle/2)
@@ -123,48 +127,76 @@ public class OculusIOSim implements OculusIO {
           (float) wpilibQuaternion.getZ()
         };
 
-    // Update input values
+    // Simulate a connected device by checking the time since the last heartbeat
+    inputs.connected =
+        Milliseconds.of(Timer.getTimestamp() - lastHeartbeatTime).lt(OCULUS_CONNECTION_TIMEOUT);
     inputs.position = position;
     inputs.eulerAngles = eulerAngles;
     inputs.quaternion = quaternion;
     inputs.timestamp = simulationTimeSeconds;
     inputs.frameCount = (int) (simulationTimeSeconds * 120); // 120Hz frame count
     inputs.batteryPercent = 100.0;
+    inputs.misoValue = currentMisoValue;
 
-    // Handle MISO responses based on MOSI commands
-    handleMisoResponse(inputs);
+    // Process any pending commands
+    processCommands();
+
+    // Simulate heartbeat every second
+    if (Timer.getTimestamp() - lastHeartbeatTime > 1.0) {
+      lastHeartbeatTime = Timer.getTimestamp();
+      lastProcessedHeartbeatId += 1.0;
+    }
   }
 
-  private void handleMisoResponse(OculusIOInputs inputs) {
-    // Update MISO value based on current command state
+  private void processCommands() {
+    // Process any pending commands based on current MOSI value
     switch (currentMosiValue) {
-      case 0: // No command
-        currentMisoValue = 0; // STATUS_READY
-        break;
-      case 1: // Heading reset
-        currentMisoValue = 99; // STATUS_HEADING_RESET_COMPLETE
-        break;
-      case 2: // Pose reset
+      case COMMAND_RESET_HEADING -> {
+        Logger.recordOutput("Oculus/Log", "Heading reset command received in sim");
+        currentMisoValue = STATUS_HEADING_RESET_COMPLETE;
+        currentMosiValue = COMMAND_CLEAR; // Auto-clear the command
+      }
+
+      case COMMAND_RESET_POSE -> {
+        Logger.recordOutput("Oculus/Log", "Pose reset command received in sim");
         // Store the offset between where we're telling Quest it is vs where it actually is
         Pose2d actualPose = swerveDriveSimulation.getSimulatedDriveTrainPose();
         poseOffset = new Transform2d(actualPose, resetTargetPose);
-        currentMisoValue = 98; // STATUS_POSE_RESET_COMPLETE
-        break;
-      case 3: // Ping
-        currentMisoValue = 97; // STATUS_PING_RESPONSE
-        break;
+        currentMisoValue = STATUS_POSE_RESET_COMPLETE;
+        currentMosiValue = COMMAND_CLEAR; // Auto-clear the command
+      }
+
+      case COMMAND_PING -> {
+        Logger.recordOutput("Oculus/Log", "Ping command received in sim");
+        currentMisoValue = STATUS_PING_RESPONSE;
+        currentMosiValue = COMMAND_CLEAR; // Auto-clear the command
+      }
+
+      case COMMAND_CLEAR -> {
+        if (currentMisoValue != STATUS_READY) {
+          currentMisoValue = STATUS_READY;
+        }
+      }
     }
-
-    inputs.misoValue = currentMisoValue;
   }
 
   @Override
-  public void setMosi(int value) {
-    this.currentMosiValue = value;
+  public void resetPose(double x, double y, double rotation) {
+    resetTargetPose = new Pose2d(x, y, Rotation2d.fromDegrees(rotation));
+
+    // Force clear mosi
+    currentMosiValue = COMMAND_CLEAR;
+
+    // Send reset command
+    currentMosiValue = COMMAND_RESET_POSE;
   }
 
   @Override
-  public void setResetPose(double x, double y, double rotation) {
-    this.resetTargetPose = new Pose2d(x, y, Rotation2d.fromDegrees(rotation));
+  public void resetHeading() {
+    // Force clear mosi
+    currentMosiValue = COMMAND_CLEAR;
+
+    // Send reset command
+    currentMosiValue = COMMAND_RESET_HEADING;
   }
 }

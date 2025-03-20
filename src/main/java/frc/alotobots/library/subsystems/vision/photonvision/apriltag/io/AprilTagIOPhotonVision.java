@@ -66,8 +66,8 @@ public class AprilTagIOPhotonVision implements AprilTagIO {
     List<SingleTagObservation> singleTagObservations = new LinkedList<>();
 
     for (var result : camera.getAllUnreadResults()) {
-      processMultiTagObservations(result, multiTagIds, multiTagObservations);
-      processSingleTagObservations(result, singleTagIds, singleTagObservations);
+      processMultiTagObservations(inputs, result, multiTagIds, multiTagObservations);
+      processSingleTagObservations(inputs, result, singleTagIds, singleTagObservations);
     }
 
     // Save pose observations to inputs object
@@ -97,10 +97,12 @@ public class AprilTagIOPhotonVision implements AprilTagIO {
   }
 
   private void processMultiTagObservations(
+      AprilTagIOInputs inputs,
       PhotonPipelineResult result,
       Set<Short> multiTagIds,
       List<MultiTagObservation> multiTagObservations) {
     if (result.multitagResult.isPresent()) {
+      inputs.hasValidMultiTagPose = true;
       var multitagResult = result.multitagResult.get();
 
       // Calculate robot pose
@@ -125,15 +127,18 @@ public class AprilTagIOPhotonVision implements AprilTagIO {
               multitagResult.estimatedPose.ambiguity, // Ambiguity
               multitagResult.fiducialIDsUsed.size(), // Tag count
               totalTagDistance / result.targets.size()));
+    } else {
+      inputs.hasValidMultiTagPose = false;
     }
   }
 
   private void processSingleTagObservations(
+      AprilTagIOInputs inputs,
       PhotonPipelineResult result,
       Set<Integer> singleTagIds,
       List<SingleTagObservation> singleTagObservations) {
     if (result.hasTargets()) {
-
+      inputs.hasValidSingleTagPose = true;
       var bestTarget = result.getBestTarget();
 
       Translation2d cameraToTagTranslation =
@@ -193,6 +198,8 @@ public class AprilTagIOPhotonVision implements AprilTagIO {
                   cameraToTagTranslation.getNorm()));
         }
       }
+    } else {
+      inputs.hasValidSingleTagPose = false;
     }
   }
 }

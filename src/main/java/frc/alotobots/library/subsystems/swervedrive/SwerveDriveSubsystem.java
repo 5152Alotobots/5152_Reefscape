@@ -13,7 +13,6 @@
 package frc.alotobots.library.subsystems.swervedrive;
 
 import static edu.wpi.first.units.Units.*;
-import static frc.alotobots.library.subsystems.vision.localizationfusion.constants.LocalizationFusionConstants.IGNORE_VISION_IN_AUTO;
 
 import com.pathplanner.lib.util.DriveFeedforwards;
 import com.pathplanner.lib.util.swerve.SwerveSetpoint;
@@ -421,12 +420,8 @@ public class SwerveDriveSubsystem extends SubsystemBase {
       Pose2d visionRobotPoseMeters,
       double timestampSeconds,
       Matrix<N3, N1> visionMeasurementStdDevs) {
-
-    // Skip if ignoring vision in auto and we're either in auto or disabled
-    if (!IGNORE_VISION_IN_AUTO || (DriverStation.isEnabled() && !DriverStation.isAutonomous())) {
-      poseEstimator.addVisionMeasurement(
-          visionRobotPoseMeters, timestampSeconds, visionMeasurementStdDevs);
-    }
+    poseEstimator.addVisionMeasurement(
+        visionRobotPoseMeters, timestampSeconds, visionMeasurementStdDevs);
   }
 
   /**

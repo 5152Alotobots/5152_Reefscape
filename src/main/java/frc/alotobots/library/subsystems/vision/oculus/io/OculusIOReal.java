@@ -12,7 +12,15 @@
 */
 package frc.alotobots.library.subsystems.vision.oculus.io;
 
+import static edu.wpi.first.units.Units.Milliseconds;
+import static frc.alotobots.library.subsystems.vision.oculus.constants.OculusConstants.OCULUS_CONNECTION_TIMEOUT;
+import static frc.alotobots.library.subsystems.vision.oculus.util.OculusStatus.Miso.*;
+import static frc.alotobots.library.subsystems.vision.oculus.util.OculusStatus.Mosi.*;
+
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.networktables.*;
+import edu.wpi.first.wpilibj.Timer;
+import org.littletonrobotics.junction.Logger;
 
 /** Implementation of OculusIO for real hardware communication via NetworkTables. */
 public class OculusIOReal implements OculusIO {
@@ -55,6 +63,9 @@ public class OculusIOReal implements OculusIO {
   /** Publisher for pose reset commands */
   private final DoubleArrayPublisher resetPosePub;
 
+  /** Pose transform tracking for robot code side updates */
+  private Pose2d resetPosition = new Pose2d();
+
   /**
    * Creates a new OculusIOReal instance and initializes all NetworkTable publishers and
    * subscribers.
@@ -79,10 +90,13 @@ public class OculusIOReal implements OculusIO {
 
   @Override
   public void updateInputs(OculusIOInputs inputs) {
+    inputs.connected =
+        Milliseconds.of(Timer.getTimestamp() - heartbeatRequestSub.getLastChange())
+            .lt(OCULUS_CONNECTION_TIMEOUT);
     inputs.position = questPosition.get();
     inputs.quaternion = questQuaternion.get();
     inputs.eulerAngles = questEulerAngles.get();
-    inputs.timestamp = questTimestamp.get();
+    inputs.timestamp = questTimestamp.getAtomic().serverTime;
     inputs.frameCount = (int) questFrameCount.get();
     inputs.batteryPercent = questBatteryPercent.get();
     inputs.misoValue = (int) questMiso.get();
@@ -90,13 +104,45 @@ public class OculusIOReal implements OculusIO {
   }
 
   @Override
-  public void setMosi(int value) {
-    questMosi.set(value);
+  public void resetPose(double x, double y, double rotation) {
+    resetPosePub.set(new double[] {x, y, rotation});
+
+    // Force clear mosi
+    questMosi.set(COMMAND_CLEAR);
+
+    // Send reset command
+    questMosi.set(COMMAND_RESET_POSE);
+
+    // Don't clear resetPosePub to prevent race conditions.
+    // It will not reset unless we request it again.
   }
 
   @Override
-  public void setResetPose(double x, double y, double rotation) {
-    resetPosePub.set(new double[] {x, y, rotation});
+  public void resetHeading() {
+    // Force clear mosi
+    questMosi.set(COMMAND_CLEAR);
+
+    // Send reset command
+    questMosi.set(COMMAND_RESET_HEADING);
+  }
+
+  private void cleanupResponses() {
+    if (questMiso.get() != STATUS_READY) {
+      switch ((int) questMiso.get()) {
+        case STATUS_POSE_RESET_COMPLETE -> {
+          Logger.recordOutput("Oculus/Log", "Pose reset complete");
+          questMosi.set(COMMAND_CLEAR);
+        }
+        case STATUS_HEADING_RESET_COMPLETE -> {
+          Logger.recordOutput("Oculus/Log", "Heading reset complete");
+          questMosi.set(COMMAND_CLEAR);
+        }
+        case STATUS_PING_RESPONSE -> {
+          Logger.recordOutput("Oculus/Log", "Ping response received");
+          questMosi.set(COMMAND_CLEAR);
+        }
+      }
+    }
   }
 
   /** Process heartbeat requests from Quest and respond with the same ID */

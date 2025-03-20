@@ -47,11 +47,9 @@ public class AprilTagSubsystem extends SubsystemBase {
   private final AprilTagIOInputsAutoLogged[] inputs;
 
   // Tracking for multi-tag pose validity and timing
-  private final boolean[] hasValidMultiTagPose;
   private final double[] lastMultiTagPoseTimestamp;
 
   // Single tag poses are tracked separately but not returned by getCurrentPose
-  private final boolean[] hasValidSingleTagPose;
   private final double[] lastSingleTagPoseTimestamp;
 
   // Consumer for applying vision measurements to odometry/pose estimation
@@ -77,15 +75,11 @@ public class AprilTagSubsystem extends SubsystemBase {
     validateConfiguration();
 
     // Initialize tracking arrays for pose validity and timestamps
-    hasValidMultiTagPose = new boolean[inputs.length];
-    hasValidSingleTagPose = new boolean[inputs.length];
     lastMultiTagPoseTimestamp = new double[inputs.length];
     lastSingleTagPoseTimestamp = new double[inputs.length];
 
     // Set initial values
     for (int i = 0; i < inputs.length; i++) {
-      hasValidMultiTagPose[i] = false;
-      hasValidSingleTagPose[i] = false;
       lastMultiTagPoseTimestamp[i] = -1;
       lastSingleTagPoseTimestamp[i] = -1;
     }
@@ -303,8 +297,6 @@ public class AprilTagSubsystem extends SubsystemBase {
       // Update pose estimation with this observation
       updatePoseFromMultiTag(observation, cameraIndex);
 
-      // Mark this camera as having a valid multi-tag pose
-      hasValidMultiTagPose[cameraIndex] = true;
       lastMultiTagPoseTimestamp[cameraIndex] = observation.timestamp();
     }
   }
@@ -349,7 +341,6 @@ public class AprilTagSubsystem extends SubsystemBase {
 
       // Update single tag pose data, but don't use it for getCurrentPose()
       updatePoseFromSingleTag(observation, cameraIndex);
-      hasValidSingleTagPose[cameraIndex] = true;
       lastSingleTagPoseTimestamp[cameraIndex] = observation.timestamp();
     }
   }

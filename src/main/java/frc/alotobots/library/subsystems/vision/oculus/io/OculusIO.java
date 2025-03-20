@@ -19,6 +19,8 @@ public interface OculusIO {
   /** Data structure for Oculus inputs that can be automatically logged. */
   @AutoLog
   public static class OculusIOInputs {
+    public boolean connected = false;
+
     /** 3D position coordinates [x, y, z] */
     public float[] position = new float[] {0.0f, 0.0f, 0.0f};
 
@@ -49,18 +51,14 @@ public interface OculusIO {
   public default void updateInputs(OculusIOInputs inputs) {}
 
   /**
-   * Sets MOSI (Master Out Slave In) value for Quest communication.
-   *
-   * @param value The MOSI value to set
-   */
-  public default void setMosi(int value) {}
-
-  /**
-   * Sets the pose components for resetting the Oculus position tracking.
+   * Resets the pose components for resetting the Oculus position tracking. HARD RESET.
    *
    * @param x The X coordinate
    * @param y The Y coordinate
    * @param rotation The rotation in degrees
    */
-  public default void setResetPose(double x, double y, double rotation) {}
+  public default void resetPose(double x, double y, double rotation) {}
+
+  /** Resets the current heading of the Oculus as zero */
+  public default void resetHeading() {}
 }
