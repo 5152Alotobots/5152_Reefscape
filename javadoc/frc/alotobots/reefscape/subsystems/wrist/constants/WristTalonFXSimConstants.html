@@ -31,6 +31,7 @@ loadScripts(document, 'script');</script>
 <li><a href="package-summary.html">Package</a></li>
 <li class="nav-bar-cell1-rev">Class</li>
 <li><a href="package-tree.html">Tree</a></li>
+<li><a href="../../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../../help-doc.html#class">Help</a></li>
 </ul>
@@ -39,7 +40,7 @@ loadScripts(document, 'script');</script>
 <div>
 <ul class="sub-nav-list">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested-class-summary">Nested</a>&nbsp;|&nbsp;</li>
 <li><a href="#field-summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor-summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-summary">Method</a></li>
@@ -78,6 +79,21 @@ loadScripts(document, 'script');</script>
 </section>
 <section class="summary">
 <ul class="summary-list">
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+<li>
+<section class="nested-class-summary" id="nested-class-summary">
+<h2>Nested Class Summary</h2>
+<div class="caption"><span>Nested Classes</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Class</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static final class&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="WristTalonFXSimConstants.MotionMagicConstants.html" class="type-name-link" title="class in frc.alotobots.reefscape.subsystems.wrist.constants">WristTalonFXSimConstants.MotionMagicConstants</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
 <!-- =========== FIELD SUMMARY =========== -->
 <li>
 <section class="field-summary" id="field-summary">
@@ -92,10 +108,30 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">Length of the wrist arm in meters</div>
 </div>
+<div class="col-first odd-row-color"><code>static final com.ctre.phoenix6.signals.SensorDirectionValue</code></div>
+<div class="col-second odd-row-color"><code><a href="#ENCODER_DIRECTION" class="member-name-link">ENCODER_DIRECTION</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">Direction of the encoder rotation</div>
+</div>
+<div class="col-first even-row-color"><code>static final double</code></div>
+<div class="col-second even-row-color"><code><a href="#ENCODER_MAGNET_OFFSET" class="member-name-link">ENCODER_MAGNET_OFFSET</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Magnet offset for the CANCoder absolute position</div>
+</div>
 <div class="col-first odd-row-color"><code>static final double</code></div>
 <div class="col-second odd-row-color"><code><a href="#INERTIA_KGM2" class="member-name-link">INERTIA_KGM2</a></code></div>
 <div class="col-last odd-row-color">
 <div class="block">Moment of inertia of the wrist mechanism in kg⋅m²</div>
+</div>
+<div class="col-first even-row-color"><code>static final com.ctre.phoenix6.signals.NeutralModeValue</code></div>
+<div class="col-second even-row-color"><code><a href="#MECHANISM_NEUTRAL_MODE" class="member-name-link">MECHANISM_NEUTRAL_MODE</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Neutral mode (brake/coast) setting for the mechanism</div>
+</div>
+<div class="col-first odd-row-color"><code>static final com.ctre.phoenix6.signals.InvertedValue</code></div>
+<div class="col-second odd-row-color"><code><a href="#MOTOR_DIRECTION" class="member-name-link">MOTOR_DIRECTION</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">Direction of the motor rotation</div>
 </div>
 <div class="col-first even-row-color"><code>static final int</code></div>
 <div class="col-second even-row-color"><code><a href="#ROTOR_TO_SENSOR_RATIO" class="member-name-link">ROTOR_TO_SENSOR_RATIO</a></code></div>
@@ -137,21 +173,6 @@ loadScripts(document, 'script');</script>
 <h2>Field Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="ROTOR_TO_SENSOR_RATIO">
-<h3>ROTOR_TO_SENSOR_RATIO</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">ROTOR_TO_SENSOR_RATIO</span></div>
-<div class="block">Gear ratio between motor rotation and mechanism rotation</div>
-<dl class="notes">
-<dt>See Also:</dt>
-<dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXSimConstants.ROTOR_TO_SENSOR_RATIO">Constant Field Values</a></li>
-</ul>
-</dd>
-</dl>
-</section>
-</li>
-<li>
 <section class="detail" id="INERTIA_KGM2">
 <h3>INERTIA_KGM2</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">INERTIA_KGM2</span></div>
@@ -176,6 +197,57 @@ loadScripts(document, 'script');</script>
 <dd>
 <ul class="see-list">
 <li><a href="../../../../../../constant-values.html#frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXSimConstants.ARM_LENGTH">Constant Field Values</a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="MOTOR_DIRECTION">
+<h3>MOTOR_DIRECTION</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">com.ctre.phoenix6.signals.InvertedValue</span>&nbsp;<span class="element-name">MOTOR_DIRECTION</span></div>
+<div class="block">Direction of the motor rotation</div>
+</section>
+</li>
+<li>
+<section class="detail" id="ENCODER_DIRECTION">
+<h3>ENCODER_DIRECTION</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">com.ctre.phoenix6.signals.SensorDirectionValue</span>&nbsp;<span class="element-name">ENCODER_DIRECTION</span></div>
+<div class="block">Direction of the encoder rotation</div>
+</section>
+</li>
+<li>
+<section class="detail" id="MECHANISM_NEUTRAL_MODE">
+<h3>MECHANISM_NEUTRAL_MODE</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">com.ctre.phoenix6.signals.NeutralModeValue</span>&nbsp;<span class="element-name">MECHANISM_NEUTRAL_MODE</span></div>
+<div class="block">Neutral mode (brake/coast) setting for the mechanism</div>
+</section>
+</li>
+<li>
+<section class="detail" id="ROTOR_TO_SENSOR_RATIO">
+<h3>ROTOR_TO_SENSOR_RATIO</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">ROTOR_TO_SENSOR_RATIO</span></div>
+<div class="block">Gear ratio between motor rotation and mechanism rotation</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../../../../../../constant-values.html#frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXSimConstants.ROTOR_TO_SENSOR_RATIO">Constant Field Values</a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="ENCODER_MAGNET_OFFSET">
+<h3>ENCODER_MAGNET_OFFSET</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">ENCODER_MAGNET_OFFSET</span></div>
+<div class="block">Magnet offset for the CANCoder absolute position</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../../../../../../constant-values.html#frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXSimConstants.ENCODER_MAGNET_OFFSET">Constant Field Values</a></li>
 </ul>
 </dd>
 </dl>

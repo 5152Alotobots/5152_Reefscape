@@ -35,6 +35,7 @@ loadScripts(document, 'script');</script>
 <li><a href="package-summary.html">Package</a></li>
 <li class="nav-bar-cell1-rev">Class</li>
 <li><a href="package-tree.html">Tree</a></li>
+<li><a href="../../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../../help-doc.html#class">Help</a></li>
 </ul>
@@ -78,7 +79,7 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">DrivePrecisionAlign</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
 <div class="block">Handles precision alignment requests to a target pose using PathPlanner's holonomic drive
- controller. Only attempts alignment when the robot is within a specified radius of the target.</div>
+ controller.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -92,13 +93,12 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(frc.alotobots.library.subsystems.swervedrive.SwerveDriveSubsystem)" class="member-name-link">DrivePrecisionAlign</a><wbr>(<a href="../SwerveDriveSubsystem.html" title="class in frc.alotobots.library.subsystems.swervedrive">SwerveDriveSubsystem</a>&nbsp;swerveDriveSubsystem)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Creates a new PrecisionAlignRequest handler with default parameters.</div>
+<div class="block">Creates a new PrecisionAlignRequest handler with default tolerance.</div>
 </div>
-<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(frc.alotobots.library.subsystems.swervedrive.SwerveDriveSubsystem,double,double)" class="member-name-link">DrivePrecisionAlign</a><wbr>(<a href="../SwerveDriveSubsystem.html" title="class in frc.alotobots.library.subsystems.swervedrive">SwerveDriveSubsystem</a>&nbsp;swerveDriveSubsystem,
- double&nbsp;alignmentRadius,
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(frc.alotobots.library.subsystems.swervedrive.SwerveDriveSubsystem,double)" class="member-name-link">DrivePrecisionAlign</a><wbr>(<a href="../SwerveDriveSubsystem.html" title="class in frc.alotobots.library.subsystems.swervedrive">SwerveDriveSubsystem</a>&nbsp;swerveDriveSubsystem,
  double&nbsp;positionTolerance)</code></div>
 <div class="col-last odd-row-color">
-<div class="block">Creates a new PrecisionAlignRequest handler with custom alignment parameters.</div>
+<div class="block">Creates a new PrecisionAlignRequest handler.</div>
 </div>
 </div>
 </section>
@@ -129,6 +129,16 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Creates a command that executes the precision alignment.</div>
 </div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isNearTarget()" class="member-name-link">isNearTarget</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Checks if the robot is near the current target pose within the position tolerance.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isNearTarget(edu.wpi.first.math.geometry.Pose2d)" class="member-name-link">isNearTarget</a><wbr>(<a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/math/geometry/Pose2d.html" title="class or interface in edu.wpi.first.math.geometry" class="external-link">Pose2d</a>&nbsp;targetPose)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Checks if the robot is near the specified target pose within the position tolerance.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setup()" class="member-name-link">setup</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -152,16 +162,14 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(frc.alotobots.library.subsystems.swervedrive.SwerveDriveSubsystem,double,double)">
+<section class="detail" id="&lt;init&gt;(frc.alotobots.library.subsystems.swervedrive.SwerveDriveSubsystem,double)">
 <h3>DrivePrecisionAlign</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">DrivePrecisionAlign</span><wbr><span class="parameters">(<a href="../SwerveDriveSubsystem.html" title="class in frc.alotobots.library.subsystems.swervedrive">SwerveDriveSubsystem</a>&nbsp;swerveDriveSubsystem,
- double&nbsp;alignmentRadius,
  double&nbsp;positionTolerance)</span></div>
-<div class="block">Creates a new PrecisionAlignRequest handler with custom alignment parameters.</div>
+<div class="block">Creates a new PrecisionAlignRequest handler.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>swerveDriveSubsystem</code> - The drive subsystem</dd>
-<dd><code>alignmentRadius</code> - The radius within which alignment will be attempted (meters)</dd>
 <dd><code>positionTolerance</code> - The position tolerance for considering alignment complete (meters)</dd>
 </dl>
 </section>
@@ -170,7 +178,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="&lt;init&gt;(frc.alotobots.library.subsystems.swervedrive.SwerveDriveSubsystem)">
 <h3>DrivePrecisionAlign</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">DrivePrecisionAlign</span><wbr><span class="parameters">(<a href="../SwerveDriveSubsystem.html" title="class in frc.alotobots.library.subsystems.swervedrive">SwerveDriveSubsystem</a>&nbsp;swerveDriveSubsystem)</span></div>
-<div class="block">Creates a new PrecisionAlignRequest handler with default parameters.</div>
+<div class="block">Creates a new PrecisionAlignRequest handler with default tolerance.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>swerveDriveSubsystem</code> - The drive subsystem</dd>
@@ -200,6 +208,30 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>targetPose</code> - Supplier for the target pose to align to</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="isNearTarget()">
+<h3>isNearTarget</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isNearTarget</span>()</div>
+<div class="block">Checks if the robot is near the current target pose within the position tolerance.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>True if the robot is within the position tolerance of the current target</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="isNearTarget(edu.wpi.first.math.geometry.Pose2d)">
+<h3>isNearTarget</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isNearTarget</span><wbr><span class="parameters">(<a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/math/geometry/Pose2d.html" title="class or interface in edu.wpi.first.math.geometry" class="external-link">Pose2d</a>&nbsp;targetPose)</span></div>
+<div class="block">Checks if the robot is near the specified target pose within the position tolerance.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>targetPose</code> - The target pose to check against</dd>
+<dt>Returns:</dt>
+<dd>True if the robot is within the position tolerance of the target</dd>
 </dl>
 </section>
 </li>
