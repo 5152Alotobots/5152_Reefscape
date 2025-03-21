@@ -4,24 +4,24 @@
     {
       "anchor": {
         "x": 1.67827868852459,
-        "y": 6.740215163934426
+        "y": 7.231892824103267
       },
       "prevControl": null,
       "nextControl": {
         "x": 2.721528688524589,
-        "y": 6.223465163934427
+        "y": 6.715142824103268
       },
       "isLocked": false,
-      "linkedName": "North Left Station"
+      "linkedName": "North Right Station"
     },
     {
       "anchor": {
-        "x": 3.981845549098945,
-        "y": 5.226219274437411
+        "x": 3.9697057122250112,
+        "y": 5.25737057298967
       },
       "prevControl": {
-        "x": 3.1043455490989453,
-        "y": 6.63996927443741
+        "x": 3.0922057122250117,
+        "y": 6.671120572989669
       },
       "nextControl": null,
       "isLocked": false,
@@ -48,7 +48,7 @@
   "folder": "Three Piece",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 125.00000000000001
+    "rotation": 126.57303097851924
   },
   "useDefaultConstraints": true
 }
