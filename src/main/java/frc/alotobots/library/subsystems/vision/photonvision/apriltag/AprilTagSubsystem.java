@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.alotobots.library.subsystems.vision.photonvision.apriltag.io.AprilTagIO;
 import frc.alotobots.library.subsystems.vision.photonvision.apriltag.io.AprilTagIOInputsAutoLogged;
+import frc.alotobots.util.NotificationPresets;
 import java.util.LinkedList;
 import java.util.List;
 import org.littletonrobotics.junction.Logger;
@@ -104,6 +105,11 @@ public class AprilTagSubsystem extends SubsystemBase {
     for (int i = 0; i < io.length; i++) {
       io[i].updateInputs(inputs[i]);
       Logger.processInputs("Vision/AprilTag/" + CAMERA_CONFIGS[i].name(), inputs[i]);
+      // Send an alert if we aren't connected
+      if (!inputs[i].connected) {
+        NotificationPresets.AprilTag.sendAprilTagCameraDisconnectedNotification(
+            CAMERA_CONFIGS[i].name());
+      }
     }
 
     // Initialize logging value lists

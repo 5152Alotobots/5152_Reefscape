@@ -45,6 +45,7 @@ import frc.alotobots.Constants.Mode;
 import frc.alotobots.library.subsystems.swervedrive.io.GyroIO;
 import frc.alotobots.library.subsystems.swervedrive.io.GyroIOInputsAutoLogged;
 import frc.alotobots.library.subsystems.swervedrive.io.ModuleIO;
+import frc.alotobots.util.NotificationPresets;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import org.littletonrobotics.junction.AutoLogOutput;
@@ -101,9 +102,6 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
   /** Pose estimator for odometry */
   private SwerveDrivePoseEstimator poseEstimator =
-      new SwerveDrivePoseEstimator(kinematics, rawGyroRotation, lastModulePositions, new Pose2d());
-
-  private SwerveDrivePoseEstimator precisionAlignPoseEstimator =
       new SwerveDrivePoseEstimator(kinematics, rawGyroRotation, lastModulePositions, new Pose2d());
 
   /**
@@ -210,8 +208,6 @@ public class SwerveDriveSubsystem extends SubsystemBase {
       }
 
       poseEstimator.updateWithTime(sampleTimestamps[i], rawGyroRotation, modulePositions);
-      precisionAlignPoseEstimator.updateWithTime(
-          sampleTimestamps[i], rawGyroRotation, modulePositions);
     }
 
     gyroDisconnectedAlert.set(!gyroInputs.connected && Constants.currentMode != Mode.SIM);
@@ -405,8 +401,8 @@ public class SwerveDriveSubsystem extends SubsystemBase {
    * @param pose New robot pose
    */
   public void setPose(Pose2d pose) {
+    NotificationPresets.SwerveDrive.sendSwerveDrivePoseResetNotification(pose);
     poseEstimator.resetPosition(rawGyroRotation, getModulePositions(), pose);
-    precisionAlignPoseEstimator.resetPosition(rawGyroRotation, getModulePositions(), pose);
   }
 
   /**

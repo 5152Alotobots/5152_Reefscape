@@ -50,6 +50,10 @@ public class OculusConstants {
   /** The strategy used to reset the pose */
   public static final PoseResetStrategy POSE_RESET_STRATEGY = PoseResetStrategy.ROBOT_SIDE;
 
+  public static final double BATTERY_LOW_PERCENT = 20;
+
+  public static final double BATTERY_CRITICAL_PERCENT = 10;
+
   /**
    * Transform from the robot center to the headset. Coordinate system: - X: Positive is forwards -
    * Y: Positive is left - Rotation: Positive is counter-clockwise

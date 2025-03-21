@@ -26,6 +26,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.alotobots.library.subsystems.vision.oculus.io.OculusIO;
 import frc.alotobots.library.subsystems.vision.oculus.io.OculusIOInputsAutoLogged;
+import frc.alotobots.util.NotificationPresets;
 import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
 
@@ -84,6 +85,18 @@ public class OculusSubsystem extends SubsystemBase {
 
     // Add to Kalman filter
     processPose();
+
+    // Notify if we are disconnected
+    if (!inputs.connected) {
+      NotificationPresets.Oculus.sendOculusDisconnectedNotification();
+    }
+
+    // Check battery levels
+    if (inputs.batteryPercent < BATTERY_CRITICAL_PERCENT) {
+      NotificationPresets.Oculus.sendOculusBatteryCriticalNotification();
+    } else if (inputs.batteryPercent < BATTERY_LOW_PERCENT) {
+      NotificationPresets.Oculus.sendOculusBatteryLowNotification();
+    }
   }
 
   /**
@@ -143,11 +156,11 @@ public class OculusSubsystem extends SubsystemBase {
       io.resetPose(0, 0, 0);
       // Set the offset transform to the new pose
       updateTransform(pose);
-      Logger.recordOutput("Oculus/Log", "Resetting pose to: " + pose);
     } else {
       io.resetPose(pose.getX(), pose.getY(), pose.getRotation().getDegrees());
-      Logger.recordOutput("Oculus/Log", "Resetting pose to: " + pose);
     }
+    Logger.recordOutput("Oculus/Log", "Resetting pose to: " + pose);
+    NotificationPresets.Oculus.sendOculusPoseResetNotification(pose);
   }
 
   /**
@@ -165,6 +178,7 @@ public class OculusSubsystem extends SubsystemBase {
     // Update the offset transform to the new pose
     Logger.recordOutput("Oculus/Log", "Updating offset transform to: " + pose);
     offsetTransform = new Transform2d(pose.getTranslation(), pose.getRotation());
+    NotificationPresets.Oculus.sendOculusTransformUpdateNotification(offsetTransform);
   }
 
   /**

@@ -70,6 +70,7 @@ import frc.alotobots.reefscape.subsystems.wrist.commands.WristRunToAngle;
 import frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants;
 import frc.alotobots.reefscape.subsystems.wrist.io.WristIOTalonFXReal;
 import frc.alotobots.reefscape.subsystems.wrist.io.WristIOTalonFXSim;
+import frc.alotobots.util.NotificationPresets;
 import org.ironmaple.simulation.SimulatedArena;
 import org.ironmaple.simulation.drivesims.SwerveDriveSimulation;
 import org.littletonrobotics.junction.Logger;
@@ -315,7 +316,11 @@ public class RobotContainer {
 
   private void configureAutoChooser() {
     // Set up auto routines
+    // Initialize the chooser and register it with the dashboard
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
+
+    // Add listener for auto path changes
+    autoChooser.getSendableChooser().onChange(this::handleAutoPathChange);
 
     // Add SysId routines
     autoChooser.addOption(
@@ -335,6 +340,17 @@ public class RobotContainer {
     autoChooser.addOption(
         "Drive SysId (Dynamic Reverse)",
         swerveDriveSubsystem.sysIdDynamic(SysIdRoutine.Direction.kReverse));
+  }
+
+  private void handleAutoPathChange(String pathName) {
+    pathPlannerManager
+        .getPathStartPose(pathName)
+        .ifPresent(
+            pose -> {
+              NotificationPresets.Auto.sendAutoPathChangeNotification(pathName);
+              swerveDriveSubsystem.setPose(pose);
+              oculusSubsystem.resetPose(pose);
+            });
   }
 
   public Command getAutonomousCommand() {
