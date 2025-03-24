@@ -47,7 +47,7 @@ public final class ElevatorTalonFXRealConstants {
       public static final double KA = 0.0;
 
       /** Gravity compensation gain */
-      public static final double KG = 0.19;
+      public static final double KG = 0.28;
 
       /** Static friction compensation */
       public static final double KS = 0.0;
@@ -71,7 +71,7 @@ public final class ElevatorTalonFXRealConstants {
       public static final double KA = 0.0;
 
       /** Gravity compensation gain */
-      public static final double KG = 0.19;
+      public static final double KG = 0.23;
 
       /** Static friction compensation */
       public static final double KS = 0.19;
@@ -106,21 +106,21 @@ public final class ElevatorTalonFXRealConstants {
   }
 
   public static final class MotionMagicConstants {
-    public static final LinearVelocity CRUISE_VELOCITY = MetersPerSecond.of(1.65);
-    public static final LinearAcceleration ACCELERATION = MetersPerSecondPerSecond.of(2.9);
+    public static final LinearVelocity CRUISE_VELOCITY = MetersPerSecond.of(3);
+    public static final LinearAcceleration ACCELERATION = MetersPerSecondPerSecond.of(5.5);
     public static final double JERK = 0;
   }
 
   /** Contains safety limit constants for the elevator motors. */
   public static final class MotorSafetyLimits {
     /** Maximum forward torque current limit in amperes */
-    public static final Current TORQUE_FORWARD_AMP_LIMIT = Amps.of(35);
+    public static final Current TORQUE_FORWARD_AMP_LIMIT = Amps.of(45);
 
     /** Maximum reverse torque current limit in amperes */
-    public static final Current TORQUE_REVERSE_AMP_LIMIT = Amps.of(-35);
+    public static final Current TORQUE_REVERSE_AMP_LIMIT = Amps.of(-45);
 
     /** Maximum stator current limit in amperes */
-    public static final Current STATOR_AMP_LIMIT = Amps.of(35);
+    public static final Current STATOR_AMP_LIMIT = Amps.of(45);
   }
 
   /** Direction of the left motor rotation */
@@ -130,5 +130,5 @@ public final class ElevatorTalonFXRealConstants {
   public static final NeutralModeValue MECHANISM_NEUTRAL_MODE = NeutralModeValue.Brake;
 
   /** Regression used to calculate height of motor. (Should be linear) Rotations:Meters */
-  public static final double HEIGHT_PER_ROTATION = 0.0224766;
+  public static final double HEIGHT_PER_ROTATION = 0.0380319;
 }
