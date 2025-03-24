@@ -104,6 +104,14 @@ public class SwerveDriveSubsystem extends SubsystemBase {
   private SwerveDrivePoseEstimator poseEstimator =
       new SwerveDrivePoseEstimator(kinematics, rawGyroRotation, lastModulePositions, new Pose2d());
 
+  /** Pose estimator for odometry */
+  private SwerveDrivePoseEstimator aprilTagPoseEstimator =
+      new SwerveDrivePoseEstimator(kinematics, rawGyroRotation, lastModulePositions, new Pose2d());
+
+  /** Pose estimator for odometry */
+  private SwerveDrivePoseEstimator oculusPoseEstimator =
+      new SwerveDrivePoseEstimator(kinematics, rawGyroRotation, lastModulePositions, new Pose2d());
+
   /**
    * Constructs a new SwerveDriveSubsystem.
    *
@@ -208,6 +216,8 @@ public class SwerveDriveSubsystem extends SubsystemBase {
       }
 
       poseEstimator.updateWithTime(sampleTimestamps[i], rawGyroRotation, modulePositions);
+      aprilTagPoseEstimator.updateWithTime(sampleTimestamps[i], rawGyroRotation, modulePositions);
+      oculusPoseEstimator.updateWithTime(sampleTimestamps[i], rawGyroRotation, modulePositions);
     }
 
     gyroDisconnectedAlert.set(!gyroInputs.connected && Constants.currentMode != Mode.SIM);
@@ -386,6 +396,16 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     return poseEstimator.getEstimatedPosition();
   }
 
+  @AutoLogOutput(key = "Drive/AprilTagPose")
+  public Pose2d getAprilTagPose() {
+    return aprilTagPoseEstimator.getEstimatedPosition();
+  }
+
+  @AutoLogOutput(key = "Drive/OculusPose")
+  public Pose2d getOculusPose() {
+    return oculusPoseEstimator.getEstimatedPosition();
+  }
+
   /**
    * Gets current odometry rotation.
    *
@@ -405,19 +425,40 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     poseEstimator.resetPosition(rawGyroRotation, getModulePositions(), pose);
   }
 
+  public enum VisionSource {
+    APRIL_TAG,
+    OCULUS
+  }
+
   /**
    * Adds vision measurement for pose estimation.
    *
+   * @param source Source of the vision measurement (AprilTag or Oculus)
    * @param visionRobotPoseMeters Vision-measured robot pose
    * @param timestampSeconds Timestamp of measurement
    * @param visionMeasurementStdDevs Standard deviations of vision measurements
    */
   public void addVisionMeasurement(
+      VisionSource source,
       Pose2d visionRobotPoseMeters,
       double timestampSeconds,
       Matrix<N3, N1> visionMeasurementStdDevs) {
+
+    // Always the measurement to the main pose estimator
     poseEstimator.addVisionMeasurement(
         visionRobotPoseMeters, timestampSeconds, visionMeasurementStdDevs);
+
+    // Add the source to its respective pose estimator
+    switch (source) {
+      case APRIL_TAG:
+        aprilTagPoseEstimator.addVisionMeasurement(
+            visionRobotPoseMeters, timestampSeconds, visionMeasurementStdDevs);
+        break;
+      case OCULUS:
+        oculusPoseEstimator.addVisionMeasurement(
+            visionRobotPoseMeters, timestampSeconds, visionMeasurementStdDevs);
+        break;
+    }
   }
 
   /**

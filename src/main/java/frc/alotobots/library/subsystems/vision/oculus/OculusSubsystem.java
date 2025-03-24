@@ -24,6 +24,7 @@ import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.alotobots.library.subsystems.swervedrive.SwerveDriveSubsystem;
 import frc.alotobots.library.subsystems.vision.oculus.io.OculusIO;
 import frc.alotobots.library.subsystems.vision.oculus.io.OculusIOInputsAutoLogged;
 import frc.alotobots.util.NotificationPresets;
@@ -191,7 +192,8 @@ public class OculusSubsystem extends SubsystemBase {
       double timestamp = getTimestamp();
 
       // Call the consumer with the new pose
-      oculusConsumer.accept(pose, timestamp, OCULUS_STD_DEVS);
+      oculusConsumer.accept(
+          SwerveDriveSubsystem.VisionSource.OCULUS, pose, timestamp, OCULUS_STD_DEVS);
     }
   }
 
@@ -240,6 +242,7 @@ public class OculusSubsystem extends SubsystemBase {
      * @param visionMeasurementStdDevs Standard deviations for the measurement (x, y, theta)
      */
     public void accept(
+        SwerveDriveSubsystem.VisionSource source,
         Pose2d visionRobotPoseMeters,
         double timestampSeconds,
         Matrix<N3, N1> visionMeasurementStdDevs);
