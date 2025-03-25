@@ -23,6 +23,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.alotobots.library.subsystems.bling.BlingSubsystem;
@@ -42,13 +43,10 @@ import frc.alotobots.library.subsystems.vision.photonvision.apriltag.constants.A
 import frc.alotobots.library.subsystems.vision.photonvision.apriltag.io.*;
 import frc.alotobots.reefscape.FieldConstants;
 import frc.alotobots.reefscape.commands.AlignToReefBranch;
-import frc.alotobots.reefscape.commands.groups.Climb;
-import frc.alotobots.reefscape.commands.groups.UnClimb;
 import frc.alotobots.reefscape.commands.states.algae.StateAlgaeRemoveL2;
 import frc.alotobots.reefscape.commands.states.algae.StateAlgaeRemoveL3;
 import frc.alotobots.reefscape.commands.states.coral.*;
 import frc.alotobots.reefscape.subsystems.climber.ClimberSubsystem;
-import frc.alotobots.reefscape.subsystems.climber.commands.ClimberDisableServos;
 import frc.alotobots.reefscape.subsystems.climber.io.ClimberIORevServoReal;
 import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEject;
@@ -244,7 +242,7 @@ public class RobotContainer {
         new DefaultWristRunAtVelocity(wristSubsystem, OI::getWristAxis));
     blingSubsystem.setDefaultCommand(
         new NoAllianceWaiting(blingSubsystem).andThen(new SetToAllianceColor(blingSubsystem)));
-    climberSubsystem.setDefaultCommand(new ClimberDisableServos(climberSubsystem));
+    // climberSubsystem.setDefaultCommand(new ClimberDisableServos(climberSubsystem));
   }
 
   /** Contains button based commands */
@@ -305,8 +303,15 @@ public class RobotContainer {
             elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, blingSubsystem));
 
     climbButton.toggleOnTrue(
-        new Climb(climberSubsystem, elevatorSubsystem, blingSubsystem, () -> -getElevatorAxis()));
-    unClimbButton.onTrue(new UnClimb(climberSubsystem, elevatorSubsystem));
+        new SequentialCommandGroup(
+            new InstantCommand(climberSubsystem::enableServos),
+            new InstantCommand(climberSubsystem::setPlungerToPlunge))
+        // new Climb(climberSubsystem, elevatorSubsystem, blingSubsystem, () -> -getElevatorAxis())
+        );
+    unClimbButton.onTrue(
+        new SequentialCommandGroup(new InstantCommand(climberSubsystem::setPlungerToReceive))
+        // new UnClimb(climberSubsystem, elevatorSubsystem)
+        );
 
     alignLeftBranchButton.toggleOnTrue(
         new AlignToReefBranch(
