@@ -150,7 +150,7 @@ public class ClimberIORevServoReal implements ClimberIO {
   public void setPlungerServoPosition(Angle angle) {
     plungerServoChannel.setPulseWidth(
         (int)
-            ((angle.in(Rotations) * (PLUNGER_SERVO_180_PW - PLUNGER_SERVO_0_PW))
+            ((angle.in(Rotations) * (PLUNGER_SERVO_270_PW - PLUNGER_SERVO_0_PW))
                 + PLUNGER_SERVO_0_PW));
   }
 
@@ -174,10 +174,10 @@ public class ClimberIORevServoReal implements ClimberIO {
   public void setElevatorLockingServoLocked(boolean elevatorLockingServoLocked) {
     if (elevatorLockingServoLocked) {
       elevatorLockingLeftServoChannel.setPulseWidth(ELEVATOR_LOCKING_LEFT_SERVO_CLOSED_PW);
-      // elevatorLockingRightServoChannel.setPulseWidth(ELEVATOR_LOCKING_RIGHT_SERVO_CLOSED_PW);
+      elevatorLockingRightServoChannel.setPulseWidth(ELEVATOR_LOCKING_RIGHT_SERVO_CLOSED_PW);
     } else {
       elevatorLockingLeftServoChannel.setPulseWidth(ELEVATOR_LOCKING_LEFT_SERVO_OPEN_PW);
-      // elevatorLockingRightServoChannel.setPulseWidth(ELEVATOR_LOCKING_RIGHT_SERVO_OPEN_PW);
+      elevatorLockingRightServoChannel.setPulseWidth(ELEVATOR_LOCKING_RIGHT_SERVO_OPEN_PW);
     }
   }
 }

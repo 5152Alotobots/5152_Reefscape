@@ -57,7 +57,7 @@ public final class CoralIntakeTalonFXRealConstants {
   }
 
   /** Direction of the left motor rotation */
-  public static final InvertedValue MOTOR_DIRECTION = InvertedValue.Clockwise_Positive;
+  public static final InvertedValue MOTOR_DIRECTION = InvertedValue.CounterClockwise_Positive;
 
   /** Neutral mode (brake/coast) setting for the mechanism */
   public static final NeutralModeValue MECHANISM_NEUTRAL_MODE = NeutralModeValue.Brake;
