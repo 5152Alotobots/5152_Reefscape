@@ -53,7 +53,7 @@ public class AlgaeIntakeIntakeOpenLoop extends Command {
    */
   @Override
   public void execute() {
-    double adjustedOutput = MathUtil.clamp(.25, 0, MAX_OPEN_LOOP_INTAKE_PERCENTAGE);
+    double adjustedOutput = MathUtil.clamp(.5, 0, MAX_OPEN_LOOP_INTAKE_PERCENTAGE);
     algaeIntakeSubsystem.runAtPercentOutput(adjustedOutput);
   }
 
