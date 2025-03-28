@@ -12,12 +12,22 @@
 */
 package frc.alotobots.reefscape.subsystems.wrist.io;
 
-import static edu.wpi.first.units.Units.*;
+import static edu.wpi.first.units.Units.Amps;
+import static edu.wpi.first.units.Units.Rotations;
+import static edu.wpi.first.units.Units.RotationsPerSecond;
+import static edu.wpi.first.units.Units.RotationsPerSecondPerSecond;
 import static frc.alotobots.Constants.CanId.WRIST_ENCODER_CAN_ID;
 import static frc.alotobots.Constants.CanId.WRIST_MOTOR_CAN_ID;
-import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.Limits.*;
-import static frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXRealConstants.*;
-import static frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXRealConstants.MotorSafetyLimits.*;
+import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.Limits.LIMITS_ENABLED;
+import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.Limits.MAX_ANGLE;
+import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.Limits.MIN_ANGLE;
+import static frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXRealConstants.ENCODER_DIRECTION;
+import static frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXRealConstants.ENCODER_MAGNET_OFFSET;
+import static frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXRealConstants.MOTOR_DIRECTION;
+import static frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXRealConstants.MotorSafetyLimits.STATOR_AMP_LIMIT;
+import static frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXRealConstants.MotorSafetyLimits.TORQUE_FORWARD_AMP_LIMIT;
+import static frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXRealConstants.MotorSafetyLimits.TORQUE_REVERSE_AMP_LIMIT;
+import static frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXRealConstants.ROTOR_TO_SENSOR_RATIO;
 import static frc.alotobots.util.PhoenixUtil.tryUntilOk;
 
 import com.ctre.phoenix6.BaseStatusSignal;
@@ -34,12 +44,15 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
 import com.ctre.phoenix6.signals.GravityTypeValue;
 import edu.wpi.first.math.filter.Debouncer;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularAcceleration;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Voltage;
 import frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXRealConstants;
+import frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXRealConstants.AlgaeMotionProfilingConstants;
+import frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXRealConstants.MotionMagicConstants;
 import frc.alotobots.reefscape.util.MechanismManager;
 
 /**
@@ -66,6 +79,12 @@ public class WristIOTalonFXReal implements WristIO {
 
   /** Control mode for open loop output */
   private final DutyCycleOut dutyCycleOut = new DutyCycleOut(0);
+
+  private final TrapezoidProfile algaeMotionProfile =
+      new TrapezoidProfile(
+          new TrapezoidProfile.Constraints(
+              AlgaeMotionProfilingConstants.CRUISE_VELOCITY.in(RotationsPerSecond),
+              AlgaeMotionProfilingConstants.ACCELERATION.in(RotationsPerSecondPerSecond)));
 
   // Status Signals for monitoring hardware state
   StatusSignal<Integer> currentPidSlot;

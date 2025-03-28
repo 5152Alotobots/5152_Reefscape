@@ -88,6 +88,12 @@ public class WristTalonFXRealConstants {
     public static final double JERK = 0;
   }
 
+  public static final class AlgaeMotionProfilingConstants {
+    public static final AngularVelocity CRUISE_VELOCITY = RotationsPerSecond.of(7);
+    public static final AngularAcceleration ACCELERATION = RotationsPerSecondPerSecond.of(15);
+    public static final double JERK = 0;
+  }
+
   /** Contains safety limit constants for the wrist motors. */
   public static final class MotorSafetyLimits {
     /** Maximum forward torque current limit in amperes */
@@ -114,5 +120,5 @@ public class WristTalonFXRealConstants {
   public static final int ROTOR_TO_SENSOR_RATIO = 189;
 
   /** Magnet offset for the CANCoder absolute position */
-  public static final double ENCODER_MAGNET_OFFSET = 0.0966796875;
+  public static final double ENCODER_MAGNET_OFFSET = -0.105712890625;
 }

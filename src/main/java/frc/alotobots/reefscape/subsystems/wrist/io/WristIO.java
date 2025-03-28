@@ -92,6 +92,13 @@ public interface WristIO {
   public default void setWristPositionMotionMagic(Angle position, int pidSlot) {}
 
   /**
+   * Set wrist to run to target using a manually profiled
+   *
+   * @param percentOutput The target position to move to
+   * @param pidSlot The PID slot to use
+   */
+
+  /**
    * Runs the wrist using direct percentage output (open-loop control).
    *
    * @param percentOutput The motor output as a percentage (-1.0 to 1.0)

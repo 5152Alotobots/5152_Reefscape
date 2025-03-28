@@ -23,7 +23,6 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.alotobots.library.subsystems.bling.BlingSubsystem;
@@ -43,6 +42,8 @@ import frc.alotobots.library.subsystems.vision.photonvision.apriltag.constants.A
 import frc.alotobots.library.subsystems.vision.photonvision.apriltag.io.*;
 import frc.alotobots.reefscape.FieldConstants;
 import frc.alotobots.reefscape.commands.AlignToReefBranch;
+import frc.alotobots.reefscape.commands.groups.Climb;
+import frc.alotobots.reefscape.commands.groups.UnClimb;
 import frc.alotobots.reefscape.commands.states.algae.StateAlgaeRemoveL2;
 import frc.alotobots.reefscape.commands.states.algae.StateAlgaeRemoveL3;
 import frc.alotobots.reefscape.commands.states.coral.*;
@@ -79,6 +80,7 @@ public class RobotContainer {
   private final WristSubsystem wristSubsystem;
   private final ClimberSubsystem climberSubsystem;
   private final CoralIntakeSubsystem coralIntakeSubsystem;
+  // private final AlgaeIntakeSubsystem algaeIntakeSubsystem;
   private final OculusSubsystem oculusSubsystem;
   private final AprilTagSubsystem aprilTagSubsystem;
   //  private final LocalizationFusion localizationFusion;
@@ -104,6 +106,7 @@ public class RobotContainer {
                 new ModuleIOTalonFXReal(ModulePosition.BACK_RIGHT.index));
         elevatorSubsystem = new ElevatorSubsystem(new ElevatorIOTalonFXReal());
         coralIntakeSubsystem = new CoralIntakeSubsystem(new CoralIntakeIOTalonFXReal());
+        // algaeIntakeSubsystem = new AlgaeIntakeSubsystem(new AlgaeIntakeIOTalonFXReal());
         wristSubsystem = new WristSubsystem(new WristIOTalonFXReal());
         climberSubsystem = new ClimberSubsystem(new ClimberIORevServoReal());
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
@@ -136,6 +139,7 @@ public class RobotContainer {
 
       case SIM:
         coralIntakeSubsystem = new CoralIntakeSubsystem(new CoralIntakeIO() {});
+        // algaeIntakeSubsystem = new AlgaeIntakeSubsystem(new AlgaeIntakeIO() {});
         Pose2d simStartPose = new Pose2d(3, 3, new Rotation2d(0));
         driveSimulation =
             new SwerveDriveSimulation(
@@ -192,6 +196,7 @@ public class RobotContainer {
 
       default:
         coralIntakeSubsystem = new CoralIntakeSubsystem(new CoralIntakeIOTalonFXReal());
+        // algaeIntakeSubsystem = new AlgaeIntakeSubsystem(new AlgaeIntakeIOTalonFXReal());
         climberSubsystem = new ClimberSubsystem(new ClimberIORevServoReal());
         // Replay mode initialization
         swerveDriveSubsystem =
@@ -242,6 +247,7 @@ public class RobotContainer {
         new DefaultWristRunAtVelocity(wristSubsystem, OI::getWristAxis));
     blingSubsystem.setDefaultCommand(
         new NoAllianceWaiting(blingSubsystem).andThen(new SetToAllianceColor(blingSubsystem)));
+    // algaeIntakeSubsystem.setDefaultCommand(new DefaultAlgaeIntakeHold(algaeIntakeSubsystem));
     // climberSubsystem.setDefaultCommand(new ClimberDisableServos(climberSubsystem));
   }
 
@@ -303,15 +309,8 @@ public class RobotContainer {
             elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, blingSubsystem));
 
     climbButton.toggleOnTrue(
-        new SequentialCommandGroup(
-            new InstantCommand(climberSubsystem::enableServos),
-            new InstantCommand(climberSubsystem::setPlungerToPlunge))
-        // new Climb(climberSubsystem, elevatorSubsystem, blingSubsystem, () -> -getElevatorAxis())
-        );
-    unClimbButton.onTrue(
-        new SequentialCommandGroup(new InstantCommand(climberSubsystem::setPlungerToReceive))
-        // new UnClimb(climberSubsystem, elevatorSubsystem)
-        );
+        new Climb(climberSubsystem, elevatorSubsystem, blingSubsystem, () -> -getElevatorAxis()));
+    unClimbButton.onTrue(new UnClimb(climberSubsystem, elevatorSubsystem));
 
     alignLeftBranchButton.toggleOnTrue(
         new AlignToReefBranch(
