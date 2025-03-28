@@ -44,14 +44,12 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
 import com.ctre.phoenix6.signals.GravityTypeValue;
 import edu.wpi.first.math.filter.Debouncer;
-import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularAcceleration;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Voltage;
 import frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXRealConstants;
-import frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXRealConstants.AlgaeMotionProfilingConstants;
 import frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXRealConstants.MotionMagicConstants;
 import frc.alotobots.reefscape.util.MechanismManager;
 
@@ -79,12 +77,6 @@ public class WristIOTalonFXReal implements WristIO {
 
   /** Control mode for open loop output */
   private final DutyCycleOut dutyCycleOut = new DutyCycleOut(0);
-
-  private final TrapezoidProfile algaeMotionProfile =
-      new TrapezoidProfile(
-          new TrapezoidProfile.Constraints(
-              AlgaeMotionProfilingConstants.CRUISE_VELOCITY.in(RotationsPerSecond),
-              AlgaeMotionProfilingConstants.ACCELERATION.in(RotationsPerSecondPerSecond)));
 
   // Status Signals for monitoring hardware state
   StatusSignal<Integer> currentPidSlot;
@@ -234,9 +226,13 @@ public class WristIOTalonFXReal implements WristIO {
    */
   @Override
   public void setWristPosition(Angle position, int pidSlot) {
-
-    // Set up the request with appropriate limits
     wristTalon.setControl(positionVoltage.withPosition(position).withSlot(pidSlot));
+  }
+
+  @Override
+  public void setWristPosition(double position, double velocity, int pidSlot) {
+    wristTalon.setControl(
+        positionVoltage.withPosition(position).withVelocity(velocity).withSlot(pidSlot));
   }
 
   /**
@@ -247,9 +243,6 @@ public class WristIOTalonFXReal implements WristIO {
    */
   @Override
   public void setWristPositionMotionMagic(Angle position, int pidSlot) {
-    // Get current angle to determine if we need to apply limits
-    Angle currentAngle = wristPosition.getValue();
-
     // Set up the request with appropriate limits
     wristTalon.setControl(magicPositionVoltage.withPosition(position).withSlot(pidSlot));
   }
@@ -262,9 +255,6 @@ public class WristIOTalonFXReal implements WristIO {
    */
   @Override
   public void setWristVelocity(AngularVelocity velocity, int pidSlot) {
-    // Get current angle to determine if we need to apply limits
-    Angle currentAngle = wristPosition.getValue();
-
     wristTalon.setControl(velocityVoltage.withVelocity(velocity).withSlot(pidSlot));
   }
 
@@ -275,11 +265,6 @@ public class WristIOTalonFXReal implements WristIO {
    */
   @Override
   public void setWristOpenLoop(double percentOutput) {
-    // Get current angle to determine if we need to apply limits
-    Angle currentAngle = wristPosition.getValue();
-
-    // Determine if we should activate limits
-
     wristTalon.setControl(dutyCycleOut.withOutput(percentOutput));
   }
 
