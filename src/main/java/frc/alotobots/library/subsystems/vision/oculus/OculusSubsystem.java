@@ -93,11 +93,11 @@ public class OculusSubsystem extends SubsystemBase {
     }
 
     // Check battery levels
-    if (inputs.batteryPercent < BATTERY_CRITICAL_PERCENT) {
-      NotificationPresets.Oculus.sendOculusBatteryCriticalNotification();
-    } else if (inputs.batteryPercent < BATTERY_LOW_PERCENT) {
-      NotificationPresets.Oculus.sendOculusBatteryLowNotification();
-    }
+    // if (inputs.batteryPercent < BATTERY_CRITICAL_PERCENT) {
+    //   NotificationPresets.Oculus.sendOculusBatteryCriticalNotification();
+    // } else if (inputs.batteryPercent < BATTERY_LOW_PERCENT) {
+    //   NotificationPresets.Oculus.sendOculusBatteryLowNotification();
+    // }
   }
 
   /**

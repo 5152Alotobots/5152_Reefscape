@@ -340,14 +340,14 @@ public class RobotContainer {
         swerveDriveSubsystem.sysIdDynamic(SysIdRoutine.Direction.kReverse));
   }
 
-  private void handleAutoPathChange(String pathName) {
+  private void handleAutoPathChange(String autoName) {
     pathPlannerManager
-        .getPathStartPose(pathName)
+        .getAutoStartPose(autoName)
         .ifPresent(
             pose -> {
-              NotificationPresets.Auto.sendAutoPathChangeNotification(pathName);
               swerveDriveSubsystem.setPose(pose);
               oculusSubsystem.resetPose(pose);
+              NotificationPresets.Auto.sendAutoPathChangeNotification(autoName);
             });
   }
 

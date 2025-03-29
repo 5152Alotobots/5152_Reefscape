@@ -34,7 +34,6 @@ import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.Alert;
 import edu.wpi.first.wpilibj.Alert.AlertType;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -128,7 +127,6 @@ public class SwerveDriveSubsystem extends SubsystemBase {
       ModuleIO blModuleIO,
       ModuleIO brModuleIO) {
     this.gyroIO = gyroIO;
-    Shuffleboard.getTab("Prematch").add("Robot Pose", field);
 
     // Initialize modules
     modules[0] = new Module(flModuleIO, 0, Constants.tunerConstants.getFrontLeft());
@@ -169,7 +167,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
   /** Periodic update function handling odometry updates and module states. */
   @Override
   public void periodic() {
-    field.setRobotPose(getPose());
+    field.getRobotObject().setPose(getPose());
     SmartDashboard.putData("SwerveDriveField", field);
     odometryLock.lock();
     gyroIO.updateInputs(gyroInputs);

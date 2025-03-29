@@ -13,6 +13,7 @@
 package frc.alotobots.library.subsystems.swervedrive.util;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.pathfinding.Pathfinding;
 import com.pathplanner.lib.trajectory.PathPlannerTrajectory;
@@ -28,6 +29,7 @@ import edu.wpi.first.wpilibj2.command.PrintCommand;
 import frc.alotobots.Constants;
 import frc.alotobots.library.subsystems.swervedrive.SwerveDriveSubsystem;
 import frc.alotobots.util.LocalADStarAK;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -146,6 +148,71 @@ public class PathPlannerManager {
       String errorMessage = "Failed to load path: " + pathName;
       Logger.recordOutput("PathPlanner/Error", errorMessage);
       return new PrintCommand(errorMessage + " Not following path!");
+    }
+  }
+
+  /**
+   * Gets the starting pose from a PathPlanner auto.
+   *
+   * @param autoName The name of the auto to load
+   * @return Optional containing the starting pose, or empty if path cannot be loaded
+   */
+  public Optional<Pose2d> getAutoStartPose(String autoName) {
+    try {
+      List<PathPlannerPath> auto = PathPlannerAuto.getPathGroupFromAutoFile(autoName);
+      // Check to see if we have a traj
+      if (auto.isEmpty()) return Optional.empty();
+      // Load it
+      PathPlannerPath path = auto.get(0);
+      Optional<PathPlannerTrajectory> expectedTrajectory =
+          path.getIdealTrajectory(Constants.tunerConstants.getPathPlannerConfig());
+      if (expectedTrajectory.isPresent()) {
+        PathPlannerTrajectory trajectory = expectedTrajectory.get();
+        if (DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red) {
+          return Optional.of(FlippingUtil.flipFieldPose(trajectory.getInitialState().pose));
+        }
+        return Optional.of(trajectory.getInitialState().pose);
+      }
+      return Optional.empty();
+    } catch (Exception e) {
+      System.err.println("Failed to load auto start pose: " + autoName);
+      e.printStackTrace();
+      return Optional.empty();
+    }
+  }
+
+  /**
+   * Gets the path poses from a PathPlanner auto.
+   *
+   * @param autoName The name of the auto to load
+   * @return Optional containing all path poses, or empty if auto cannot be loaded
+   */
+  public Optional<List<Pose2d>> getAutoPathPoints(String autoName) {
+    List<Pose2d> pathPoses = new LinkedList<>();
+    try {
+      List<PathPlannerPath> auto = PathPlannerAuto.getPathGroupFromAutoFile(autoName);
+      // Check to see if we have a traj
+      if (auto.isEmpty()) return Optional.empty();
+      // Load it
+
+      for (PathPlannerPath path : auto) {
+        Optional<PathPlannerTrajectory> expectedTrajectory =
+            path.getIdealTrajectory(Constants.tunerConstants.getPathPlannerConfig());
+        if (expectedTrajectory.isPresent()) {
+          PathPlannerTrajectory trajectory = expectedTrajectory.get();
+          if (DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red) {
+            pathPoses.add(FlippingUtil.flipFieldPose(trajectory.getInitialState().pose));
+          }
+          pathPoses.add(trajectory.getInitialState().pose);
+        } else {
+          return Optional.empty();
+        }
+      }
+      return Optional.of(pathPoses);
+    } catch (Exception e) {
+      System.err.println("Failed to load auto start pose: " + autoName);
+      e.printStackTrace();
+      return Optional.empty();
     }
   }
 

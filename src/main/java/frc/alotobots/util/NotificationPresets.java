@@ -26,7 +26,7 @@ public final class NotificationPresets {
               Elastic.ElasticNotification.NotificationLevel.INFO,
               "Path Change",
               "The path has changed to: " + pathName,
-              1000));
+              3000));
     }
   }
 
@@ -37,7 +37,7 @@ public final class NotificationPresets {
               Elastic.ElasticNotification.NotificationLevel.ERROR,
               "Camera Disconnected",
               cameraName + " has been disconnected.",
-              1000));
+              3000));
     }
   }
 
@@ -51,7 +51,7 @@ public final class NotificationPresets {
                   + newPose.getTranslation().toString()
                   + newPose.getRotation().getDegrees()
                   + "deg",
-              1000));
+              3000));
     }
 
     public static void sendOculusTransformUpdateNotification(Transform2d newTransform) {
@@ -63,7 +63,7 @@ public final class NotificationPresets {
                   + newTransform.getTranslation().toString()
                   + newTransform.getRotation().getDegrees()
                   + "deg",
-              1000));
+              3000));
     }
 
     public static void sendOculusDisconnectedNotification() {
@@ -72,7 +72,7 @@ public final class NotificationPresets {
               Elastic.ElasticNotification.NotificationLevel.ERROR,
               "Oculus Disconnected",
               "The Oculus has been disconnected.",
-              1000));
+              3000));
     }
 
     public static void sendOculusBatteryLowNotification() {
@@ -81,7 +81,7 @@ public final class NotificationPresets {
               Elastic.ElasticNotification.NotificationLevel.WARNING,
               "Oculus Battery Low",
               "The Oculus battery is low.",
-              1000));
+              3000));
     }
 
     public static void sendOculusBatteryCriticalNotification() {
@@ -90,7 +90,7 @@ public final class NotificationPresets {
               Elastic.ElasticNotification.NotificationLevel.ERROR,
               "Oculus Battery Critical",
               "The Oculus battery is critical.",
-              1000));
+              3000));
     }
   }
 
@@ -104,14 +104,14 @@ public final class NotificationPresets {
                   + newPose.getTranslation().toString()
                   + newPose.getRotation().getDegrees()
                   + "deg",
-              1000));
+              3000));
     }
   }
 
   public final class General {
     public static void sendGeneralNotification(
         Elastic.ElasticNotification.NotificationLevel level, String title, String message) {
-      Elastic.sendAlert(new Elastic.ElasticNotification(level, title, message, 1000));
+      Elastic.sendAlert(new Elastic.ElasticNotification(level, title, message, 3000));
     }
   }
 }

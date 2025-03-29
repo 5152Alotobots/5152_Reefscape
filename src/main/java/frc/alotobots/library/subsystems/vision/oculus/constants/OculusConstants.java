@@ -48,7 +48,7 @@ public class OculusConstants {
   }
 
   /** The strategy used to reset the pose */
-  public static final PoseResetStrategy POSE_RESET_STRATEGY = PoseResetStrategy.ROBOT_SIDE;
+  public static final PoseResetStrategy POSE_RESET_STRATEGY = PoseResetStrategy.OCULUS_SIDE;
 
   public static final double BATTERY_LOW_PERCENT = 20;
 
@@ -59,7 +59,7 @@ public class OculusConstants {
    * Y: Positive is left - Rotation: Positive is counter-clockwise
    */
   public static final Transform2d ROBOT_TO_OCULUS =
-      new Transform2d(0.14, -0.22, Rotation2d.fromDegrees(-90));
+      new Transform2d(0.153, -0.26, Rotation2d.fromDegrees(-90));
 
   /** Timeout threshold for considering Quest disconnected (seconds) */
   public static final Time OCULUS_CONNECTION_TIMEOUT = Seconds.of(1.0);
