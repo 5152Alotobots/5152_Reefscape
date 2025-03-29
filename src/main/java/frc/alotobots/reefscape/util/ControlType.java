@@ -16,6 +16,8 @@ public class ControlType {
   public enum ClosedLoop {
     VELOCITY,
     POSITION,
+    POSITION_MAGIC,
+    POSITION_PROFILED,
     VELOCITY_CLIMB
   }
 

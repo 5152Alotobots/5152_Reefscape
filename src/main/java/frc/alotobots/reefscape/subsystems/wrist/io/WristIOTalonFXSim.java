@@ -187,6 +187,12 @@ public class WristIOTalonFXSim implements WristIO {
     wristTalon.setControl(positionVoltage.withPosition(position).withSlot(pidSlot));
   }
 
+  @Override
+  public void setWristPosition(double position, double velocity, int pidSlot) {
+    wristTalon.setControl(
+        positionVoltage.withPosition(position).withVelocity(velocity).withSlot(pidSlot));
+  }
+
   /**
    * Sets the wrist to a target position using closed-loop control and motion magic.
    *

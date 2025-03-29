@@ -149,6 +149,8 @@ public class OI {
   // BACKUP -----------------------------------------------------------
 
   public static final Trigger ejectCoralButton = codriverBackupController.rightBumper();
+  public static final Trigger intakeAlgaeButton = codriverBackupController.y();
+  public static final Trigger ejectAlgaeButton = codriverBackupController.x();
 
   /** Trigger for activating the coral eject-through function */
   public static final Trigger coralIntakeEjectThroughButton = codriverBackupController.start();
@@ -163,8 +165,9 @@ public class OI {
   public static final Trigger elevatorStowButton = codriverBackupController.a();
 
   public static final Trigger elevatorL2Button = codriverBackupController.b();
-  public static final Trigger elevatorL3Button = codriverBackupController.x();
-  public static final Trigger elevatorL4Button = codriverBackupController.y();
+
+  // public static final Trigger elevatorL3Button = codriverBackupController.x();
+  // public static final Trigger elevatorL4Button = codriverBackupController.y();
 
   /**
    * Gets the manual elevator control input by selecting the larger magnitude input between the two
