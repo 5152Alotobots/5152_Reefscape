@@ -97,10 +97,9 @@ public class WristSubsystem extends SubsystemBase {
     var adjustedAngle =
         Degrees.of(MathUtil.clamp(angle.in(Degrees), MIN_ANGLE.in(Degrees), MAX_ANGLE.in(Degrees)));
     targetAngle = adjustedAngle;
-    io.setWristPositionMotionMagic(adjustedAngle, ControlType.ClosedLoop.POSITION.ordinal());
+    io.setWristPositionMotionMagic(adjustedAngle, 1);
 
     Logger.recordOutput("Wrist/ControlType", ControlType.ClosedLoop.POSITION_MAGIC);
-    Logger.recordOutput("Wrist/TargetAngle", targetAngle.in(Degrees));
   }
 
   public Command wristRunToAngleManualProfile(Angle angle) {
@@ -108,22 +107,26 @@ public class WristSubsystem extends SubsystemBase {
         Degrees.of(MathUtil.clamp(angle.in(Degrees), MIN_ANGLE.in(Degrees), MAX_ANGLE.in(Degrees)));
     targetAngle = adjustedAngle;
 
-    TrapezoidProfile.State goal = new TrapezoidProfile.State(angle.in(Rotation), 0);
+    TrapezoidProfile.State goal = new TrapezoidProfile.State(adjustedAngle.in(Rotation), 0);
     TrapezoidProfile.State current =
         new TrapezoidProfile.State(
             inputs.mechanismAngle.in(Rotation), inputs.rotationVelocity.in(RotationsPerSecond));
 
-    Logger.recordOutput("Wrist/ControlType", ControlType.ClosedLoop.POSITION_PROFILED);
-    Logger.recordOutput("Wrist/TargetAngle", targetAngle.in(Degrees));
-
     return startRun(
             profileTimer::restart,
             () -> {
+              Logger.recordOutput("Wrist/Timer", profileTimer.get());
+              Logger.recordOutput("Wrist/ControlType", ControlType.ClosedLoop.POSITION_PROFILED);
+              Logger.recordOutput(
+                  "Wrist/ProfileFinished", algaeMotionProfile.isFinished(profileTimer.get()));
+              Logger.recordOutput("Wrist/ProfileGoalPos", goal.position);
               var setpoint = algaeMotionProfile.calculate(profileTimer.get(), current, goal);
+              Logger.recordOutput("Wrist/ProfileVelocity", setpoint.velocity);
+              Logger.recordOutput("Wrist/ProfilePosition", setpoint.position);
 
               io.setWristPosition(setpoint.position, setpoint.velocity, 1);
             })
-        .until(() -> false);
+        .until(() -> algaeMotionProfile.isFinished(profileTimer.get()));
   }
 
   /**
@@ -141,7 +144,7 @@ public class WristSubsystem extends SubsystemBase {
                 -MAX_SPEED.in(DegreesPerSecond),
                 MAX_SPEED.in(DegreesPerSecond)));
 
-    io.setWristVelocity(adjustedVelocity, ControlType.ClosedLoop.VELOCITY.ordinal());
+    io.setWristVelocity(adjustedVelocity, 0);
 
     Logger.recordOutput("Wrist/ControlType", ControlType.ClosedLoop.VELOCITY);
   }

@@ -43,6 +43,6 @@ public class ElevatorWristRunManualProfile extends SequentialCommandGroup {
         new ParallelCommandGroup(
             wristSubsystem.wristRunToAngleManualProfile(CRUISE),
             new ElevatorRunToHeight(elevatorSubsystem, elevatorHeight).asProxy()),
-        wristSubsystem.wristRunToAngleManualProfile(wristAngle));
+        wristSubsystem.wristRunToAngleManualProfile(wristAngle).asProxy());
   }
 }
