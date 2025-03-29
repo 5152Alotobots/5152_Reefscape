@@ -36,7 +36,7 @@ public class WristConstants {
   /** Contains physical limits and safety thresholds for the wrist. */
   public static final class Limits {
     /** Maximum allowed angle */
-    public static final Angle MAX_ANGLE = Degrees.of(125);
+    public static final Angle MAX_ANGLE = Degrees.of(110);
 
     /** Minimum allowed angle */
     public static final Angle MIN_ANGLE = Degrees.of(-22);
@@ -61,7 +61,7 @@ public class WristConstants {
     public static final Angle CORAL_STOWED = Degrees.of(85);
 
     /** Angle for picking up from coral station */
-    public static final Angle CORAL_CORAL_STATION = Degrees.of(31.1);
+    public static final Angle CORAL_CORAL_STATION = Degrees.of(27.42);
 
     /** Angle for L4 placement */
     public static final Angle CORAL_L4_PLACE = Degrees.of(90);

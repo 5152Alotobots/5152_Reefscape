@@ -19,7 +19,7 @@ import frc.alotobots.reefscape.subsystems.climber.ClimberSubsystem;
  * A command that disables the servos in the climber subsystem. This command executes instantly and
  * can run when the robot is disabled.
  */
-public class ClimberDisableServos extends InstantCommand {
+public class ClimberDefaultPositions extends InstantCommand {
   /** The climber subsystem instance this command operates on */
   private final ClimberSubsystem climberSubsystem;
 
@@ -28,7 +28,7 @@ public class ClimberDisableServos extends InstantCommand {
    *
    * @param climberSubsystem The climber subsystem to control
    */
-  public ClimberDisableServos(ClimberSubsystem climberSubsystem) {
+  public ClimberDefaultPositions(ClimberSubsystem climberSubsystem) {
     this.climberSubsystem = climberSubsystem;
     addRequirements(climberSubsystem);
   }
@@ -38,16 +38,9 @@ public class ClimberDisableServos extends InstantCommand {
    */
   @Override
   public void initialize() {
-    climberSubsystem.disableServos();
-  }
-
-  /**
-   * Returns whether this command can run when the robot is disabled.
-   *
-   * @return true, allowing this command to run when the robot is disabled
-   */
-  @Override
-  public boolean runsWhenDisabled() {
-    return true;
+    climberSubsystem.enableServos();
+    climberSubsystem.unlockCage();
+    climberSubsystem.unlockElevator();
+    climberSubsystem.setPlungerToStow();
   }
 }

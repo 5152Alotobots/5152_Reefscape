@@ -147,6 +147,11 @@ public class ClimberSubsystem extends SubsystemBase {
     io.setPlungerServoPosition(Degrees.of(180));
   }
 
+  /** Sets the plunger servo to its stow position (270 degrees). */
+  public void setPlungerToStow() {
+    io.setPlungerServoPosition(Degrees.of(230));
+  }
+
   /** Sets the plunger servo to its plunge position (0 degrees). */
   public void setPlungerToPlunge() {
     io.setPlungerServoPosition(Degrees.of(0));
