@@ -82,5 +82,23 @@ public class WristConstants {
     public static final Angle ALGAE_L2_REMOVAL = Degrees.of(0);
 
     public static final Angle ALGAE_L3_REMOVAL = Degrees.of(0);
+
+    /** Height for L2/L3 algae pickup */
+    public static final Angle ALGAE_L2L3_PICKUP = Degrees.of(-17);
+
+    /** Height for L3/L4 algae pickup */
+    public static final Angle ALGAE_L3L4_PICKUP = Degrees.of(-17);
+
+    /** Height for stowed algae */
+    public static final Angle ALGAE_STOWED = Degrees.of(85);
+
+    /** Height for algae processor */
+    public static final Angle ALGAE_PROCESSOR = Degrees.of(-17);
+
+    /** Height for algae processor */
+    public static final Angle ALGAE_NET = Degrees.of(60);
+
+    /** Height for algae processor */
+    public static final Angle ALGAE_GROUND_INTAKE = Degrees.of(1);
   }
 }

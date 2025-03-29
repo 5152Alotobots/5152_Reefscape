@@ -272,12 +272,12 @@ public class RobotContainer {
         new StateCoralGround(
             elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, blingSubsystem));
 
-    stateAlgaeL2Button.toggleOnTrue(
-        new StateAlgaeRemoveL2(
-            elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, blingSubsystem));
-    stateAlgaeL3Button.toggleOnTrue(
-        new StateAlgaeRemoveL3(
-            elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, blingSubsystem));
+    stateAlgaeL2Button.toggleOnTrue(new AlgaeIntakeIntakeOpenLoop(algaeIntakeSubsystem));
+        //new StateAlgaeRemoveL2(
+        //    elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, blingSubsystem));
+    stateAlgaeL3Button.toggleOnTrue(new AlgaeIntakeEjectOpenLoop(algaeIntakeSubsystem));
+        //new StateAlgaeRemoveL3(
+        //    elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, blingSubsystem));
 
     climbButton.toggleOnTrue(
         new Climb(climberSubsystem, elevatorSubsystem, blingSubsystem, () -> -getElevatorAxis()));
