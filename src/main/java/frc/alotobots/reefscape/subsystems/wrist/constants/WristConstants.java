@@ -36,10 +36,10 @@ public class WristConstants {
   /** Contains physical limits and safety thresholds for the wrist. */
   public static final class Limits {
     /** Maximum allowed angle */
-    public static final Angle MAX_ANGLE = Degrees.of(110);
+    public static final Angle MAX_ANGLE = Degrees.of(118);
 
     /** Minimum allowed angle */
-    public static final Angle MIN_ANGLE = Degrees.of(-22);
+    public static final Angle MIN_ANGLE = Degrees.of(-3);
 
     /** Maximum open loop percent output */
     public static final double MAX_OPEN_LOOP_PERCENTAGE = 0.5;
@@ -67,10 +67,10 @@ public class WristConstants {
     public static final Angle CORAL_L4_PLACE = Degrees.of(90);
 
     /** Angle for L3 placement (Equal to the angle for L2 placement) */
-    public static final Angle CORAL_L3_PLACE = Degrees.of(125);
+    public static final Angle CORAL_L3_PLACE = Degrees.of(118);
 
     /** Angle for L2 placement (Equal to the angle for L3 placement) */
-    public static final Angle CORAL_L2_PLACE = Degrees.of(125);
+    public static final Angle CORAL_L2_PLACE = Degrees.of(118);
 
     /** Angle for L1 placement */
     public static final Angle CORAL_L1_PLACE = Degrees.of(2);
