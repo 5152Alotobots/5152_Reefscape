@@ -85,12 +85,14 @@ public class OculusSubsystem extends SubsystemBase {
     Logger.processInputs("Oculus", inputs);
 
     // Add to Kalman filter
-    processPose();
+    // TODO: Fix identifying connection status, processes pose when not connected still
+    // processPose();
 
     // Notify if we are disconnected
-    if (!inputs.connected) {
-      NotificationPresets.Oculus.sendOculusDisconnectedNotification();
-    }
+    // TODO: Only send notifcation on STATE CHANGE.
+    // if (!inputs.connected) {
+    //   NotificationPresets.Oculus.sendOculusDisconnectedNotification();
+    // }
 
     // Check battery levels
     // if (inputs.batteryPercent < BATTERY_CRITICAL_PERCENT) {
@@ -158,6 +160,7 @@ public class OculusSubsystem extends SubsystemBase {
       // Set the offset transform to the new pose
       updateTransform(pose);
     } else {
+      updateTransform(Pose2d.kZero);
       io.resetPose(pose.getX(), pose.getY(), pose.getRotation().getDegrees());
     }
     Logger.recordOutput("Oculus/Log", "Resetting pose to: " + pose);

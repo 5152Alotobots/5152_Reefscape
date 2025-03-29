@@ -213,6 +213,7 @@ public class RobotContainer {
 
   /** Contains button based commands */
   private void configureLogicCommands() {
+    lockWheelsButton.onTrue(new InstantCommand(swerveDriveSubsystem::stopWithX));
     // TEMPORARY!!
     resetGyroButton.onTrue(
         new InstantCommand(() -> swerveDriveSubsystem.setPose(new Pose2d(0, 0, Rotation2d.kZero))));
