@@ -13,10 +13,10 @@
 package frc.alotobots;
 
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.HttpCamera;
 import edu.wpi.first.wpilibj.Threads;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.alotobots.reefscape.util.MechanismManager;
 import org.ironmaple.simulation.SimulatedArena;
 import org.littletonrobotics.junction.LogFileUtil;
 import org.littletonrobotics.junction.LoggedRobot;
@@ -67,7 +67,6 @@ public class Robot extends LoggedRobot {
         // Running on a real robot, log to a USB stick ("/U/logs")
         Logger.addDataReceiver(new WPILOGWriter());
         Logger.addDataReceiver(new NT4Publisher());
-        CameraServer.startAutomaticCapture();
         break;
 
       case SIM:
@@ -105,10 +104,15 @@ public class Robot extends LoggedRobot {
 
     // Return to normal thread priority
     Threads.setCurrentThreadPriority(false, 10);
-
-    MechanismManager.logMech();
   }
 
+  @Override
+  public void robotInit() {
+    CameraServer.startAutomaticCapture();
+        CameraServer.startAutomaticCapture(
+            new HttpCamera("Oculus", "http://10.51.52.201:5809/stream"));
+
+  }
   /** Called once when the robot is disabled. */
   @Override
   public void disabledInit() {}

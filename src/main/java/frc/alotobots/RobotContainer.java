@@ -156,8 +156,7 @@ public class RobotContainer {
         configureAutoChooser();
 
         oculusSubsystem =
-            new OculusSubsystem(
-                swerveDriveSubsystem::addVisionMeasurement, new OculusIOSim(driveSimulation));
+            new OculusSubsystem(swerveDriveSubsystem::addVisionMeasurement, new OculusIOReal());
         aprilTagSubsystem =
             new AprilTagSubsystem(
                 swerveDriveSubsystem::addVisionMeasurement,
