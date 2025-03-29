@@ -12,22 +12,12 @@
 */
 package frc.alotobots.reefscape.subsystems.wrist.io;
 
-import static edu.wpi.first.units.Units.Amps;
-import static edu.wpi.first.units.Units.Rotations;
-import static edu.wpi.first.units.Units.RotationsPerSecond;
-import static edu.wpi.first.units.Units.RotationsPerSecondPerSecond;
+import static edu.wpi.first.units.Units.*;
 import static frc.alotobots.Constants.CanId.WRIST_ENCODER_CAN_ID;
 import static frc.alotobots.Constants.CanId.WRIST_MOTOR_CAN_ID;
-import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.Limits.LIMITS_ENABLED;
-import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.Limits.MAX_ANGLE;
-import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.Limits.MIN_ANGLE;
-import static frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXRealConstants.ENCODER_DIRECTION;
-import static frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXRealConstants.ENCODER_MAGNET_OFFSET;
-import static frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXRealConstants.MOTOR_DIRECTION;
-import static frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXRealConstants.MotorSafetyLimits.STATOR_AMP_LIMIT;
-import static frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXRealConstants.MotorSafetyLimits.TORQUE_FORWARD_AMP_LIMIT;
-import static frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXRealConstants.MotorSafetyLimits.TORQUE_REVERSE_AMP_LIMIT;
-import static frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXRealConstants.ROTOR_TO_SENSOR_RATIO;
+import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.Limits.*;
+import static frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXRealConstants.*;
+import static frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXRealConstants.MotorSafetyLimits.*;
 import static frc.alotobots.util.PhoenixUtil.tryUntilOk;
 
 import com.ctre.phoenix6.BaseStatusSignal;
@@ -222,13 +212,9 @@ public class WristIOTalonFXReal implements WristIO {
    */
   @Override
   public void setWristPosition(Angle position, int pidSlot) {
-    wristTalon.setControl(positionVoltage.withPosition(position).withSlot(pidSlot));
-  }
 
-  @Override
-  public void setWristPosition(double position, double velocity, int pidSlot) {
-    wristTalon.setControl(
-        positionVoltage.withPosition(position).withVelocity(velocity).withSlot(pidSlot));
+    // Set up the request with appropriate limits
+    wristTalon.setControl(positionVoltage.withPosition(position).withSlot(pidSlot));
   }
 
   /**
@@ -239,6 +225,9 @@ public class WristIOTalonFXReal implements WristIO {
    */
   @Override
   public void setWristPositionMotionMagic(Angle position, int pidSlot) {
+    // Get current angle to determine if we need to apply limits
+    Angle currentAngle = wristPosition.getValue();
+
     // Set up the request with appropriate limits
     wristTalon.setControl(magicPositionVoltage.withPosition(position).withSlot(pidSlot));
   }
@@ -251,6 +240,9 @@ public class WristIOTalonFXReal implements WristIO {
    */
   @Override
   public void setWristVelocity(AngularVelocity velocity, int pidSlot) {
+    // Get current angle to determine if we need to apply limits
+    Angle currentAngle = wristPosition.getValue();
+
     wristTalon.setControl(velocityVoltage.withVelocity(velocity).withSlot(pidSlot));
   }
 
@@ -261,6 +253,11 @@ public class WristIOTalonFXReal implements WristIO {
    */
   @Override
   public void setWristOpenLoop(double percentOutput) {
+    // Get current angle to determine if we need to apply limits
+    Angle currentAngle = wristPosition.getValue();
+
+    // Determine if we should activate limits
+
     wristTalon.setControl(dutyCycleOut.withOutput(percentOutput));
   }
 

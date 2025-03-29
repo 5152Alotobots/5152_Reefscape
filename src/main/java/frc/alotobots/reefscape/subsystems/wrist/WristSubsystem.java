@@ -12,29 +12,16 @@
 */
 package frc.alotobots.reefscape.subsystems.wrist;
 
-import static edu.wpi.first.units.Units.Degree;
-import static edu.wpi.first.units.Units.Degrees;
-import static edu.wpi.first.units.Units.DegreesPerSecond;
-import static edu.wpi.first.units.Units.Rotation;
-import static edu.wpi.first.units.Units.RotationsPerSecond;
-import static edu.wpi.first.units.Units.RotationsPerSecondPerSecond;
-import static edu.wpi.first.units.Units.Seconds;
-import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.Limits.MAX_ANGLE;
-import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.Limits.MAX_OPEN_LOOP_PERCENTAGE;
-import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.Limits.MAX_SPEED;
-import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.Limits.MIN_ANGLE;
+import static edu.wpi.first.units.Units.*;
+import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.Limits.*;
 import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.Thresholds.AT_TARGET_ANGLE_POSITION_THRESHOLD;
 import static frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants.Thresholds.AT_TARGET_ANGLE_TIME_THRESHOLD;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.Debouncer;
-import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXRealConstants.AlgaeMotionProfilingConstants;
 import frc.alotobots.reefscape.subsystems.wrist.io.WristIO;
 import frc.alotobots.reefscape.subsystems.wrist.io.WristIOInputsAutoLogged;
 import frc.alotobots.reefscape.util.ControlType;
@@ -51,8 +38,6 @@ public class WristSubsystem extends SubsystemBase {
   /** Latest inputs from the wrist hardware */
   private final WristIOInputsAutoLogged inputs = new WristIOInputsAutoLogged();
 
-  private final Timer profileTimer = new Timer();
-
   /** Debouncer for ensuring stability at a position */
   private final Debouncer atTargetAngleDebounce =
       new Debouncer(AT_TARGET_ANGLE_TIME_THRESHOLD.in(Seconds));
@@ -62,12 +47,6 @@ public class WristSubsystem extends SubsystemBase {
    * POSITION control mode)
    */
   private Angle targetAngle = Degrees.zero();
-
-  private final TrapezoidProfile algaeMotionProfile =
-      new TrapezoidProfile(
-          new TrapezoidProfile.Constraints(
-              AlgaeMotionProfilingConstants.CRUISE_VELOCITY.in(RotationsPerSecond),
-              AlgaeMotionProfilingConstants.ACCELERATION.in(RotationsPerSecondPerSecond)));
 
   /**
    * Creates a new WristSubsystem.
@@ -97,36 +76,9 @@ public class WristSubsystem extends SubsystemBase {
     var adjustedAngle =
         Degrees.of(MathUtil.clamp(angle.in(Degrees), MIN_ANGLE.in(Degrees), MAX_ANGLE.in(Degrees)));
     targetAngle = adjustedAngle;
-    io.setWristPositionMotionMagic(adjustedAngle, 1);
-
-    Logger.recordOutput("Wrist/ControlType", ControlType.ClosedLoop.POSITION_MAGIC);
-  }
-
-  public Command wristRunToAngleManualProfile(Angle angle) {
-    var adjustedAngle =
-        Degrees.of(MathUtil.clamp(angle.in(Degrees), MIN_ANGLE.in(Degrees), MAX_ANGLE.in(Degrees)));
-    targetAngle = adjustedAngle;
-
-    TrapezoidProfile.State goal = new TrapezoidProfile.State(adjustedAngle.in(Rotation), 0);
-    TrapezoidProfile.State current =
-        new TrapezoidProfile.State(
-            inputs.mechanismAngle.in(Rotation), inputs.rotationVelocity.in(RotationsPerSecond));
-
-    return startRun(
-            profileTimer::restart,
-            () -> {
-              Logger.recordOutput("Wrist/Timer", profileTimer.get());
-              Logger.recordOutput("Wrist/ControlType", ControlType.ClosedLoop.POSITION_PROFILED);
-              Logger.recordOutput(
-                  "Wrist/ProfileFinished", algaeMotionProfile.isFinished(profileTimer.get()));
-              Logger.recordOutput("Wrist/ProfileGoalPos", goal.position);
-              var setpoint = algaeMotionProfile.calculate(profileTimer.get(), current, goal);
-              Logger.recordOutput("Wrist/ProfileVelocity", setpoint.velocity);
-              Logger.recordOutput("Wrist/ProfilePosition", setpoint.position);
-
-              io.setWristPosition(setpoint.position, setpoint.velocity, 1);
-            })
-        .until(() -> algaeMotionProfile.isFinished(profileTimer.get()));
+    io.setWristPositionMotionMagic(adjustedAngle, ControlType.ClosedLoop.POSITION.ordinal());
+    Logger.recordOutput("Wrist/ControlType", ControlType.ClosedLoop.POSITION);
+    Logger.recordOutput("Wrist/TargetAngle", targetAngle.in(Degrees));
   }
 
   /**
@@ -144,7 +96,7 @@ public class WristSubsystem extends SubsystemBase {
                 -MAX_SPEED.in(DegreesPerSecond),
                 MAX_SPEED.in(DegreesPerSecond)));
 
-    io.setWristVelocity(adjustedVelocity, 0);
+    io.setWristVelocity(adjustedVelocity, ControlType.ClosedLoop.VELOCITY.ordinal());
 
     Logger.recordOutput("Wrist/ControlType", ControlType.ClosedLoop.VELOCITY);
   }

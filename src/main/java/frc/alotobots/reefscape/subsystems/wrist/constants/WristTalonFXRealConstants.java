@@ -88,12 +88,6 @@ public class WristTalonFXRealConstants {
     public static final double JERK = 0;
   }
 
-  public static final class AlgaeMotionProfilingConstants {
-    public static final AngularVelocity CRUISE_VELOCITY = RotationsPerSecond.of(3);
-    public static final AngularAcceleration ACCELERATION = RotationsPerSecondPerSecond.of(2);
-    public static final double JERK = 0;
-  }
-
   /** Contains safety limit constants for the wrist motors. */
   public static final class MotorSafetyLimits {
     /** Maximum forward torque current limit in amperes */

@@ -12,11 +12,7 @@
 */
 package frc.alotobots.reefscape.subsystems.wrist.io;
 
-import static edu.wpi.first.units.Units.Amps;
-import static edu.wpi.first.units.Units.Rotations;
-import static edu.wpi.first.units.Units.RotationsPerSecond;
-import static edu.wpi.first.units.Units.RotationsPerSecondPerSecond;
-import static edu.wpi.first.units.Units.Volts;
+import static edu.wpi.first.units.Units.*;
 
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularAcceleration;
@@ -80,15 +76,6 @@ public interface WristIO {
   public default void setWristPosition(Angle position, int pidSlot) {}
 
   /**
-   * Sets the wrist to run to a target position using closed-loop control. This is likely most
-   * useful in for motion profiling
-   *
-   * @param position The target angle to move to
-   * @param pidSlot The PID slot to use (0 for velocity, 1 for position)
-   */
-  public default void setWristPosition(double position, double velocity, int pidSlot) {}
-
-  /**
    * Sets the wrist to run at a target velocity using closed-loop control.
    *
    * @param velocity The target velocity to move at
@@ -103,13 +90,6 @@ public interface WristIO {
    * @param pidSlot The PID slot to use (0 for velocity, 1 for position)
    */
   public default void setWristPositionMotionMagic(Angle position, int pidSlot) {}
-
-  /**
-   * Set wrist to run to target using a manually profiled
-   *
-   * @param percentOutput The target position to move to
-   * @param pidSlot The PID slot to use
-   */
 
   /**
    * Runs the wrist using direct percentage output (open-loop control).
