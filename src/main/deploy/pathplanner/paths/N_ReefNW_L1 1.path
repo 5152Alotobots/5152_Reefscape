@@ -12,20 +12,20 @@
         "y": 6.896055327868852
       },
       "isLocked": false,
-      "linkedName": "Start North"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.955,
-        "y": 5.433555327868853
+        "x": 3.96,
+        "y": 5.434
       },
       "prevControl": {
-        "x": 3.513230295042496,
-        "y": 6.422175063317387
+        "x": 3.5182302950424957,
+        "y": 6.422619735448534
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Experimental L1 NE"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],

@@ -12,20 +12,20 @@
         "y": 6.116854508196721
       },
       "isLocked": false,
-      "linkedName": "Experimental L1 NE"
+      "linkedName": null
     },
     {
       "anchor": {
         "x": 1.67827868852459,
-        "y": 6.740215163934426
+        "y": 7.231892824103267
       },
       "prevControl": {
         "x": 2.7440465587629816,
-        "y": 6.599137008993833
+        "y": 7.090814669162674
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "North Left Station"
+      "linkedName": "North Right Station"
     }
   ],
   "rotationTargets": [],
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 125.00000000000001
+    "rotation": 126.57303097851924
   },
   "reversed": false,
   "folder": "Battle Creek",
