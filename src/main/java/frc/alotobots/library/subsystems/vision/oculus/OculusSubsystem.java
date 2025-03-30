@@ -86,7 +86,7 @@ public class OculusSubsystem extends SubsystemBase {
 
     // Add to Kalman filter
     // TODO: Fix identifying connection status, processes pose when not connected still
-    // processPose();
+    processPose();
 
     // Notify if we are disconnected
     // TODO: Only send notifcation on STATE CHANGE.
@@ -153,17 +153,22 @@ public class OculusSubsystem extends SubsystemBase {
           "resetPose() called while the robot is enabled. This shouldn't happen! Ignoring.");
       return;
     }
+    // Transform the pose to the Oculus coordinate system w/ offset
+    Pose2d oculusSidePose = pose.plus(ROBOT_TO_OCULUS);
 
     if (POSE_RESET_STRATEGY.equals(PoseResetStrategy.ROBOT_SIDE)) {
       // Reset the pose on the Oculus side
       io.resetPose(0, 0, 0);
       // Set the offset transform to the new pose
-      updateTransform(pose);
+      updateTransform(oculusSidePose);
     } else {
       updateTransform(Pose2d.kZero);
-      io.resetPose(pose.getX(), pose.getY(), pose.getRotation().getDegrees());
+      io.resetPose(
+          oculusSidePose.getX(), oculusSidePose.getY(), oculusSidePose.getRotation().getDegrees());
     }
-    Logger.recordOutput("Oculus/Log", "Resetting pose to: " + pose);
+    Logger.recordOutput(
+        "Oculus/Log",
+        String.format("Resetting pose to WPILib: %s, Oculus: %s", pose, oculusSidePose));
     NotificationPresets.Oculus.sendOculusPoseResetNotification(pose);
   }
 
@@ -226,6 +231,7 @@ public class OculusSubsystem extends SubsystemBase {
    *
    * @return Raw Pose2d from the headset's perspective
    */
+  @AutoLogOutput(key = "Oculus/RawPose")
   private Pose2d getOculusPose() {
     return new Pose2d(getOculusTranslation(), getOculusYaw());
   }

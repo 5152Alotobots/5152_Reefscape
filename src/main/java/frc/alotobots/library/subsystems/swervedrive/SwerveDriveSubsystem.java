@@ -421,6 +421,8 @@ public class SwerveDriveSubsystem extends SubsystemBase {
   public void setPose(Pose2d pose) {
     NotificationPresets.SwerveDrive.sendSwerveDrivePoseResetNotification(pose);
     poseEstimator.resetPosition(rawGyroRotation, getModulePositions(), pose);
+    aprilTagPoseEstimator.resetPosition(rawGyroRotation, getModulePositions(), pose);
+    oculusPoseEstimator.resetPosition(rawGyroRotation, getModulePositions(), pose);
   }
 
   public enum VisionSource {
