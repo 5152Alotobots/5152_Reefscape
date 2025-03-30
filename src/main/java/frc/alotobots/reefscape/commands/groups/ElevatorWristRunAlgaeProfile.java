@@ -22,7 +22,7 @@ import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.commands.ElevatorRunToHeight;
 import frc.alotobots.reefscape.subsystems.wrist.WristSubsystem;
 
-public class ElevatorWristRunManualProfile extends SequentialCommandGroup {
+public class ElevatorWristRunAlgaeProfile extends SequentialCommandGroup {
   /**
    * Creates a new ElevatorWristRun command group that moves both the elevator and wrist to
    * specified positions one after the other. Runs the wrist first, then the elevator. Proxies the
@@ -33,7 +33,7 @@ public class ElevatorWristRunManualProfile extends SequentialCommandGroup {
    * @param wristSubsystem The wrist subsystem
    * @param wristAngle Target angle for the wrist
    */
-  public ElevatorWristRunManualProfile(
+  public ElevatorWristRunAlgaeProfile(
       ElevatorSubsystem elevatorSubsystem,
       WristSubsystem wristSubsystem,
       Distance elevatorHeight,

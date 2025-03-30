@@ -16,6 +16,7 @@ import static edu.wpi.first.units.Units.Degree;
 import static edu.wpi.first.units.Units.Degrees;
 import static edu.wpi.first.units.Units.DegreesPerSecond;
 import static edu.wpi.first.units.Units.Rotation;
+import static edu.wpi.first.units.Units.Rotations;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
 import static edu.wpi.first.units.Units.RotationsPerSecondPerSecond;
 import static edu.wpi.first.units.Units.Seconds;
@@ -105,7 +106,6 @@ public class WristSubsystem extends SubsystemBase {
   public Command wristRunToAngleManualProfile(Angle angle) {
     var adjustedAngle =
         Degrees.of(MathUtil.clamp(angle.in(Degrees), MIN_ANGLE.in(Degrees), MAX_ANGLE.in(Degrees)));
-    targetAngle = adjustedAngle;
 
     TrapezoidProfile.State goal = new TrapezoidProfile.State(adjustedAngle.in(Rotation), 0);
     TrapezoidProfile.State current =
@@ -113,20 +113,26 @@ public class WristSubsystem extends SubsystemBase {
             inputs.mechanismAngle.in(Rotation), inputs.rotationVelocity.in(RotationsPerSecond));
 
     return startRun(
-            profileTimer::restart,
             () -> {
+              profileTimer.restart();
+              targetAngle = adjustedAngle;
+            },
+            () -> {
+              Logger.recordOutput("Wrist/ProfileSetAngle", adjustedAngle.in(Rotations));
               Logger.recordOutput("Wrist/Timer", profileTimer.get());
               Logger.recordOutput("Wrist/ControlType", ControlType.ClosedLoop.POSITION_PROFILED);
               Logger.recordOutput(
                   "Wrist/ProfileFinished", algaeMotionProfile.isFinished(profileTimer.get()));
               Logger.recordOutput("Wrist/ProfileGoalPos", goal.position);
+              Logger.recordOutput("Wrist/ProfileStartPos", current.position);
+
               var setpoint = algaeMotionProfile.calculate(profileTimer.get(), current, goal);
               Logger.recordOutput("Wrist/ProfileVelocity", setpoint.velocity);
               Logger.recordOutput("Wrist/ProfilePosition", setpoint.position);
 
               io.setWristPosition(setpoint.position, setpoint.velocity, 1);
             })
-        .until(() -> algaeMotionProfile.isFinished(profileTimer.get()));
+        .until(this::isAtTargetAngle);
   }
 
   /**

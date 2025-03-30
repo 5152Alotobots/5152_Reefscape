@@ -17,6 +17,7 @@ import static frc.alotobots.reefscape.subsystems.algaeintake.constants.AlgaeInta
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.alotobots.reefscape.subsystems.algaeintake.AlgaeIntakeSubsystem;
+import java.util.function.DoubleSupplier;
 
 /**
  * Command that runs the algae intake in reverse (negative output) to eject game pieces.
@@ -28,7 +29,7 @@ public class AlgaeIntakeEjectOpenLoop extends Command {
   private final AlgaeIntakeSubsystem algaeIntakeSubsystem;
 
   /** The input for controlling eject speed */
-  // private final DoubleSupplier input;
+  private final DoubleSupplier input;
 
   /**
    * Creates a new AlgaeIntakeEjectOpenLoop command.
@@ -37,9 +38,9 @@ public class AlgaeIntakeEjectOpenLoop extends Command {
    * @param input Supplier for the eject speed (0.0 to MAX_OPEN_LOOP_OUTTAKE_PERCENTAGE). Input is
    *     made negative to push outward.
    */
-  public AlgaeIntakeEjectOpenLoop(AlgaeIntakeSubsystem algaeIntakeSubsystem) {
+  public AlgaeIntakeEjectOpenLoop(AlgaeIntakeSubsystem algaeIntakeSubsystem, DoubleSupplier input) {
     this.algaeIntakeSubsystem = algaeIntakeSubsystem;
-    // this.input = input;
+    this.input = input;
     addRequirements(algaeIntakeSubsystem);
   }
 
@@ -50,7 +51,8 @@ public class AlgaeIntakeEjectOpenLoop extends Command {
   @Override
   public void execute() {
     // Take the input speed, clamp it, and make it negative for outtake motion
-    double adjustedOutput = -MathUtil.clamp(1, 0, MAX_OPEN_LOOP_OUTTAKE_PERCENTAGE);
+    double adjustedOutput =
+        -MathUtil.clamp(input.getAsDouble(), 0, MAX_OPEN_LOOP_OUTTAKE_PERCENTAGE);
     algaeIntakeSubsystem.runAtPercentOutput(adjustedOutput);
   }
 

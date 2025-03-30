@@ -22,7 +22,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.alotobots.library.commands.util.LogCommand;
 import frc.alotobots.library.subsystems.bling.BlingSubsystem;
 import frc.alotobots.library.subsystems.bling.commands.BlingCoralEjectedDrive;
-import frc.alotobots.reefscape.commands.groups.ElevatorWristRunManualProfile;
+import frc.alotobots.reefscape.commands.groups.ElevatorWristRun;
 import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEjectThrough;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
@@ -53,7 +53,7 @@ public class StateCoralL4 extends SequentialCommandGroup {
       Trigger coralIntakeReleaseTrigger) {
     addCommands(
         new LogCommand("State/State", "CORAL_L4"),
-        new ElevatorWristRunManualProfile(
+        new ElevatorWristRun(
             elevatorSubsystem,
             wristSubsystem,
             ElevatorConstants.Setpoints.CORAL_L4_PLACE,

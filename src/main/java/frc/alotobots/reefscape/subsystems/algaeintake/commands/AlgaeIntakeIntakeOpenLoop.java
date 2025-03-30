@@ -17,6 +17,7 @@ import static frc.alotobots.reefscape.subsystems.algaeintake.constants.AlgaeInta
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.alotobots.reefscape.subsystems.algaeintake.AlgaeIntakeSubsystem;
+import java.util.function.DoubleSupplier;
 
 /**
  * Command that runs the algae intake to collect game pieces by pulling them inward using positive
@@ -28,9 +29,7 @@ public class AlgaeIntakeIntakeOpenLoop extends Command {
   private final AlgaeIntakeSubsystem algaeIntakeSubsystem;
 
   /** The input for controlling intake speed */
-  // private final DoubleSupplier input;
-
-  // private final Trigger stop;
+  private final DoubleSupplier input;
 
   /**
    * Creates a new AlgaeIntakeIntakeOpenLoop command.
@@ -39,11 +38,11 @@ public class AlgaeIntakeIntakeOpenLoop extends Command {
    * @param input Supplier for the intake speed (0.0 to MAX_OPEN_LOOP_INTAKE_PERCENTAGE) Positive
    *     values pull inward.
    */
-  public AlgaeIntakeIntakeOpenLoop(AlgaeIntakeSubsystem algaeIntakeSubsystem) {
+  public AlgaeIntakeIntakeOpenLoop(
+      AlgaeIntakeSubsystem algaeIntakeSubsystem, DoubleSupplier input) {
     // AlgaeIntakeSubsystem algaeIntakeSubsystem, Trigger stop, DoubleSupplier input) {
-    // this.stop = stop;
     this.algaeIntakeSubsystem = algaeIntakeSubsystem;
-    // this.input = input;
+    this.input = input;
     addRequirements(algaeIntakeSubsystem);
   }
 
@@ -53,7 +52,7 @@ public class AlgaeIntakeIntakeOpenLoop extends Command {
    */
   @Override
   public void execute() {
-    double adjustedOutput = MathUtil.clamp(.5, 0, MAX_OPEN_LOOP_INTAKE_PERCENTAGE);
+    double adjustedOutput = MathUtil.clamp(input.getAsDouble(), 0, MAX_OPEN_LOOP_INTAKE_PERCENTAGE);
     algaeIntakeSubsystem.runAtPercentOutput(adjustedOutput);
   }
 
@@ -74,7 +73,6 @@ public class AlgaeIntakeIntakeOpenLoop extends Command {
    */
   @Override
   public boolean isFinished() {
-    return false;
-    // stop.getAsBoolean() || algaeIntakeSubsystem.isIntakeOccupied();
+    return algaeIntakeSubsystem.isIntakeOccupied();
   }
 }

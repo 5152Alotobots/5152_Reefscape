@@ -133,12 +133,18 @@ public class OI {
   public static final Trigger stateCoralL3Button = codriverController.x();
   public static final Trigger stateCoralL2Button = codriverController.b();
   public static final Trigger stateCoralL1Button = codriverController.a();
+  public static final Trigger stateCoralGroundButton = codriverController.povDown();
 
   public static final Trigger coralIntakeReleaseButton = codriverController.rightTrigger();
+  public static final Trigger algaeIntakeReleaseButton = codriverController.rightTrigger();
 
+  public static final Trigger stateAlgaeL3RemovalButton = null; // codriverController.povLeft();
+  public static final Trigger stateAlgaeL2RemovalButton = null; // codriverController.povRight();
   public static final Trigger stateAlgaeL3Button = codriverController.povLeft();
   public static final Trigger stateAlgaeL2Button = codriverController.povRight();
-  public static final Trigger stateCoralGroundButton = codriverController.povDown();
+  public static final Trigger stateAlgaeGroundButton = codriverController.povUp();
+  public static final Trigger stateAlgaeNetButton = codriverController.back();
+  public static final Trigger stateAlgaeProcessorButton = codriverController.start();
 
   // END CODRIVER -----------------------------------------------------------
 

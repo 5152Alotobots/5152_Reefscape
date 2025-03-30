@@ -44,12 +44,16 @@ import frc.alotobots.reefscape.FieldConstants;
 import frc.alotobots.reefscape.commands.AlignToReefBranch;
 import frc.alotobots.reefscape.commands.groups.Climb;
 import frc.alotobots.reefscape.commands.groups.UnClimb;
-import frc.alotobots.reefscape.commands.states.algae.StateAlgaeRemoveL2;
-import frc.alotobots.reefscape.commands.states.algae.StateAlgaeRemoveL3;
+import frc.alotobots.reefscape.commands.states.algae.StateAlgaeGround;
+import frc.alotobots.reefscape.commands.states.algae.StateAlgaeL2;
+import frc.alotobots.reefscape.commands.states.algae.StateAlgaeL3;
+import frc.alotobots.reefscape.commands.states.algae.StateAlgaeNet;
+import frc.alotobots.reefscape.commands.states.algae.StateAlgaeProcessor;
 import frc.alotobots.reefscape.commands.states.coral.*;
 import frc.alotobots.reefscape.subsystems.algaeintake.AlgaeIntakeSubsystem;
 import frc.alotobots.reefscape.subsystems.algaeintake.commands.AlgaeIntakeEjectOpenLoop;
 import frc.alotobots.reefscape.subsystems.algaeintake.commands.AlgaeIntakeIntakeOpenLoop;
+import frc.alotobots.reefscape.subsystems.algaeintake.constants.AlgaeIntakeConstants;
 import frc.alotobots.reefscape.subsystems.algaeintake.io.AlgaeIntakeIO;
 import frc.alotobots.reefscape.subsystems.algaeintake.io.AlgaeIntakeIOTalonFXReal;
 import frc.alotobots.reefscape.subsystems.climber.ClimberSubsystem;
@@ -306,12 +310,43 @@ public class RobotContainer {
         new StateCoralGround(
             elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, blingSubsystem));
 
+    stateAlgaeGroundButton.toggleOnTrue(
+        new StateAlgaeGround(
+            elevatorSubsystem,
+            wristSubsystem,
+            algaeIntakeSubsystem,
+            blingSubsystem,
+            alignLeftBranchButton));
+
+    stateAlgaeNetButton.toggleOnTrue(
+        new StateAlgaeNet(
+            elevatorSubsystem,
+            wristSubsystem,
+            algaeIntakeSubsystem,
+            blingSubsystem,
+            algaeIntakeReleaseButton));
+    stateAlgaeProcessorButton.toggleOnTrue(
+        new StateAlgaeProcessor(
+            elevatorSubsystem,
+            wristSubsystem,
+            algaeIntakeSubsystem,
+            blingSubsystem,
+            algaeIntakeReleaseButton));
+
     stateAlgaeL2Button.toggleOnTrue(
-        new StateAlgaeRemoveL2(
-            elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, blingSubsystem));
+        new StateAlgaeL2(
+            elevatorSubsystem,
+            wristSubsystem,
+            algaeIntakeSubsystem,
+            blingSubsystem,
+            alignLeftBranchButton));
     stateAlgaeL3Button.toggleOnTrue(
-        new StateAlgaeRemoveL3(
-            elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, blingSubsystem));
+        new StateAlgaeL3(
+            elevatorSubsystem,
+            wristSubsystem,
+            algaeIntakeSubsystem,
+            blingSubsystem,
+            alignLeftBranchButton));
 
     climbButton.toggleOnTrue(
         new Climb(climberSubsystem, elevatorSubsystem, blingSubsystem, () -> -getElevatorAxis()));
@@ -356,8 +391,12 @@ public class RobotContainer {
     wristGroundButton.toggleOnTrue(
         new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.CORAL_GROUND_INTAKE));
     // Algae Intake
-    intakeAlgaeButton.whileTrue(new AlgaeIntakeIntakeOpenLoop(algaeIntakeSubsystem));
-    ejectAlgaeButton.whileTrue(new AlgaeIntakeEjectOpenLoop(algaeIntakeSubsystem));
+    intakeAlgaeButton.whileTrue(
+        new AlgaeIntakeIntakeOpenLoop(
+            algaeIntakeSubsystem, () -> AlgaeIntakeConstants.Setpoints.OpenLoop.INTAKE_PERCENTAGE));
+    ejectAlgaeButton.whileTrue(
+        new AlgaeIntakeEjectOpenLoop(
+            algaeIntakeSubsystem, () -> AlgaeIntakeConstants.Setpoints.OpenLoop.EJECT_PERCENTAGE));
   }
 
   private void configureAutoChooser() {

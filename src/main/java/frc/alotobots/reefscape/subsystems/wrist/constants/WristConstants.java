@@ -54,33 +54,28 @@ public class WristConstants {
   /** Contains position setpoints for different wrist states. */
   public static final class Setpoints {
 
-    /** Angle when wrist is moving to a position. Safe position */
     public static final Angle CRUISE = Degrees.of(90);
-
-    /** Angle when wrist is fully retracted/stowed */
     public static final Angle CORAL_STOWED = Degrees.of(85);
 
-    /** Angle for picking up from coral station */
     public static final Angle CORAL_CORAL_STATION = Degrees.of(31.1);
 
-    /** Angle for L4 placement */
     public static final Angle CORAL_L4_PLACE = Degrees.of(90);
-
-    /** Angle for L3 placement (Equal to the angle for L2 placement) */
     public static final Angle CORAL_L3_PLACE = Degrees.of(125);
-
-    /** Angle for L2 placement (Equal to the angle for L3 placement) */
     public static final Angle CORAL_L2_PLACE = Degrees.of(125);
-
-    /** Angle for L1 placement */
     public static final Angle CORAL_L1_PLACE = Degrees.of(2);
 
-    /** Angle for ground intake */
     public static final Angle CORAL_GROUND_INTAKE = Degrees.of(-7);
 
-    /** Height for L2/L3 algae pickup */
     public static final Angle ALGAE_L2_REMOVAL = Degrees.of(0);
-
     public static final Angle ALGAE_L3_REMOVAL = Degrees.of(0);
+
+    public static final Angle ALGAE_L2_PICKUP = Degrees.of(-17);
+    public static final Angle ALGAE_L3_PICKUP = Degrees.of(-17);
+
+    public static final Angle ALGAE_STOWED = Degrees.of(85);
+    public static final Angle ALGAE_PROCESSOR = Degrees.of(-17);
+    public static final Angle ALGAE_NET = Degrees.of(0);
+
+    public static final Angle ALGAE_GROUND_INTAKE = Degrees.of(1);
   }
 }
