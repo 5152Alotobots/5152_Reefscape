@@ -12,7 +12,7 @@
 */
 package frc.alotobots.library.subsystems.vision.oculus.constants;
 
-import static edu.wpi.first.units.Units.Seconds;
+import static edu.wpi.first.units.Units.Milliseconds;
 
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
@@ -62,7 +62,7 @@ public class OculusConstants {
       new Transform2d(0.153, -0.26, Rotation2d.fromDegrees(-90));
 
   /** Timeout threshold for considering Quest disconnected (seconds) */
-  public static final Time OCULUS_CONNECTION_TIMEOUT = Seconds.of(1.0);
+  public static final Time OCULUS_CONNECTION_TIMEOUT = Milliseconds.of(350);
 
   /**
    * Standard deviations representing how much we "trust" the position from the Oculus. By default,

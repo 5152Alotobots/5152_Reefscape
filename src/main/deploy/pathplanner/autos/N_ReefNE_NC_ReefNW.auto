@@ -82,7 +82,7 @@
       ]
     }
   },
-  "resetOdom": true,
+  "resetOdom": false,
   "folder": "Two Piece",
   "choreoAuto": false
 }

@@ -12,6 +12,7 @@
 */
 package frc.alotobots.library.subsystems.vision.oculus.io;
 
+import static edu.wpi.first.units.Units.Microseconds;
 import static edu.wpi.first.units.Units.Seconds;
 import static frc.alotobots.library.subsystems.vision.oculus.constants.OculusConstants.OCULUS_CONNECTION_TIMEOUT;
 import static frc.alotobots.library.subsystems.vision.oculus.util.OculusStatus.Miso.*;
@@ -109,12 +110,9 @@ public class OculusIOReal implements OculusIO {
 
   @Override
   public void updateInputs(OculusIOInputs inputs) {
-    Logger.recordOutput(
-        "Oculus/Debug",
-        String.format(
-            "timestamp %f, hbReqSub, %f", Timer.getTimestamp(), heartbeatRequestSub.get()));
     inputs.connected =
-        Seconds.of(Timer.getTimestamp() - heartbeatRequestSub.getLastChange())
+        Seconds.of(Timer.getTimestamp())
+            .minus(Microseconds.of(questTimestamp.getLastChange()))
             .lt(OCULUS_CONNECTION_TIMEOUT);
     inputs.position = questPosition.get();
     inputs.quaternion = questQuaternion.get();
