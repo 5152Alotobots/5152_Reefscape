@@ -57,7 +57,7 @@ public class AprilTagConstants {
   public static double MULTI_TAG_LINEAR_STD_DEV_BASE = 0.08; // Meters
   public static double MULTI_TAG_ANGULAR_STD_DEV_BASE = 1000; // Radians
 
-  public static double SINGLE_TAG_LINEAR_STD_DEV_BASE = 0.12; // Meters
+  public static double SINGLE_TAG_LINEAR_STD_DEV_BASE = 0.18; // Meters
   public static double SINGLE_TAG_ANGULAR_STD_DEV_BASE =
       1000; // DO NOT USE FOR HEADING CORRECTION! MAKES LOOP!!!
 

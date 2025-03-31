@@ -41,10 +41,10 @@ public final class ClimberRevServoRealConstants {
   public static final int CAGE_SWITCH_2_ID = 1;
 
   /** The pulse width for the plunger servo at 0 degrees DOWN */
-  public static final int PLUNGER_SERVO_0_PW = 0;
+  public static final int PLUNGER_SERVO_0_PW = 600;
 
-  /** The pulse width for the plunger servo at 270 degrees */
-  public static final int PLUNGER_SERVO_270_PW = 2500;
+  /** The pulse width for the plunger servo at 180 degrees */
+  public static final int PLUNGER_SERVO_180_PW = 2500;
 
   /** The pulse width for the locking servo in the open position */
   public static final int LOCKING_SERVO_OPEN_PW = 1994;
@@ -52,11 +52,11 @@ public final class ClimberRevServoRealConstants {
   /** The pulse width for the locking servo in the closed position */
   public static final int LOCKING_SERVO_CLOSED_PW = 1376;
 
-  public static final int ELEVATOR_LOCKING_LEFT_SERVO_OPEN_PW = 2000;
+  public static final int ELEVATOR_LOCKING_LEFT_SERVO_OPEN_PW = 1600;
 
-  public static final int ELEVATOR_LOCKING_LEFT_SERVO_CLOSED_PW = 750;
+  public static final int ELEVATOR_LOCKING_LEFT_SERVO_CLOSED_PW = 1050;
 
-  public static final int ELEVATOR_LOCKING_RIGHT_SERVO_OPEN_PW = 750;
+  public static final int ELEVATOR_LOCKING_RIGHT_SERVO_OPEN_PW = 1470;
 
-  public static final int ELEVATOR_LOCKING_RIGHT_SERVO_CLOSED_PW = 2000;
+  public static final int ELEVATOR_LOCKING_RIGHT_SERVO_CLOSED_PW = 2050;
 }

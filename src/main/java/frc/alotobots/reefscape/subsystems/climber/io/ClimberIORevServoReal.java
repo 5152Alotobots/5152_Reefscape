@@ -150,7 +150,7 @@ public class ClimberIORevServoReal implements ClimberIO {
   public void setPlungerServoPosition(Angle angle) {
     plungerServoChannel.setPulseWidth(
         (int)
-            ((angle.in(Rotations) * (PLUNGER_SERVO_270_PW - PLUNGER_SERVO_0_PW))
+            ((angle.in(Rotations) * (PLUNGER_SERVO_180_PW - PLUNGER_SERVO_0_PW))
                 + PLUNGER_SERVO_0_PW));
   }
 
