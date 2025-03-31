@@ -19,11 +19,9 @@ import static frc.alotobots.library.subsystems.vision.oculus.util.OculusStatus.M
 import static frc.alotobots.util.NotificationPresets.Oculus.*;
 
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.networktables.*;
 import edu.wpi.first.wpilibj.Timer;
 import frc.alotobots.library.subsystems.vision.oculus.util.QuestCommandRetryHandler;
-import frc.alotobots.util.NotificationPresets;
 import org.littletonrobotics.junction.Logger;
 
 /** Implementation of OculusIO for real hardware communication via NetworkTables. */
@@ -76,16 +74,11 @@ public class OculusIOReal implements OculusIO {
   /** Command retry handler for Quest commands */
   private final QuestCommandRetryHandler retryHandler;
 
-  /**
-   * Attempts to run a command with success and failure callbacks.
-   */
+  /** Attempts to run a command with success and failure callbacks. */
   private void tryCommandUntilOk(
-          int maxAttempts,
-          int command,
-          int expectedResponse,
-          Runnable onSuccess,
-          Runnable onFailure) {
-    retryHandler.startRetry(maxAttempts, command, expectedResponse, COMMAND_CLEAR, onSuccess, onFailure);
+      int maxAttempts, int command, int expectedResponse, Runnable onSuccess, Runnable onFailure) {
+    retryHandler.startRetry(
+        maxAttempts, command, expectedResponse, COMMAND_CLEAR, onSuccess, onFailure);
   }
 
   /**
@@ -99,11 +92,11 @@ public class OculusIOReal implements OculusIO {
     questFrameCount = nt4Table.getIntegerTopic("frameCount").subscribe(-1);
     questTimestamp = nt4Table.getDoubleTopic("timestamp").subscribe(-1.0);
     questPosition =
-            nt4Table.getFloatArrayTopic("position").subscribe(new float[] {0.0f, 0.0f, 0.0f});
+        nt4Table.getFloatArrayTopic("position").subscribe(new float[] {0.0f, 0.0f, 0.0f});
     questQuaternion =
-            nt4Table.getFloatArrayTopic("quaternion").subscribe(new float[] {0.0f, 0.0f, 0.0f, 0.0f});
+        nt4Table.getFloatArrayTopic("quaternion").subscribe(new float[] {0.0f, 0.0f, 0.0f, 0.0f});
     questEulerAngles =
-            nt4Table.getFloatArrayTopic("eulerAngles").subscribe(new float[] {0.0f, 0.0f, 0.0f});
+        nt4Table.getFloatArrayTopic("eulerAngles").subscribe(new float[] {0.0f, 0.0f, 0.0f});
     questBatteryPercent = nt4Table.getDoubleTopic("device/batteryPercent").subscribe(-1.0);
     questTrackingStatus = nt4Table.getBooleanTopic("device/isTracking").subscribe(false);
     heartbeatRequestSub = nt4Table.getDoubleTopic("heartbeat/quest_to_robot").subscribe(0.0);
@@ -116,9 +109,13 @@ public class OculusIOReal implements OculusIO {
 
   @Override
   public void updateInputs(OculusIOInputs inputs) {
+    Logger.recordOutput(
+        "Oculus/Debug",
+        String.format(
+            "timestamp %f, hbReqSub, %f", Timer.getTimestamp(), heartbeatRequestSub.get()));
     inputs.connected =
-            Seconds.of(Timer.getTimestamp() - heartbeatRequestSub.getLastChange())
-                    .lt(OCULUS_CONNECTION_TIMEOUT);
+        Seconds.of(Timer.getTimestamp() - heartbeatRequestSub.getLastChange())
+            .lt(OCULUS_CONNECTION_TIMEOUT);
     inputs.position = questPosition.get();
     inputs.quaternion = questQuaternion.get();
     inputs.eulerAngles = questEulerAngles.get();
@@ -136,42 +133,45 @@ public class OculusIOReal implements OculusIO {
 
   @Override
   public void resetPose(Pose2d oculusTargetPose) {
-    resetPosePub.set(new double[] {oculusTargetPose.getX(), oculusTargetPose.getY(), oculusTargetPose.getRotation().getDegrees()});
+    resetPosePub.set(
+        new double[] {
+          oculusTargetPose.getX(),
+          oculusTargetPose.getY(),
+          oculusTargetPose.getRotation().getDegrees()
+        });
 
     // Using callbacks to handle success and failure
     tryCommandUntilOk(
-            5,
-            COMMAND_RESET_POSE,
-            STATUS_POSE_RESET_COMPLETE,
-            () -> {
-              Logger.recordOutput("Oculus/Log", "Pose reset successful");
-              sendOculusPoseResetNotification(oculusTargetPose);
-              cleanupResponses();
-            },
-            () -> {
-              Logger.recordOutput("Oculus/Log", "Pose reset failed");
-              sendOculusPoseResetFailedNotification();
-            }
-    );
+        5,
+        COMMAND_RESET_POSE,
+        STATUS_POSE_RESET_COMPLETE,
+        () -> {
+          Logger.recordOutput("Oculus/Log", "Pose reset successful");
+          sendOculusPoseResetNotification(oculusTargetPose);
+          cleanupResponses();
+        },
+        () -> {
+          Logger.recordOutput("Oculus/Log", "Pose reset failed");
+          sendOculusPoseResetFailedNotification();
+        });
   }
 
   @Override
   public void resetHeading() {
     // Using callbacks to handle success and failure
     tryCommandUntilOk(
-            5,
-            COMMAND_RESET_HEADING,
-            STATUS_HEADING_RESET_COMPLETE,
-            () -> {
-              Logger.recordOutput("Oculus/Log", "Heading reset successful");
-              sendOculusHeadingResetNotification();
-              cleanupResponses();
-            },
-            () -> {
-              Logger.recordOutput("Oculus/Log", "Heading reset failed");
-              sendOculusHeadingResetFailedNotification();
-            }
-    );
+        5,
+        COMMAND_RESET_HEADING,
+        STATUS_HEADING_RESET_COMPLETE,
+        () -> {
+          Logger.recordOutput("Oculus/Log", "Heading reset successful");
+          sendOculusHeadingResetNotification();
+          cleanupResponses();
+        },
+        () -> {
+          Logger.recordOutput("Oculus/Log", "Heading reset failed");
+          sendOculusHeadingResetFailedNotification();
+        });
   }
 
   private void cleanupResponses() {

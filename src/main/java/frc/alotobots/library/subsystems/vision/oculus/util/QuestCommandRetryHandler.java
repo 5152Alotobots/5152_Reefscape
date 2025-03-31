@@ -1,12 +1,22 @@
+/*
+* ALOTOBOTS - FRC Team 5152
+  https://github.com/5152Alotobots
+* Copyright (C) 2025 ALOTOBOTS
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* Source code must be publicly available on GitHub or an alternative web accessible site
+*/
 package frc.alotobots.library.subsystems.vision.oculus.util;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.networktables.IntegerPublisher;
+import edu.wpi.first.wpilibj.Timer;
 import org.littletonrobotics.junction.Logger;
 
-/**
- * Handler for retrying Quest commands with proper delays between attempts.
- */
+/** Handler for retrying Quest commands with proper delays between attempts. */
 public class QuestCommandRetryHandler {
   private final IntegerPublisher questMosi;
 
@@ -43,24 +53,20 @@ public class QuestCommandRetryHandler {
    * @param retryDelaySeconds Delay between retry attempts (seconds)
    */
   public QuestCommandRetryHandler(
-          IntegerPublisher questMosi,
-          double commandDelaySeconds,
-          double retryDelaySeconds) {
+      IntegerPublisher questMosi, double commandDelaySeconds, double retryDelaySeconds) {
     this.questMosi = questMosi;
     this.commandDelaySeconds = commandDelaySeconds;
     this.retryDelaySeconds = retryDelaySeconds;
   }
 
-  /**
-   * Start a new command retry sequence
-   */
+  /** Start a new command retry sequence */
   public void startRetry(
-          int maxAttempts,
-          int command,
-          int expectedResponse,
-          int clearCommand,
-          Runnable onSuccess,
-          Runnable onFailure) {
+      int maxAttempts,
+      int command,
+      int expectedResponse,
+      int clearCommand,
+      Runnable onSuccess,
+      Runnable onFailure) {
 
     this.maxAttempts = maxAttempts;
     this.command = command;
@@ -76,9 +82,7 @@ public class QuestCommandRetryHandler {
     lastCommandTime = Timer.getTimestamp();
   }
 
-  /**
-   * Simplified method that allows skipping callbacks
-   */
+  /** Simplified method that allows skipping callbacks */
   public void startRetry(int maxAttempts, int command, int expectedResponse, int clearCommand) {
     startRetry(maxAttempts, command, expectedResponse, clearCommand, null, null);
   }
@@ -122,7 +126,8 @@ public class QuestCommandRetryHandler {
       commandSent = true;
       lastCommandTime = currentTime;
       currentAttempt++;
-      Logger.recordOutput("Oculus/Log", "Sent command, attempt " + currentAttempt + " of " + maxAttempts);
+      Logger.recordOutput(
+          "Oculus/Log", "Sent command, attempt " + currentAttempt + " of " + maxAttempts);
       return;
     }
 
@@ -144,13 +149,12 @@ public class QuestCommandRetryHandler {
       clearSent = false;
       commandSent = false;
       // Next attempt will start on next update call
-      Logger.recordOutput("Oculus/Log", "Preparing retry " + (currentAttempt+1) + " of " + maxAttempts);
+      Logger.recordOutput(
+          "Oculus/Log", "Preparing retry " + (currentAttempt + 1) + " of " + maxAttempts);
     }
   }
 
-  /**
-   * Returns whether a command is currently being executed
-   */
+  /** Returns whether a command is currently being executed */
   public boolean isCommandActive() {
     return isActive;
   }

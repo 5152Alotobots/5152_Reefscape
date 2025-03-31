@@ -98,16 +98,14 @@ public final class NotificationPresets {
     /** Tracks whether a tracking lost notification has already been sent */
     private static boolean oculusTrackingLostNotificationSent = false;
 
-    /**
-     * Sends a notification when the Oculus pose reset fails.
-     */
+    /** Sends a notification when the Oculus pose reset fails. */
     public static void sendOculusPoseResetFailedNotification() {
       Elastic.sendAlert(
-              new Elastic.ElasticNotification(
-                      Elastic.ElasticNotification.NotificationLevel.ERROR,
-                      "Oculus Pose Reset Failed",
-                      "Not using Quest",
-                      3000));
+          new Elastic.ElasticNotification(
+              Elastic.ElasticNotification.NotificationLevel.ERROR,
+              "Oculus Pose Reset Failed",
+              "Not using Quest",
+              3000));
     }
 
     /**
@@ -127,28 +125,24 @@ public final class NotificationPresets {
               3000));
     }
 
-    /**
-     * Sends a notification when the Oculus heading reset fails.
-     */
+    /** Sends a notification when the Oculus heading reset fails. */
     public static void sendOculusHeadingResetFailedNotification() {
       Elastic.sendAlert(
-              new Elastic.ElasticNotification(
-                      Elastic.ElasticNotification.NotificationLevel.ERROR,
-                      "Oculus Heading Reset Failed",
-                      "Not using Quest",
-                      3000));
+          new Elastic.ElasticNotification(
+              Elastic.ElasticNotification.NotificationLevel.ERROR,
+              "Oculus Heading Reset Failed",
+              "Not using Quest",
+              3000));
     }
 
-    /**
-     * Sends a notification when the Oculus heading is reset.
-     */
+    /** Sends a notification when the Oculus heading is reset. */
     public static void sendOculusHeadingResetNotification() {
       Elastic.sendAlert(
-              new Elastic.ElasticNotification(
-                      Elastic.ElasticNotification.NotificationLevel.INFO,
-                      "Oculus Heading Reset",
-                      "Reset complete",
-                      3000));
+          new Elastic.ElasticNotification(
+              Elastic.ElasticNotification.NotificationLevel.INFO,
+              "Oculus Heading Reset",
+              "Reset complete",
+              3000));
     }
 
     /**
