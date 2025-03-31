@@ -181,8 +181,8 @@ public class OculusIOSim implements OculusIO {
   }
 
   @Override
-  public void resetPose(double x, double y, double rotation) {
-    resetTargetPose = new Pose2d(x, y, Rotation2d.fromDegrees(rotation));
+  public void resetPose(Pose2d oculusTargetPose) {
+    resetTargetPose = oculusTargetPose;
 
     // Force clear mosi
     currentMosiValue = COMMAND_CLEAR;

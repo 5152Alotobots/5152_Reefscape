@@ -12,14 +12,18 @@
 */
 package frc.alotobots.library.subsystems.vision.oculus.io;
 
-import static edu.wpi.first.units.Units.Milliseconds;
+import static edu.wpi.first.units.Units.Seconds;
 import static frc.alotobots.library.subsystems.vision.oculus.constants.OculusConstants.OCULUS_CONNECTION_TIMEOUT;
 import static frc.alotobots.library.subsystems.vision.oculus.util.OculusStatus.Miso.*;
 import static frc.alotobots.library.subsystems.vision.oculus.util.OculusStatus.Mosi.*;
+import static frc.alotobots.util.NotificationPresets.Oculus.*;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.networktables.*;
 import edu.wpi.first.wpilibj.Timer;
+import frc.alotobots.library.subsystems.vision.oculus.util.QuestCommandRetryHandler;
+import frc.alotobots.util.NotificationPresets;
 import org.littletonrobotics.junction.Logger;
 
 /** Implementation of OculusIO for real hardware communication via NetworkTables. */
@@ -51,6 +55,9 @@ public class OculusIOReal implements OculusIO {
   /** Subscriber for battery percentage updates */
   private final DoubleSubscriber questBatteryPercent;
 
+  /** Subscriber for tracking status */
+  private final BooleanSubscriber questTrackingStatus;
+
   /** Subscriber for heartbeat requests */
   private final DoubleSubscriber heartbeatRequestSub;
 
@@ -66,6 +73,21 @@ public class OculusIOReal implements OculusIO {
   /** Pose transform tracking for robot code side updates */
   private Pose2d resetPosition = new Pose2d();
 
+  /** Command retry handler for Quest commands */
+  private final QuestCommandRetryHandler retryHandler;
+
+  /**
+   * Attempts to run a command with success and failure callbacks.
+   */
+  private void tryCommandUntilOk(
+          int maxAttempts,
+          int command,
+          int expectedResponse,
+          Runnable onSuccess,
+          Runnable onFailure) {
+    retryHandler.startRetry(maxAttempts, command, expectedResponse, COMMAND_CLEAR, onSuccess, onFailure);
+  }
+
   /**
    * Creates a new OculusIOReal instance and initializes all NetworkTable publishers and
    * subscribers.
@@ -77,54 +99,79 @@ public class OculusIOReal implements OculusIO {
     questFrameCount = nt4Table.getIntegerTopic("frameCount").subscribe(-1);
     questTimestamp = nt4Table.getDoubleTopic("timestamp").subscribe(-1.0);
     questPosition =
-        nt4Table.getFloatArrayTopic("position").subscribe(new float[] {0.0f, 0.0f, 0.0f});
+            nt4Table.getFloatArrayTopic("position").subscribe(new float[] {0.0f, 0.0f, 0.0f});
     questQuaternion =
-        nt4Table.getFloatArrayTopic("quaternion").subscribe(new float[] {0.0f, 0.0f, 0.0f, 0.0f});
+            nt4Table.getFloatArrayTopic("quaternion").subscribe(new float[] {0.0f, 0.0f, 0.0f, 0.0f});
     questEulerAngles =
-        nt4Table.getFloatArrayTopic("eulerAngles").subscribe(new float[] {0.0f, 0.0f, 0.0f});
+            nt4Table.getFloatArrayTopic("eulerAngles").subscribe(new float[] {0.0f, 0.0f, 0.0f});
     questBatteryPercent = nt4Table.getDoubleTopic("device/batteryPercent").subscribe(-1.0);
+    questTrackingStatus = nt4Table.getBooleanTopic("device/isTracking").subscribe(false);
     heartbeatRequestSub = nt4Table.getDoubleTopic("heartbeat/quest_to_robot").subscribe(0.0);
     heartbeatResponsePub = nt4Table.getDoubleTopic("heartbeat/robot_to_quest").publish();
     resetPosePub = nt4Table.getDoubleArrayTopic("resetpose").publish();
+
+    // Initialize the retry handler
+    retryHandler = new QuestCommandRetryHandler(questMosi, 0.05, 0.2);
   }
 
   @Override
   public void updateInputs(OculusIOInputs inputs) {
     inputs.connected =
-        Milliseconds.of(Timer.getTimestamp() - heartbeatRequestSub.getLastChange())
-            .lt(OCULUS_CONNECTION_TIMEOUT);
+            Seconds.of(Timer.getTimestamp() - heartbeatRequestSub.getLastChange())
+                    .lt(OCULUS_CONNECTION_TIMEOUT);
     inputs.position = questPosition.get();
     inputs.quaternion = questQuaternion.get();
     inputs.eulerAngles = questEulerAngles.get();
     inputs.timestamp = questTimestamp.getAtomic().serverTime;
     inputs.frameCount = (int) questFrameCount.get();
     inputs.batteryPercent = questBatteryPercent.get();
+    inputs.isTracking = questTrackingStatus.get();
     inputs.misoValue = (int) questMiso.get();
+
+    // Update the retry handler
+    retryHandler.update((int) questMiso.get(), COMMAND_CLEAR);
+
     processHeartbeat();
-    cleanupResponses();
   }
 
   @Override
-  public void resetPose(double x, double y, double rotation) {
-    resetPosePub.set(new double[] {x, y, rotation});
+  public void resetPose(Pose2d oculusTargetPose) {
+    resetPosePub.set(new double[] {oculusTargetPose.getX(), oculusTargetPose.getY(), oculusTargetPose.getRotation().getDegrees()});
 
-    // Force clear mosi
-    questMosi.set(COMMAND_CLEAR);
-
-    // Send reset command
-    questMosi.set(COMMAND_RESET_POSE);
-
-    // Don't clear resetPosePub to prevent race conditions.
-    // It will not reset unless we request it again.
+    // Using callbacks to handle success and failure
+    tryCommandUntilOk(
+            5,
+            COMMAND_RESET_POSE,
+            STATUS_POSE_RESET_COMPLETE,
+            () -> {
+              Logger.recordOutput("Oculus/Log", "Pose reset successful");
+              sendOculusPoseResetNotification(oculusTargetPose);
+              cleanupResponses();
+            },
+            () -> {
+              Logger.recordOutput("Oculus/Log", "Pose reset failed");
+              sendOculusPoseResetFailedNotification();
+            }
+    );
   }
 
   @Override
   public void resetHeading() {
-    // Force clear mosi
-    questMosi.set(COMMAND_CLEAR);
-
-    // Send reset command
-    questMosi.set(COMMAND_RESET_HEADING);
+    // Using callbacks to handle success and failure
+    tryCommandUntilOk(
+            5,
+            COMMAND_RESET_HEADING,
+            STATUS_HEADING_RESET_COMPLETE,
+            () -> {
+              Logger.recordOutput("Oculus/Log", "Heading reset successful");
+              sendOculusHeadingResetNotification();
+              cleanupResponses();
+            },
+            () -> {
+              Logger.recordOutput("Oculus/Log", "Heading reset failed");
+              sendOculusHeadingResetFailedNotification();
+            }
+    );
   }
 
   private void cleanupResponses() {

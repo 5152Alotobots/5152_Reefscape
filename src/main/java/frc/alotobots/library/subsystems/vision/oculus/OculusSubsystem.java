@@ -85,21 +85,28 @@ public class OculusSubsystem extends SubsystemBase {
     Logger.processInputs("Oculus", inputs);
 
     // Add to Kalman filter
-    // TODO: Fix identifying connection status, processes pose when not connected still
     processPose();
 
     // Notify if we are disconnected
-    // TODO: Only send notifcation on STATE CHANGE.
-    // if (!inputs.connected) {
-    //   NotificationPresets.Oculus.sendOculusDisconnectedNotification();
-    // }
+    if (!inputs.connected) {
+      NotificationPresets.Oculus.sendOculusDisconnectedNotification();
+    } else {
+      NotificationPresets.Oculus.sendOculusReconnectedNotification();
+    }
 
-    // Check battery levels
-    // if (inputs.batteryPercent < BATTERY_CRITICAL_PERCENT) {
-    //   NotificationPresets.Oculus.sendOculusBatteryCriticalNotification();
-    // } else if (inputs.batteryPercent < BATTERY_LOW_PERCENT) {
-    //   NotificationPresets.Oculus.sendOculusBatteryLowNotification();
-    // }
+    // Notify for battery levels
+    if (inputs.batteryPercent < BATTERY_CRITICAL_PERCENT) {
+      NotificationPresets.Oculus.sendOculusBatteryCriticalNotification();
+    } else if (inputs.batteryPercent < BATTERY_LOW_PERCENT) {
+      NotificationPresets.Oculus.sendOculusBatteryLowNotification();
+    }
+
+    // Notify for tracking status
+    if (!inputs.isTracking) {
+      NotificationPresets.Oculus.sendOculusTrackingLostNotification(inputs.totalTrackingLostEvents);
+    } else {
+      NotificationPresets.Oculus.sendOculusTrackingRegainedNotification();
+    }
   }
 
   /**
@@ -158,13 +165,12 @@ public class OculusSubsystem extends SubsystemBase {
 
     if (POSE_RESET_STRATEGY.equals(PoseResetStrategy.ROBOT_SIDE)) {
       // Reset the pose on the Oculus side
-      io.resetPose(0, 0, 0);
+      io.resetPose(Pose2d.kZero);
       // Set the offset transform to the new pose
       updateTransform(oculusSidePose);
     } else {
       updateTransform(Pose2d.kZero);
-      io.resetPose(
-          oculusSidePose.getX(), oculusSidePose.getY(), oculusSidePose.getRotation().getDegrees());
+      io.resetPose(oculusSidePose);
     }
     Logger.recordOutput(
         "Oculus/Log",
@@ -191,11 +197,11 @@ public class OculusSubsystem extends SubsystemBase {
   }
 
   /**
-   * Processes the current pose data and forwards it to the consumer if connected. This enables
-   * integration with pose estimation systems.
+   * Processes the current pose data and forwards it to the consumer if connected and properly
+   * tracking. This enables integration with pose estimation systems.
    */
   private void processPose() {
-    if (inputs.connected) {
+    if (inputs.connected && inputs.isTracking) {
       Pose2d pose = getPose();
       double timestamp = getTimestamp();
 
