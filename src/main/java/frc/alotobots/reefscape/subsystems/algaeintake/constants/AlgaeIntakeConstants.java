@@ -50,7 +50,7 @@ public class AlgaeIntakeConstants {
   public static final class Setpoints {
     public static final class OpenLoop {
       /** Default percent output for intake operation */
-      public static final double INTAKE_PERCENTAGE = 0.7;
+      public static final double INTAKE_PERCENTAGE = 0.5;
 
       /** Default percent output for eject operation */
       public static final double EJECT_PERCENTAGE = 1.0;
