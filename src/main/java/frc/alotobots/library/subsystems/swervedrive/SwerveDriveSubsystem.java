@@ -444,11 +444,15 @@ public class SwerveDriveSubsystem extends SubsystemBase {
       double timestampSeconds,
       Matrix<N3, N1> visionMeasurementStdDevs) {
 
-    // Always the measurement to the main pose estimator
-    poseEstimator.addVisionMeasurement(
-        visionRobotPoseMeters, timestampSeconds, visionMeasurementStdDevs);
+    // Set extremely high std dev for rotation
+    Matrix<N3, N1> rotationIgnoredStdDevs = visionMeasurementStdDevs.copy();
+    rotationIgnoredStdDevs.set(2, 0, 1000.0);
 
-    // Add the source to its respective pose estimator
+    // Always add this measurement to the main pose estimator (no rotation)
+    poseEstimator.addVisionMeasurement(
+        visionRobotPoseMeters, timestampSeconds, rotationIgnoredStdDevs);
+
+    // Add the source to its respective pose estimator (w/ rotation)
     switch (source) {
       case APRIL_TAG:
         aprilTagPoseEstimator.addVisionMeasurement(

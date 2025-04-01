@@ -41,6 +41,7 @@ import frc.alotobots.library.subsystems.vision.photonvision.apriltag.AprilTagSub
 import frc.alotobots.library.subsystems.vision.photonvision.apriltag.constants.AprilTagConstants;
 import frc.alotobots.library.subsystems.vision.photonvision.apriltag.io.*;
 import frc.alotobots.reefscape.FieldConstants;
+import frc.alotobots.reefscape.commands.AlignToCoralStation;
 import frc.alotobots.reefscape.commands.AlignToReefBranch;
 import frc.alotobots.reefscape.commands.groups.Climb;
 import frc.alotobots.reefscape.commands.groups.UnClimb;
@@ -274,17 +275,11 @@ public class RobotContainer {
     unClimbButton.onTrue(new UnClimb(climberSubsystem, elevatorSubsystem));
 
     alignLeftBranchButton.toggleOnTrue(
-        new AlignToReefBranch(
-                swerveDriveSubsystem,
-                AlignToReefBranch.ReefBranchSide.LEFT,
-                FieldConstants.Level.L4)
-            .withTimeout(1));
+        new AlignToReefBranch(swerveDriveSubsystem, FieldConstants.BranchType.LEFT).withTimeout(1));
     alignRightBranchButton.toggleOnTrue(
-        new AlignToReefBranch(
-                swerveDriveSubsystem,
-                AlignToReefBranch.ReefBranchSide.RIGHT,
-                FieldConstants.Level.L4)
+        new AlignToReefBranch(swerveDriveSubsystem, FieldConstants.BranchType.RIGHT)
             .withTimeout(1));
+    alignNearestCoralStationButton.toggleOnTrue(new AlignToCoralStation(swerveDriveSubsystem));
 
     // BACKUP -----------------------------------------------------------------------------
     // Coral Intake

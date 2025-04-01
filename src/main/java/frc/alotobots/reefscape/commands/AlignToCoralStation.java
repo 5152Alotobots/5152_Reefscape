@@ -12,6 +12,9 @@
 */
 package frc.alotobots.reefscape.commands;
 
+import static edu.wpi.first.units.Units.Degrees;
+import static edu.wpi.first.units.Units.Meters;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
@@ -24,30 +27,24 @@ import frc.alotobots.library.subsystems.swervedrive.SwerveDriveSubsystem;
 import frc.alotobots.library.subsystems.swervedrive.commands.DrivePrecisionAlign;
 import frc.alotobots.reefscape.FieldConstants;
 
-import static edu.wpi.first.units.Units.*;
-
-/** Command that aligns the robot to the closest reef branch on the specified side. */
-public class AlignToReefBranch extends Command {
+/** Command that aligns the robot to the closest coral station on the specified side. */
+public class AlignToCoralStation extends Command {
 
   private final Distance ALIGN_ALLOW_DISTANCE = Meters.of(0.25); // Allowable distance for alignment
   private final Angle HEADING_MATCH_REQUIREMENT = Degrees.of(30); // Allowable heading difference
-  private final Transform2d ALIGN_OFFSET_TRANSFORM = new Transform2d(new Translation2d(-0.35, 0), Rotation2d.kZero); // Distance from the reef branch to align at
+  private final Transform2d ALIGN_OFFSET_TRANSFORM = new Transform2d(new Translation2d(-0.35, 0), Rotation2d.kZero); // Distance from the coral station pose to align at
 
   private final SwerveDriveSubsystem swerveDriveSubsystem;
   private final DrivePrecisionAlign request;
-  private final FieldConstants.BranchType branchType;
   private DriverStation.Alliance alliance;
   private Pose2d targetPose;
 
   /**
-   * Creates a new AlignToReefBranch command.
+   * Creates a new AlignToCoralStation command.
    *
    * @param swerveDriveSubsystem The swerve drive subsystem
-   * @param branchType The type of the reef branch to align to (LEFT, RIGHT, ANY)
    */
-  public AlignToReefBranch(
-      SwerveDriveSubsystem swerveDriveSubsystem, FieldConstants.BranchType branchType) {
-    this.branchType = branchType;
+  public AlignToCoralStation(SwerveDriveSubsystem swerveDriveSubsystem) {
     this.swerveDriveSubsystem = swerveDriveSubsystem;
     this.request = new DrivePrecisionAlign(swerveDriveSubsystem, 0.03);
     addRequirements(swerveDriveSubsystem);
@@ -61,11 +58,12 @@ public class AlignToReefBranch extends Command {
     if (DriverStation.getAlliance().isPresent()) {
       alliance = DriverStation.getAlliance().get();
 
-      // Get the appropriate reef branch pose based on alliance and side
-      Pose2d targetBranchPose =
-          FieldConstants.BranchPositions.getClosestBranch(currentPose, alliance, branchType);
+      // Get the appropriate station pose based on alliance
+      Pose2d targetStationPose =
+          FieldConstants.CoralStationPositions.getClosestStation(currentPose, alliance);
 
-      targetPose = targetBranchPose.transformBy(ALIGN_OFFSET_TRANSFORM);
+      targetPose = targetStationPose.transformBy(ALIGN_OFFSET_TRANSFORM);
+
       // Put on dash
       swerveDriveSubsystem.logAutoAlignTargetPose(targetPose);
 

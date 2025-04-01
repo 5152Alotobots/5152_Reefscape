@@ -73,7 +73,7 @@ public class OculusConstants {
       VecBuilder.fill(
           0.015, // Trust down to 50mm
           0.015, // Trust down to 50mm
-          1000 // Don't use for rotation at all
+          0.0872665 // 5deg
           );
 
   /**
