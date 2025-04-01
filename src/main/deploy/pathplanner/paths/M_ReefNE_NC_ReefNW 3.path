@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.5,
-        "y": 6.82
+        "x": 1.25,
+        "y": 6.85
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.42436422413793,
-        "y": 6.707202586206897
+        "x": 3.17436422413793,
+        "y": 6.737202586206896
       },
       "isLocked": false,
       "linkedName": "North Left Station"
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -59.548718065917626
+    "rotation": -59.99999999999999
   },
   "reversed": false,
   "folder": "Battle Creek",

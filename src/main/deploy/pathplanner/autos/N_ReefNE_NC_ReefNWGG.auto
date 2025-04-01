@@ -38,12 +38,6 @@
                 "data": {
                   "pathName": "N_ReefNE_NC_ReefNW 2"
                 }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutoStateCoralStation"
-                }
               }
             ]
           }
@@ -63,12 +57,6 @@
                 "data": {
                   "pathName": "N_ReefNE_NC_ReefNW 3"
                 }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutoStateL4"
-                }
               }
             ]
           }
@@ -77,6 +65,12 @@
           "type": "named",
           "data": {
             "name": "CoralIntakeEjectThrough"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "N_ReefNE_NC_ReefNW 4"
           }
         }
       ]

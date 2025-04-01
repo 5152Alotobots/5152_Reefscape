@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 1.5,
-        "y": 6.82
+        "x": 1.25,
+        "y": 6.85
       },
       "prevControl": {
-        "x": 2.270754310345544,
-        "y": 6.70720258619792
+        "x": 2.020754310345544,
+        "y": 6.7372025861979195
       },
       "nextControl": null,
       "isLocked": false,
@@ -31,7 +31,14 @@
   "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "AutoStateCoralStation",
+      "waypointRelativePos": 0.13238157040882487,
+      "endWaypointRelativePos": null,
+      "command": null
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 2.0,
     "maxAcceleration": 2.0,

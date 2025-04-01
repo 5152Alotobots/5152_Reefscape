@@ -48,7 +48,7 @@
   "folder": "Three Piece",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -59.548718065917626
+    "rotation": -59.99999999999999
   },
   "useDefaultConstraints": true
 }

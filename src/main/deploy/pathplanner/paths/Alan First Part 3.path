@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.5,
-        "y": 6.82
+        "x": 1.25,
+        "y": 6.85
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.9819999999999993,
-        "y": 6.28375
+        "x": 2.7319999999999993,
+        "y": 6.31375
       },
       "isLocked": false,
       "linkedName": "North Left Station"
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -59.548718065917626
+    "rotation": -59.99999999999999
   },
   "reversed": false,
   "folder": "Test2025",

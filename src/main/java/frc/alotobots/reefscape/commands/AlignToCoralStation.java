@@ -32,7 +32,10 @@ public class AlignToCoralStation extends Command {
 
   private final Distance ALIGN_ALLOW_DISTANCE = Meters.of(0.25); // Allowable distance for alignment
   private final Angle HEADING_MATCH_REQUIREMENT = Degrees.of(30); // Allowable heading difference
-  private final Transform2d ALIGN_OFFSET_TRANSFORM = new Transform2d(new Translation2d(-0.35, 0), Rotation2d.kZero); // Distance from the coral station pose to align at
+  private final Transform2d ALIGN_OFFSET_TRANSFORM =
+      new Transform2d(
+          new Translation2d(-0.35, 0),
+          Rotation2d.kZero); // Distance from the coral station pose to align at
 
   private final SwerveDriveSubsystem swerveDriveSubsystem;
   private final DrivePrecisionAlign request;

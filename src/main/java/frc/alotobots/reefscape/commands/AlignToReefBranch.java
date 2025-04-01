@@ -12,6 +12,8 @@
 */
 package frc.alotobots.reefscape.commands;
 
+import static edu.wpi.first.units.Units.*;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
@@ -24,14 +26,15 @@ import frc.alotobots.library.subsystems.swervedrive.SwerveDriveSubsystem;
 import frc.alotobots.library.subsystems.swervedrive.commands.DrivePrecisionAlign;
 import frc.alotobots.reefscape.FieldConstants;
 
-import static edu.wpi.first.units.Units.*;
-
 /** Command that aligns the robot to the closest reef branch on the specified side. */
 public class AlignToReefBranch extends Command {
 
   private final Distance ALIGN_ALLOW_DISTANCE = Meters.of(0.25); // Allowable distance for alignment
   private final Angle HEADING_MATCH_REQUIREMENT = Degrees.of(30); // Allowable heading difference
-  private final Transform2d ALIGN_OFFSET_TRANSFORM = new Transform2d(new Translation2d(-0.35, 0), Rotation2d.kZero); // Distance from the reef branch to align at
+  private final Transform2d ALIGN_OFFSET_TRANSFORM =
+      new Transform2d(
+          new Translation2d(-0.35, 0),
+          Rotation2d.kZero); // Distance from the reef branch to align at
 
   private final SwerveDriveSubsystem swerveDriveSubsystem;
   private final DrivePrecisionAlign request;

@@ -38,25 +38,6 @@
                 "data": {
                   "pathName": "N_ReefNE_NC_ReefNE_NC_ReefNE 2"
                 }
-              },
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 0.25
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "AutoStateCoralStation"
-                      }
-                    }
-                  ]
-                }
               }
             ]
           }
@@ -75,12 +56,6 @@
                 "type": "path",
                 "data": {
                   "pathName": "N_ReefNE_NC_ReefNE_NC_ReefNE 3"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutoStateL4"
                 }
               }
             ]
@@ -101,25 +76,6 @@
                 "data": {
                   "pathName": "N_ReefNE_NC_ReefNE_NC_ReefNE 4"
                 }
-              },
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 0.25
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "AutoStateCoralStation"
-                      }
-                    }
-                  ]
-                }
               }
             ]
           }
@@ -138,12 +94,6 @@
                 "type": "path",
                 "data": {
                   "pathName": "N_ReefNE_NC_ReefNE_NC_ReefNE 5"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutoStateL4"
                 }
               }
             ]

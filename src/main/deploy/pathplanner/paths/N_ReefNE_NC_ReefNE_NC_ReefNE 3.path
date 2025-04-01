@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.67827868852459,
-        "y": 7.231892824103267
+        "x": 1.25,
+        "y": 6.85
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.4342927631578943,
-        "y": 6.497779605263157
+        "x": 1.8137789026408988,
+        "y": 5.698195970022722
       },
       "isLocked": false,
-      "linkedName": "North Right Station"
+      "linkedName": "North Left Station"
     },
     {
       "anchor": {
@@ -20,8 +20,8 @@
         "y": 5.093298801157915
       },
       "prevControl": {
-        "x": 3.3002467105263156,
-        "y": 5.833881578947369
+        "x": 3.4497384900647563,
+        "y": 5.706617508370891
       },
       "nextControl": null,
       "isLocked": false,
@@ -29,12 +29,38 @@
     }
   ],
   "rotationTargets": [],
-  "constraintZones": [],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 0.8487994808565882,
+      "maxWaypointRelativePos": 1.0,
+      "constraints": {
+        "maxVelocity": 5.0,
+        "maxAcceleration": 2.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 460.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
   "pointTowardsZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "",
+      "waypointRelativePos": 0.38935756002595695,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "AutoStateL4"
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 5.0,
-    "maxAcceleration": 3.0,
+    "maxAcceleration": 2.8,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 460.0,
     "nominalVoltage": 12.0,
@@ -48,7 +74,7 @@
   "folder": "Three Piece",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 126.57303097851924
+    "rotation": 125.00000000000001
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

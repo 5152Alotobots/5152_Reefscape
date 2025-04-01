@@ -20,7 +20,7 @@
         "y": 5.25737057298967
       },
       "prevControl": {
-        "x": 3.0922057122250117,
+        "x": 3.0922057122250113,
         "y": 6.671120572989669
       },
       "nextControl": null,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -59.548718065917626
+    "rotation": -59.99999999999999
   },
   "reversed": false,
   "folder": "Three Piece",
