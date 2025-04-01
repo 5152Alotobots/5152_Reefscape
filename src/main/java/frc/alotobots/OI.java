@@ -154,8 +154,8 @@ public class OI {
   // BACKUP -----------------------------------------------------------
 
   public static final Trigger ejectCoralButton = codriverBackupController.rightBumper();
-  public static final Trigger intakeAlgaeButton = codriverBackupController.y();
-  public static final Trigger ejectAlgaeButton = codriverBackupController.x();
+  public static final Trigger intakeAlgaeButton = codriverController.rightTrigger();
+  public static final Trigger ejectAlgaeButton = codriverController.leftTrigger();
 
   /** Trigger for activating the coral eject-through function */
   public static final Trigger coralIntakeEjectThroughButton = codriverBackupController.start();
