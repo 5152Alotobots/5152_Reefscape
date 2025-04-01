@@ -350,18 +350,12 @@ public class FieldConstants {
 
     static {
       // Coral stations
-      addStationPose(
-          CoralStation.A_LEFT, new Pose2d(.35, 7, Rotation2d.fromDegrees(125)));
-      addStationPose(
-          CoralStation.A_RIGHT, new Pose2d(.35, 1, Rotation2d.fromDegrees(-125)));
-      addStationPose(
-          CoralStation.B_LEFT, new Pose2d(.875, 7.4, Rotation2d.fromDegrees(125)));
-      addStationPose(
-          CoralStation.B_RIGHT, new Pose2d(.875, .6, Rotation2d.fromDegrees(-125)));
-      addStationPose(
-          CoralStation.C_LEFT, new Pose2d(1.4, 7.83, Rotation2d.fromDegrees(125)));
-      addStationPose(
-          CoralStation.C_RIGHT, new Pose2d(1.4, .23, Rotation2d.fromDegrees(-125))); 
+      addStationPose(CoralStation.A_LEFT, new Pose2d(.35, 7, Rotation2d.fromDegrees(125)));
+      addStationPose(CoralStation.A_RIGHT, new Pose2d(.35, 1, Rotation2d.fromDegrees(-125)));
+      addStationPose(CoralStation.B_LEFT, new Pose2d(.875, 7.4, Rotation2d.fromDegrees(125)));
+      addStationPose(CoralStation.B_RIGHT, new Pose2d(.875, .6, Rotation2d.fromDegrees(-125)));
+      addStationPose(CoralStation.C_LEFT, new Pose2d(1.4, 7.83, Rotation2d.fromDegrees(125)));
+      addStationPose(CoralStation.C_RIGHT, new Pose2d(1.4, .23, Rotation2d.fromDegrees(-125)));
     }
 
     private void addStationPose(CoralStation station, Pose2d bluePose) {

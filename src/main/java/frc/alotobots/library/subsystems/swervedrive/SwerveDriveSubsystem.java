@@ -107,6 +107,9 @@ public class SwerveDriveSubsystem extends SubsystemBase {
   private SwerveDrivePoseEstimator aprilTagPoseEstimator =
       new SwerveDrivePoseEstimator(kinematics, rawGyroRotation, lastModulePositions, new Pose2d());
 
+  private SwerveDrivePoseEstimator multiTagPoseEstimator =
+      new SwerveDrivePoseEstimator(kinematics, rawGyroRotation, lastModulePositions, new Pose2d());
+
   /** Pose estimator for odometry */
   private SwerveDrivePoseEstimator oculusPoseEstimator =
       new SwerveDrivePoseEstimator(kinematics, rawGyroRotation, lastModulePositions, new Pose2d());
@@ -215,6 +218,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
       poseEstimator.updateWithTime(sampleTimestamps[i], rawGyroRotation, modulePositions);
       aprilTagPoseEstimator.updateWithTime(sampleTimestamps[i], rawGyroRotation, modulePositions);
+      multiTagPoseEstimator.updateWithTime(sampleTimestamps[i], rawGyroRotation, modulePositions);
       oculusPoseEstimator.updateWithTime(sampleTimestamps[i], rawGyroRotation, modulePositions);
     }
 
@@ -399,6 +403,11 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     return aprilTagPoseEstimator.getEstimatedPosition();
   }
 
+  @AutoLogOutput(key = "Drive/MultiTagPose")
+  public Pose2d getMultiTagPose() {
+    return multiTagPoseEstimator.getEstimatedPosition();
+  }
+
   @AutoLogOutput(key = "Drive/OculusPose")
   public Pose2d getOculusPose() {
     return oculusPoseEstimator.getEstimatedPosition();
@@ -422,11 +431,13 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     NotificationPresets.SwerveDrive.sendSwerveDrivePoseResetNotification(pose);
     poseEstimator.resetPosition(rawGyroRotation, getModulePositions(), pose);
     aprilTagPoseEstimator.resetPosition(rawGyroRotation, getModulePositions(), pose);
+    multiTagPoseEstimator.resetPosition(rawGyroRotation, getModulePositions(), pose);
     oculusPoseEstimator.resetPosition(rawGyroRotation, getModulePositions(), pose);
   }
 
   public enum VisionSource {
-    APRIL_TAG,
+    MULTI_TAG,
+    SINGLE_TAG,
     OCULUS
   }
 
@@ -454,11 +465,20 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
     // Add the source to its respective pose estimator (w/ rotation)
     switch (source) {
-      case APRIL_TAG:
+      case SINGLE_TAG:
+        // Only add single tag to the main AprilTag pose estimator as there is no
+        // reason to have it on its own.
         aprilTagPoseEstimator.addVisionMeasurement(
             visionRobotPoseMeters, timestampSeconds, visionMeasurementStdDevs);
         break;
+      case MULTI_TAG:
+        // Add multi tag to its individual and apriltag pose estimator for quest realignment
+        aprilTagPoseEstimator.addVisionMeasurement(
+            visionRobotPoseMeters, timestampSeconds, visionMeasurementStdDevs);
+        multiTagPoseEstimator.addVisionMeasurement(
+            visionRobotPoseMeters, timestampSeconds, visionMeasurementStdDevs);
       case OCULUS:
+        // Add quest to its own pose estimator
         oculusPoseEstimator.addVisionMeasurement(
             visionRobotPoseMeters, timestampSeconds, visionMeasurementStdDevs);
         break;

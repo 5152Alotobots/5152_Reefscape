@@ -48,7 +48,7 @@
   "folder": "Battle Creek",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": -135.0
   },
   "useDefaultConstraints": false
 }

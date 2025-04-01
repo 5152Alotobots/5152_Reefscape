@@ -407,7 +407,7 @@ public class AprilTagSubsystem extends SubsystemBase {
 
     // Send pose to consumer
     aprilTagConsumer.accept(
-        SwerveDriveSubsystem.VisionSource.APRIL_TAG,
+        SwerveDriveSubsystem.VisionSource.MULTI_TAG,
         observation.pose().toPose2d(),
         observation.timestamp(),
         multiTagStdDevs);
@@ -437,7 +437,7 @@ public class AprilTagSubsystem extends SubsystemBase {
 
     // Accept poses
     aprilTagConsumer.accept(
-        SwerveDriveSubsystem.VisionSource.APRIL_TAG,
+        SwerveDriveSubsystem.VisionSource.SINGLE_TAG,
         observation.pose(),
         observation.timestamp(),
         singleTagStdDevs);

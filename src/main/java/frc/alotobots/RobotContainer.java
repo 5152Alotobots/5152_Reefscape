@@ -36,6 +36,7 @@ import frc.alotobots.library.subsystems.swervedrive.commands.*;
 import frc.alotobots.library.subsystems.swervedrive.io.*;
 import frc.alotobots.library.subsystems.swervedrive.util.PathPlannerManager;
 import frc.alotobots.library.subsystems.vision.oculus.OculusSubsystem;
+import frc.alotobots.library.subsystems.vision.oculus.commands.RequestPositionResetViaAprilTags;
 import frc.alotobots.library.subsystems.vision.oculus.io.*;
 import frc.alotobots.library.subsystems.vision.photonvision.apriltag.AprilTagSubsystem;
 import frc.alotobots.library.subsystems.vision.photonvision.apriltag.constants.AprilTagConstants;
@@ -343,8 +344,12 @@ public class RobotContainer {
         .getAutoStartPose(autoName)
         .ifPresent(
             pose -> {
+              // Reset all estimators to auto pose
               swerveDriveSubsystem.setPose(pose);
-              oculusSubsystem.resetPose(pose);
+              // Pull oculus pose from aprilTag pose (same as drive pose if no tags)
+              new RequestPositionResetViaAprilTags(2.0, oculusSubsystem, swerveDriveSubsystem)
+                  .schedule();
+              // Send notification
               NotificationPresets.Auto.sendAutoPathChangeNotification(autoName);
             });
   }
