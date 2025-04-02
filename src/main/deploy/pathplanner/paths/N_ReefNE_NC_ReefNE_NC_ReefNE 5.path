@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.7181017210916139,
-        "y": 5.338596800442889
+        "x": 2.0941712042872993,
+        "y": 5.254657645793047
       },
       "isLocked": false,
       "linkedName": "North Left Station"
@@ -20,8 +20,8 @@
         "y": 5.25737057298967
       },
       "prevControl": {
-        "x": 3.542507732024027,
-        "y": 5.708813389994734
+        "x": 3.5723683661902736,
+        "y": 5.7481765394577575
       },
       "nextControl": null,
       "isLocked": false,
