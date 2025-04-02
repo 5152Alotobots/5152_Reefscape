@@ -3,37 +3,37 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.25,
-        "y": 6.85
+        "x": 3.960424850265893,
+        "y": 2.787294253872092
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.81225,
-        "y": 6.35525
+        "x": 3.7909539473684206,
+        "y": 2.398930921052631
       },
       "isLocked": false,
-      "linkedName": "North Left Station"
+      "linkedName": "Reef_SW_R"
     },
     {
       "anchor": {
-        "x": 3.9697057122250112,
-        "y": 5.25737057298967
+        "x": 3.531167763157894,
+        "y": 1.9659539473684209
       },
       "prevControl": {
-        "x": 3.5723683661902736,
-        "y": 5.7481765394577575
+        "x": 3.762088815789473,
+        "y": 2.543256578947368
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Reef_NW_L"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.9007138221933774,
-      "maxWaypointRelativePos": 1.0,
+      "minWaypointRelativePos": 1.0,
+      "maxWaypointRelativePos": 0.9012567324955116,
       "constraints": {
         "maxVelocity": 1.5,
         "maxAcceleration": 1.0,
@@ -45,22 +45,10 @@
     }
   ],
   "pointTowardsZones": [],
-  "eventMarkers": [
-    {
-      "name": "",
-      "waypointRelativePos": 0.30889033095393115,
-      "endWaypointRelativePos": null,
-      "command": {
-        "type": "named",
-        "data": {
-          "name": "AutoStateL4"
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 4.5,
-    "maxAcceleration": 2.4,
+    "maxVelocity": 5.0,
+    "maxAcceleration": 2.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 460.0,
     "nominalVoltage": 12.0,
@@ -68,13 +56,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -59.99999999999999
+    "rotation": 59.99999999999999
   },
   "reversed": false,
-  "folder": "Three Piece",
+  "folder": "TwoPiece",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 125.00000000000001
+    "rotation": 59.99999999999999
   },
   "useDefaultConstraints": false
 }

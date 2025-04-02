@@ -11,7 +11,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "N_ReefNE_NC_ReefNW_NC_ReefW 1"
+                  "pathName": "S_ReefSE_SC_ReefSW_SC_ReefW 1"
                 }
               },
               {
@@ -36,13 +36,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "N_ReefNE_NC_ReefNW_NC_ReefW 2"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutoStateCoralStation"
+                  "pathName": "S_ReefSE_SC_ReefSW_SC_ReefW 2"
                 }
               }
             ]
@@ -61,13 +55,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "N_ReefNE_NC_ReefNW_NC_ReefW 3"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutoStateL4"
+                  "pathName": "S_ReefSE_SC_ReefSW_SC_ReefW 3"
                 }
               }
             ]
@@ -86,13 +74,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "N_ReefNE_NC_ReefNW_NC_ReefW 4"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutoStateCoralStation"
+                  "pathName": "S_ReefSE_SC_ReefSW_SC_ReefW 4"
                 }
               }
             ]
@@ -111,13 +93,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "N_ReefNE_NC_ReefNW_NC_ReefW 5"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutoStateL4"
+                  "pathName": "S_ReefSE_SC_ReefSW_SC_ReefW 5"
                 }
               }
             ]
