@@ -54,11 +54,11 @@ public class AprilTagConstants {
   // Standard deviation baselines, for 1 meter distance and 1 tag
   // (Adjusted automatically based on distance and # of tags)
   // LOWER = TRUST MORE
-  public static double MULTI_TAG_LINEAR_STD_DEV_BASE = 0.08; // Meters
+  public static double MULTI_TAG_LINEAR_STD_DEV_BASE = 0.06; // Meters
   public static double MULTI_TAG_ANGULAR_STD_DEV_BASE =
       0.174533; // 10deg (not used in main estimator, only secondary)
 
-  public static double SINGLE_TAG_LINEAR_STD_DEV_BASE = 0.18; // Meters
+  public static double SINGLE_TAG_LINEAR_STD_DEV_BASE = 0.12; // Meters
   public static double SINGLE_TAG_ANGULAR_STD_DEV_BASE =
       1000; // DO NOT USE FOR HEADING CORRECTION! MAKES LOOP!!!
 
@@ -73,7 +73,7 @@ public class AprilTagConstants {
 
   // Constants for single tag processing
   public static final double SINGLE_TAG_MAX_AMBIGUITY = 0.2;
-  public static final double SINGLE_TAG_MAX_DISTANCE = 4.0; // meters
+  public static final double SINGLE_TAG_MAX_DISTANCE = 2.0; // meters
 
   /** Time after which a pose is considered stale (seconds) */
   public static final double POSE_TIMEOUT = 0.06;

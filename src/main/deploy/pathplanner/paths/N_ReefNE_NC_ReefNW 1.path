@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.398289473684212,
-        "y": 5.868898295944778
+        "x": 5.7525,
+        "y": 6.335749999999999
       },
       "isLocked": false,
       "linkedName": "Start North"
@@ -28,11 +28,16 @@
       "linkedName": "Reef_NE_L"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.7424547283702154,
+      "rotationDegrees": -119.99999999999999
+    }
+  ],
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.5165476963011006,
+      "minWaypointRelativePos": 0.6645933014354137,
       "maxWaypointRelativePos": 1.0,
       "constraints": {
         "maxVelocity": 1.0,
@@ -50,7 +55,7 @@
     "maxVelocity": 2.0,
     "maxAcceleration": 2.0,
     "maxAngularVelocity": 540.0,
-    "maxAngularAcceleration": 460.0,
+    "maxAngularAcceleration": 260.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },

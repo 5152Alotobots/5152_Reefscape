@@ -43,9 +43,22 @@
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "CoralIntakeIntake"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "CoralIntakeIntake"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoStopWithX"
+                }
+              }
+            ]
           }
         },
         {
@@ -81,9 +94,22 @@
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "CoralIntakeIntake"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "CoralIntakeIntake"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoStopWithX"
+                }
+              }
+            ]
           }
         },
         {

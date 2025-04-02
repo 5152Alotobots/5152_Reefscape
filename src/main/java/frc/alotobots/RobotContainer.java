@@ -109,7 +109,8 @@ public class RobotContainer {
         climberSubsystem = new ClimberSubsystem(new ClimberIORevServoReal());
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         autoNamedCommands =
-            new AutoNamedCommands(elevatorSubsystem, wristSubsystem, coralIntakeSubsystem);
+            new AutoNamedCommands(
+                elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, swerveDriveSubsystem);
         configureAutoChooser();
         oculusSubsystem =
             new OculusSubsystem(swerveDriveSubsystem::addVisionMeasurement, new OculusIOReal());
@@ -153,7 +154,8 @@ public class RobotContainer {
         wristSubsystem = new WristSubsystem(new WristIOTalonFXSim());
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         autoNamedCommands =
-            new AutoNamedCommands(elevatorSubsystem, wristSubsystem, coralIntakeSubsystem);
+            new AutoNamedCommands(
+                elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, swerveDriveSubsystem);
         configureAutoChooser();
 
         oculusSubsystem =
@@ -184,7 +186,8 @@ public class RobotContainer {
         wristSubsystem = new WristSubsystem(new WristIOTalonFXSim());
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         autoNamedCommands =
-            new AutoNamedCommands(elevatorSubsystem, wristSubsystem, coralIntakeSubsystem);
+            new AutoNamedCommands(
+                elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, swerveDriveSubsystem);
         configureAutoChooser();
 
         oculusSubsystem =

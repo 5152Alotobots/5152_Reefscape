@@ -71,8 +71,8 @@ public class OculusConstants {
    */
   public static final Matrix<N3, N1> OCULUS_STD_DEVS =
       VecBuilder.fill(
-          0.015, // Trust down to 50mm
-          0.015, // Trust down to 50mm
+          0.02, // Trust down to 50mm
+          0.02, // Trust down to 50mm
           0.0872665 // 5deg
           );
 
