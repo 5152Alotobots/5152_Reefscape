@@ -33,7 +33,7 @@ public class AlignToReefBranch extends Command {
   private final Angle HEADING_MATCH_REQUIREMENT = Degrees.of(30); // Allowable heading difference
   private final Transform2d ALIGN_OFFSET_TRANSFORM =
       new Transform2d(
-          new Translation2d(-0.35, 0),
+          new Translation2d(-0.58, 0),
           Rotation2d.kZero); // Distance from the reef branch to align at
 
   private final SwerveDriveSubsystem swerveDriveSubsystem;
@@ -52,7 +52,7 @@ public class AlignToReefBranch extends Command {
       SwerveDriveSubsystem swerveDriveSubsystem, FieldConstants.BranchType branchType) {
     this.branchType = branchType;
     this.swerveDriveSubsystem = swerveDriveSubsystem;
-    this.request = new DrivePrecisionAlign(swerveDriveSubsystem, 0.03);
+    this.request = new DrivePrecisionAlign(swerveDriveSubsystem, 0.01);
     addRequirements(swerveDriveSubsystem);
   }
 
