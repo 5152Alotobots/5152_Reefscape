@@ -67,7 +67,7 @@ public class WristConstants {
     public static final Angle CORAL_L4_PLACE = Degrees.of(90);
 
     /** Angle for L3 placement (Equal to the angle for L2 placement) */
-    public static final Angle CORAL_L3_PLACE = Degrees.of(118);
+    public static final Angle CORAL_L3_PLACE = Degrees.of(104);
 
     /** Angle for L2 placement (Equal to the angle for L3 placement) */
     public static final Angle CORAL_L2_PLACE = Degrees.of(104);
