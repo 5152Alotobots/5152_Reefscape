@@ -35,7 +35,6 @@ loadScripts(document, 'script');</script>
 <li><a href="package-summary.html">Package</a></li>
 <li class="nav-bar-cell1-rev">Class</li>
 <li><a href="package-tree.html">Tree</a></li>
-<li><a href="../../../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../../../help-doc.html#class">Help</a></li>
 </ul>
@@ -111,16 +110,14 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#setMosi(int)" class="member-name-link">setMosi</a><wbr>(int&nbsp;value)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#resetHeading()" class="member-name-link">resetHeading</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
-<div class="block">Sets MOSI (Master Out Slave In) value for Quest communication.</div>
+<div class="block">Resets the current heading of the Oculus as zero</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#setResetPose(double,double,double)" class="member-name-link">setResetPose</a><wbr>(double&nbsp;x,
- double&nbsp;y,
- double&nbsp;rotation)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#resetPose(edu.wpi.first.math.geometry.Pose2d)" class="member-name-link">resetPose</a><wbr>(<a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/math/geometry/Pose2d.html" title="class or interface in edu.wpi.first.math.geometry" class="external-link">Pose2d</a>&nbsp;oculusTargetPose)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
-<div class="block">Sets the pose components for resetting the Oculus position tracking.</div>
+<div class="block">Resets the pose components for resetting the Oculus position tracking.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#updateInputs(frc.alotobots.library.subsystems.vision.oculus.io.OculusIO.OculusIOInputs)" class="member-name-link">updateInputs</a><wbr>(<a href="OculusIO.OculusIOInputs.html" title="class in frc.alotobots.library.subsystems.vision.oculus.io">OculusIO.OculusIOInputs</a>&nbsp;inputs)</code></div>
@@ -153,29 +150,21 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="setMosi(int)">
-<h3>setMosi</h3>
-<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setMosi</span><wbr><span class="parameters">(int&nbsp;value)</span></div>
-<div class="block">Sets MOSI (Master Out Slave In) value for Quest communication.</div>
+<section class="detail" id="resetPose(edu.wpi.first.math.geometry.Pose2d)">
+<h3>resetPose</h3>
+<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">resetPose</span><wbr><span class="parameters">(<a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/math/geometry/Pose2d.html" title="class or interface in edu.wpi.first.math.geometry" class="external-link">Pose2d</a>&nbsp;oculusTargetPose)</span></div>
+<div class="block">Resets the pose components for resetting the Oculus position tracking. HARD RESET.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>value</code> - The MOSI value to set</dd>
+<dd><code>oculusTargetPose</code> - The target pose of the oculus to reset to. NOT THE TARGET ROBOT POSE</dd>
 </dl>
 </section>
 </li>
 <li>
-<section class="detail" id="setResetPose(double,double,double)">
-<h3>setResetPose</h3>
-<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setResetPose</span><wbr><span class="parameters">(double&nbsp;x,
- double&nbsp;y,
- double&nbsp;rotation)</span></div>
-<div class="block">Sets the pose components for resetting the Oculus position tracking.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>x</code> - The X coordinate</dd>
-<dd><code>y</code> - The Y coordinate</dd>
-<dd><code>rotation</code> - The rotation in degrees</dd>
-</dl>
+<section class="detail" id="resetHeading()">
+<h3>resetHeading</h3>
+<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">resetHeading</span>()</div>
+<div class="block">Resets the current heading of the Oculus as zero</div>
 </section>
 </li>
 </ul>

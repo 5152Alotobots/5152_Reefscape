@@ -31,7 +31,6 @@ loadScripts(document, 'script');</script>
 <li><a href="package-summary.html">Package</a></li>
 <li class="nav-bar-cell1-rev">Class</li>
 <li><a href="package-tree.html">Tree</a></li>
-<li><a href="../../../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../../../help-doc.html#class">Help</a></li>
 </ul>
@@ -40,7 +39,7 @@ loadScripts(document, 'script');</script>
 <div>
 <ul class="sub-nav-list">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested-class-summary">Nested</a>&nbsp;|&nbsp;</li>
 <li><a href="#field-summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor-summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-summary">Method</a></li>
@@ -79,6 +78,23 @@ loadScripts(document, 'script');</script>
 </section>
 <section class="summary">
 <ul class="summary-list">
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+<li>
+<section class="nested-class-summary" id="nested-class-summary">
+<h2>Nested Class Summary</h2>
+<div class="caption"><span>Nested Classes</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Class</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static enum&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="OculusConstants.PoseResetStrategy.html" class="type-name-link" title="enum class in frc.alotobots.library.subsystems.vision.oculus.constants">OculusConstants.PoseResetStrategy</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Determines which side the pose reset logic should be used</div>
+</div>
+</div>
+</section>
+</li>
 <!-- =========== FIELD SUMMARY =========== -->
 <li>
 <section class="field-summary" id="field-summary">
@@ -89,39 +105,40 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static final double</code></div>
-<div class="col-second even-row-color"><code><a href="#CONNECTION_TIMEOUT" class="member-name-link">CONNECTION_TIMEOUT</a></code></div>
+<div class="col-second even-row-color"><code><a href="#BATTERY_CRITICAL_PERCENT" class="member-name-link">BATTERY_CRITICAL_PERCENT</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static final double</code></div>
+<div class="col-second odd-row-color"><code><a href="#BATTERY_LOW_PERCENT" class="member-name-link">BATTERY_LOW_PERCENT</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static final <a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/units/measure/Time.html" title="class or interface in edu.wpi.first.units.measure" class="external-link">Time</a></code></div>
+<div class="col-second even-row-color"><code><a href="#OCULUS_CONNECTION_TIMEOUT" class="member-name-link">OCULUS_CONNECTION_TIMEOUT</a></code></div>
 <div class="col-last even-row-color">
 <div class="block">Timeout threshold for considering Quest disconnected (seconds)</div>
 </div>
-<div class="col-first odd-row-color"><code>static final int</code></div>
-<div class="col-second odd-row-color"><code><a href="#MAX_RESET_ATTEMPTS" class="member-name-link">MAX_RESET_ATTEMPTS</a></code></div>
+<div class="col-first odd-row-color"><code>static final <a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/math/Matrix.html" title="class or interface in edu.wpi.first.math" class="external-link">Matrix</a>&lt;<a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/math/numbers/N3.html" title="class or interface in edu.wpi.first.math.numbers" class="external-link">N3</a>,<wbr><a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/math/numbers/N1.html" title="class or interface in edu.wpi.first.math.numbers" class="external-link">N1</a>&gt;</code></div>
+<div class="col-second odd-row-color"><code><a href="#OCULUS_STD_DEVS" class="member-name-link">OCULUS_STD_DEVS</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">Maximum number of attempts for reset operations.</div>
-</div>
-<div class="col-first even-row-color"><code>static final <a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/math/Matrix.html" title="class or interface in edu.wpi.first.math" class="external-link">Matrix</a>&lt;<a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/math/numbers/N3.html" title="class or interface in edu.wpi.first.math.numbers" class="external-link">N3</a>,<wbr><a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/math/numbers/N1.html" title="class or interface in edu.wpi.first.math.numbers" class="external-link">N1</a>&gt;</code></div>
-<div class="col-second even-row-color"><code><a href="#OCULUS_STD_DEVS" class="member-name-link">OCULUS_STD_DEVS</a></code></div>
-<div class="col-last even-row-color">
 <div class="block">Standard deviations representing how much we "trust" the position from the Oculus.</div>
 </div>
-<div class="col-first odd-row-color"><code>static final double</code></div>
-<div class="col-second odd-row-color"><code><a href="#RESET_TIMEOUT_SECONDS" class="member-name-link">RESET_TIMEOUT_SECONDS</a></code></div>
-<div class="col-last odd-row-color">
-<div class="block">Timeout duration in seconds for reset operations (pose reset, heading reset, ping).</div>
-</div>
-<div class="col-first even-row-color"><code>static final <a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/math/geometry/Transform2d.html" title="class or interface in edu.wpi.first.math.geometry" class="external-link">Transform2d</a></code></div>
-<div class="col-second even-row-color"><code><a href="#ROBOT_TO_OCULUS" class="member-name-link">ROBOT_TO_OCULUS</a></code></div>
+<div class="col-first even-row-color"><code>static final <a href="OculusConstants.PoseResetStrategy.html" title="enum class in frc.alotobots.library.subsystems.vision.oculus.constants">OculusConstants.PoseResetStrategy</a></code></div>
+<div class="col-second even-row-color"><code><a href="#POSE_RESET_STRATEGY" class="member-name-link">POSE_RESET_STRATEGY</a></code></div>
 <div class="col-last even-row-color">
+<div class="block">The strategy used to reset the pose</div>
+</div>
+<div class="col-first odd-row-color"><code>static final <a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/math/geometry/Transform2d.html" title="class or interface in edu.wpi.first.math.geometry" class="external-link">Transform2d</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#ROBOT_TO_OCULUS" class="member-name-link">ROBOT_TO_OCULUS</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">Transform from the robot center to the headset.</div>
 </div>
-<div class="col-first odd-row-color"><code>static final double</code></div>
-<div class="col-second odd-row-color"><code><a href="#SIM_TRUST_ROTATION" class="member-name-link">SIM_TRUST_ROTATION</a></code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code>static final double</code></div>
+<div class="col-second even-row-color"><code><a href="#SIM_TRUST_ROTATION" class="member-name-link">SIM_TRUST_ROTATION</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">The divisor to divide the rotational std devs by for simulation (how much we trust our sim)
  Higher = more trust</div>
 </div>
-<div class="col-first even-row-color"><code>static final double</code></div>
-<div class="col-second even-row-color"><code><a href="#SIM_TRUST_TRANSLATION" class="member-name-link">SIM_TRUST_TRANSLATION</a></code></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><code>static final double</code></div>
+<div class="col-second odd-row-color"><code><a href="#SIM_TRUST_TRANSLATION" class="member-name-link">SIM_TRUST_TRANSLATION</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">The divisor to divide the translational std devs by for simulation (how much we trust our sim)
  Higher = more trust</div>
 </div>
@@ -160,6 +177,41 @@ loadScripts(document, 'script');</script>
 <h2>Field Details</h2>
 <ul class="member-list">
 <li>
+<section class="detail" id="POSE_RESET_STRATEGY">
+<h3>POSE_RESET_STRATEGY</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="OculusConstants.PoseResetStrategy.html" title="enum class in frc.alotobots.library.subsystems.vision.oculus.constants">OculusConstants.PoseResetStrategy</a></span>&nbsp;<span class="element-name">POSE_RESET_STRATEGY</span></div>
+<div class="block">The strategy used to reset the pose</div>
+</section>
+</li>
+<li>
+<section class="detail" id="BATTERY_LOW_PERCENT">
+<h3>BATTERY_LOW_PERCENT</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">BATTERY_LOW_PERCENT</span></div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../../../../../../../constant-values.html#frc.alotobots.library.subsystems.vision.oculus.constants.OculusConstants.BATTERY_LOW_PERCENT">Constant Field Values</a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="BATTERY_CRITICAL_PERCENT">
+<h3>BATTERY_CRITICAL_PERCENT</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">BATTERY_CRITICAL_PERCENT</span></div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../../../../../../../constant-values.html#frc.alotobots.library.subsystems.vision.oculus.constants.OculusConstants.BATTERY_CRITICAL_PERCENT">Constant Field Values</a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="ROBOT_TO_OCULUS">
 <h3>ROBOT_TO_OCULUS</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/math/geometry/Transform2d.html" title="class or interface in edu.wpi.first.math.geometry" class="external-link">Transform2d</a></span>&nbsp;<span class="element-name">ROBOT_TO_OCULUS</span></div>
@@ -168,50 +220,10 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="RESET_TIMEOUT_SECONDS">
-<h3>RESET_TIMEOUT_SECONDS</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">RESET_TIMEOUT_SECONDS</span></div>
-<div class="block">Timeout duration in seconds for reset operations (pose reset, heading reset, ping). If a reset
- operation takes longer than this time, it will be considered failed.</div>
-<dl class="notes">
-<dt>See Also:</dt>
-<dd>
-<ul class="see-list">
-<li><a href="../../../../../../../constant-values.html#frc.alotobots.library.subsystems.vision.oculus.constants.OculusConstants.RESET_TIMEOUT_SECONDS">Constant Field Values</a></li>
-</ul>
-</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="MAX_RESET_ATTEMPTS">
-<h3>MAX_RESET_ATTEMPTS</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">MAX_RESET_ATTEMPTS</span></div>
-<div class="block">Maximum number of attempts for reset operations. If a reset operation fails this many times,
- the command will terminate.</div>
-<dl class="notes">
-<dt>See Also:</dt>
-<dd>
-<ul class="see-list">
-<li><a href="../../../../../../../constant-values.html#frc.alotobots.library.subsystems.vision.oculus.constants.OculusConstants.MAX_RESET_ATTEMPTS">Constant Field Values</a></li>
-</ul>
-</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="CONNECTION_TIMEOUT">
-<h3>CONNECTION_TIMEOUT</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">CONNECTION_TIMEOUT</span></div>
+<section class="detail" id="OCULUS_CONNECTION_TIMEOUT">
+<h3>OCULUS_CONNECTION_TIMEOUT</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/units/measure/Time.html" title="class or interface in edu.wpi.first.units.measure" class="external-link">Time</a></span>&nbsp;<span class="element-name">OCULUS_CONNECTION_TIMEOUT</span></div>
 <div class="block">Timeout threshold for considering Quest disconnected (seconds)</div>
-<dl class="notes">
-<dt>See Also:</dt>
-<dd>
-<ul class="see-list">
-<li><a href="../../../../../../../constant-values.html#frc.alotobots.library.subsystems.vision.oculus.constants.OculusConstants.CONNECTION_TIMEOUT">Constant Field Values</a></li>
-</ul>
-</dd>
-</dl>
 </section>
 </li>
 <li>

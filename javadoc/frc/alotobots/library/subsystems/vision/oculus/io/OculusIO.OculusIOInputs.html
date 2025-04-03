@@ -31,7 +31,6 @@ loadScripts(document, 'script');</script>
 <li><a href="package-summary.html">Package</a></li>
 <li class="nav-bar-cell1-rev">Class</li>
 <li><a href="package-tree.html">Tree</a></li>
-<li><a href="../../../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../../../help-doc.html#class">Help</a></li>
 </ul>
@@ -100,15 +99,23 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">Battery level percentage</div>
 </div>
-<div class="col-first odd-row-color"><code>float[]</code></div>
-<div class="col-second odd-row-color"><code><a href="#eulerAngles" class="member-name-link">eulerAngles</a></code></div>
-<div class="col-last odd-row-color">
+<div class="col-first odd-row-color"><code>boolean</code></div>
+<div class="col-second odd-row-color"><code><a href="#connected" class="member-name-link">connected</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>float[]</code></div>
+<div class="col-second even-row-color"><code><a href="#eulerAngles" class="member-name-link">eulerAngles</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">Euler angles [roll, pitch, yaw] in degrees</div>
 </div>
-<div class="col-first even-row-color"><code>int</code></div>
-<div class="col-second even-row-color"><code><a href="#frameCount" class="member-name-link">frameCount</a></code></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><code>int</code></div>
+<div class="col-second odd-row-color"><code><a href="#frameCount" class="member-name-link">frameCount</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">Frame counter from the Oculus</div>
+</div>
+<div class="col-first even-row-color"><code>boolean</code></div>
+<div class="col-second even-row-color"><code><a href="#isTracking" class="member-name-link">isTracking</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Does the Oculus have 6dof tracking?</div>
 </div>
 <div class="col-first odd-row-color"><code>int</code></div>
 <div class="col-second odd-row-color"><code><a href="#misoValue" class="member-name-link">misoValue</a></code></div>
@@ -129,6 +136,11 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color"><code><a href="#timestamp" class="member-name-link">timestamp</a></code></div>
 <div class="col-last even-row-color">
 <div class="block">Current timestamp from the Oculus</div>
+</div>
+<div class="col-first odd-row-color"><code>int</code></div>
+<div class="col-second odd-row-color"><code><a href="#totalTrackingLostEvents" class="member-name-link">totalTrackingLostEvents</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">Total number of tracking lost events since the Quest has booted</div>
 </div>
 </div>
 </section>
@@ -164,6 +176,12 @@ loadScripts(document, 'script');</script>
 <section class="field-details" id="field-detail">
 <h2>Field Details</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="connected">
+<h3>connected</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">connected</span></div>
+</section>
+</li>
 <li>
 <section class="detail" id="position">
 <h3>position</h3>
@@ -211,6 +229,20 @@ loadScripts(document, 'script');</script>
 <h3>misoValue</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">misoValue</span></div>
 <div class="block">Current MISO (Master In Slave Out) value</div>
+</section>
+</li>
+<li>
+<section class="detail" id="isTracking">
+<h3>isTracking</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isTracking</span></div>
+<div class="block">Does the Oculus have 6dof tracking?</div>
+</section>
+</li>
+<li>
+<section class="detail" id="totalTrackingLostEvents">
+<h3>totalTrackingLostEvents</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">totalTrackingLostEvents</span></div>
+<div class="block">Total number of tracking lost events since the Quest has booted</div>
 </section>
 </li>
 </ul>
