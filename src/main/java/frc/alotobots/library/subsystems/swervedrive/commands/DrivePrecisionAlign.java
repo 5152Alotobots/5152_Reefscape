@@ -72,7 +72,7 @@ public class DrivePrecisionAlign {
     this.swerveDriveSubsystem = swerveDriveSubsystem;
     this.currentPoseSupplier = currentPoseSupplier;
     this.positionTolerance = positionTolerance;
-    this.controller = Constants.tunerConstants.getHolonomicDriveController();
+    this.controller = Constants.tunerConstants.getPrecisionAlignHolonomicDriveController();
     this.targetTrajectoryState = new PathPlannerTrajectoryState();
     this.currentTargetPose = new Pose2d(); // Initialize with default pose
   }
