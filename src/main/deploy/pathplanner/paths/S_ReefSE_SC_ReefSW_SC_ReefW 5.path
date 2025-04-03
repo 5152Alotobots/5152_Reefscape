@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.3374177631578945,
-        "y": 1.128865131578948
+        "x": 1.5635214282090348,
+        "y": 1.15
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.9339638157894734,
-        "y": 2.360444078947369
+        "x": 2.160067480840614,
+        "y": 2.3815789473684217
       },
       "isLocked": false,
-      "linkedName": "South Left Station"
+      "linkedName": "ShuffleS"
     },
     {
       "anchor": {
@@ -32,10 +32,10 @@
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 1.0,
-      "maxWaypointRelativePos": 0.8994614003590664,
+      "minWaypointRelativePos": 0.8046722907203113,
+      "maxWaypointRelativePos": 1.0,
       "constraints": {
-        "maxVelocity": 1.5,
+        "maxVelocity": 1.0,
         "maxAcceleration": 1.0,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 460.0,
@@ -59,8 +59,8 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 5.0,
-    "maxAcceleration": 2.4,
+    "maxVelocity": 2.0,
+    "maxAcceleration": 2.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 460.0,
     "nominalVoltage": 12.0,

@@ -41,6 +41,8 @@ public class DrivePrecisionAlign {
   /** The position tolerance for considering alignment complete (meters) */
   private final double positionTolerance;
 
+  private final Supplier<Pose2d> currentPoseSupplier;
+
   /**
    * The current target pose being tracked -- SETTER -- Sets the current target pose.
    *
@@ -60,12 +62,17 @@ public class DrivePrecisionAlign {
    * Creates a new PrecisionAlignRequest handler.
    *
    * @param swerveDriveSubsystem The drive subsystem
+   * @param currentPoseSupplier The source to use for pose
    * @param positionTolerance The position tolerance for considering alignment complete (meters)
    */
-  public DrivePrecisionAlign(SwerveDriveSubsystem swerveDriveSubsystem, double positionTolerance) {
+  public DrivePrecisionAlign(
+      SwerveDriveSubsystem swerveDriveSubsystem,
+      Supplier<Pose2d> currentPoseSupplier,
+      double positionTolerance) {
     this.swerveDriveSubsystem = swerveDriveSubsystem;
+    this.currentPoseSupplier = currentPoseSupplier;
     this.positionTolerance = positionTolerance;
-    this.controller = Constants.tunerConstants.getHolonomicDriveController();
+    this.controller = Constants.tunerConstants.getPrecisionAlignHolonomicDriveController();
     this.targetTrajectoryState = new PathPlannerTrajectoryState();
     this.currentTargetPose = new Pose2d(); // Initialize with default pose
   }
@@ -74,9 +81,26 @@ public class DrivePrecisionAlign {
    * Creates a new PrecisionAlignRequest handler with default tolerance.
    *
    * @param swerveDriveSubsystem The drive subsystem
+   * @param currentPoseSupplier Where to get the current pose from
+   */
+  public DrivePrecisionAlign(
+      SwerveDriveSubsystem swerveDriveSubsystem, Supplier<Pose2d> currentPoseSupplier) {
+    this(
+        swerveDriveSubsystem,
+        currentPoseSupplier,
+        Constants.tunerConstants.getPrecisionAlignTolerance());
+  }
+
+  /**
+   * Creates a new PrecisionAlignRequest handler with default tolerance.
+   *
+   * @param swerveDriveSubsystem The drive subsystem
    */
   public DrivePrecisionAlign(SwerveDriveSubsystem swerveDriveSubsystem) {
-    this(swerveDriveSubsystem, Constants.tunerConstants.getPrecisionAlignTolerance());
+    this(
+        swerveDriveSubsystem,
+        swerveDriveSubsystem::getPose,
+        Constants.tunerConstants.getPrecisionAlignTolerance());
   }
 
   /** Called to initialize the request handler. */
@@ -90,7 +114,7 @@ public class DrivePrecisionAlign {
    * @param targetPose Supplier for the target pose to align to
    */
   public void applyRequest(Supplier<Pose2d> targetPose) {
-    Pose2d currentPose = swerveDriveSubsystem.getPose();
+    Pose2d currentPose = currentPoseSupplier.get();
     this.currentTargetPose = targetPose.get();
 
     targetTrajectoryState.pose = currentTargetPose;

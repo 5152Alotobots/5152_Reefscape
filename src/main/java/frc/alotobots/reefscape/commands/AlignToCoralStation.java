@@ -49,7 +49,7 @@ public class AlignToCoralStation extends Command {
    */
   public AlignToCoralStation(SwerveDriveSubsystem swerveDriveSubsystem) {
     this.swerveDriveSubsystem = swerveDriveSubsystem;
-    this.request = new DrivePrecisionAlign(swerveDriveSubsystem, 0.03);
+    this.request = new DrivePrecisionAlign(swerveDriveSubsystem);
     addRequirements(swerveDriveSubsystem);
   }
 
