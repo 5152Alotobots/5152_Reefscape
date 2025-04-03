@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.245258112456639,
-        "y": 2.08890343236869
+        "x": 4.998872950819672,
+        "y": 1.8492315573770484
       },
       "isLocked": false,
       "linkedName": "Start South"
@@ -20,15 +20,20 @@
         "y": 2.7962602459016397
       },
       "prevControl": {
-        "x": 5.316767222274461,
-        "y": 2.630762115771872
+        "x": 5.105322209902141,
+        "y": 2.5700555703513905
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": "Reef_SE_L"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.5082644628099078,
+      "rotationDegrees": 119.99999999999999
+    }
+  ],
   "constraintZones": [
     {
       "name": "Constraints Zone",
