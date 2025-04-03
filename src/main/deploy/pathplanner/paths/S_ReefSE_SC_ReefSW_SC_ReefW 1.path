@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.998872950819672,
-        "y": 1.8492315573770484
+        "x": 6.029815573770492,
+        "y": 1.5135758196721305
       },
       "isLocked": false,
       "linkedName": "Start South"
@@ -37,10 +37,10 @@
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 1.0,
-      "maxWaypointRelativePos": 0.8994614003590664,
+      "minWaypointRelativePos": 0.5347177157689834,
+      "maxWaypointRelativePos": 1.0,
       "constraints": {
-        "maxVelocity": 1.5,
+        "maxVelocity": 1.0,
         "maxAcceleration": 1.0,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 460.0,

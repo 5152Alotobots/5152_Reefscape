@@ -28,6 +28,18 @@
           "data": {
             "name": "CoralIntakeEjectThrough"
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "C_ReefE 2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoStateL1"
+          }
         }
       ]
     }

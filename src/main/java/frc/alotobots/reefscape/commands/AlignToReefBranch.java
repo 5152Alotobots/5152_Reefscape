@@ -74,7 +74,7 @@ public class AlignToReefBranch extends Command {
       swerveDriveSubsystem.logAutoAlignTargetPose(targetPose);
 
       // Check if we're in the required zone for aligning
-      if (!shouldAlign(currentPose, targetPose)) {
+      if (!alignAllowed(currentPose, targetPose)) {
         cancel();
       }
     } else {
@@ -84,13 +84,13 @@ public class AlignToReefBranch extends Command {
   }
 
   /**
-   * Checks if the robot is already aligned with the target branch.
+   * Checks to make sure the robot is within the limits to align
    *
    * @param currentPose The current robot pose
    * @param targetBranchPose The target branch pose
    * @return True if already aligned within tolerance
    */
-  private boolean shouldAlign(Pose2d currentPose, Pose2d targetBranchPose) {
+  private boolean alignAllowed(Pose2d currentPose, Pose2d targetBranchPose) {
     double distanceToTarget =
         currentPose.getTranslation().getDistance(targetBranchPose.getTranslation());
 
