@@ -12,6 +12,7 @@
 */
 package frc.alotobots.library.subsystems.vision.oculus.io;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import org.littletonrobotics.junction.AutoLog;
 
 /** Interface for handling input/output operations with the Oculus Quest hardware. */
@@ -19,6 +20,8 @@ public interface OculusIO {
   /** Data structure for Oculus inputs that can be automatically logged. */
   @AutoLog
   public static class OculusIOInputs {
+    public boolean connected = false;
+
     /** 3D position coordinates [x, y, z] */
     public float[] position = new float[] {0.0f, 0.0f, 0.0f};
 
@@ -39,6 +42,12 @@ public interface OculusIO {
 
     /** Current MISO (Master In Slave Out) value */
     public int misoValue = 0;
+
+    /** Does the Oculus have 6dof tracking? */
+    public boolean isTracking = false;
+
+    /** Total number of tracking lost events since the Quest has booted */
+    public int totalTrackingLostEvents = 0;
   }
 
   /**
@@ -49,18 +58,12 @@ public interface OculusIO {
   public default void updateInputs(OculusIOInputs inputs) {}
 
   /**
-   * Sets MOSI (Master Out Slave In) value for Quest communication.
+   * Resets the pose components for resetting the Oculus position tracking. HARD RESET.
    *
-   * @param value The MOSI value to set
+   * @param oculusTargetPose The target pose of the oculus to reset to. NOT THE TARGET ROBOT POSE
    */
-  public default void setMosi(int value) {}
+  public default void resetPose(Pose2d oculusTargetPose) {}
 
-  /**
-   * Sets the pose components for resetting the Oculus position tracking.
-   *
-   * @param x The X coordinate
-   * @param y The Y coordinate
-   * @param rotation The rotation in degrees
-   */
-  public default void setResetPose(double x, double y, double rotation) {}
+  /** Resets the current heading of the Oculus as zero */
+  public default void resetHeading() {}
 }

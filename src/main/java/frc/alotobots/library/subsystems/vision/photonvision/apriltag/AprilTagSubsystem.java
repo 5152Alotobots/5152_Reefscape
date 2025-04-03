@@ -23,8 +23,10 @@ import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.alotobots.library.subsystems.swervedrive.SwerveDriveSubsystem;
 import frc.alotobots.library.subsystems.vision.photonvision.apriltag.io.AprilTagIO;
 import frc.alotobots.library.subsystems.vision.photonvision.apriltag.io.AprilTagIOInputsAutoLogged;
+import frc.alotobots.util.NotificationPresets;
 import java.util.LinkedList;
 import java.util.List;
 import org.littletonrobotics.junction.Logger;
@@ -47,11 +49,9 @@ public class AprilTagSubsystem extends SubsystemBase {
   private final AprilTagIOInputsAutoLogged[] inputs;
 
   // Tracking for multi-tag pose validity and timing
-  private final boolean[] hasValidMultiTagPose;
   private final double[] lastMultiTagPoseTimestamp;
 
   // Single tag poses are tracked separately but not returned by getCurrentPose
-  private final boolean[] hasValidSingleTagPose;
   private final double[] lastSingleTagPoseTimestamp;
 
   // Consumer for applying vision measurements to odometry/pose estimation
@@ -77,15 +77,11 @@ public class AprilTagSubsystem extends SubsystemBase {
     validateConfiguration();
 
     // Initialize tracking arrays for pose validity and timestamps
-    hasValidMultiTagPose = new boolean[inputs.length];
-    hasValidSingleTagPose = new boolean[inputs.length];
     lastMultiTagPoseTimestamp = new double[inputs.length];
     lastSingleTagPoseTimestamp = new double[inputs.length];
 
     // Set initial values
     for (int i = 0; i < inputs.length; i++) {
-      hasValidMultiTagPose[i] = false;
-      hasValidSingleTagPose[i] = false;
       lastMultiTagPoseTimestamp[i] = -1;
       lastSingleTagPoseTimestamp[i] = -1;
     }
@@ -110,6 +106,11 @@ public class AprilTagSubsystem extends SubsystemBase {
     for (int i = 0; i < io.length; i++) {
       io[i].updateInputs(inputs[i]);
       Logger.processInputs("Vision/AprilTag/" + CAMERA_CONFIGS[i].name(), inputs[i]);
+      // Send an alert if we aren't connected
+      if (!inputs[i].connected) {
+        NotificationPresets.AprilTag.sendAprilTagCameraDisconnectedNotification(
+            CAMERA_CONFIGS[i].name());
+      }
     }
 
     // Initialize logging value lists
@@ -303,8 +304,6 @@ public class AprilTagSubsystem extends SubsystemBase {
       // Update pose estimation with this observation
       updatePoseFromMultiTag(observation, cameraIndex);
 
-      // Mark this camera as having a valid multi-tag pose
-      hasValidMultiTagPose[cameraIndex] = true;
       lastMultiTagPoseTimestamp[cameraIndex] = observation.timestamp();
     }
   }
@@ -349,7 +348,6 @@ public class AprilTagSubsystem extends SubsystemBase {
 
       // Update single tag pose data, but don't use it for getCurrentPose()
       updatePoseFromSingleTag(observation, cameraIndex);
-      hasValidSingleTagPose[cameraIndex] = true;
       lastSingleTagPoseTimestamp[cameraIndex] = observation.timestamp();
     }
   }
@@ -409,7 +407,10 @@ public class AprilTagSubsystem extends SubsystemBase {
 
     // Send pose to consumer
     aprilTagConsumer.accept(
-        observation.pose().toPose2d(), observation.timestamp(), multiTagStdDevs);
+        SwerveDriveSubsystem.VisionSource.APRIL_TAG,
+        observation.pose().toPose2d(),
+        observation.timestamp(),
+        multiTagStdDevs);
   }
 
   /**
@@ -435,7 +436,11 @@ public class AprilTagSubsystem extends SubsystemBase {
     Matrix<N3, N1> singleTagStdDevs = VecBuilder.fill(linearStdDev, linearStdDev, angularStdDev);
 
     // Accept poses
-    aprilTagConsumer.accept(observation.pose(), observation.timestamp(), singleTagStdDevs);
+    aprilTagConsumer.accept(
+        SwerveDriveSubsystem.VisionSource.APRIL_TAG,
+        observation.pose(),
+        observation.timestamp(),
+        singleTagStdDevs);
   }
 
   /**
@@ -551,6 +556,7 @@ public class AprilTagSubsystem extends SubsystemBase {
      * @param visionMeasurementStdDevs Standard deviations for the measurement (x, y, theta)
      */
     public void accept(
+        SwerveDriveSubsystem.VisionSource source,
         Pose2d visionRobotPoseMeters,
         double timestampSeconds,
         Matrix<N3, N1> visionMeasurementStdDevs);

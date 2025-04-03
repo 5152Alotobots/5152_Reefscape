@@ -41,6 +41,7 @@ import frc.alotobots.library.subsystems.vision.photonvision.apriltag.AprilTagSub
 import frc.alotobots.library.subsystems.vision.photonvision.apriltag.constants.AprilTagConstants;
 import frc.alotobots.library.subsystems.vision.photonvision.apriltag.io.*;
 import frc.alotobots.reefscape.FieldConstants;
+import frc.alotobots.reefscape.commands.AlignToCoralStation;
 import frc.alotobots.reefscape.commands.AlignToReefBranch;
 import frc.alotobots.reefscape.commands.groups.Climb;
 import frc.alotobots.reefscape.commands.groups.UnClimb;
@@ -70,6 +71,7 @@ import frc.alotobots.reefscape.subsystems.wrist.commands.WristRunToAngle;
 import frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants;
 import frc.alotobots.reefscape.subsystems.wrist.io.WristIOTalonFXReal;
 import frc.alotobots.reefscape.subsystems.wrist.io.WristIOTalonFXSim;
+import frc.alotobots.util.NotificationPresets;
 import org.ironmaple.simulation.SimulatedArena;
 import org.ironmaple.simulation.drivesims.SwerveDriveSimulation;
 import org.littletonrobotics.junction.Logger;
@@ -83,9 +85,6 @@ public class RobotContainer {
   private final CoralIntakeSubsystem coralIntakeSubsystem;
   private final OculusSubsystem oculusSubsystem;
   private final AprilTagSubsystem aprilTagSubsystem;
-  //  private final LocalizationFusion localizationFusion;
-  //  private final OculusPoseSource oculusPoseSource;
-  //  private final AprilTagPoseSource aprilTagPoseSource;
   private final BlingSubsystem blingSubsystem;
   private final PathPlannerManager pathPlannerManager;
   private final AutoNamedCommands autoNamedCommands;
@@ -110,9 +109,11 @@ public class RobotContainer {
         climberSubsystem = new ClimberSubsystem(new ClimberIORevServoReal());
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         autoNamedCommands =
-            new AutoNamedCommands(elevatorSubsystem, wristSubsystem, coralIntakeSubsystem);
+            new AutoNamedCommands(
+                elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, swerveDriveSubsystem);
         configureAutoChooser();
-        oculusSubsystem = new OculusSubsystem(new OculusIOReal());
+        oculusSubsystem =
+            new OculusSubsystem(swerveDriveSubsystem::addVisionMeasurement, new OculusIOReal());
         aprilTagSubsystem =
             new AprilTagSubsystem(
                 swerveDriveSubsystem::addVisionMeasurement,
@@ -120,19 +121,6 @@ public class RobotContainer {
                     AprilTagConstants.CAMERA_CONFIGS[0], swerveDriveSubsystem::getRotation),
                 new AprilTagIOPhotonVision(
                     AprilTagConstants.CAMERA_CONFIGS[1], swerveDriveSubsystem::getRotation));
-
-        // Create pose sources
-        //        oculusPoseSource = new OculusPoseSource(oculusSubsystem);
-        //        aprilTagPoseSource = new AprilTagPoseSource(aprilTagSubsystem);
-
-        //        localizationFusion =
-        //            new LocalizationFusion(
-        //                swerveDriveSubsystem::addVisionMeasurement,
-        //                oculusPoseSource,
-        //                aprilTagPoseSource,
-        //                swerveDriveSubsystem,
-        //                autoChooser);
-
         blingSubsystem = new BlingSubsystem(new BlingIOReal());
         break;
 
@@ -166,10 +154,12 @@ public class RobotContainer {
         wristSubsystem = new WristSubsystem(new WristIOTalonFXSim());
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         autoNamedCommands =
-            new AutoNamedCommands(elevatorSubsystem, wristSubsystem, coralIntakeSubsystem);
+            new AutoNamedCommands(
+                elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, swerveDriveSubsystem);
         configureAutoChooser();
 
-        oculusSubsystem = new OculusSubsystem(new OculusIOSim(driveSimulation));
+        oculusSubsystem =
+            new OculusSubsystem(swerveDriveSubsystem::addVisionMeasurement, new OculusIOReal());
         aprilTagSubsystem =
             new AprilTagSubsystem(
                 swerveDriveSubsystem::addVisionMeasurement,
@@ -177,17 +167,6 @@ public class RobotContainer {
                     AprilTagConstants.CAMERA_CONFIGS[0], swerveDriveSubsystem::getPose),
                 new AprilTagIOPhotonVisionSim(
                     AprilTagConstants.CAMERA_CONFIGS[1], swerveDriveSubsystem::getPose));
-
-        // Create pose sources
-        //        oculusPoseSource = new OculusPoseSource(oculusSubsystem);
-        //        aprilTagPoseSource = new AprilTagPoseSource(aprilTagSubsystem);
-        //        localizationFusion =
-        //            new LocalizationFusion(
-        //                swerveDriveSubsystem::addVisionMeasurement,
-        //                oculusPoseSource,
-        //                aprilTagPoseSource,
-        //                swerveDriveSubsystem,
-        //                autoChooser);
 
         blingSubsystem = new BlingSubsystem(new BlingIOSim());
         break;
@@ -207,27 +186,17 @@ public class RobotContainer {
         wristSubsystem = new WristSubsystem(new WristIOTalonFXSim());
         pathPlannerManager = new PathPlannerManager(swerveDriveSubsystem);
         autoNamedCommands =
-            new AutoNamedCommands(elevatorSubsystem, wristSubsystem, coralIntakeSubsystem);
+            new AutoNamedCommands(
+                elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, swerveDriveSubsystem);
         configureAutoChooser();
 
-        oculusSubsystem = new OculusSubsystem(new OculusIO() {});
+        oculusSubsystem =
+            new OculusSubsystem(swerveDriveSubsystem::addVisionMeasurement, new OculusIO() {});
         aprilTagSubsystem =
             new AprilTagSubsystem(
                 swerveDriveSubsystem::addVisionMeasurement,
                 new AprilTagIO() {},
                 new AprilTagIO() {});
-
-        // Create pose sources
-        //        oculusPoseSource = new OculusPoseSource(oculusSubsystem);
-        //        aprilTagPoseSource = new AprilTagPoseSource(aprilTagSubsystem);
-        //        localizationFusion =
-        //            new LocalizationFusion(
-        //                swerveDriveSubsystem::addVisionMeasurement,
-        //                oculusPoseSource,
-        //                aprilTagPoseSource,
-        //                swerveDriveSubsystem,
-        //                autoChooser);
-
         blingSubsystem = new BlingSubsystem(new BlingIO() {});
         break;
     }
@@ -245,10 +214,12 @@ public class RobotContainer {
     blingSubsystem.setDefaultCommand(
         new NoAllianceWaiting(blingSubsystem).andThen(new SetToAllianceColor(blingSubsystem)));
     climberSubsystem.setDefaultCommand(new ClimberDisableServos(climberSubsystem));
+    // climberSubsystem.setDefaultCommand(new ClimberDefaultPositions(climberSubsystem));
   }
 
   /** Contains button based commands */
   private void configureLogicCommands() {
+    lockWheelsButton.onTrue(new InstantCommand(swerveDriveSubsystem::stopWithX));
     // TEMPORARY!!
     resetGyroButton.onTrue(
         new InstantCommand(() -> swerveDriveSubsystem.setPose(new Pose2d(0, 0, Rotation2d.kZero))));
@@ -309,17 +280,11 @@ public class RobotContainer {
     unClimbButton.onTrue(new UnClimb(climberSubsystem, elevatorSubsystem));
 
     alignLeftBranchButton.toggleOnTrue(
-        new AlignToReefBranch(
-                swerveDriveSubsystem,
-                AlignToReefBranch.ReefBranchSide.LEFT,
-                FieldConstants.Level.L4)
-            .withTimeout(1));
+        new AlignToReefBranch(swerveDriveSubsystem, FieldConstants.BranchType.LEFT).withTimeout(1));
     alignRightBranchButton.toggleOnTrue(
-        new AlignToReefBranch(
-                swerveDriveSubsystem,
-                AlignToReefBranch.ReefBranchSide.RIGHT,
-                FieldConstants.Level.L4)
+        new AlignToReefBranch(swerveDriveSubsystem, FieldConstants.BranchType.RIGHT)
             .withTimeout(1));
+    alignNearestCoralStationButton.toggleOnTrue(new AlignToCoralStation(swerveDriveSubsystem));
 
     // BACKUP -----------------------------------------------------------------------------
     // Coral Intake
@@ -350,7 +315,11 @@ public class RobotContainer {
 
   private void configureAutoChooser() {
     // Set up auto routines
+    // Initialize the chooser and register it with the dashboard
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
+
+    // Add listener for auto path changes
+    autoChooser.getSendableChooser().onChange(this::handleAutoPathChange);
 
     // Add SysId routines
     autoChooser.addOption(
@@ -370,6 +339,17 @@ public class RobotContainer {
     autoChooser.addOption(
         "Drive SysId (Dynamic Reverse)",
         swerveDriveSubsystem.sysIdDynamic(SysIdRoutine.Direction.kReverse));
+  }
+
+  private void handleAutoPathChange(String autoName) {
+    pathPlannerManager
+        .getAutoStartPose(autoName)
+        .ifPresent(
+            pose -> {
+              swerveDriveSubsystem.setPose(pose);
+              oculusSubsystem.resetPose(pose);
+              NotificationPresets.Auto.sendAutoPathChangeNotification(autoName);
+            });
   }
 
   public Command getAutonomousCommand() {

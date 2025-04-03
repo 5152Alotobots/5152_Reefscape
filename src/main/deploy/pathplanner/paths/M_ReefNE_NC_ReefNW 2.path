@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.288235199119298,
-        "y": 5.072996531400761
+        "x": 5.297435381293082,
+        "y": 5.1094392588887425
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.333360199119298,
-        "y": 7.643046100366279
+        "x": 3.3425603812930813,
+        "y": 7.679488827854261
       },
       "isLocked": false,
       "linkedName": "Reef_NE_L"
     },
     {
       "anchor": {
-        "x": 1.67827868852459,
-        "y": 6.740215163934426
+        "x": 1.25,
+        "y": 6.85
       },
       "prevControl": {
-        "x": 2.4490329988701345,
-        "y": 6.627417750132346
+        "x": 2.020754310345544,
+        "y": 6.7372025861979195
       },
       "nextControl": null,
       "isLocked": false,
@@ -31,10 +31,17 @@
   "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "AutoStateCoralStation",
+      "waypointRelativePos": 0.13238157040882487,
+      "endWaypointRelativePos": null,
+      "command": null
+    }
+  ],
   "globalConstraints": {
-    "maxVelocity": 5.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 2.0,
+    "maxAcceleration": 2.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 460.0,
     "nominalVoltage": 12.0,
@@ -50,5 +57,5 @@
     "velocity": 0,
     "rotation": -119.99999999999999
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.099506578947368,
-        "y": 2.966611842105263
+        "x": 5.0468237704918035,
+        "y": 6.896055327868852
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.099506578947368,
-        "y": 2.966611842105263
+        "x": 3.51975,
+        "y": 6.90125
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "PIDTuning1-End"
     },
     {
       "anchor": {
-        "x": 3.8294407894736837,
-        "y": 2.966611842105263
+        "x": 2.1817622950819673,
+        "y": 6.896055327868852
       },
       "prevControl": {
-        "x": 2.8294407894736837,
-        "y": 2.966611842105263
+        "x": 3.549,
+        "y": 6.8915
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "PIDTuning1"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 59.99999999999999
+    "rotation": 0.0
   },
   "reversed": false,
-  "folder": "Positions",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 119.99999999999999
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }

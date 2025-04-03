@@ -11,7 +11,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "N_ReefNE_NC_ReefNW_NC_ReefW 1"
+                  "pathName": "DoNothing"
                 }
               },
               {
@@ -36,13 +36,26 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "N_ReefNE_NC_ReefNW_NC_ReefW 2"
+                  "pathName": "DoNothing"
                 }
               },
               {
-                "type": "named",
+                "type": "sequential",
                 "data": {
-                  "name": "AutoStateCoralStation"
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.25
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "AutoStateCoralStation"
+                      }
+                    }
+                  ]
                 }
               }
             ]
@@ -61,7 +74,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "N_ReefNE_NC_ReefNW_NC_ReefW 3"
+                  "pathName": "DoNothing"
                 }
               },
               {
@@ -86,13 +99,26 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "N_ReefNE_NC_ReefNW_NC_ReefW 4"
+                  "pathName": "DoNothing"
                 }
               },
               {
-                "type": "named",
+                "type": "sequential",
                 "data": {
-                  "name": "AutoStateCoralStation"
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.25
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "AutoStateCoralStation"
+                      }
+                    }
+                  ]
                 }
               }
             ]
@@ -111,7 +137,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "N_ReefNE_NC_ReefNW_NC_ReefW 5"
+                  "pathName": "DoNothing"
                 }
               },
               {

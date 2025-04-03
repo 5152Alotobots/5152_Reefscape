@@ -121,11 +121,12 @@ public class OI {
   // DRIVER -----------------------------------------------------------
   public static final Trigger climbButton = driverController.start();
   public static final Trigger unClimbButton = driverController.back();
+  public static final Trigger lockWheelsButton = driverController.x();
 
   // Auto Drive
   public static final Trigger alignLeftBranchButton = driverController.povLeft();
   public static final Trigger alignRightBranchButton = driverController.povRight();
-
+  public static final Trigger alignNearestCoralStationButton = driverController.y();
   // CODRIVER -----------------------------------------------------------
   public static final Trigger stateCoralCoralStationButton = codriverController.rightBumper();
   public static final Trigger stateCoralStowedButton = codriverController.leftBumper();

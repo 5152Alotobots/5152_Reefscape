@@ -14,6 +14,8 @@ package frc.alotobots;
 
 import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.alotobots.library.subsystems.swervedrive.SwerveDriveSubsystem;
 import frc.alotobots.reefscape.commands.auto.*;
 import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
 import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEject;
@@ -30,16 +32,19 @@ public class AutoNamedCommands {
   private final ElevatorSubsystem elevatorSubsystem;
   private final WristSubsystem wristSubsystem;
   private final CoralIntakeSubsystem coralIntakeSubsystem;
+  private final SwerveDriveSubsystem swerveDriveSubsystem;
 
   /** Constructs command registration manager with required subsystems. */
   public AutoNamedCommands(
       ElevatorSubsystem elevatorSubsystem,
       WristSubsystem wristSubsystem,
-      CoralIntakeSubsystem coralIntakeSubsystem) {
+      CoralIntakeSubsystem coralIntakeSubsystem,
+      SwerveDriveSubsystem swerveDriveSubsystem) {
 
     this.elevatorSubsystem = elevatorSubsystem;
     this.wristSubsystem = wristSubsystem;
     this.coralIntakeSubsystem = coralIntakeSubsystem;
+    this.swerveDriveSubsystem = swerveDriveSubsystem;
 
     registerCommands();
   }
@@ -56,7 +61,7 @@ public class AutoNamedCommands {
     commands.put("AutoStateStowed", new AutoStateStowed(elevatorSubsystem, wristSubsystem));
     commands.put(
         "AutoStateCoralStation", new AutoStateCoralStation(elevatorSubsystem, wristSubsystem));
-
+    commands.put("AutoStopWithX", new InstantCommand(swerveDriveSubsystem::stopWithX));
     // Coral Intake Commands
     commands.put(
         "CoralIntakeEject",

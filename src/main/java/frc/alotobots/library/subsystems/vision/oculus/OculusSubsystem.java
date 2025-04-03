@@ -12,23 +12,23 @@
 */
 package frc.alotobots.library.subsystems.vision.oculus;
 
-import static edu.wpi.first.units.Units.Seconds;
 import static frc.alotobots.library.subsystems.vision.oculus.constants.OculusConstants.*;
 import static frc.alotobots.library.subsystems.vision.oculus.util.OculusStatus.*;
 
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
-import edu.wpi.first.units.measure.Time;
-import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.alotobots.library.subsystems.vision.localizationfusion.util.PoseSource;
+import frc.alotobots.library.subsystems.swervedrive.SwerveDriveSubsystem;
 import frc.alotobots.library.subsystems.vision.oculus.io.OculusIO;
 import frc.alotobots.library.subsystems.vision.oculus.io.OculusIOInputsAutoLogged;
-import lombok.Getter;
+import frc.alotobots.util.NotificationPresets;
+import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
 
 /**
@@ -44,44 +44,18 @@ import org.littletonrobotics.junction.Logger;
  * acquisition and alignment 3. Continuous pose updates during match 4. Recovery handling if
  * tracking is lost
  */
-public class OculusSubsystem extends SubsystemBase implements PoseSource {
+public class OculusSubsystem extends SubsystemBase {
   /** Hardware communication interface */
   private final OculusIO io;
+
+  /** Consumer for pose updates from the Oculus */
+  private final OculusConsumer oculusConsumer;
 
   /** Logged inputs from Quest hardware */
   private final OculusIOInputsAutoLogged inputs = new OculusIOInputsAutoLogged();
 
-  /** Flag indicating active pose reset */
-  @Getter private boolean poseResetInProgress = false;
-
-  /** Flag indicating active heading reset */
-  @Getter private boolean headingResetInProgress = false;
-
-  /** Flag indicating active ping operation */
-  @Getter private boolean pingInProgress = false;
-
-  /** Previous connection state */
-  @Getter private boolean wasConnected = false;
-
-  /** Reset operation start timestamp */
-  private double resetStartTime = 0;
-
-  /** Current reset attempt counter */
-  private int currentResetAttempt = 0;
-
-  /** Previous Quest timestamp */
-  private double lastTimestamp = 0.0;
-
-  /** Current Quest timestamp */
-  private double currentTimestamp = 0.0;
-
-  /** Target pose for reset operation */
-  private Pose2d pendingResetPose = null;
-
-  /** Current robot pose estimate */
-  private Pose2d currentPose = null;
-
-  private double lastQuestUpdateTime = Timer.getTimestamp();
+  /** Transform offset applied when using ROBOT_SIDE reset strategy */
+  private Transform2d offsetTransform = new Transform2d();
 
   /**
    * Creates a new OculusSubsystem.
@@ -89,10 +63,12 @@ public class OculusSubsystem extends SubsystemBase implements PoseSource {
    * <p>Initializes communication with Quest hardware and prepares logging systems. The subsystem
    * starts in an uninitialized state requiring pose calibration.
    *
+   * @param oculusConsumer Consumer that receives pose updates from the headset
    * @param io Interface for Quest hardware communication
    */
-  public OculusSubsystem(OculusIO io) {
+  public OculusSubsystem(OculusConsumer oculusConsumer, OculusIO io) {
     this.io = io;
+    this.oculusConsumer = oculusConsumer;
     Logger.recordOutput("Oculus/status", "Initialized");
   }
 
@@ -108,304 +84,182 @@ public class OculusSubsystem extends SubsystemBase implements PoseSource {
     io.updateInputs(inputs);
     Logger.processInputs("Oculus", inputs);
 
-    lastTimestamp = currentTimestamp;
-    currentTimestamp = inputs.timestamp;
+    // Add to Kalman filter
+    processPose();
 
-    // Update current pose
-    var oculusPose = getOculusPose();
-    currentPose = oculusPose.transformBy(ROBOT_TO_OCULUS.inverse());
-    Logger.recordOutput("Oculus/status/poses/headsetPose", oculusPose);
-    Logger.recordOutput("Oculus/status/poses/robotPose", currentPose);
-
-    handleResetTimeout();
-    handleResetCompletion();
-    handlePingResponse();
-  }
-
-  /**
-   * Manages timeouts for reset operations.
-   *
-   * <p>Reset operations that exceed the timeout threshold are either: - Retried up to the maximum
-   * attempt limit - Abandoned with appropriate status logging
-   */
-  private void handleResetTimeout() {
-    double currentTime = Timer.getTimestamp();
-    if (currentTime - resetStartTime > RESET_TIMEOUT_SECONDS) {
-      if (headingResetInProgress) handleReset(true);
-      if (poseResetInProgress) handleReset(false);
-    }
-  }
-
-  /**
-   * Processes reset operation outcomes.
-   *
-   * @param isHeadingReset true for heading reset, false for pose reset
-   */
-  private void handleReset(boolean isHeadingReset) {
-    if (currentResetAttempt < MAX_RESET_ATTEMPTS) {
-      String resetType = isHeadingReset ? "Heading" : "Pose";
-      Logger.recordOutput(
-          "Oculus/status",
-          resetType + " Reset attempt " + (currentResetAttempt + 1) + " timed out, retrying...");
-      currentResetAttempt++;
-      resetStartTime = Timer.getTimestamp();
-
-      io.setMosi(0); // Clear command
-
-      if (isHeadingReset) {
-        io.setMosi(1); // Request heading reset
-      } else {
-        io.setResetPose(
-            pendingResetPose.getX(),
-            pendingResetPose.getY(),
-            pendingResetPose.getRotation().getDegrees());
-        io.setMosi(2); // Request pose reset
-      }
+    // Notify if we are disconnected
+    if (!inputs.connected) {
+      NotificationPresets.Oculus.sendOculusDisconnectedNotification();
     } else {
+      NotificationPresets.Oculus.sendOculusReconnectedNotification();
+    }
+
+    // Notify for battery levels
+    if (inputs.batteryPercent < BATTERY_CRITICAL_PERCENT) {
+      NotificationPresets.Oculus.sendOculusBatteryCriticalNotification();
+    } else if (inputs.batteryPercent < BATTERY_LOW_PERCENT) {
+      NotificationPresets.Oculus.sendOculusBatteryLowNotification();
+    }
+
+    // Notify for tracking status
+    if (!inputs.isTracking) {
+      NotificationPresets.Oculus.sendOculusTrackingLostNotification(inputs.totalTrackingLostEvents);
+    } else {
+      NotificationPresets.Oculus.sendOculusTrackingRegainedNotification();
+    }
+  }
+
+  /**
+   * Returns the battery percentage of the connected Quest headset.
+   *
+   * @return Battery percentage (0-100)
+   */
+  public double getBatteryPercent() {
+    return inputs.batteryPercent;
+  }
+
+  /**
+   * Returns the timestamp of the most recent pose update.
+   *
+   * @return Timestamp in seconds
+   */
+  public double getTimestamp() {
+    return inputs.timestamp;
+  }
+
+  /**
+   * Checks if the Quest headset is currently connected.
+   *
+   * @return True if connected, false otherwise
+   */
+  public boolean isConnected() {
+    return inputs.connected;
+  }
+
+  /**
+   * Gets the current robot pose as estimated by the Quest headset. This incorporates all transforms
+   * and offsets to convert from headset to robot coordinates.
+   *
+   * @return Field-relative robot pose
+   */
+  @AutoLogOutput(key = "Oculus/Pose")
+  public Pose2d getPose() {
+    return getOculusPose().transformBy(ROBOT_TO_OCULUS.inverse()).plus(offsetTransform);
+  }
+
+  /**
+   * Resets the pose tracking system to a specified position. Must be called only when the robot is
+   * disabled to avoid interrupting tracking during a match.
+   *
+   * @param pose The new reference pose
+   */
+  public void resetPose(Pose2d pose) {
+    if (DriverStation.isEnabled()) {
       Logger.recordOutput(
-          "Oculus/status",
-          (isHeadingReset ? "Heading" : "Pose")
-              + " Reset failed after "
-              + MAX_RESET_ATTEMPTS
-              + " attempts");
-      if (isHeadingReset) {
-        clearHeadingResetState();
-      } else {
-        clearPoseResetState();
-      }
+          "Oculus/Log",
+          "resetPose() called while the robot is enabled. This shouldn't happen! Ignoring.");
+      return;
     }
+    // Transform the pose to the Oculus coordinate system w/ offset
+    Pose2d oculusSidePose = pose.plus(ROBOT_TO_OCULUS);
+
+    if (POSE_RESET_STRATEGY.equals(PoseResetStrategy.ROBOT_SIDE)) {
+      // Reset the pose on the Oculus side
+      io.resetPose(Pose2d.kZero);
+      // Set the offset transform to the new pose
+      updateTransform(oculusSidePose);
+    } else {
+      updateTransform(Pose2d.kZero);
+      io.resetPose(oculusSidePose);
+    }
+    Logger.recordOutput(
+        "Oculus/Log",
+        String.format("Resetting pose to WPILib: %s, Oculus: %s", pose, oculusSidePose));
+    NotificationPresets.Oculus.sendOculusPoseResetNotification(pose);
   }
 
   /**
-   * Handles completion of reset operations.
+   * Updates the transform offset used in ROBOT_SIDE pose reset strategy. Has no effect if using a
+   * different pose reset strategy.
    *
-   * <p>Processes successful reset confirmations from Quest and updates system state.
+   * @param pose The new reference pose for calculating offset
    */
-  private void handleResetCompletion() {
-    if (headingResetInProgress && inputs.misoValue == STATUS_HEADING_RESET_COMPLETE) {
+  public void updateTransform(Pose2d pose) {
+    if (!POSE_RESET_STRATEGY.equals(PoseResetStrategy.ROBOT_SIDE)) {
       Logger.recordOutput(
-          "Oculus/status",
-          "Heading Reset completed successfully on attempt " + (currentResetAttempt + 1));
-      clearHeadingResetState();
+          "Oculus/Log", "updateTransform() called when not using ROBOT_SIDE. Ignoring.");
+      return;
     }
-    if (poseResetInProgress && inputs.misoValue == STATUS_POSE_RESET_COMPLETE) {
-      Logger.recordOutput(
-          "Oculus/status",
-          "Pose Reset completed successfully on attempt " + (currentResetAttempt + 1));
-      clearPoseResetState();
+    // Update the offset transform to the new pose
+    Logger.recordOutput("Oculus/Log", "Updating offset transform to: " + pose);
+    offsetTransform = new Transform2d(pose.getTranslation(), pose.getRotation());
+    NotificationPresets.Oculus.sendOculusTransformUpdateNotification(offsetTransform);
+  }
+
+  /**
+   * Processes the current pose data and forwards it to the consumer if connected and properly
+   * tracking. This enables integration with pose estimation systems.
+   */
+  private void processPose() {
+    if (inputs.connected && inputs.isTracking) {
+      Pose2d pose = getPose();
+      double timestamp = getTimestamp();
+
+      // Call the consumer with the new pose
+      oculusConsumer.accept(
+          SwerveDriveSubsystem.VisionSource.OCULUS, pose, timestamp, OCULUS_STD_DEVS);
     }
   }
 
   /**
-   * Handles ping response from Quest.
+   * Converts the raw Oculus yaw to a Rotation2d object. Applies necessary coordinate system
+   * transformations.
    *
-   * <p>Processes communication test responses and updates status.
-   */
-  private void handlePingResponse() {
-    if (inputs.misoValue == STATUS_PING_RESPONSE) {
-      Logger.recordOutput("Oculus/status", "Ping response received");
-      io.setMosi(0); // Clear command
-      pingInProgress = false;
-    }
-  }
-
-  /**
-   * Clears pose reset operation state.
-   *
-   * <p>Resets all state variables related to pose reset operations.
-   */
-  private void clearPoseResetState() {
-    Logger.recordOutput("Oculus/status", "Clearing pose reset state");
-    poseResetInProgress = false;
-    pendingResetPose = null;
-    currentResetAttempt = 0;
-    io.setMosi(0); // Clear command
-  }
-
-  /**
-   * Clears heading reset operation state.
-   *
-   * <p>Resets all state variables related to heading reset operations.
-   */
-  private void clearHeadingResetState() {
-    Logger.recordOutput("Oculus/status", "Clearing heading reset state");
-    headingResetInProgress = false;
-    currentResetAttempt = 0;
-    io.setMosi(0); // Clear command
-  }
-
-  /**
-   * Gets current Quest rotation in field frame.
-   *
-   * <p>Converts Quest IMU data to field-relative rotation.
-   *
-   * @return Current headset rotation
+   * @return Rotation2d representing the headset's yaw
    */
   private Rotation2d getOculusYaw() {
     return Rotation2d.fromDegrees(-inputs.eulerAngles[1]);
   }
 
   /**
-   * Gets current Quest position in field frame.
+   * Converts the raw Oculus position to a Translation2d object. Maps Unity coordinate system to FRC
+   * coordinate system.
    *
-   * <p>Converts Quest SLAM position to field coordinates.
-   *
-   * @return Current headset position
+   * @return Translation2d representing the headset's position
    */
-  private Translation2d getOculusPosition() {
-    return new Translation2d(inputs.position[2], -inputs.position[0]);
+  private Translation2d getOculusTranslation() {
+    float[] oculusPosition = inputs.position;
+    return new Translation2d(oculusPosition[2], -oculusPosition[0]);
   }
 
   /**
-   * Gets complete Quest pose in field frame.
+   * Combines Oculus position and orientation into a unified Pose2d.
    *
-   * <p>Combines position and rotation data into a field-relative pose.
-   *
-   * @return Current headset pose
+   * @return Raw Pose2d from the headset's perspective
    */
+  @AutoLogOutput(key = "Oculus/RawPose")
   private Pose2d getOculusPose() {
-    return new Pose2d(getOculusPosition(), getOculusYaw());
+    return new Pose2d(getOculusTranslation(), getOculusYaw());
   }
 
   /**
-   * Initiates pose reset operation.
+   * Functional interface for components that consume Oculus vision measurements.
    *
-   * <p>Attempts to reset Quest SLAM origin to align with target pose.
-   *
-   * @param targetPose Desired robot pose after reset
-   * @return true if reset initiated successfully
+   * <p>Typically implemented by subsystems that handle pose estimation/odometry.
    */
-  public boolean resetToPose(Pose2d targetPose) {
-    if (poseResetInProgress) {
-      Logger.recordOutput("Oculus/status", "Cannot reset pose - reset already in progress");
-      return false;
-    }
-
-    if (inputs.misoValue != STATUS_READY) {
-      Logger.recordOutput(
-          "Oculus/status", "Cannot reset pose - Quest busy (MISO=" + inputs.misoValue + ")");
-      return false;
-    }
-
-    targetPose = targetPose.plus(ROBOT_TO_OCULUS);
-    pendingResetPose = targetPose;
-    Logger.recordOutput(
-        "Oculus/status",
-        String.format(
-            "Initiating pose reset to X:%.2f Y:%.2f Rot:%.2f°",
-            targetPose.getX(), targetPose.getY(), targetPose.getRotation().getDegrees()));
-
-    io.setResetPose(targetPose.getX(), targetPose.getY(), targetPose.getRotation().getDegrees());
-    poseResetInProgress = true;
-    resetStartTime = Timer.getTimestamp();
-    currentResetAttempt = 0;
-    io.setMosi(2); // Request pose reset
-
-    return true;
-  }
-
-  /**
-   * Initiates heading reset operation.
-   *
-   * <p>Attempts to zero current Quest heading measurement.
-   *
-   * @return true if reset initiated successfully
-   */
-  public boolean zeroHeading() {
-    if (headingResetInProgress) {
-      Logger.recordOutput("Oculus/status", "Cannot zero heading - reset already in progress");
-      return false;
-    }
-
-    if (inputs.misoValue != STATUS_READY) {
-      Logger.recordOutput(
-          "Oculus/status", "Cannot zero heading - Quest busy (MISO=" + inputs.misoValue + ")");
-      return false;
-    }
-
-    Logger.recordOutput("Oculus/status", "Zeroing heading");
-    headingResetInProgress = true;
-    resetStartTime = Timer.getTimestamp();
-    currentResetAttempt = 0;
-    io.setMosi(1); // Request heading reset
-    return true;
-  }
-
-  /**
-   * Tests Quest communication.
-   *
-   * <p>Sends ping command to verify hardware connectivity.
-   *
-   * @return true if ping initiated successfully
-   */
-  public boolean ping() {
-    if (pingInProgress) {
-      Logger.recordOutput("Oculus/status", "Cannot ping - ping already in progress");
-      return false;
-    }
-
-    if (inputs.misoValue != STATUS_READY) {
-      Logger.recordOutput(
-          "Oculus/status", "Cannot ping - system busy (MISO=" + inputs.misoValue + ")");
-      return false;
-    }
-
-    Logger.recordOutput("Oculus/status", "Sending ping...");
-    Logger.recordOutput("Oculus/ping/sendTime", Timer.getTimestamp());
-    pingInProgress = true;
-    io.setMosi(3); // Send ping
-    return true;
-  }
-
-  // PoseSource interface implementation
-
-  /**
-   * {@inheritDoc}
-   *
-   * <p>Quest connection is determined by checking if we've received any new Quest timestamp updates
-   * within our timeout window. Small variations in update timing are allowed, only triggering
-   * disconnect on significant delays.
-   */
-  @Override
-  public boolean isConnected() {
-    // If timestamp has changed since last check, update our last update time
-    if (inputs.timestamp != lastTimestamp) {
-      lastQuestUpdateTime = Timer.getTimestamp();
-    }
-
-    // Only consider disconnected if we haven't seen ANY new timestamps
-    // for longer than our timeout period
-    return (Timer.getTimestamp() - lastQuestUpdateTime) < CONNECTION_TIMEOUT;
-  }
-
-  /**
-   * {@inheritDoc}
-   *
-   * <p>Returns field-relative robot pose from Quest SLAM.
-   */
-  @Override
-  public Pose2d getCurrentPose() {
-    return currentPose;
-  }
-
-  /**
-   * {@inheritDoc}
-   *
-   * <p>Returns constant measurement uncertainty for Quest tracking.
-   */
-  @Override
-  public Matrix<N3, N1> getStdDevs() {
-    return OCULUS_STD_DEVS;
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public String getSourceName() {
-    return "Oculus Quest";
-  }
-
-  @Override
-  public Time getTimestamp() {
-    return Seconds.of(lastQuestUpdateTime);
+  @FunctionalInterface
+  public static interface OculusConsumer {
+    /**
+     * Accepts a vision measurement from the Oculus subsystem.
+     *
+     * @param visionRobotPoseMeters Field-relative pose of the robot in meters
+     * @param timestampSeconds Timestamp when the measurement was taken, in seconds
+     * @param visionMeasurementStdDevs Standard deviations for the measurement (x, y, theta)
+     */
+    public void accept(
+        SwerveDriveSubsystem.VisionSource source,
+        Pose2d visionRobotPoseMeters,
+        double timestampSeconds,
+        Matrix<N3, N1> visionMeasurementStdDevs);
   }
 }

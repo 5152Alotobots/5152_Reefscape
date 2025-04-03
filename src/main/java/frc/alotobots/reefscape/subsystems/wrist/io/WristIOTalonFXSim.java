@@ -50,7 +50,6 @@ import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXRealConstants;
 import frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXSimConstants.MotionMagicConstants;
-import frc.alotobots.reefscape.util.MechanismManager;
 
 /**
  * Hardware implementation of the WristIO interface using TalonFX motor controller and CANCoder for
@@ -173,8 +172,6 @@ public class WristIOTalonFXSim implements WristIO {
     inputs.mechanismAngle = Radians.of(wristSim.getAngleRads());
     inputs.topLimit = wristSim.getAngleRads() >= MAX_ANGLE.in(Radians);
     inputs.bottomLimit = wristSim.getAngleRads() <= MIN_ANGLE.in(Radians);
-
-    MechanismManager.updateWristMech(inputs.mechanismAngle);
   }
 
   /**

@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.7432377049180328,
-        "y": 1.3337602459016387
+        "x": 7.4,
+        "y": 7.55
       },
       "prevControl": null,
       "nextControl": {
-        "x": -0.7534908761881021,
-        "y": 1.0532215165349483
+        "x": 8.400000000000011,
+        "y": 7.55
       },
       "isLocked": false,
-      "linkedName": "South Right Station"
+      "linkedName": "BargeN"
     },
     {
       "anchor": {
-        "x": 3.812090163928191,
-        "y": 2.4126536885288137
+        "x": 7.4,
+        "y": 0.5
       },
       "prevControl": {
-        "x": 4.829012615360639,
-        "y": 2.431156816711112
+        "x": 6.4,
+        "y": 0.5
       },
       "nextControl": null,
-      "isLocked": true,
-      "linkedName": null
+      "isLocked": false,
+      "linkedName": "BargeS"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 59.99999999999999
+    "rotation": 0.0
   },
   "reversed": false,
-  "folder": "BenAutos",
+  "folder": "Positions",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -125.00000000000001
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }

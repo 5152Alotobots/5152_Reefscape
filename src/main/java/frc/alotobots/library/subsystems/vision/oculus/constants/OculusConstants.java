@@ -12,12 +12,15 @@
 */
 package frc.alotobots.library.subsystems.vision.oculus.constants;
 
+import static edu.wpi.first.units.Units.Milliseconds;
+
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
+import edu.wpi.first.units.measure.Time;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -28,26 +31,38 @@ import lombok.experimental.UtilityClass;
 public class OculusConstants {
 
   /**
+   * Determines which side the pose reset logic should be used
+   *
+   * <p>ROBOT_SIDE -> All resets happen with a transform applied to the robot code. resetPose() must
+   * be called ONCE prior to the start of the match to avoid latency in resetting the Oculus side
+   * pose to (0, 0, 0) Afterward, updateTransform() should be called instead if the transform needs
+   * to be updated.
+   *
+   * <p>OCULUS_SIDE -> All resets happen with a transform applied to the Oculus code. These methods
+   * should NOT be called during match play as it will result in incorrect transformations due to
+   * latency.
+   */
+  public static enum PoseResetStrategy {
+    ROBOT_SIDE,
+    OCULUS_SIDE
+  }
+
+  /** The strategy used to reset the pose */
+  public static final PoseResetStrategy POSE_RESET_STRATEGY = PoseResetStrategy.OCULUS_SIDE;
+
+  public static final double BATTERY_LOW_PERCENT = 20;
+
+  public static final double BATTERY_CRITICAL_PERCENT = 10;
+
+  /**
    * Transform from the robot center to the headset. Coordinate system: - X: Positive is forwards -
    * Y: Positive is left - Rotation: Positive is counter-clockwise
    */
   public static final Transform2d ROBOT_TO_OCULUS =
-      new Transform2d(0.14, -0.22, Rotation2d.fromDegrees(-90));
-
-  /**
-   * Timeout duration in seconds for reset operations (pose reset, heading reset, ping). If a reset
-   * operation takes longer than this time, it will be considered failed.
-   */
-  public static final double RESET_TIMEOUT_SECONDS = 0.2;
-
-  /**
-   * Maximum number of attempts for reset operations. If a reset operation fails this many times,
-   * the command will terminate.
-   */
-  public static final int MAX_RESET_ATTEMPTS = 3;
+      new Transform2d(0.153, -0.26, Rotation2d.fromDegrees(-90));
 
   /** Timeout threshold for considering Quest disconnected (seconds) */
-  public static final double CONNECTION_TIMEOUT = 0.4;
+  public static final Time OCULUS_CONNECTION_TIMEOUT = Milliseconds.of(350);
 
   /**
    * Standard deviations representing how much we "trust" the position from the Oculus. By default,
@@ -56,9 +71,9 @@ public class OculusConstants {
    */
   public static final Matrix<N3, N1> OCULUS_STD_DEVS =
       VecBuilder.fill(
-          0.015, // Trust down to 50mm
-          0.015, // Trust down to 50mm
-          1000 // Don't use for rotation at all
+          0.02, // Trust down to 50mm
+          0.02, // Trust down to 50mm
+          0.0872665 // 5deg
           );
 
   /**

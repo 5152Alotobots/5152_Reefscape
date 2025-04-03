@@ -174,10 +174,10 @@ public class ClimberIORevServoReal implements ClimberIO {
   public void setElevatorLockingServoLocked(boolean elevatorLockingServoLocked) {
     if (elevatorLockingServoLocked) {
       elevatorLockingLeftServoChannel.setPulseWidth(ELEVATOR_LOCKING_LEFT_SERVO_CLOSED_PW);
-      // elevatorLockingRightServoChannel.setPulseWidth(ELEVATOR_LOCKING_RIGHT_SERVO_CLOSED_PW);
+      elevatorLockingRightServoChannel.setPulseWidth(ELEVATOR_LOCKING_RIGHT_SERVO_CLOSED_PW);
     } else {
       elevatorLockingLeftServoChannel.setPulseWidth(ELEVATOR_LOCKING_LEFT_SERVO_OPEN_PW);
-      // elevatorLockingRightServoChannel.setPulseWidth(ELEVATOR_LOCKING_RIGHT_SERVO_OPEN_PW);
+      elevatorLockingRightServoChannel.setPulseWidth(ELEVATOR_LOCKING_RIGHT_SERVO_OPEN_PW);
     }
   }
 }

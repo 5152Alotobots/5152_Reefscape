@@ -54,7 +54,6 @@ import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.simulation.ElevatorSim;
 import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorTalonFXRealConstants.MotionMagicConstants;
 import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorTalonFXRealConstants.PIDConstants;
-import frc.alotobots.reefscape.util.MechanismManager;
 
 /** Motor Control Types */
 public class ElevatorIOTalonFXSim implements ElevatorIO {
@@ -182,8 +181,6 @@ public class ElevatorIOTalonFXSim implements ElevatorIO {
         linearVelocityToTalonFX(MetersPerSecond.of(elevatorSim.getVelocityMetersPerSecond())));
     rightSim.setRotorVelocity(
         linearVelocityToTalonFX(MetersPerSecond.of(elevatorSim.getVelocityMetersPerSecond())));
-
-    MechanismManager.updateElevatorMech(inputs.leftHeight);
   }
 
   /**

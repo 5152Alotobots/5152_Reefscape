@@ -13,7 +13,6 @@
 package frc.alotobots.library.subsystems.swervedrive;
 
 import static edu.wpi.first.units.Units.*;
-import static frc.alotobots.library.subsystems.vision.localizationfusion.constants.LocalizationFusionConstants.IGNORE_VISION_IN_AUTO;
 
 import com.pathplanner.lib.util.DriveFeedforwards;
 import com.pathplanner.lib.util.swerve.SwerveSetpoint;
@@ -35,7 +34,6 @@ import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.Alert;
 import edu.wpi.first.wpilibj.Alert.AlertType;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -46,6 +44,7 @@ import frc.alotobots.Constants.Mode;
 import frc.alotobots.library.subsystems.swervedrive.io.GyroIO;
 import frc.alotobots.library.subsystems.swervedrive.io.GyroIOInputsAutoLogged;
 import frc.alotobots.library.subsystems.swervedrive.io.ModuleIO;
+import frc.alotobots.util.NotificationPresets;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import org.littletonrobotics.junction.AutoLogOutput;
@@ -104,7 +103,12 @@ public class SwerveDriveSubsystem extends SubsystemBase {
   private SwerveDrivePoseEstimator poseEstimator =
       new SwerveDrivePoseEstimator(kinematics, rawGyroRotation, lastModulePositions, new Pose2d());
 
-  private SwerveDrivePoseEstimator precisionAlignPoseEstimator =
+  /** Pose estimator for odometry */
+  private SwerveDrivePoseEstimator aprilTagPoseEstimator =
+      new SwerveDrivePoseEstimator(kinematics, rawGyroRotation, lastModulePositions, new Pose2d());
+
+  /** Pose estimator for odometry */
+  private SwerveDrivePoseEstimator oculusPoseEstimator =
       new SwerveDrivePoseEstimator(kinematics, rawGyroRotation, lastModulePositions, new Pose2d());
 
   /**
@@ -123,7 +127,6 @@ public class SwerveDriveSubsystem extends SubsystemBase {
       ModuleIO blModuleIO,
       ModuleIO brModuleIO) {
     this.gyroIO = gyroIO;
-    Shuffleboard.getTab("Prematch").add("Robot Pose", field);
 
     // Initialize modules
     modules[0] = new Module(flModuleIO, 0, Constants.tunerConstants.getFrontLeft());
@@ -164,7 +167,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
   /** Periodic update function handling odometry updates and module states. */
   @Override
   public void periodic() {
-    field.setRobotPose(getPose());
+    field.getRobotObject().setPose(getPose());
     SmartDashboard.putData("SwerveDriveField", field);
     odometryLock.lock();
     gyroIO.updateInputs(gyroInputs);
@@ -211,8 +214,8 @@ public class SwerveDriveSubsystem extends SubsystemBase {
       }
 
       poseEstimator.updateWithTime(sampleTimestamps[i], rawGyroRotation, modulePositions);
-      precisionAlignPoseEstimator.updateWithTime(
-          sampleTimestamps[i], rawGyroRotation, modulePositions);
+      aprilTagPoseEstimator.updateWithTime(sampleTimestamps[i], rawGyroRotation, modulePositions);
+      oculusPoseEstimator.updateWithTime(sampleTimestamps[i], rawGyroRotation, modulePositions);
     }
 
     gyroDisconnectedAlert.set(!gyroInputs.connected && Constants.currentMode != Mode.SIM);
@@ -391,6 +394,16 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     return poseEstimator.getEstimatedPosition();
   }
 
+  @AutoLogOutput(key = "Drive/AprilTagPose")
+  public Pose2d getAprilTagPose() {
+    return aprilTagPoseEstimator.getEstimatedPosition();
+  }
+
+  @AutoLogOutput(key = "Drive/OculusPose")
+  public Pose2d getOculusPose() {
+    return oculusPoseEstimator.getEstimatedPosition();
+  }
+
   /**
    * Gets current odometry rotation.
    *
@@ -406,26 +419,49 @@ public class SwerveDriveSubsystem extends SubsystemBase {
    * @param pose New robot pose
    */
   public void setPose(Pose2d pose) {
+    NotificationPresets.SwerveDrive.sendSwerveDrivePoseResetNotification(pose);
     poseEstimator.resetPosition(rawGyroRotation, getModulePositions(), pose);
-    precisionAlignPoseEstimator.resetPosition(rawGyroRotation, getModulePositions(), pose);
+    aprilTagPoseEstimator.resetPosition(rawGyroRotation, getModulePositions(), pose);
+    oculusPoseEstimator.resetPosition(rawGyroRotation, getModulePositions(), pose);
+  }
+
+  public enum VisionSource {
+    APRIL_TAG,
+    OCULUS
   }
 
   /**
    * Adds vision measurement for pose estimation.
    *
+   * @param source Source of the vision measurement (AprilTag or Oculus)
    * @param visionRobotPoseMeters Vision-measured robot pose
    * @param timestampSeconds Timestamp of measurement
    * @param visionMeasurementStdDevs Standard deviations of vision measurements
    */
   public void addVisionMeasurement(
+      VisionSource source,
       Pose2d visionRobotPoseMeters,
       double timestampSeconds,
       Matrix<N3, N1> visionMeasurementStdDevs) {
 
-    // Skip if ignoring vision in auto and we're either in auto or disabled
-    if (!IGNORE_VISION_IN_AUTO || (DriverStation.isEnabled() && !DriverStation.isAutonomous())) {
-      poseEstimator.addVisionMeasurement(
-          visionRobotPoseMeters, timestampSeconds, visionMeasurementStdDevs);
+    // Set extremely high std dev for rotation
+    Matrix<N3, N1> rotationIgnoredStdDevs = visionMeasurementStdDevs.copy();
+    rotationIgnoredStdDevs.set(2, 0, 1000.0);
+
+    // Always add this measurement to the main pose estimator (no rotation)
+    poseEstimator.addVisionMeasurement(
+        visionRobotPoseMeters, timestampSeconds, rotationIgnoredStdDevs);
+
+    // Add the source to its respective pose estimator (w/ rotation)
+    switch (source) {
+      case APRIL_TAG:
+        aprilTagPoseEstimator.addVisionMeasurement(
+            visionRobotPoseMeters, timestampSeconds, visionMeasurementStdDevs);
+        break;
+      case OCULUS:
+        oculusPoseEstimator.addVisionMeasurement(
+            visionRobotPoseMeters, timestampSeconds, visionMeasurementStdDevs);
+        break;
     }
   }
 

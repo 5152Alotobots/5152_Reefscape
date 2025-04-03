@@ -38,7 +38,10 @@ public class ClimberDisableServos extends InstantCommand {
    */
   @Override
   public void initialize() {
+
     climberSubsystem.disableServos();
+    climberSubsystem.enableElevatorLockingServo();
+    climberSubsystem.unlockElevator();
   }
 
   /**

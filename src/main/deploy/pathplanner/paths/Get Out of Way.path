@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.57,
-        "y": 0.866
+        "x": 3.9697057122250112,
+        "y": 5.25737057298967
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.4769391211489684,
-        "y": 2.607457430455756
+        "x": 3.728176229508197,
+        "y": 5.42156762295082
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Reef_NW_L"
     },
     {
       "anchor": {
-        "x": 3.464,
-        "y": 2.64
+        "x": 3.368545081967213,
+        "y": 5.949026639344262
       },
       "prevControl": {
-        "x": 2.5377030430793015,
-        "y": 1.864395082003282
+        "x": 3.6802254098360656,
+        "y": 5.6613217213114755
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,8 +33,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 5.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 1.0,
+    "maxAcceleration": 1.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 460.0,
     "nominalVoltage": 12.0,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 59.99999999999999
+    "rotation": -59.99999999999999
   },
   "reversed": false,
-  "folder": "BenAutos",
+  "folder": "Three Piece",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -130.0
+    "rotation": -59.99999999999999
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

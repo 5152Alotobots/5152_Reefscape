@@ -267,7 +267,7 @@ public class TunerConstants2025 implements TunerConstants {
 
   public static class CustomConstants {
     // Custom constants go here
-    public static final PIDConstants translationPid = new PIDConstants(2.3, 0, 0.07);
+    public static final PIDConstants translationPid = new PIDConstants(5.5, 0, 0.04);
     public static final PIDConstants rotationPid = new PIDConstants(7.8, 0, 0.015);
     public static final double precisionAlignTolerance = .03; // Meters
     public static final double precisionAlignAllowRadius = .5; // Meters

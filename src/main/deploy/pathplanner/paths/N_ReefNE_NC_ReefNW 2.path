@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.288235199119298,
-        "y": 5.072996531400761
+        "x": 5.297435381293082,
+        "y": 5.1094392588887425
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.705733595306348,
-        "y": 6.4307804821811985
+        "x": 4.714933777480131,
+        "y": 6.46722320966918
       },
       "isLocked": false,
       "linkedName": "Reef_NE_L"
     },
     {
       "anchor": {
-        "x": 1.67827868852459,
-        "y": 6.740215163934426
+        "x": 1.25,
+        "y": 6.85
       },
       "prevControl": {
-        "x": 2.9675878990509044,
-        "y": 6.643998058671268
+        "x": 2.029959016393443,
+        "y": 5.713370901639343
       },
       "nextControl": null,
       "isLocked": false,
@@ -29,12 +29,38 @@
     }
   ],
   "rotationTargets": [],
-  "constraintZones": [],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 0.7916937053861077,
+      "maxWaypointRelativePos": 1.0,
+      "constraints": {
+        "maxVelocity": 1.0,
+        "maxAcceleration": 1.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 460.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
   "pointTowardsZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "AutoStateCoralStation",
+      "waypointRelativePos": 0.2465931213497694,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "AutoStateCoralStation"
+        }
+      }
+    }
+  ],
   "globalConstraints": {
-    "maxVelocity": 5.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 2.0,
+    "maxAcceleration": 2.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 460.0,
     "nominalVoltage": 12.0,
@@ -50,5 +76,5 @@
     "velocity": 0,
     "rotation": -119.99999999999999
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

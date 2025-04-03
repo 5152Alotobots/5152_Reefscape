@@ -4,15 +4,15 @@
     {
       "anchor": {
         "x": 1.67827868852459,
-        "y": 6.740215163934426
+        "y": 7.231892824103267
       },
       "prevControl": null,
       "nextControl": {
         "x": 2.6782786885245886,
-        "y": 6.740215163934426
+        "y": 7.231892824103267
       },
       "isLocked": false,
-      "linkedName": "North Left Station"
+      "linkedName": "North Right Station"
     },
     {
       "anchor": {
@@ -25,7 +25,7 @@
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Reef_NEL1"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -48,7 +48,7 @@
   "folder": "Battle Creek",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 125.00000000000001
+    "rotation": 126.57303097851924
   },
   "useDefaultConstraints": false
 }

@@ -12,11 +12,12 @@
 */
 package frc.alotobots.reefscape.commands;
 
-import static edu.wpi.first.units.Units.Degrees;
-import static edu.wpi.first.units.Units.Meters;
+import static edu.wpi.first.units.Units.*;
 
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -28,37 +29,30 @@ import frc.alotobots.reefscape.FieldConstants;
 /** Command that aligns the robot to the closest reef branch on the specified side. */
 public class AlignToReefBranch extends Command {
 
-  public enum ReefBranchSide {
-    LEFT,
-    RIGHT
-  }
-
   private final Distance ALIGN_ALLOW_DISTANCE = Meters.of(0.25); // Allowable distance for alignment
   private final Angle HEADING_MATCH_REQUIREMENT = Degrees.of(30); // Allowable heading difference
+  private final Transform2d ALIGN_OFFSET_TRANSFORM =
+      new Transform2d(
+          new Translation2d(-0.58, 0),
+          Rotation2d.kZero); // Distance from the reef branch to align at
 
-  private final ReefBranchSide side;
   private final SwerveDriveSubsystem swerveDriveSubsystem;
   private final DrivePrecisionAlign request;
-  private final FieldConstants.Level branchLevel;
-
+  private final FieldConstants.BranchType branchType;
   private DriverStation.Alliance alliance;
   private Pose2d targetPose;
 
   /**
-   * Creates a new AlignToReefBranch command with the specified branch level.
+   * Creates a new AlignToReefBranch command.
    *
    * @param swerveDriveSubsystem The swerve drive subsystem
-   * @param side The side of the reef branch to align to (LEFT or RIGHT)
-   * @param branchLevel The level of the reef branch to target
+   * @param branchType The type of the reef branch to align to (LEFT, RIGHT, ANY)
    */
   public AlignToReefBranch(
-      SwerveDriveSubsystem swerveDriveSubsystem,
-      ReefBranchSide side,
-      FieldConstants.Level branchLevel) {
-    this.side = side;
+      SwerveDriveSubsystem swerveDriveSubsystem, FieldConstants.BranchType branchType) {
+    this.branchType = branchType;
     this.swerveDriveSubsystem = swerveDriveSubsystem;
-    this.branchLevel = branchLevel;
-    this.request = new DrivePrecisionAlign(swerveDriveSubsystem, 0.03);
+    this.request = new DrivePrecisionAlign(swerveDriveSubsystem, 0.01);
     addRequirements(swerveDriveSubsystem);
   }
 
@@ -71,38 +65,20 @@ public class AlignToReefBranch extends Command {
       alliance = DriverStation.getAlliance().get();
 
       // Get the appropriate reef branch pose based on alliance and side
-      Pose3d targetBranchPose = getTargetBranchPose(currentPose);
+      Pose2d targetBranchPose =
+          FieldConstants.BranchPositions.getClosestBranch(currentPose, alliance, branchType);
 
-      // Convert to Pose2d for alignment
-      targetPose = targetBranchPose.toPose2d();
-
+      targetPose = targetBranchPose.transformBy(ALIGN_OFFSET_TRANSFORM);
       // Put on dash
       swerveDriveSubsystem.logAutoAlignTargetPose(targetPose);
-      // Check if we're already within alignment tolerance
-      if (isAlreadyAligned(currentPose, targetBranchPose)) {
-        return;
+
+      // Check if we're in the required zone for aligning
+      if (!shouldAlign(currentPose, targetPose)) {
+        cancel();
       }
     } else {
       // Cannot align without alliance information
       cancel();
-    }
-  }
-
-  /**
-   * Gets the target branch pose based on the current pose, alliance, and selected side.
-   *
-   * @param currentPose The current robot pose
-   * @return The target branch pose in 3D space
-   */
-  private Pose3d getTargetBranchPose(Pose2d currentPose) {
-    if (alliance == DriverStation.Alliance.Red) {
-      return (side == ReefBranchSide.LEFT)
-          ? FieldConstants.getClosestLeftBranchRed(currentPose, branchLevel)
-          : FieldConstants.getClosestRightBranchRed(currentPose, branchLevel);
-    } else {
-      return (side == ReefBranchSide.LEFT)
-          ? FieldConstants.getClosestLeftBranchBlue(currentPose, branchLevel)
-          : FieldConstants.getClosestRightBranchBlue(currentPose, branchLevel);
     }
   }
 
@@ -113,14 +89,13 @@ public class AlignToReefBranch extends Command {
    * @param targetBranchPose The target branch pose
    * @return True if already aligned within tolerance
    */
-  private boolean isAlreadyAligned(Pose2d currentPose, Pose3d targetBranchPose) {
+  private boolean shouldAlign(Pose2d currentPose, Pose2d targetBranchPose) {
     double distanceToTarget =
-        currentPose
-            .getTranslation()
-            .getDistance(targetBranchPose.getTranslation().toTranslation2d());
+        currentPose.getTranslation().getDistance(targetBranchPose.getTranslation());
 
     double headingDifference =
-        Math.abs(currentPose.getRotation().getDegrees() - targetBranchPose.getRotation().getZ());
+        Math.abs(
+            currentPose.getRotation().getDegrees() - targetBranchPose.getRotation().getDegrees());
 
     return (distanceToTarget <= ALIGN_ALLOW_DISTANCE.in(Meters))
         && (headingDifference <= HEADING_MATCH_REQUIREMENT.in(Degrees));
@@ -141,6 +116,6 @@ public class AlignToReefBranch extends Command {
   @Override
   public void end(boolean interrupted) {
     // Stop the robot when the command ends
-    swerveDriveSubsystem.stop();
+    swerveDriveSubsystem.stopWithX();
   }
 }

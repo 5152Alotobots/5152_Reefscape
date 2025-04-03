@@ -40,7 +40,6 @@ import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Voltage;
 import frc.alotobots.reefscape.subsystems.wrist.constants.WristTalonFXRealConstants;
-import frc.alotobots.reefscape.util.MechanismManager;
 
 /**
  * Hardware implementation of the WristIO interface using TalonFX motor controller and CANCoder for
@@ -203,8 +202,6 @@ public class WristIOTalonFXReal implements WristIO {
     inputs.mechanismAngle = wristPosition.getValue();
     inputs.topLimit = topSoftLimit.getValue();
     inputs.bottomLimit = bottomSoftLimit.getValue();
-
-    MechanismManager.updateWristMech(inputs.mechanismAngle);
   }
 
   /**

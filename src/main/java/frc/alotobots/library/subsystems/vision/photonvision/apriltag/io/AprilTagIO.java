@@ -22,6 +22,8 @@ public interface AprilTagIO {
   @AutoLog
   public static class AprilTagIOInputs {
     public boolean connected = false;
+    public boolean hasValidSingleTagPose = false;
+    public boolean hasValidMultiTagPose = false;
     public SingleTagObservation[] singleTagObservations = new SingleTagObservation[0];
     public int[] singleTagIds = new int[0];
     public MultiTagObservation[] multiTagObservations = new MultiTagObservation[0];

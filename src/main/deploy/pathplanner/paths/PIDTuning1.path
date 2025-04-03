@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.812,
-        "y": 2.414
+        "x": 2.1817622950819673,
+        "y": 6.896055327868852
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.785875594287308,
-        "y": 2.3992679867721356
+        "x": 3.1817622950819673,
+        "y": 6.896055327868852
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "PIDTuning1"
     },
     {
       "anchor": {
-        "x": 1.5703893442622954,
-        "y": 0.8662397540983602
+        "x": 5.0468237704918035,
+        "y": 6.896055327868852
       },
       "prevControl": {
-        "x": 2.227051217052968,
-        "y": 1.9907756404755743
+        "x": 4.0468237704918035,
+        "y": 6.896055327868852
       },
       "nextControl": null,
-      "isLocked": true,
-      "linkedName": null
+      "isLocked": false,
+      "linkedName": "PIDTuning1-End"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -130.0
+    "rotation": 0.0
   },
   "reversed": false,
-  "folder": "BenAutos",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 59.99999999999999
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }

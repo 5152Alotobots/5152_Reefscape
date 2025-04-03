@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.67827868852459,
-        "y": 6.740215163934426
+        "x": 1.25,
+        "y": 6.85
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.6026429126625206,
-        "y": 6.627417750141323
+        "x": 3.17436422413793,
+        "y": 6.737202586206896
       },
       "isLocked": false,
       "linkedName": "North Left Station"
     },
     {
       "anchor": {
-        "x": 3.981845549098945,
-        "y": 5.226219274437411
+        "x": 3.9697057122250112,
+        "y": 5.25737057298967
       },
       "prevControl": {
-        "x": 3.02853089392653,
-        "y": 6.249969274437409
+        "x": 3.0163910570525965,
+        "y": 6.281120572989668
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,8 +33,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 5.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 2.0,
+    "maxAcceleration": 2.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 460.0,
     "nominalVoltage": 12.0,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -59.548718065917626
+    "rotation": -59.99999999999999
   },
   "reversed": false,
   "folder": "Battle Creek",
@@ -50,5 +50,5 @@
     "velocity": 0,
     "rotation": 125.00000000000001
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

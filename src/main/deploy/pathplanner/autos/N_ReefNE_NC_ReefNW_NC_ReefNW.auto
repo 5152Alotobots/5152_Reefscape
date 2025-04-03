@@ -11,7 +11,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "S_ReefSE_SC_ReefSW_SC_ReefW 1"
+                  "pathName": "N_ReefNE_NC_ReefNE_NC_ReefNE 1"
                 }
               },
               {
@@ -36,22 +36,29 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "S_ReefSE_SC_ReefSW_SC_ReefW 2"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutoStateCoralStation"
+                  "pathName": "N_ReefNE_NC_ReefNE_NC_ReefNE 2"
                 }
               }
             ]
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "CoralIntakeIntake"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "CoralIntakeIntake"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoStopWithX"
+                }
+              }
+            ]
           }
         },
         {
@@ -61,13 +68,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "S_ReefSE_SC_ReefSW_SC_ReefW 3"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutoStateL4"
+                  "pathName": "N_ReefNE_NC_ReefNE_NC_ReefNE 3"
                 }
               }
             ]
@@ -86,22 +87,29 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "S_ReefSE_SC_ReefSW_SC_ReefW 4"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutoStateCoralStation"
+                  "pathName": "N_ReefNE_NC_ReefNE_NC_ReefNE 4"
                 }
               }
             ]
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "CoralIntakeIntake"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "CoralIntakeIntake"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoStopWithX"
+                }
+              }
+            ]
           }
         },
         {
@@ -111,13 +119,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "S_ReefSE_SC_ReefSW_SC_ReefW 5"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutoStateL4"
+                  "pathName": "N_ReefNE_NC_ReefNE_NC_ReefNE 5"
                 }
               }
             ]

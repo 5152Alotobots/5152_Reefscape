@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.288235199119298,
-        "y": 5.072996531400761
+        "x": 5.297435381293082,
+        "y": 5.1094392588887425
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.063985199119299,
-        "y": 6.788996531400761
+        "x": 5.073185381293082,
+        "y": 6.825439258888743
       },
       "isLocked": false,
       "linkedName": "Reef_NE_L"
@@ -17,15 +17,15 @@
     {
       "anchor": {
         "x": 1.67827868852459,
-        "y": 6.740215163934426
+        "y": 7.231892824103267
       },
       "prevControl": {
         "x": 3.940278688524591,
-        "y": 6.213715163934427
+        "y": 6.705392824103267
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "North Left Station"
+      "linkedName": "North Right Station"
     }
   ],
   "rotationTargets": [],
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 125.00000000000001
+    "rotation": 126.57303097851924
   },
   "reversed": false,
   "folder": "Three Piece",
