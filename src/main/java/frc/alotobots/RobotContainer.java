@@ -36,7 +36,6 @@ import frc.alotobots.library.subsystems.swervedrive.commands.*;
 import frc.alotobots.library.subsystems.swervedrive.io.*;
 import frc.alotobots.library.subsystems.swervedrive.util.PathPlannerManager;
 import frc.alotobots.library.subsystems.vision.oculus.OculusSubsystem;
-import frc.alotobots.library.subsystems.vision.oculus.commands.OculusCalibration;
 import frc.alotobots.library.subsystems.vision.oculus.io.*;
 import frc.alotobots.library.subsystems.vision.photonvision.apriltag.AprilTagSubsystem;
 import frc.alotobots.library.subsystems.vision.photonvision.apriltag.constants.AprilTagConstants;
@@ -220,10 +219,7 @@ public class RobotContainer {
 
   /** Contains button based commands */
   private void configureLogicCommands() {
-    lockWheelsButton.onTrue(
-        new OculusCalibration()
-            .determineOffsetToRobotCenter(swerveDriveSubsystem, oculusSubsystem));
-    // new InstantCommand(swerveDriveSubsystem::stopWithX));
+    lockWheelsButton.onTrue(new InstantCommand(swerveDriveSubsystem::stopWithX));
     // TEMPORARY!!
     resetGyroButton.onTrue(
         new InstantCommand(() -> swerveDriveSubsystem.setPose(new Pose2d(0, 0, Rotation2d.kZero))));
