@@ -65,7 +65,10 @@ public class DrivePrecisionAlign {
    * @param currentPoseSupplier The source to use for pose
    * @param positionTolerance The position tolerance for considering alignment complete (meters)
    */
-  public DrivePrecisionAlign(SwerveDriveSubsystem swerveDriveSubsystem, Supplier<Pose2d> currentPoseSupplier, double positionTolerance) {
+  public DrivePrecisionAlign(
+      SwerveDriveSubsystem swerveDriveSubsystem,
+      Supplier<Pose2d> currentPoseSupplier,
+      double positionTolerance) {
     this.swerveDriveSubsystem = swerveDriveSubsystem;
     this.currentPoseSupplier = currentPoseSupplier;
     this.positionTolerance = positionTolerance;
@@ -80,17 +83,24 @@ public class DrivePrecisionAlign {
    * @param swerveDriveSubsystem The drive subsystem
    * @param currentPoseSupplier Where to get the current pose from
    */
-  public DrivePrecisionAlign(SwerveDriveSubsystem swerveDriveSubsystem, Supplier<Pose2d> currentPoseSupplier) {
-    this(swerveDriveSubsystem, currentPoseSupplier, Constants.tunerConstants.getPrecisionAlignTolerance());
+  public DrivePrecisionAlign(
+      SwerveDriveSubsystem swerveDriveSubsystem, Supplier<Pose2d> currentPoseSupplier) {
+    this(
+        swerveDriveSubsystem,
+        currentPoseSupplier,
+        Constants.tunerConstants.getPrecisionAlignTolerance());
   }
 
-    /**
+  /**
    * Creates a new PrecisionAlignRequest handler with default tolerance.
    *
    * @param swerveDriveSubsystem The drive subsystem
    */
   public DrivePrecisionAlign(SwerveDriveSubsystem swerveDriveSubsystem) {
-    this(swerveDriveSubsystem, swerveDriveSubsystem::getPose, Constants.tunerConstants.getPrecisionAlignTolerance());
+    this(
+        swerveDriveSubsystem,
+        swerveDriveSubsystem::getPose,
+        Constants.tunerConstants.getPrecisionAlignTolerance());
   }
 
   /** Called to initialize the request handler. */

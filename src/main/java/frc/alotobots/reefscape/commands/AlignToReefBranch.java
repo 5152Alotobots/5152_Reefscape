@@ -52,7 +52,8 @@ public class AlignToReefBranch extends Command {
       SwerveDriveSubsystem swerveDriveSubsystem, FieldConstants.BranchType branchType) {
     this.branchType = branchType;
     this.swerveDriveSubsystem = swerveDriveSubsystem;
-    this.request = new DrivePrecisionAlign(swerveDriveSubsystem, swerveDriveSubsystem::getAprilTagPose, 0.01);
+    this.request =
+        new DrivePrecisionAlign(swerveDriveSubsystem, swerveDriveSubsystem::getAprilTagPose, 0.01);
     addRequirements(swerveDriveSubsystem);
   }
 
