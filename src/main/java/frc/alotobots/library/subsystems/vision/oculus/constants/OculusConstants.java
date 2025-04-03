@@ -18,6 +18,7 @@ import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.units.measure.Time;
@@ -59,7 +60,8 @@ public class OculusConstants {
    * Y: Positive is left - Rotation: Positive is counter-clockwise
    */
   public static final Transform2d ROBOT_TO_OCULUS =
-      new Transform2d(0.153, -0.26, Rotation2d.fromDegrees(-90));
+      //new Transform2d(0.153, -0.26, Rotation2d.fromDegrees(-90));
+      new Transform2d(new Translation2d(), Rotation2d.fromDegrees(-90));
 
   /** Timeout threshold for considering Quest disconnected (seconds) */
   public static final Time OCULUS_CONNECTION_TIMEOUT = Milliseconds.of(350);
