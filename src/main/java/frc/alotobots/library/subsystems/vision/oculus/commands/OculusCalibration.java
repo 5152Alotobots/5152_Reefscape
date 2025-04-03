@@ -51,7 +51,7 @@ public class OculusCalibration {
   public Command determineOffsetToRobotCenter(
       SwerveDriveSubsystem swerveDriveSubsystem, OculusSubsystem oculusSubsystem) {
     // First reset our pose to 0, 0
-    oculusSubsystem.resetPose(Pose2d.kZero);
+    oculusSubsystem.resetPose(Pose2d.kZero, true);
     Supplier<Pose2d> questPose = oculusSubsystem::getPose;
     return Commands.repeatingSequence(
             Commands.run(

@@ -179,6 +179,42 @@ public class OculusSubsystem extends SubsystemBase {
   }
 
   /**
+   * Resets the pose tracking system to a specified position. Must be called only when the robot is
+   * disabled to avoid interrupting tracking during a match.
+   *
+   * @param pose The new reference pose
+   * @param overrideEnabledCheck Overrides the enabled check to allow for resetting while enabled.
+   */
+  public void resetPose(Pose2d pose, boolean overrideEnabledCheck) {
+    if (!overrideEnabledCheck && DriverStation.isEnabled()) {
+      Logger.recordOutput(
+          "Oculus/Log",
+          "resetPose() called while the robot is enabled. This shouldn't happen! Ignoring.");
+      return;
+    }
+
+    Logger.recordOutput(
+        "Oculus/Log",
+        "resetPose() called while the robot is enabled. Enabled check overridden! Make sure this is what you want to happen!");
+    // Transform the pose to the Oculus coordinate system w/ offset
+    Pose2d oculusSidePose = pose.plus(ROBOT_TO_OCULUS);
+
+    if (POSE_RESET_STRATEGY.equals(PoseResetStrategy.ROBOT_SIDE)) {
+      // Reset the pose on the Oculus side
+      io.resetPose(Pose2d.kZero);
+      // Set the offset transform to the new pose
+      updateTransform(oculusSidePose);
+    } else {
+      updateTransform(Pose2d.kZero);
+      io.resetPose(oculusSidePose);
+    }
+    Logger.recordOutput(
+        "Oculus/Log",
+        String.format("Resetting pose to WPILib: %s, Oculus: %s", pose, oculusSidePose));
+    NotificationPresets.Oculus.sendOculusPoseResetNotification(pose);
+  }
+
+  /**
    * Updates the transform offset used in ROBOT_SIDE pose reset strategy. Has no effect if using a
    * different pose reset strategy.
    *
