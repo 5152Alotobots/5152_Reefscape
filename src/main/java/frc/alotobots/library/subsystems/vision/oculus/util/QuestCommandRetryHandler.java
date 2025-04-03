@@ -12,6 +12,7 @@
 */
 package frc.alotobots.library.subsystems.vision.oculus.util;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.networktables.IntegerPublisher;
 import edu.wpi.first.wpilibj.Timer;
 import org.littletonrobotics.junction.Logger;
@@ -56,8 +57,8 @@ public class QuestCommandRetryHandler {
   public QuestCommandRetryHandler(
       IntegerPublisher questMosi, double commandDelaySeconds, double retryDelaySeconds) {
     this.questMosi = questMosi;
-    this.commandDelaySeconds = commandDelaySeconds;
-    this.retryDelaySeconds = retryDelaySeconds;
+    this.commandDelaySeconds = MathUtil.clamp(commandDelaySeconds, 0, 10);
+    this.retryDelaySeconds = MathUtil.clamp(retryDelaySeconds, 0, 10);
   }
 
   /** Start a new command retry sequence */
