@@ -24,6 +24,7 @@ public class QuestCommandRetryHandler {
   private int currentAttempt = 0;
   private int command;
   private int expectedResponse;
+  private int clearCommand;
   private boolean isActive = false;
 
   // Timing variables now as instance variables
@@ -71,6 +72,7 @@ public class QuestCommandRetryHandler {
     this.maxAttempts = maxAttempts;
     this.command = command;
     this.expectedResponse = expectedResponse;
+    this.clearCommand = clearCommand;
     this.currentAttempt = 0;
     this.isActive = true;
     this.onSuccessCallback = onSuccess;
@@ -91,9 +93,8 @@ public class QuestCommandRetryHandler {
    * Update method to be called in updateInputs
    *
    * @param currentResponse Current response value
-   * @param clearCommand Command to clear previous commands
    */
-  public void update(int currentResponse, int clearCommand) {
+  public void update(int currentResponse) {
     if (!isActive) return;
 
     double currentTime = Timer.getTimestamp();

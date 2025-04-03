@@ -124,7 +124,7 @@ public class OculusIOReal implements OculusIO {
     inputs.misoValue = (int) questMiso.get();
 
     // Update the retry handler
-    retryHandler.update((int) questMiso.get(), COMMAND_CLEAR);
+    retryHandler.update((int) questMiso.get());
 
     processHeartbeat();
   }
