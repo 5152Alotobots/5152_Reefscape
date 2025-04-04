@@ -237,9 +237,9 @@ public class OculusSubsystem extends SubsystemBase {
     NotificationPresets.Oculus.sendOculusTransformUpdateNotification(offsetTransform);
   }
 
-    private final AprilTagFieldLayout aprilTagFieldLayout =
+  private final AprilTagFieldLayout aprilTagFieldLayout =
       AprilTagFieldLayout.loadField(AprilTagFields.kDefaultField);
-      
+
   /**
    * Processes the current pose data and forwards it to the consumer if connected and properly
    * tracking. This enables integration with pose estimation systems.
@@ -250,12 +250,12 @@ public class OculusSubsystem extends SubsystemBase {
       double timestamp = getTimestamp();
 
       // Make sure we are inside the field
-        if (pose.getX() < 0.0
-        || pose.getX() > aprilTagFieldLayout.getFieldLength()
-        || pose.getY() < 0.0
-        || pose.getY() > aprilTagFieldLayout.getFieldWidth()) {
-          return;
-        }
+      if (pose.getX() < 0.0
+          || pose.getX() > aprilTagFieldLayout.getFieldLength()
+          || pose.getY() < 0.0
+          || pose.getY() > aprilTagFieldLayout.getFieldWidth()) {
+        return;
+      }
 
       // Call the consumer with the new pose
       oculusConsumer.accept(
