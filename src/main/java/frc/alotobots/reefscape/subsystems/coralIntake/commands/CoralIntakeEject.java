@@ -51,7 +51,6 @@ public class CoralIntakeEject extends Command {
    */
   @Override
   public void execute() {
-    Logger.recordOutput("", null);
     double adjustedOutput =
         MathUtil.clamp(-input.getAsDouble(), -MAX_OPEN_LOOP_EJECT_PERCENTAGE, 0);
     coralIntakeSubsystem.runAtPercentOutput(adjustedOutput);
