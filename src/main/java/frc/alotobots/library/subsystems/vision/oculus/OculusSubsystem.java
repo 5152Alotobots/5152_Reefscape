@@ -15,6 +15,8 @@ package frc.alotobots.library.subsystems.vision.oculus;
 import static frc.alotobots.library.subsystems.vision.oculus.constants.OculusConstants.*;
 import static frc.alotobots.library.subsystems.vision.oculus.util.OculusStatus.*;
 
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -25,6 +27,7 @@ import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.alotobots.library.subsystems.swervedrive.SwerveDriveSubsystem;
+import frc.alotobots.library.subsystems.vision.oculus.constants.OculusConstants.PoseResetStrategy;
 import frc.alotobots.library.subsystems.vision.oculus.io.OculusIO;
 import frc.alotobots.library.subsystems.vision.oculus.io.OculusIOInputsAutoLogged;
 import frc.alotobots.util.NotificationPresets;
@@ -56,6 +59,8 @@ public class OculusSubsystem extends SubsystemBase {
 
   /** Transform offset applied when using ROBOT_SIDE reset strategy */
   private Transform2d offsetTransform = new Transform2d();
+
+  private boolean questHadTracking = false;
 
   /**
    * Creates a new OculusSubsystem.
@@ -232,6 +237,9 @@ public class OculusSubsystem extends SubsystemBase {
     NotificationPresets.Oculus.sendOculusTransformUpdateNotification(offsetTransform);
   }
 
+    private final AprilTagFieldLayout aprilTagFieldLayout =
+      AprilTagFieldLayout.loadField(AprilTagFields.kDefaultField);
+      
   /**
    * Processes the current pose data and forwards it to the consumer if connected and properly
    * tracking. This enables integration with pose estimation systems.
@@ -240,6 +248,14 @@ public class OculusSubsystem extends SubsystemBase {
     if (inputs.connected && inputs.isTracking) {
       Pose2d pose = getPose();
       double timestamp = getTimestamp();
+
+      // Make sure we are inside the field
+        if (pose.getX() < 0.0
+        || pose.getX() > aprilTagFieldLayout.getFieldLength()
+        || pose.getY() < 0.0
+        || pose.getY() > aprilTagFieldLayout.getFieldWidth()) {
+          return;
+        }
 
       // Call the consumer with the new pose
       oculusConsumer.accept(
