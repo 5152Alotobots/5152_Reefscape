@@ -19,6 +19,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
 import java.util.function.DoubleSupplier;
 
+import org.littletonrobotics.junction.Logger;
+
 /**
  * Command that runs the intake in reverse (negative output) to eject game pieces out the front.
  * Automatically ends when the game piece is no longer detected by the intake sensor. The speed is
@@ -50,6 +52,7 @@ public class CoralIntakeEject extends Command {
    */
   @Override
   public void execute() {
+    Logger.recordOutput("", null);
     double adjustedOutput =
         MathUtil.clamp(-input.getAsDouble(), -MAX_OPEN_LOOP_EJECT_PERCENTAGE, 0);
     coralIntakeSubsystem.runAtPercentOutput(adjustedOutput);

@@ -59,7 +59,7 @@ public class StateCoralL1 extends SequentialCommandGroup {
             ElevatorConstants.Setpoints.CORAL_L1_PLACE,
             WristConstants.Setpoints.CORAL_L1_PLACE),
         Commands.waitUntil(coralIntakeReleaseTrigger),
-        new CoralIntakeEject(coralIntakeSubsystem, () -> EJECT_PERCENTAGE),
+        new CoralIntakeEject(coralIntakeSubsystem, () -> EJECT_PERCENTAGE).asProxy(),
         new ScheduleCommand(
             new BlingCoralEjectedDrive(blingSubsystem).withTimeout(BLING_NOTIFICATION_TIME)));
   }
