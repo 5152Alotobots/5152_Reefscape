@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.4421,
+        "y": 6.8379
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.2518125619795968,
+        "y": 6.675755956225241
+      },
+      "isLocked": false,
+      "linkedName": "North Left Station"
+    },
+    {
+      "anchor": {
+        "x": 1.0482997416693758,
+        "y": 6.575399290424957
+      },
+      "prevControl": {
+        "x": 1.2702383745316086,
+        "y": 6.690478581538707
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "SidewaysN"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 0.2,
+    "maxAcceleration": 0.2,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 460.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 125.00000000000001
+  },
+  "reversed": false,
+  "folder": "TwoPiece",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 125.00000000000001
+  },
+  "useDefaultConstraints": false
+}

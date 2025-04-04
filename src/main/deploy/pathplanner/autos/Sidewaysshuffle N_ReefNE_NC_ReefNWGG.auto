@@ -1,0 +1,95 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "N_ReefNE_NC_ReefNW 1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoStateL4"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "CoralIntakeEjectThrough"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "N_ReefNE_NC_ReefNW 2"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "CoralIntakeIntake"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Sidewaysshuffle N_ReefNE_NC_ReefNWGG"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "N_ReefNE_NC_ReefNW 3"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "CoralIntakeEjectThrough"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "N_ReefNE_NC_ReefNW 4"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": false,
+  "folder": "Two Piece",
+  "choreoAuto": false
+}
