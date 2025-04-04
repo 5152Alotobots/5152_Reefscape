@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.2937161685025276,
-        "y": 6.785807098323614
+        "x": 1.4421,
+        "y": 6.8379
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.075310037613497,
-        "y": 6.14847536382919
+        "x": 2.22369386911097,
+        "y": 6.200568265505576
       },
       "isLocked": false,
       "linkedName": "North Left Station"

@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.381177177742189,
-        "y": 1.1658598141243317
+        "x": 1.4421,
+        "y": 1.221
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.3811771777421895,
-        "y": 1.1658598141243313
+        "x": 2.4421000000000004,
+        "y": 1.2209999999999996
       },
       "isLocked": false,
       "linkedName": "South Left Station"
