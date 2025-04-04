@@ -64,4 +64,3 @@ public class StateCoralL4 extends SequentialCommandGroup {
             new BlingCoralEjectedDrive(blingSubsystem).withTimeout(BLING_NOTIFICATION_TIME)));
   }
 }
-

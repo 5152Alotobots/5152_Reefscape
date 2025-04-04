@@ -18,7 +18,6 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
 import java.util.function.DoubleSupplier;
-
 import org.littletonrobotics.junction.Logger;
 
 /**
