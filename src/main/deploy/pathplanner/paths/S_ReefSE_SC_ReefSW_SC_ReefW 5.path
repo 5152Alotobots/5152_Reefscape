@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.4421,
-        "y": 1.221
+        "x": 1.5635214282090348,
+        "y": 1.15
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.038646052631579,
-        "y": 2.452578947368421
+        "x": 2.160067480840614,
+        "y": 2.3815789473684217
       },
       "isLocked": false,
-      "linkedName": "South Left Station"
+      "linkedName": "ShuffleS"
     },
     {
       "anchor": {

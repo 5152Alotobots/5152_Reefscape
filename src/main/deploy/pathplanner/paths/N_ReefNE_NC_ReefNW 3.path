@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.0482997416693758,
-        "y": 6.575399290424957
+        "x": 1.35,
+        "y": 6.77
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.048299741669375,
-        "y": 6.575399290424957
+        "x": 2.3499999999999988,
+        "y": 6.77
       },
       "isLocked": false,
       "linkedName": "SidewaysN"

@@ -44,6 +44,6 @@
   "bumperOffsetX": 0.0,
   "bumperOffsetY": 0.0,
   "robotFeatures": [
-    "{\"name\":\"Rectangle\",\"type\":\"rounded_rect\",\"data\":{\"center\":{\"x\":0.38,\"y\":0.01},\"size\":{\"width\":0.19,\"length\":0.1},\"borderRadius\":0.0,\"strokeWidth\":0.02,\"filled\":false}}"
+    "{\"name\":\"Rectangle\",\"type\":\"rounded_rect\",\"data\":{\"center\":{\"x\":0.48,\"y\":0.01},\"size\":{\"width\":0.19,\"length\":0.1},\"borderRadius\":0.0,\"strokeWidth\":0.02,\"filled\":true}}"
   ]
 }
