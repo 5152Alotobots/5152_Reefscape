@@ -136,7 +136,7 @@ public class CoralIntakeIOTalonFXReal implements CoralIntakeIO {
     var canRangeSignals = BaseStatusSignal.refreshAll(intakeOccupied);
     var intakeMotorSignals =
         BaseStatusSignal.refreshAll(
-            intakeAppliedCurrent, intakeAppliedCurrent, intakeVelocity, intakePosition);
+            intakeAppliedCurrent, intakeAppliedVoltage, intakeVelocity, intakePosition);
 
     // Connected Status
     inputs.intakeOccupied = intakeOccupied.getValue();
