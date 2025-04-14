@@ -172,8 +172,14 @@ loadScripts(document, 'script');</script>
 <div class="block">Resets the pose tracking system to a specified position.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateTransform(edu.wpi.first.math.geometry.Pose2d)" class="member-name-link">updateTransform</a><wbr>(<a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/math/geometry/Pose2d.html" title="class or interface in edu.wpi.first.math.geometry" class="external-link">Pose2d</a>&nbsp;pose)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#resetPose(edu.wpi.first.math.geometry.Pose2d,boolean)" class="member-name-link">resetPose</a><wbr>(<a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/math/geometry/Pose2d.html" title="class or interface in edu.wpi.first.math.geometry" class="external-link">Pose2d</a>&nbsp;pose,
+ boolean&nbsp;overrideEnabledCheck)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Resets the pose tracking system to a specified position.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateTransform(edu.wpi.first.math.geometry.Pose2d)" class="member-name-link">updateTransform</a><wbr>(<a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/math/geometry/Pose2d.html" title="class or interface in edu.wpi.first.math.geometry" class="external-link">Pose2d</a>&nbsp;pose)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Updates the transform offset used in ROBOT_SIDE pose reset strategy.</div>
 </div>
 </div>
@@ -288,6 +294,20 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>pose</code> - The new reference pose</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="resetPose(edu.wpi.first.math.geometry.Pose2d,boolean)">
+<h3>resetPose</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">resetPose</span><wbr><span class="parameters">(<a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/math/geometry/Pose2d.html" title="class or interface in edu.wpi.first.math.geometry" class="external-link">Pose2d</a>&nbsp;pose,
+ boolean&nbsp;overrideEnabledCheck)</span></div>
+<div class="block">Resets the pose tracking system to a specified position. Must be called only when the robot is
+ disabled to avoid interrupting tracking during a match.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>pose</code> - The new reference pose</dd>
+<dd><code>overrideEnabledCheck</code> - Overrides the enabled check to allow for resetting while enabled.</dd>
 </dl>
 </section>
 </li>

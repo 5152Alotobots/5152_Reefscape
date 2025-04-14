@@ -94,9 +94,15 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">Creates a new PrecisionAlignRequest handler with default tolerance.</div>
 </div>
-<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(frc.alotobots.library.subsystems.swervedrive.SwerveDriveSubsystem,double)" class="member-name-link">DrivePrecisionAlign</a><wbr>(<a href="../SwerveDriveSubsystem.html" title="class in frc.alotobots.library.subsystems.swervedrive">SwerveDriveSubsystem</a>&nbsp;swerveDriveSubsystem,
- double&nbsp;positionTolerance)</code></div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(frc.alotobots.library.subsystems.swervedrive.SwerveDriveSubsystem,java.util.function.Supplier)" class="member-name-link">DrivePrecisionAlign</a><wbr>(<a href="../SwerveDriveSubsystem.html" title="class in frc.alotobots.library.subsystems.swervedrive">SwerveDriveSubsystem</a>&nbsp;swerveDriveSubsystem,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Supplier.html" title="class or interface in java.util.function" class="external-link">Supplier</a>&lt;<a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/math/geometry/Pose2d.html" title="class or interface in edu.wpi.first.math.geometry" class="external-link">Pose2d</a>&gt;&nbsp;currentPoseSupplier)</code></div>
 <div class="col-last odd-row-color">
+<div class="block">Creates a new PrecisionAlignRequest handler with default tolerance.</div>
+</div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(frc.alotobots.library.subsystems.swervedrive.SwerveDriveSubsystem,java.util.function.Supplier,double)" class="member-name-link">DrivePrecisionAlign</a><wbr>(<a href="../SwerveDriveSubsystem.html" title="class in frc.alotobots.library.subsystems.swervedrive">SwerveDriveSubsystem</a>&nbsp;swerveDriveSubsystem,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Supplier.html" title="class or interface in java.util.function" class="external-link">Supplier</a>&lt;<a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/math/geometry/Pose2d.html" title="class or interface in edu.wpi.first.math.geometry" class="external-link">Pose2d</a>&gt;&nbsp;currentPoseSupplier,
+ double&nbsp;positionTolerance)</code></div>
+<div class="col-last even-row-color">
 <div class="block">Creates a new PrecisionAlignRequest handler.</div>
 </div>
 </div>
@@ -161,15 +167,30 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(frc.alotobots.library.subsystems.swervedrive.SwerveDriveSubsystem,double)">
+<section class="detail" id="&lt;init&gt;(frc.alotobots.library.subsystems.swervedrive.SwerveDriveSubsystem,java.util.function.Supplier,double)">
 <h3>DrivePrecisionAlign</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">DrivePrecisionAlign</span><wbr><span class="parameters">(<a href="../SwerveDriveSubsystem.html" title="class in frc.alotobots.library.subsystems.swervedrive">SwerveDriveSubsystem</a>&nbsp;swerveDriveSubsystem,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Supplier.html" title="class or interface in java.util.function" class="external-link">Supplier</a>&lt;<a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/math/geometry/Pose2d.html" title="class or interface in edu.wpi.first.math.geometry" class="external-link">Pose2d</a>&gt;&nbsp;currentPoseSupplier,
  double&nbsp;positionTolerance)</span></div>
 <div class="block">Creates a new PrecisionAlignRequest handler.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>swerveDriveSubsystem</code> - The drive subsystem</dd>
+<dd><code>currentPoseSupplier</code> - The source to use for pose</dd>
 <dd><code>positionTolerance</code> - The position tolerance for considering alignment complete (meters)</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(frc.alotobots.library.subsystems.swervedrive.SwerveDriveSubsystem,java.util.function.Supplier)">
+<h3>DrivePrecisionAlign</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">DrivePrecisionAlign</span><wbr><span class="parameters">(<a href="../SwerveDriveSubsystem.html" title="class in frc.alotobots.library.subsystems.swervedrive">SwerveDriveSubsystem</a>&nbsp;swerveDriveSubsystem,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Supplier.html" title="class or interface in java.util.function" class="external-link">Supplier</a>&lt;<a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/math/geometry/Pose2d.html" title="class or interface in edu.wpi.first.math.geometry" class="external-link">Pose2d</a>&gt;&nbsp;currentPoseSupplier)</span></div>
+<div class="block">Creates a new PrecisionAlignRequest handler with default tolerance.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>swerveDriveSubsystem</code> - The drive subsystem</dd>
+<dd><code>currentPoseSupplier</code> - Where to get the current pose from</dd>
 </dl>
 </section>
 </li>

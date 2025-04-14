@@ -1098,6 +1098,10 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="frc/alotobots/library/subsystems/vision/photonvision/objectdetection/io/ObjectDetectionIO.ObjectDetectionIOInputs.html#detectedObjects" class="member-name-link">detectedObjects</a> - Variable in class frc.alotobots.library.subsystems.vision.photonvision.objectdetection.io.<a href="frc/alotobots/library/subsystems/vision/photonvision/objectdetection/io/ObjectDetectionIO.ObjectDetectionIOInputs.html" title="class in frc.alotobots.library.subsystems.vision.photonvision.objectdetection.io">ObjectDetectionIO.ObjectDetectionIOInputs</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="frc/alotobots/library/subsystems/vision/oculus/commands/OculusCalibration.html#determineOffsetToRobotCenter(frc.alotobots.library.subsystems.swervedrive.SwerveDriveSubsystem,frc.alotobots.library.subsystems.vision.oculus.OculusSubsystem)" class="member-name-link">determineOffsetToRobotCenter(SwerveDriveSubsystem, OculusSubsystem)</a> - Method in class frc.alotobots.library.subsystems.vision.oculus.commands.<a href="frc/alotobots/library/subsystems/vision/oculus/commands/OculusCalibration.html" title="class in frc.alotobots.library.subsystems.vision.oculus.commands">OculusCalibration</a></dt>
+<dd>
+<div class="block">When calibrating make sure the rotation in your quest transform is right.</div>
+</dd>
 <dt><a href="frc/alotobots/BuildConstants.html#DIRTY" class="member-name-link">DIRTY</a> - Static variable in class frc.alotobots.<a href="frc/alotobots/BuildConstants.html" title="class in frc.alotobots">BuildConstants</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="frc/alotobots/library/subsystems/bling/constants/BlingConstants.html#DISABLE_STATUS_LED" class="member-name-link">DISABLE_STATUS_LED</a> - Static variable in class frc.alotobots.library.subsystems.bling.constants.<a href="frc/alotobots/library/subsystems/bling/constants/BlingConstants.html" title="class in frc.alotobots.library.subsystems.bling.constants">BlingConstants</a></dt>
@@ -1212,7 +1216,11 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Creates a new PrecisionAlignRequest handler with default tolerance.</div>
 </dd>
-<dt><a href="frc/alotobots/library/subsystems/swervedrive/commands/DrivePrecisionAlign.html#%3Cinit%3E(frc.alotobots.library.subsystems.swervedrive.SwerveDriveSubsystem,double)" class="member-name-link">DrivePrecisionAlign(SwerveDriveSubsystem, double)</a> - Constructor for class frc.alotobots.library.subsystems.swervedrive.commands.<a href="frc/alotobots/library/subsystems/swervedrive/commands/DrivePrecisionAlign.html" title="class in frc.alotobots.library.subsystems.swervedrive.commands">DrivePrecisionAlign</a></dt>
+<dt><a href="frc/alotobots/library/subsystems/swervedrive/commands/DrivePrecisionAlign.html#%3Cinit%3E(frc.alotobots.library.subsystems.swervedrive.SwerveDriveSubsystem,java.util.function.Supplier)" class="member-name-link">DrivePrecisionAlign(SwerveDriveSubsystem, Supplier&lt;Pose2d&gt;)</a> - Constructor for class frc.alotobots.library.subsystems.swervedrive.commands.<a href="frc/alotobots/library/subsystems/swervedrive/commands/DrivePrecisionAlign.html" title="class in frc.alotobots.library.subsystems.swervedrive.commands">DrivePrecisionAlign</a></dt>
+<dd>
+<div class="block">Creates a new PrecisionAlignRequest handler with default tolerance.</div>
+</dd>
+<dt><a href="frc/alotobots/library/subsystems/swervedrive/commands/DrivePrecisionAlign.html#%3Cinit%3E(frc.alotobots.library.subsystems.swervedrive.SwerveDriveSubsystem,java.util.function.Supplier,double)" class="member-name-link">DrivePrecisionAlign(SwerveDriveSubsystem, Supplier&lt;Pose2d&gt;, double)</a> - Constructor for class frc.alotobots.library.subsystems.swervedrive.commands.<a href="frc/alotobots/library/subsystems/swervedrive/commands/DrivePrecisionAlign.html" title="class in frc.alotobots.library.subsystems.swervedrive.commands">DrivePrecisionAlign</a></dt>
 <dd>
 <div class="block">Creates a new PrecisionAlignRequest handler.</div>
 </dd>
@@ -1813,6 +1821,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="frc/alotobots/library/subsystems/vision/oculus/package-summary.html">frc.alotobots.library.subsystems.vision.oculus</a> - package frc.alotobots.library.subsystems.vision.oculus</dt>
 <dd>&nbsp;</dd>
+<dt><a href="frc/alotobots/library/subsystems/vision/oculus/commands/package-summary.html">frc.alotobots.library.subsystems.vision.oculus.commands</a> - package frc.alotobots.library.subsystems.vision.oculus.commands</dt>
+<dd>&nbsp;</dd>
 <dt><a href="frc/alotobots/library/subsystems/vision/oculus/constants/package-summary.html">frc.alotobots.library.subsystems.vision.oculus.constants</a> - package frc.alotobots.library.subsystems.vision.oculus.constants</dt>
 <dd>&nbsp;</dd>
 <dt><a href="frc/alotobots/library/subsystems/vision/oculus/io/package-summary.html">frc.alotobots.library.subsystems.vision.oculus.io</a> - package frc.alotobots.library.subsystems.vision.oculus.io</dt>
@@ -2317,6 +2327,14 @@ loadScripts(document, 'script');</script>
 <dt><a href="frc/alotobots/library/subsystems/swervedrive/constants/TunerConstants.html#getPrecisionAlignAllowRadius()" class="member-name-link">getPrecisionAlignAllowRadius()</a> - Method in interface frc.alotobots.library.subsystems.swervedrive.constants.<a href="frc/alotobots/library/subsystems/swervedrive/constants/TunerConstants.html" title="interface in frc.alotobots.library.subsystems.swervedrive.constants">TunerConstants</a></dt>
 <dd>
 <div class="block">Gets the radius in which precision align should function</div>
+</dd>
+<dt><a href="frc/alotobots/library/subsystems/swervedrive/constants/mk4i2023/TunerConstants2023.html#getPrecisionAlignHolonomicDriveController()" class="member-name-link">getPrecisionAlignHolonomicDriveController()</a> - Method in class frc.alotobots.library.subsystems.swervedrive.constants.mk4i2023.<a href="frc/alotobots/library/subsystems/swervedrive/constants/mk4i2023/TunerConstants2023.html" title="class in frc.alotobots.library.subsystems.swervedrive.constants.mk4i2023">TunerConstants2023</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="frc/alotobots/library/subsystems/swervedrive/constants/mk4i2025/TunerConstants2025.html#getPrecisionAlignHolonomicDriveController()" class="member-name-link">getPrecisionAlignHolonomicDriveController()</a> - Method in class frc.alotobots.library.subsystems.swervedrive.constants.mk4i2025.<a href="frc/alotobots/library/subsystems/swervedrive/constants/mk4i2025/TunerConstants2025.html" title="class in frc.alotobots.library.subsystems.swervedrive.constants.mk4i2025">TunerConstants2025</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="frc/alotobots/library/subsystems/swervedrive/constants/TunerConstants.html#getPrecisionAlignHolonomicDriveController()" class="member-name-link">getPrecisionAlignHolonomicDriveController()</a> - Method in interface frc.alotobots.library.subsystems.swervedrive.constants.<a href="frc/alotobots/library/subsystems/swervedrive/constants/TunerConstants.html" title="interface in frc.alotobots.library.subsystems.swervedrive.constants">TunerConstants</a></dt>
+<dd>
+<div class="block">Gets the precision align holonomic drive controller for path following.</div>
 </dd>
 <dt><a href="frc/alotobots/library/subsystems/swervedrive/constants/mk4i2023/TunerConstants2023.html#getPrecisionAlignTolerance()" class="member-name-link">getPrecisionAlignTolerance()</a> - Method in class frc.alotobots.library.subsystems.swervedrive.constants.mk4i2023.<a href="frc/alotobots/library/subsystems/swervedrive/constants/mk4i2023/TunerConstants2023.html" title="class in frc.alotobots.library.subsystems.swervedrive.constants.mk4i2023">TunerConstants2023</a></dt>
 <dd>&nbsp;</dd>
@@ -3566,6 +3584,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Standard deviations representing how much we "trust" the position from the Oculus.</div>
 </dd>
+<dt><a href="frc/alotobots/library/subsystems/vision/oculus/commands/OculusCalibration.html" class="type-name-link" title="class in frc.alotobots.library.subsystems.vision.oculus.commands">OculusCalibration</a> - Class in <a href="frc/alotobots/library/subsystems/vision/oculus/commands/package-summary.html">frc.alotobots.library.subsystems.vision.oculus.commands</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="frc/alotobots/library/subsystems/vision/oculus/commands/OculusCalibration.html#%3Cinit%3E()" class="member-name-link">OculusCalibration()</a> - Constructor for class frc.alotobots.library.subsystems.vision.oculus.commands.<a href="frc/alotobots/library/subsystems/vision/oculus/commands/OculusCalibration.html" title="class in frc.alotobots.library.subsystems.vision.oculus.commands">OculusCalibration</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="frc/alotobots/library/subsystems/vision/oculus/constants/OculusConstants.html" class="type-name-link" title="class in frc.alotobots.library.subsystems.vision.oculus.constants">OculusConstants</a> - Class in <a href="frc/alotobots/library/subsystems/vision/oculus/constants/package-summary.html">frc.alotobots.library.subsystems.vision.oculus.constants</a></dt>
 <dd>
 <div class="block">Constants used by the Oculus Quest navigation subsystem.</div>
@@ -3830,13 +3852,25 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="frc/alotobots/library/subsystems/swervedrive/constants/mk4i2025/TunerConstants2025.CustomConstants.html#PP_HOLONOMIC_DRIVE_CONTROLLER" class="member-name-link">PP_HOLONOMIC_DRIVE_CONTROLLER</a> - Static variable in class frc.alotobots.library.subsystems.swervedrive.constants.mk4i2025.<a href="frc/alotobots/library/subsystems/swervedrive/constants/mk4i2025/TunerConstants2025.CustomConstants.html" title="class in frc.alotobots.library.subsystems.swervedrive.constants.mk4i2025">TunerConstants2025.CustomConstants</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="frc/alotobots/library/subsystems/swervedrive/constants/mk4i2023/TunerConstants2023.CustomConstants.html#PRECISION_ALIGN_PP_HOLONOMIC_DRIVE_CONTROLLER" class="member-name-link">PRECISION_ALIGN_PP_HOLONOMIC_DRIVE_CONTROLLER</a> - Static variable in class frc.alotobots.library.subsystems.swervedrive.constants.mk4i2023.<a href="frc/alotobots/library/subsystems/swervedrive/constants/mk4i2023/TunerConstants2023.CustomConstants.html" title="class in frc.alotobots.library.subsystems.swervedrive.constants.mk4i2023">TunerConstants2023.CustomConstants</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="frc/alotobots/library/subsystems/swervedrive/constants/mk4i2025/TunerConstants2025.CustomConstants.html#PRECISION_ALIGN_PP_HOLONOMIC_DRIVE_CONTROLLER" class="member-name-link">PRECISION_ALIGN_PP_HOLONOMIC_DRIVE_CONTROLLER</a> - Static variable in class frc.alotobots.library.subsystems.swervedrive.constants.mk4i2025.<a href="frc/alotobots/library/subsystems/swervedrive/constants/mk4i2025/TunerConstants2025.CustomConstants.html" title="class in frc.alotobots.library.subsystems.swervedrive.constants.mk4i2025">TunerConstants2025.CustomConstants</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="frc/alotobots/library/subsystems/swervedrive/constants/mk4i2023/TunerConstants2023.CustomConstants.html#precisionAlignAllowRadius" class="member-name-link">precisionAlignAllowRadius</a> - Static variable in class frc.alotobots.library.subsystems.swervedrive.constants.mk4i2023.<a href="frc/alotobots/library/subsystems/swervedrive/constants/mk4i2023/TunerConstants2023.CustomConstants.html" title="class in frc.alotobots.library.subsystems.swervedrive.constants.mk4i2023">TunerConstants2023.CustomConstants</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="frc/alotobots/library/subsystems/swervedrive/constants/mk4i2025/TunerConstants2025.CustomConstants.html#precisionAlignAllowRadius" class="member-name-link">precisionAlignAllowRadius</a> - Static variable in class frc.alotobots.library.subsystems.swervedrive.constants.mk4i2025.<a href="frc/alotobots/library/subsystems/swervedrive/constants/mk4i2025/TunerConstants2025.CustomConstants.html" title="class in frc.alotobots.library.subsystems.swervedrive.constants.mk4i2025">TunerConstants2025.CustomConstants</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="frc/alotobots/library/subsystems/swervedrive/constants/mk4i2023/TunerConstants2023.CustomConstants.html#precisionAlignrotationPid" class="member-name-link">precisionAlignrotationPid</a> - Static variable in class frc.alotobots.library.subsystems.swervedrive.constants.mk4i2023.<a href="frc/alotobots/library/subsystems/swervedrive/constants/mk4i2023/TunerConstants2023.CustomConstants.html" title="class in frc.alotobots.library.subsystems.swervedrive.constants.mk4i2023">TunerConstants2023.CustomConstants</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="frc/alotobots/library/subsystems/swervedrive/constants/mk4i2025/TunerConstants2025.CustomConstants.html#precisionAlignrotationPid" class="member-name-link">precisionAlignrotationPid</a> - Static variable in class frc.alotobots.library.subsystems.swervedrive.constants.mk4i2025.<a href="frc/alotobots/library/subsystems/swervedrive/constants/mk4i2025/TunerConstants2025.CustomConstants.html" title="class in frc.alotobots.library.subsystems.swervedrive.constants.mk4i2025">TunerConstants2025.CustomConstants</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="frc/alotobots/library/subsystems/swervedrive/constants/mk4i2023/TunerConstants2023.CustomConstants.html#precisionAlignTolerance" class="member-name-link">precisionAlignTolerance</a> - Static variable in class frc.alotobots.library.subsystems.swervedrive.constants.mk4i2023.<a href="frc/alotobots/library/subsystems/swervedrive/constants/mk4i2023/TunerConstants2023.CustomConstants.html" title="class in frc.alotobots.library.subsystems.swervedrive.constants.mk4i2023">TunerConstants2023.CustomConstants</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="frc/alotobots/library/subsystems/swervedrive/constants/mk4i2025/TunerConstants2025.CustomConstants.html#precisionAlignTolerance" class="member-name-link">precisionAlignTolerance</a> - Static variable in class frc.alotobots.library.subsystems.swervedrive.constants.mk4i2025.<a href="frc/alotobots/library/subsystems/swervedrive/constants/mk4i2025/TunerConstants2025.CustomConstants.html" title="class in frc.alotobots.library.subsystems.swervedrive.constants.mk4i2025">TunerConstants2025.CustomConstants</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="frc/alotobots/library/subsystems/swervedrive/constants/mk4i2023/TunerConstants2023.CustomConstants.html#precisionAlignTranslationPid" class="member-name-link">precisionAlignTranslationPid</a> - Static variable in class frc.alotobots.library.subsystems.swervedrive.constants.mk4i2023.<a href="frc/alotobots/library/subsystems/swervedrive/constants/mk4i2023/TunerConstants2023.CustomConstants.html" title="class in frc.alotobots.library.subsystems.swervedrive.constants.mk4i2023">TunerConstants2023.CustomConstants</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="frc/alotobots/library/subsystems/swervedrive/constants/mk4i2025/TunerConstants2025.CustomConstants.html#precisionAlignTranslationPid" class="member-name-link">precisionAlignTranslationPid</a> - Static variable in class frc.alotobots.library.subsystems.swervedrive.constants.mk4i2025.<a href="frc/alotobots/library/subsystems/swervedrive/constants/mk4i2025/TunerConstants2025.CustomConstants.html" title="class in frc.alotobots.library.subsystems.swervedrive.constants.mk4i2025">TunerConstants2025.CustomConstants</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="frc/alotobots/library/subsystems/vision/photonvision/apriltag/constants/CameraConfig.html#properties()" class="member-name-link">properties()</a> - Method in record class frc.alotobots.library.subsystems.vision.photonvision.apriltag.constants.<a href="frc/alotobots/library/subsystems/vision/photonvision/apriltag/constants/CameraConfig.html" title="class in frc.alotobots.library.subsystems.vision.photonvision.apriltag.constants">CameraConfig</a></dt>
 <dd>
@@ -3922,6 +3956,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="frc/alotobots/library/subsystems/vision/oculus/io/OculusIOSim.html#resetPose(edu.wpi.first.math.geometry.Pose2d)" class="member-name-link">resetPose(Pose2d)</a> - Method in class frc.alotobots.library.subsystems.vision.oculus.io.<a href="frc/alotobots/library/subsystems/vision/oculus/io/OculusIOSim.html" title="class in frc.alotobots.library.subsystems.vision.oculus.io">OculusIOSim</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="frc/alotobots/library/subsystems/vision/oculus/OculusSubsystem.html#resetPose(edu.wpi.first.math.geometry.Pose2d)" class="member-name-link">resetPose(Pose2d)</a> - Method in class frc.alotobots.library.subsystems.vision.oculus.<a href="frc/alotobots/library/subsystems/vision/oculus/OculusSubsystem.html" title="class in frc.alotobots.library.subsystems.vision.oculus">OculusSubsystem</a></dt>
+<dd>
+<div class="block">Resets the pose tracking system to a specified position.</div>
+</dd>
+<dt><a href="frc/alotobots/library/subsystems/vision/oculus/OculusSubsystem.html#resetPose(edu.wpi.first.math.geometry.Pose2d,boolean)" class="member-name-link">resetPose(Pose2d, boolean)</a> - Method in class frc.alotobots.library.subsystems.vision.oculus.<a href="frc/alotobots/library/subsystems/vision/oculus/OculusSubsystem.html" title="class in frc.alotobots.library.subsystems.vision.oculus">OculusSubsystem</a></dt>
 <dd>
 <div class="block">Resets the pose tracking system to a specified position.</div>
 </dd>

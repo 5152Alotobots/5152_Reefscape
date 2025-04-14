@@ -13,6 +13,7 @@ frc.alotobots.library.subsystems.swervedrive.constants.mk4i2025
 frc.alotobots.library.subsystems.swervedrive.io
 frc.alotobots.library.subsystems.swervedrive.util
 frc.alotobots.library.subsystems.vision.oculus
+frc.alotobots.library.subsystems.vision.oculus.commands
 frc.alotobots.library.subsystems.vision.oculus.constants
 frc.alotobots.library.subsystems.vision.oculus.io
 frc.alotobots.library.subsystems.vision.oculus.util
