@@ -20,15 +20,20 @@
         "y": 5.1094392588887425
       },
       "prevControl": {
-        "x": 5.6745,
-        "y": 5.98475
+        "x": 5.586270491803279,
+        "y": 6.056915983606557
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": "Reef_NE_L"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.7665289256198244,
+      "rotationDegrees": -119.99999999999999
+    }
+  ],
   "constraintZones": [
     {
       "name": "Constraints Zone",

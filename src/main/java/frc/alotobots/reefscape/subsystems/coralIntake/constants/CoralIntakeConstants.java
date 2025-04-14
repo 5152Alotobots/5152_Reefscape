@@ -42,7 +42,7 @@ public class CoralIntakeConstants {
   /** Setpoints for different coral intake states */
   public static final class Setpoints {
     public static final class OpenLoop {
-      public static final double INTAKE_PERCENTAGE = 0.5;
+      public static final double INTAKE_PERCENTAGE = 0.75;
       public static final double EJECT_PERCENTAGE = 0.75;
     }
   }

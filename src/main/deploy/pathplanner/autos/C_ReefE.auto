@@ -28,11 +28,23 @@
           "data": {
             "name": "CoralIntakeEjectThrough"
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "C_ReefE 2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoStateL1"
+          }
         }
       ]
     }
   },
-  "resetOdom": true,
+  "resetOdom": false,
   "folder": "One Piece",
   "choreoAuto": false
 }

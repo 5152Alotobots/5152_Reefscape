@@ -33,7 +33,7 @@ public class AlignToReefBranch extends Command {
   private final Angle HEADING_MATCH_REQUIREMENT = Degrees.of(30); // Allowable heading difference
   private final Transform2d ALIGN_OFFSET_TRANSFORM =
       new Transform2d(
-          new Translation2d(-0.58, 0),
+          new Translation2d(-0.495, 0),
           Rotation2d.kZero); // Distance from the reef branch to align at
 
   private final SwerveDriveSubsystem swerveDriveSubsystem;
@@ -52,13 +52,14 @@ public class AlignToReefBranch extends Command {
       SwerveDriveSubsystem swerveDriveSubsystem, FieldConstants.BranchType branchType) {
     this.branchType = branchType;
     this.swerveDriveSubsystem = swerveDriveSubsystem;
-    this.request = new DrivePrecisionAlign(swerveDriveSubsystem, 0.01);
+    this.request =
+        new DrivePrecisionAlign(swerveDriveSubsystem, swerveDriveSubsystem::getAprilTagPose, 0.01);
     addRequirements(swerveDriveSubsystem);
   }
 
   @Override
   public void initialize() {
-    Pose2d currentPose = swerveDriveSubsystem.getPose();
+    Pose2d currentPose = swerveDriveSubsystem.getAprilTagPose();
 
     // Check if alliance information is available
     if (DriverStation.getAlliance().isPresent()) {
@@ -73,7 +74,7 @@ public class AlignToReefBranch extends Command {
       swerveDriveSubsystem.logAutoAlignTargetPose(targetPose);
 
       // Check if we're in the required zone for aligning
-      if (!shouldAlign(currentPose, targetPose)) {
+      if (!alignAllowed(currentPose, targetPose)) {
         cancel();
       }
     } else {
@@ -83,13 +84,13 @@ public class AlignToReefBranch extends Command {
   }
 
   /**
-   * Checks if the robot is already aligned with the target branch.
+   * Checks to make sure the robot is within the limits to align
    *
    * @param currentPose The current robot pose
    * @param targetBranchPose The target branch pose
    * @return True if already aligned within tolerance
    */
-  private boolean shouldAlign(Pose2d currentPose, Pose2d targetBranchPose) {
+  private boolean alignAllowed(Pose2d currentPose, Pose2d targetBranchPose) {
     double distanceToTarget =
         currentPose.getTranslation().getDistance(targetBranchPose.getTranslation());
 

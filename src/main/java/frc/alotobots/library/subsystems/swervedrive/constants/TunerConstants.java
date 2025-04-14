@@ -160,6 +160,13 @@ public interface TunerConstants {
   PPHolonomicDriveController getHolonomicDriveController();
 
   /**
+   * Gets the precision align holonomic drive controller for path following.
+   *
+   * @return PPHolonomicDriveController for path following control
+   */
+  PPHolonomicDriveController getPrecisionAlignHolonomicDriveController();
+
+  /**
    * Gets the PID gains for the steer motors.
    *
    * @return Slot0Configs containing PID and feedforward gains for steering

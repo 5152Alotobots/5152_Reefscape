@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.25,
-        "y": 6.85
+        "x": 1.35,
+        "y": 6.77
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.249999999999999,
-        "y": 6.85
+        "x": 2.3499999999999988,
+        "y": 6.77
       },
       "isLocked": false,
-      "linkedName": "North Left Station"
+      "linkedName": "SidewaysN"
     },
     {
       "anchor": {

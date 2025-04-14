@@ -267,14 +267,22 @@ public class TunerConstants2025 implements TunerConstants {
 
   public static class CustomConstants {
     // Custom constants go here
+    // Pathfinding PID constants
     public static final PIDConstants translationPid = new PIDConstants(5.5, 0, 0.04);
     public static final PIDConstants rotationPid = new PIDConstants(7.8, 0, 0.015);
-    public static final double precisionAlignTolerance = .03; // Meters
-    public static final double precisionAlignAllowRadius = .5; // Meters
-    public static final PathConstraints PATHFINDING_CONSTRAINTS =
-        new PathConstraints(5.0, 3.5, Units.degreesToRadians(540), Units.degreesToRadians(460));
     public static final PPHolonomicDriveController PP_HOLONOMIC_DRIVE_CONTROLLER =
         new PPHolonomicDriveController(translationPid, rotationPid);
+    public static final PathConstraints PATHFINDING_CONSTRAINTS =
+        new PathConstraints(5.0, 3.5, Units.degreesToRadians(540), Units.degreesToRadians(460));
+
+    // Precision align PID constants
+    public static final PIDConstants precisionAlignTranslationPid = new PIDConstants(3.0, 0, 0.04);
+    public static final PIDConstants precisionAlignrotationPid = new PIDConstants(5.8, 0, 0.015);
+    public static final PPHolonomicDriveController PRECISION_ALIGN_PP_HOLONOMIC_DRIVE_CONTROLLER =
+        new PPHolonomicDriveController(precisionAlignTranslationPid, precisionAlignrotationPid);
+
+    public static final double precisionAlignTolerance = .03; // Meters
+    public static final double precisionAlignAllowRadius = .5; // Meters
     public static final ProfiledPIDController driveFacingAngleController =
         new ProfiledPIDController(
             rotationPid.kP,
@@ -380,6 +388,11 @@ public class TunerConstants2025 implements TunerConstants {
   @Override
   public PPHolonomicDriveController getHolonomicDriveController() {
     return CustomConstants.PP_HOLONOMIC_DRIVE_CONTROLLER;
+  }
+
+  @Override
+  public PPHolonomicDriveController getPrecisionAlignHolonomicDriveController() {
+    return CustomConstants.PRECISION_ALIGN_PP_HOLONOMIC_DRIVE_CONTROLLER;
   }
 
   @Override
