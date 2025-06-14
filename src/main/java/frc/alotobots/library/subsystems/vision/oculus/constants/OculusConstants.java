@@ -29,27 +29,6 @@ import lombok.experimental.UtilityClass;
  */
 @UtilityClass
 public class OculusConstants {
-
-  /**
-   * Determines which side the pose reset logic should be used
-   *
-   * <p>ROBOT_SIDE -> All resets happen with a transform applied to the robot code. resetPose() must
-   * be called ONCE prior to the start of the match to avoid latency in resetting the Oculus side
-   * pose to (0, 0, 0) Afterward, updateTransform() should be called instead if the transform needs
-   * to be updated.
-   *
-   * <p>OCULUS_SIDE -> All resets happen with a transform applied to the Oculus code. These methods
-   * should NOT be called during match play as it will result in incorrect transformations due to
-   * latency.
-   */
-  public static enum PoseResetStrategy {
-    ROBOT_SIDE,
-    OCULUS_SIDE
-  }
-
-  /** The strategy used to reset the pose */
-  public static final PoseResetStrategy POSE_RESET_STRATEGY = PoseResetStrategy.OCULUS_SIDE;
-
   public static final double BATTERY_LOW_PERCENT = 20;
 
   public static final double BATTERY_CRITICAL_PERCENT = 10;

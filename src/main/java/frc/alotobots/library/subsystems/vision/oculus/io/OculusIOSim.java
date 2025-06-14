@@ -12,13 +12,9 @@
 */
 package frc.alotobots.library.subsystems.vision.oculus.io;
 
-import static edu.wpi.first.units.Units.Milliseconds;
 import static frc.alotobots.library.subsystems.vision.oculus.constants.OculusConstants.*;
-import static frc.alotobots.library.subsystems.vision.oculus.util.OculusStatus.Miso.*;
-import static frc.alotobots.library.subsystems.vision.oculus.util.OculusStatus.Mosi.*;
 
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Quaternion;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.wpilibj.Timer;
@@ -33,26 +29,26 @@ public class OculusIOSim implements OculusIO {
   private double simulationTimeSeconds = 0.0;
   private static final double UPDATE_PERIOD_SECONDS = 1.0 / 120.0; // 120Hz update rate
 
-  // Current command state
-  private int currentMosiValue = COMMAND_CLEAR;
-  private int currentMisoValue = STATUS_READY;
-
-  // Target pose for reset operations
-  private Pose2d resetTargetPose = new Pose2d();
-
   // Current simulated pose with noise
   private Pose2d currentPose = new Pose2d();
 
   // Transform representing the offset between where Quest thinks it is vs actual position
   private Transform2d poseOffset = new Transform2d();
 
-  // Heartbeat simulation
-  private double lastHeartbeatTime = 0.0;
-  private double lastProcessedHeartbeatId = 0.0;
+  // Tracking simulation
+  private boolean isCurrentlyTracking = true;
+  private int trackingLostCounter = 0;
+  private double lastTrackingLossTime = 0.0;
+  private final double TRACKING_LOSS_INTERVAL =
+      30.0; // Lose tracking every 30 seconds for simulation
+
+  // Connection simulation
+  private double lastUpdateTime = 0.0;
 
   public OculusIOSim(SwerveDriveSimulation swerveDriveSimulation) {
     this.swerveDriveSimulation = swerveDriveSimulation;
-    this.lastHeartbeatTime = Timer.getTimestamp();
+    this.lastUpdateTime = Timer.getTimestamp();
+    this.lastTrackingLossTime = Timer.getTimestamp();
   }
 
   /** Updates the base physics simulation pose that the Oculus measurements will be derived from. */
@@ -60,11 +56,10 @@ public class OculusIOSim implements OculusIO {
     // Get actual robot pose from physics
     Pose2d physicsPose = swerveDriveSimulation.getSimulatedDriveTrainPose();
 
-    // Apply the stored offset from any imperfect resets before transforming to headset position
+    // Apply the stored offset from any imperfect resets
     Pose2d offsetPose = physicsPose.transformBy(poseOffset);
 
-    // Transform robot pose to headset pose
-    // This simulates where the headset actually is relative to robot center
+    // Transform robot pose to headset pose (assuming headset is at robot center for simplicity)
     currentPose = offsetPose;
 
     // Add noise based on standard deviations
@@ -79,124 +74,71 @@ public class OculusIOSim implements OculusIO {
             currentPose.getRotation().plus(new Rotation2d(noiseRot)));
   }
 
+  /** Simulates periodic tracking loss for realistic behavior */
+  private void updateTrackingSimulation() {
+    double currentTime = Timer.getTimestamp();
+
+    // Simulate tracking loss every so often
+    if (isCurrentlyTracking && (currentTime - lastTrackingLossTime) > TRACKING_LOSS_INTERVAL) {
+      isCurrentlyTracking = false;
+      trackingLostCounter++;
+      lastTrackingLossTime = currentTime;
+      Logger.recordOutput("Oculus/Log", "Simulated tracking loss event #" + trackingLostCounter);
+    }
+
+    // Regain tracking after 2 seconds
+    if (!isCurrentlyTracking && (currentTime - lastTrackingLossTime) > 2.0) {
+      isCurrentlyTracking = true;
+      Logger.recordOutput("Oculus/Log", "Simulated tracking regained");
+    }
+  }
+
   @Override
   public void updateInputs(OculusIOInputs inputs) {
-    // Update quest pose
-    updateSimPose();
-
-    // Update simulation time
+    // Update simulation time and pose
     simulationTimeSeconds += UPDATE_PERIOD_SECONDS;
+    updateSimPose();
+    updateTrackingSimulation();
 
-    // Convert pose to Quest coordinate system (Z forward, -X left)
-    // Quest coordinates: +Z forward, +Y up, -X left
-    // FRC coordinates: +X forward, +Y left
-    float[] position =
-        new float[] {
-          (float) -currentPose.getY(), // Quest -X = FRC Y
-          0.0f, // Quest Y (height) = 0
-          (float) currentPose.getX() // Quest Z = FRC X
-        };
+    // Update current time for connection simulation
+    lastUpdateTime = Timer.getTimestamp();
 
-    // Convert rotation to Quest coordinate system
-    float yaw = (float) -currentPose.getRotation().getDegrees();
-    float[] eulerAngles =
-        new float[] {
-          0.0f, // Roll
-          yaw, // Yaw (negated for coordinate system conversion)
-          0.0f // Pitch
-        };
+    // Simulate connection status (always connected in sim unless something goes wrong)
+    inputs.connected = true;
 
-    // Convert to quaternion using WPILib
-    // For a pure yaw rotation:
-    // w = cos(angle/2)
-    // z = sin(angle/2)
-    double halfAngle = currentPose.getRotation().getRadians() / 2.0;
-    var wpilibQuaternion =
-        new Quaternion(
-            Math.cos(halfAngle), // w
-            0.0, // x
-            0.0, // y
-            Math.sin(halfAngle) // z
-            );
-
-    float[] quaternion =
-        new float[] {
-          (float) wpilibQuaternion.getW(),
-          (float) wpilibQuaternion.getX(),
-          (float) wpilibQuaternion.getY(),
-          (float) wpilibQuaternion.getZ()
-        };
-
-    // Simulate a connected device by checking the time since the last heartbeat
-    inputs.connected =
-        Milliseconds.of(Timer.getTimestamp() - lastHeartbeatTime).lt(OCULUS_CONNECTION_TIMEOUT);
-    inputs.position = position;
-    inputs.eulerAngles = eulerAngles;
-    inputs.quaternion = quaternion;
-    inputs.timestamp = simulationTimeSeconds;
+    // Frame data
     inputs.frameCount = (int) (simulationTimeSeconds * 120); // 120Hz frame count
-    inputs.batteryPercent = 100.0;
-    inputs.misoValue = currentMisoValue;
+    inputs.timestamp = simulationTimeSeconds;
 
-    // Process any pending commands
-    processCommands();
-
-    // Simulate heartbeat every second
-    if (Timer.getTimestamp() - lastHeartbeatTime > 1.0) {
-      lastHeartbeatTime = Timer.getTimestamp();
-      lastProcessedHeartbeatId += 1.0;
+    // Latency
+    inputs.latency = 20;
+    // Pose data - if not tracking, provide stale data
+    if (isCurrentlyTracking) {
+      inputs.pose2d = currentPose;
+    } else {
+      // When not tracking, pose doesn't update (stale data)
+      // inputs.pose2d retains its previous value
     }
-  }
 
-  private void processCommands() {
-    // Process any pending commands based on current MOSI value
-    switch (currentMosiValue) {
-      case COMMAND_RESET_HEADING -> {
-        Logger.recordOutput("Oculus/Log", "Heading reset command received in sim");
-        currentMisoValue = STATUS_HEADING_RESET_COMPLETE;
-        currentMosiValue = COMMAND_CLEAR; // Auto-clear the command
-      }
-
-      case COMMAND_RESET_POSE -> {
-        Logger.recordOutput("Oculus/Log", "Pose reset command received in sim");
-        // Store the offset between where we're telling Quest it is vs where it actually is
-        Pose2d actualPose = swerveDriveSimulation.getSimulatedDriveTrainPose();
-        poseOffset = new Transform2d(actualPose, resetTargetPose);
-        currentMisoValue = STATUS_POSE_RESET_COMPLETE;
-        currentMosiValue = COMMAND_CLEAR; // Auto-clear the command
-      }
-
-      case COMMAND_PING -> {
-        Logger.recordOutput("Oculus/Log", "Ping command received in sim");
-        currentMisoValue = STATUS_PING_RESPONSE;
-        currentMosiValue = COMMAND_CLEAR; // Auto-clear the command
-      }
-
-      case COMMAND_CLEAR -> {
-        if (currentMisoValue != STATUS_READY) {
-          currentMisoValue = STATUS_READY;
-        }
-      }
-    }
+    // Device data
+    inputs.batteryPercent =
+        Math.max(95.0, 100.0 - (simulationTimeSeconds * 0.01)); // Slowly drain battery
+    inputs.currentlyTracking = isCurrentlyTracking;
+    inputs.trackingLostCounter = trackingLostCounter;
   }
 
   @Override
-  public void resetPose(Pose2d oculusTargetPose) {
-    resetTargetPose = oculusTargetPose;
+  public void setPose(Pose2d oculusTargetPose) {
+    // Store the offset between where we're telling Quest it is vs where it actually is
+    Pose2d actualPose = swerveDriveSimulation.getSimulatedDriveTrainPose();
+    poseOffset = new Transform2d(actualPose, oculusTargetPose);
 
-    // Force clear mosi
-    currentMosiValue = COMMAND_CLEAR;
-
-    // Send reset command
-    currentMosiValue = COMMAND_RESET_POSE;
-  }
-
-  @Override
-  public void resetHeading() {
-    // Force clear mosi
-    currentMosiValue = COMMAND_CLEAR;
-
-    // Send reset command
-    currentMosiValue = COMMAND_RESET_HEADING;
+    Logger.recordOutput(
+        "Oculus/Log",
+        String.format(
+            "Pose reset in sim to: (%.2f, %.2f, %.2f°)",
+            oculusTargetPose.getX(),
+            oculusTargetPose.getY(),
+            oculusTargetPose.getRotation().getDegrees()));
   }
 }

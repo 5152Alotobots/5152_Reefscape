@@ -19,15 +19,10 @@ import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Transform2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.alotobots.library.subsystems.swervedrive.SwerveDriveSubsystem;
-import frc.alotobots.library.subsystems.vision.oculus.constants.OculusConstants.PoseResetStrategy;
 import frc.alotobots.library.subsystems.vision.oculus.io.OculusIO;
 import frc.alotobots.library.subsystems.vision.oculus.io.OculusIOInputsAutoLogged;
 import frc.alotobots.util.NotificationPresets;
@@ -56,11 +51,6 @@ public class OculusSubsystem extends SubsystemBase {
 
   /** Logged inputs from Quest hardware */
   private final OculusIOInputsAutoLogged inputs = new OculusIOInputsAutoLogged();
-
-  /** Transform offset applied when using ROBOT_SIDE reset strategy */
-  private Transform2d offsetTransform = new Transform2d();
-
-  private boolean questHadTracking = false;
 
   /**
    * Creates a new OculusSubsystem.
@@ -107,8 +97,8 @@ public class OculusSubsystem extends SubsystemBase {
     }
 
     // Notify for tracking status
-    if (!inputs.isTracking) {
-      NotificationPresets.Oculus.sendOculusTrackingLostNotification(inputs.totalTrackingLostEvents);
+    if (!inputs.currentlyTracking) {
+      NotificationPresets.Oculus.sendOculusTrackingLostNotification(inputs.trackingLostCounter);
     } else {
       NotificationPresets.Oculus.sendOculusTrackingRegainedNotification();
     }
@@ -149,7 +139,7 @@ public class OculusSubsystem extends SubsystemBase {
    */
   @AutoLogOutput(key = "Oculus/Pose")
   public Pose2d getPose() {
-    return getOculusPose().transformBy(ROBOT_TO_OCULUS.inverse()).plus(offsetTransform);
+    return getOculusPose().transformBy(ROBOT_TO_OCULUS.inverse());
   }
 
   /**
@@ -159,82 +149,16 @@ public class OculusSubsystem extends SubsystemBase {
    * @param pose The new reference pose
    */
   public void resetPose(Pose2d pose) {
-    if (DriverStation.isEnabled()) {
-      Logger.recordOutput(
-          "Oculus/Log",
-          "resetPose() called while the robot is enabled. This shouldn't happen! Ignoring.");
-      return;
-    }
     // Transform the pose to the Oculus coordinate system w/ offset
     Pose2d oculusSidePose = pose.plus(ROBOT_TO_OCULUS);
 
-    if (POSE_RESET_STRATEGY.equals(PoseResetStrategy.ROBOT_SIDE)) {
-      // Reset the pose on the Oculus side
-      io.resetPose(Pose2d.kZero);
-      // Set the offset transform to the new pose
-      updateTransform(oculusSidePose);
-    } else {
-      updateTransform(Pose2d.kZero);
-      io.resetPose(oculusSidePose);
-    }
+    // Send the request
+    io.setPose(oculusSidePose);
+
     Logger.recordOutput(
         "Oculus/Log",
         String.format("Resetting pose to WPILib: %s, Oculus: %s", pose, oculusSidePose));
     NotificationPresets.Oculus.sendOculusPoseResetNotification(pose);
-  }
-
-  /**
-   * Resets the pose tracking system to a specified position. Must be called only when the robot is
-   * disabled to avoid interrupting tracking during a match.
-   *
-   * @param pose The new reference pose
-   * @param overrideEnabledCheck Overrides the enabled check to allow for resetting while enabled.
-   */
-  public void resetPose(Pose2d pose, boolean overrideEnabledCheck) {
-    if (!overrideEnabledCheck && DriverStation.isEnabled()) {
-      Logger.recordOutput(
-          "Oculus/Log",
-          "resetPose() called while the robot is enabled. This shouldn't happen! Ignoring.");
-      return;
-    }
-
-    Logger.recordOutput(
-        "Oculus/Log",
-        "resetPose() called while the robot is enabled. Enabled check overridden! Make sure this is what you want to happen!");
-    // Transform the pose to the Oculus coordinate system w/ offset
-    Pose2d oculusSidePose = pose.plus(ROBOT_TO_OCULUS);
-
-    if (POSE_RESET_STRATEGY.equals(PoseResetStrategy.ROBOT_SIDE)) {
-      // Reset the pose on the Oculus side
-      io.resetPose(Pose2d.kZero);
-      // Set the offset transform to the new pose
-      updateTransform(oculusSidePose);
-    } else {
-      updateTransform(Pose2d.kZero);
-      io.resetPose(oculusSidePose);
-    }
-    Logger.recordOutput(
-        "Oculus/Log",
-        String.format("Resetting pose to WPILib: %s, Oculus: %s", pose, oculusSidePose));
-    NotificationPresets.Oculus.sendOculusPoseResetNotification(pose);
-  }
-
-  /**
-   * Updates the transform offset used in ROBOT_SIDE pose reset strategy. Has no effect if using a
-   * different pose reset strategy.
-   *
-   * @param pose The new reference pose for calculating offset
-   */
-  public void updateTransform(Pose2d pose) {
-    if (!POSE_RESET_STRATEGY.equals(PoseResetStrategy.ROBOT_SIDE)) {
-      Logger.recordOutput(
-          "Oculus/Log", "updateTransform() called when not using ROBOT_SIDE. Ignoring.");
-      return;
-    }
-    // Update the offset transform to the new pose
-    Logger.recordOutput("Oculus/Log", "Updating offset transform to: " + pose);
-    offsetTransform = new Transform2d(pose.getTranslation(), pose.getRotation());
-    NotificationPresets.Oculus.sendOculusTransformUpdateNotification(offsetTransform);
   }
 
   private final AprilTagFieldLayout aprilTagFieldLayout =
@@ -245,7 +169,7 @@ public class OculusSubsystem extends SubsystemBase {
    * tracking. This enables integration with pose estimation systems.
    */
   private void processPose() {
-    if (inputs.connected && inputs.isTracking) {
+    if (inputs.connected && inputs.currentlyTracking) {
       Pose2d pose = getPose();
       double timestamp = getTimestamp();
 
@@ -264,34 +188,13 @@ public class OculusSubsystem extends SubsystemBase {
   }
 
   /**
-   * Converts the raw Oculus yaw to a Rotation2d object. Applies necessary coordinate system
-   * transformations.
-   *
-   * @return Rotation2d representing the headset's yaw
-   */
-  private Rotation2d getOculusYaw() {
-    return Rotation2d.fromDegrees(-inputs.eulerAngles[1]);
-  }
-
-  /**
-   * Converts the raw Oculus position to a Translation2d object. Maps Unity coordinate system to FRC
-   * coordinate system.
-   *
-   * @return Translation2d representing the headset's position
-   */
-  private Translation2d getOculusTranslation() {
-    float[] oculusPosition = inputs.position;
-    return new Translation2d(oculusPosition[2], -oculusPosition[0]);
-  }
-
-  /**
    * Combines Oculus position and orientation into a unified Pose2d.
    *
    * @return Raw Pose2d from the headset's perspective
    */
   @AutoLogOutput(key = "Oculus/RawPose")
   private Pose2d getOculusPose() {
-    return new Pose2d(getOculusTranslation(), getOculusYaw());
+    return inputs.pose2d;
   }
 
   /**
