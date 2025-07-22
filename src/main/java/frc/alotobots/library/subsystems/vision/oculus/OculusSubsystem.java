@@ -152,13 +152,13 @@ public class OculusSubsystem extends SubsystemBase {
     // Transform the pose to the Oculus coordinate system w/ offset
     Pose2d oculusSidePose = pose.plus(ROBOT_TO_OCULUS);
 
-    // Send the request
-    io.setPose(oculusSidePose);
-
     Logger.recordOutput(
         "Oculus/Log",
         String.format("Resetting pose to WPILib: %s, Oculus: %s", pose, oculusSidePose));
     NotificationPresets.Oculus.sendOculusPoseResetNotification(pose);
+
+    // Send the request
+    io.setPose(oculusSidePose);
   }
 
   private final AprilTagFieldLayout aprilTagFieldLayout =

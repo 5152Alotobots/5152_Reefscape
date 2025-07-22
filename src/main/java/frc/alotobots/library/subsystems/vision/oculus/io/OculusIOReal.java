@@ -33,7 +33,7 @@ public class OculusIOReal implements OculusIO {
 
     // Update frame data
     inputs.frameCount = questNav.getFrameCount();
-    inputs.timestamp = questNav.getTimestamp();
+    inputs.timestamp = questNav.getDataTimestamp();
     inputs.pose2d = questNav.getPose();
 
     // Update device data
