@@ -33,11 +33,11 @@ import frc.alotobots.library.subsystems.swervedrive.*;
 import frc.alotobots.library.subsystems.swervedrive.commands.*;
 import frc.alotobots.library.subsystems.swervedrive.io.*;
 import frc.alotobots.library.subsystems.swervedrive.util.PathPlannerManager;
-import frc.alotobots.library.subsystems.vision.oculus.OculusSubsystem;
-import frc.alotobots.library.subsystems.vision.oculus.io.*;
 import frc.alotobots.library.subsystems.vision.photonvision.apriltag.AprilTagSubsystem;
 import frc.alotobots.library.subsystems.vision.photonvision.apriltag.constants.AprilTagConstants;
 import frc.alotobots.library.subsystems.vision.photonvision.apriltag.io.*;
+import frc.alotobots.library.subsystems.vision.questnav.QuestNavSubsystem;
+import frc.alotobots.library.subsystems.vision.questnav.io.*;
 import frc.alotobots.reefscape.FieldConstants;
 import frc.alotobots.reefscape.commands.AlignToCoralStation;
 import frc.alotobots.reefscape.commands.AlignToReefBranch;
@@ -73,7 +73,7 @@ public class RobotContainer {
   private final WristSubsystem wristSubsystem;
   private final ClimberSubsystem climberSubsystem;
   private final CoralIntakeSubsystem coralIntakeSubsystem;
-  private final OculusSubsystem oculusSubsystem;
+  private final QuestNavSubsystem questNavSubsystem;
   private final AprilTagSubsystem aprilTagSubsystem;
   private final BlingSubsystem blingSubsystem;
   private final PathPlannerManager pathPlannerManager;
@@ -102,8 +102,8 @@ public class RobotContainer {
             new AutoNamedCommands(
                 elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, swerveDriveSubsystem);
         configureAutoChooser();
-        oculusSubsystem =
-            new OculusSubsystem(swerveDriveSubsystem::addVisionMeasurement, new OculusIOReal());
+        questNavSubsystem =
+            new QuestNavSubsystem(swerveDriveSubsystem::addVisionMeasurement, new QuestNavIOReal());
         aprilTagSubsystem =
             new AprilTagSubsystem(
                 swerveDriveSubsystem::addVisionMeasurement,
@@ -148,8 +148,8 @@ public class RobotContainer {
                 elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, swerveDriveSubsystem);
         configureAutoChooser();
 
-        oculusSubsystem =
-            new OculusSubsystem(swerveDriveSubsystem::addVisionMeasurement, new OculusIOReal());
+        questNavSubsystem =
+            new QuestNavSubsystem(swerveDriveSubsystem::addVisionMeasurement, new QuestNavIOReal());
         aprilTagSubsystem =
             new AprilTagSubsystem(
                 swerveDriveSubsystem::addVisionMeasurement,
@@ -180,8 +180,8 @@ public class RobotContainer {
                 elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, swerveDriveSubsystem);
         configureAutoChooser();
 
-        oculusSubsystem =
-            new OculusSubsystem(swerveDriveSubsystem::addVisionMeasurement, new OculusIO() {});
+        questNavSubsystem =
+            new QuestNavSubsystem(swerveDriveSubsystem::addVisionMeasurement, new QuestNavIO() {});
         aprilTagSubsystem =
             new AprilTagSubsystem(
                 swerveDriveSubsystem::addVisionMeasurement,
@@ -311,7 +311,7 @@ public class RobotContainer {
         .ifPresent(
             pose -> {
               swerveDriveSubsystem.setPose(pose);
-              oculusSubsystem.resetPose(pose);
+              questNavSubsystem.resetPose(pose);
               NotificationPresets.Auto.sendAutoPathChangeNotification(autoName);
             });
   }

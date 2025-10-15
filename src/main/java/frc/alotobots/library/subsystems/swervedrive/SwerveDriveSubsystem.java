@@ -108,7 +108,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
       new SwerveDrivePoseEstimator(kinematics, rawGyroRotation, lastModulePositions, new Pose2d());
 
   /** Pose estimator for odometry */
-  private SwerveDrivePoseEstimator oculusPoseEstimator =
+  private SwerveDrivePoseEstimator questNavPoseEstimator =
       new SwerveDrivePoseEstimator(kinematics, rawGyroRotation, lastModulePositions, new Pose2d());
 
   /**
@@ -215,7 +215,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
       poseEstimator.updateWithTime(sampleTimestamps[i], rawGyroRotation, modulePositions);
       aprilTagPoseEstimator.updateWithTime(sampleTimestamps[i], rawGyroRotation, modulePositions);
-      oculusPoseEstimator.updateWithTime(sampleTimestamps[i], rawGyroRotation, modulePositions);
+      questNavPoseEstimator.updateWithTime(sampleTimestamps[i], rawGyroRotation, modulePositions);
     }
 
     gyroDisconnectedAlert.set(!gyroInputs.connected && Constants.currentMode != Mode.SIM);
@@ -399,9 +399,9 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     return aprilTagPoseEstimator.getEstimatedPosition();
   }
 
-  @AutoLogOutput(key = "Drive/OculusPose")
-  public Pose2d getOculusPose() {
-    return oculusPoseEstimator.getEstimatedPosition();
+  @AutoLogOutput(key = "Drive/QuestNavPose")
+  public Pose2d getQuestNavPose() {
+    return questNavPoseEstimator.getEstimatedPosition();
   }
 
   /**
@@ -422,18 +422,18 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     NotificationPresets.SwerveDrive.sendSwerveDrivePoseResetNotification(pose);
     poseEstimator.resetPosition(rawGyroRotation, getModulePositions(), pose);
     aprilTagPoseEstimator.resetPosition(rawGyroRotation, getModulePositions(), pose);
-    oculusPoseEstimator.resetPosition(rawGyroRotation, getModulePositions(), pose);
+    questNavPoseEstimator.resetPosition(rawGyroRotation, getModulePositions(), pose);
   }
 
   public enum VisionSource {
     APRIL_TAG,
-    OCULUS
+    QUESTNAV
   }
 
   /**
    * Adds vision measurement for pose estimation.
    *
-   * @param source Source of the vision measurement (AprilTag or Oculus)
+   * @param source Source of the vision measurement (AprilTag or QuestNav)
    * @param visionRobotPoseMeters Vision-measured robot pose
    * @param timestampSeconds Timestamp of measurement
    * @param visionMeasurementStdDevs Standard deviations of vision measurements
@@ -458,8 +458,8 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         aprilTagPoseEstimator.addVisionMeasurement(
             visionRobotPoseMeters, timestampSeconds, visionMeasurementStdDevs);
         break;
-      case OCULUS:
-        oculusPoseEstimator.addVisionMeasurement(
+      case QUESTNAV:
+        questNavPoseEstimator.addVisionMeasurement(
             visionRobotPoseMeters, timestampSeconds, visionMeasurementStdDevs);
         break;
     }

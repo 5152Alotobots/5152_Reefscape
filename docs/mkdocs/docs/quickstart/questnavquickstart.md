@@ -43,11 +43,11 @@ public class RobotContainer {
     private final AprilTagIO aprilTagIO = new AprilTagIO();
 
     // Vision subsystems
-    private final OculusSubsystem oculusSubsystem = new OculusSubsystem(oculusIO);
+    private final OculusSubsystem questNavSubsystem = new OculusSubsystem(oculusIO);
     private final AprilTagSubsystem aprilTagSubsystem = new AprilTagSubsystem(aprilTagIO);
 
     // Create pose sources
-    private final OculusPoseSource oculusPoseSource = new OculusPoseSource(oculusSubsystem);
+    private final OculusPoseSource oculusPoseSource = new OculusPoseSource(questNavSubsystem);
     private final AprilTagPoseSource aprilTagPoseSource = new AprilTagPoseSource(aprilTagSubsystem);
 
     // Auto chooser
