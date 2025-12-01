@@ -12,11 +12,6 @@ frc.alotobots.library.subsystems.swervedrive.constants.mk4i2023
 frc.alotobots.library.subsystems.swervedrive.constants.mk4i2025
 frc.alotobots.library.subsystems.swervedrive.io
 frc.alotobots.library.subsystems.swervedrive.util
-frc.alotobots.library.subsystems.vision.oculus
-frc.alotobots.library.subsystems.vision.oculus.commands
-frc.alotobots.library.subsystems.vision.oculus.constants
-frc.alotobots.library.subsystems.vision.oculus.io
-frc.alotobots.library.subsystems.vision.oculus.util
 frc.alotobots.library.subsystems.vision.photonvision.apriltag
 frc.alotobots.library.subsystems.vision.photonvision.apriltag.constants
 frc.alotobots.library.subsystems.vision.photonvision.apriltag.io
@@ -25,6 +20,9 @@ frc.alotobots.library.subsystems.vision.photonvision.objectdetection.commands
 frc.alotobots.library.subsystems.vision.photonvision.objectdetection.constants
 frc.alotobots.library.subsystems.vision.photonvision.objectdetection.io
 frc.alotobots.library.subsystems.vision.photonvision.objectdetection.util
+frc.alotobots.library.subsystems.vision.questnav
+frc.alotobots.library.subsystems.vision.questnav.constants
+frc.alotobots.library.subsystems.vision.questnav.io
 frc.alotobots.reefscape
 frc.alotobots.reefscape.commands
 frc.alotobots.reefscape.commands.auto
