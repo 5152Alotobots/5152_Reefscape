@@ -15,8 +15,6 @@ package frc.alotobots;
 import static edu.wpi.first.units.Units.Seconds;
 import static frc.alotobots.OI.*;
 import static frc.alotobots.library.subsystems.bling.constants.BlingConstants.BLING_NOTIFICATION_TIME;
-import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeConstants.Setpoints.OpenLoop.EJECT_PERCENTAGE;
-import static frc.alotobots.reefscape.subsystems.coralIntake.constants.CoralIntakeConstants.Setpoints.OpenLoop.INTAKE_PERCENTAGE;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -35,11 +33,11 @@ import frc.alotobots.library.subsystems.swervedrive.*;
 import frc.alotobots.library.subsystems.swervedrive.commands.*;
 import frc.alotobots.library.subsystems.swervedrive.io.*;
 import frc.alotobots.library.subsystems.swervedrive.util.PathPlannerManager;
-import frc.alotobots.library.subsystems.vision.oculus.OculusSubsystem;
-import frc.alotobots.library.subsystems.vision.oculus.io.*;
 import frc.alotobots.library.subsystems.vision.photonvision.apriltag.AprilTagSubsystem;
 import frc.alotobots.library.subsystems.vision.photonvision.apriltag.constants.AprilTagConstants;
 import frc.alotobots.library.subsystems.vision.photonvision.apriltag.io.*;
+import frc.alotobots.library.subsystems.vision.questnav.QuestNavSubsystem;
+import frc.alotobots.library.subsystems.vision.questnav.io.*;
 import frc.alotobots.reefscape.FieldConstants;
 import frc.alotobots.reefscape.commands.AlignToCoralStation;
 import frc.alotobots.reefscape.commands.AlignToReefBranch;
@@ -52,23 +50,15 @@ import frc.alotobots.reefscape.subsystems.climber.ClimberSubsystem;
 import frc.alotobots.reefscape.subsystems.climber.commands.ClimberDisableServos;
 import frc.alotobots.reefscape.subsystems.climber.io.ClimberIORevServoReal;
 import frc.alotobots.reefscape.subsystems.coralIntake.CoralIntakeSubsystem;
-import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEject;
-import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEjectManual;
-import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeEjectThrough;
-import frc.alotobots.reefscape.subsystems.coralIntake.commands.CoralIntakeIntakeManual;
 import frc.alotobots.reefscape.subsystems.coralIntake.io.CoralIntakeIO;
 import frc.alotobots.reefscape.subsystems.coralIntake.io.CoralIntakeIOTalonFXReal;
 import frc.alotobots.reefscape.subsystems.elevator.ElevatorSubsystem;
 import frc.alotobots.reefscape.subsystems.elevator.commands.DefaultElevatorRunAtVelocity;
-import frc.alotobots.reefscape.subsystems.elevator.commands.ElevatorRunToHeight;
-import frc.alotobots.reefscape.subsystems.elevator.constants.ElevatorConstants;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIO;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIOTalonFXReal;
 import frc.alotobots.reefscape.subsystems.elevator.io.ElevatorIOTalonFXSim;
 import frc.alotobots.reefscape.subsystems.wrist.WristSubsystem;
 import frc.alotobots.reefscape.subsystems.wrist.commands.DefaultWristRunAtVelocity;
-import frc.alotobots.reefscape.subsystems.wrist.commands.WristRunToAngle;
-import frc.alotobots.reefscape.subsystems.wrist.constants.WristConstants;
 import frc.alotobots.reefscape.subsystems.wrist.io.WristIOTalonFXReal;
 import frc.alotobots.reefscape.subsystems.wrist.io.WristIOTalonFXSim;
 import frc.alotobots.util.NotificationPresets;
@@ -83,7 +73,7 @@ public class RobotContainer {
   private final WristSubsystem wristSubsystem;
   private final ClimberSubsystem climberSubsystem;
   private final CoralIntakeSubsystem coralIntakeSubsystem;
-  private final OculusSubsystem oculusSubsystem;
+  private final QuestNavSubsystem questNavSubsystem;
   private final AprilTagSubsystem aprilTagSubsystem;
   private final BlingSubsystem blingSubsystem;
   private final PathPlannerManager pathPlannerManager;
@@ -112,8 +102,8 @@ public class RobotContainer {
             new AutoNamedCommands(
                 elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, swerveDriveSubsystem);
         configureAutoChooser();
-        oculusSubsystem =
-            new OculusSubsystem(swerveDriveSubsystem::addVisionMeasurement, new OculusIOReal());
+        questNavSubsystem =
+            new QuestNavSubsystem(swerveDriveSubsystem::addVisionMeasurement, new QuestNavIOReal());
         aprilTagSubsystem =
             new AprilTagSubsystem(
                 swerveDriveSubsystem::addVisionMeasurement,
@@ -158,8 +148,8 @@ public class RobotContainer {
                 elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, swerveDriveSubsystem);
         configureAutoChooser();
 
-        oculusSubsystem =
-            new OculusSubsystem(swerveDriveSubsystem::addVisionMeasurement, new OculusIOReal());
+        questNavSubsystem =
+            new QuestNavSubsystem(swerveDriveSubsystem::addVisionMeasurement, new QuestNavIOReal());
         aprilTagSubsystem =
             new AprilTagSubsystem(
                 swerveDriveSubsystem::addVisionMeasurement,
@@ -190,8 +180,8 @@ public class RobotContainer {
                 elevatorSubsystem, wristSubsystem, coralIntakeSubsystem, swerveDriveSubsystem);
         configureAutoChooser();
 
-        oculusSubsystem =
-            new OculusSubsystem(swerveDriveSubsystem::addVisionMeasurement, new OculusIO() {});
+        questNavSubsystem =
+            new QuestNavSubsystem(swerveDriveSubsystem::addVisionMeasurement, new QuestNavIO() {});
         aprilTagSubsystem =
             new AprilTagSubsystem(
                 swerveDriveSubsystem::addVisionMeasurement,
@@ -285,32 +275,6 @@ public class RobotContainer {
         new AlignToReefBranch(swerveDriveSubsystem, FieldConstants.BranchType.RIGHT)
             .withTimeout(1));
     alignNearestCoralStationButton.toggleOnTrue(new AlignToCoralStation(swerveDriveSubsystem));
-
-    // BACKUP -----------------------------------------------------------------------------
-    // Coral Intake
-    ejectCoralButton.whileTrue(new CoralIntakeEject(coralIntakeSubsystem, () -> EJECT_PERCENTAGE));
-    coralIntakeEjectThroughButton.toggleOnTrue(
-        new CoralIntakeEjectThrough(coralIntakeSubsystem, () -> EJECT_PERCENTAGE));
-    coralIntakeIntakeManualButton.whileTrue(
-        new CoralIntakeIntakeManual(coralIntakeSubsystem, () -> INTAKE_PERCENTAGE));
-    coralIntakeEjectManualButton.whileTrue(
-        new CoralIntakeEjectManual(coralIntakeSubsystem, () -> 0.5));
-    // Elevator
-    elevatorStowButton.toggleOnTrue(
-        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.CORAL_STOWED));
-    elevatorL2Button.toggleOnTrue(
-        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.CORAL_L2_PLACE));
-    elevatorL3Button.toggleOnTrue(
-        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.CORAL_L3_PLACE));
-    elevatorL4Button.toggleOnTrue(
-        new ElevatorRunToHeight(elevatorSubsystem, ElevatorConstants.Setpoints.CORAL_L4_PLACE));
-    // Wrist
-    wristL4coralButton.toggleOnTrue(
-        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.CORAL_L4_PLACE));
-    wristL2and3coralButton.toggleOnTrue(
-        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.CORAL_L3_PLACE));
-    wristGroundButton.toggleOnTrue(
-        new WristRunToAngle(wristSubsystem, WristConstants.Setpoints.CORAL_GROUND_INTAKE));
   }
 
   private void configureAutoChooser() {
@@ -347,7 +311,7 @@ public class RobotContainer {
         .ifPresent(
             pose -> {
               swerveDriveSubsystem.setPose(pose);
-              oculusSubsystem.resetPose(pose);
+              questNavSubsystem.resetPose(pose);
               NotificationPresets.Auto.sendAutoPathChangeNotification(autoName);
             });
   }

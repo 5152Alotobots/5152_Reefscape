@@ -109,7 +109,8 @@ public class Robot extends LoggedRobot {
   @Override
   public void robotInit() {
     CameraServer.startAutomaticCapture();
-    CameraServer.startAutomaticCapture(new HttpCamera("Oculus", "http://10.51.52.200:5809/stream"));
+    CameraServer.startAutomaticCapture(
+        new HttpCamera("QuestNav", "http://10.51.52.200:5809/stream"));
   }
 
   /** Called once when the robot is disabled. */

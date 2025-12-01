@@ -54,10 +54,6 @@ public class OI {
   private static final CommandXboxController codriverController =
       new CommandXboxController(CO_DRIVER_CONTROLLER_ID);
 
-  /** Xbox controller instance for manual and redundant control options. */
-  private static final CommandXboxController codriverBackupController =
-      new CommandXboxController(CO_DRIVER_BACKUP_CONTROLLER_ID);
-
   /**
    * Trigger that activates when the driver is using the chassis control sticks. Combines X/Y
    * translation and rotation inputs with deadband application to detect intentional driver input.
@@ -118,6 +114,10 @@ public class OI {
 
   /* State-based play control triggers */
   public static final Trigger resetGyroButton = driverController.rightStick();
+
+  /** Temporary test button */
+  public static final Trigger testButton = driverController.leftStick();
+
   // DRIVER -----------------------------------------------------------
   public static final Trigger climbButton = driverController.start();
   public static final Trigger unClimbButton = driverController.back();
@@ -146,26 +146,6 @@ public class OI {
   public static final Trigger coralIntakeIntakeManualButton = driverController.povDown();
   public static final Trigger coralIntakeEjectManualButton = driverController.povUp();
 
-  // BACKUP -----------------------------------------------------------
-
-  public static final Trigger ejectCoralButton = codriverBackupController.rightBumper();
-
-  /** Trigger for activating the coral eject-through function */
-  public static final Trigger coralIntakeEjectThroughButton = codriverBackupController.start();
-
-  /* Wrist position control triggers */
-  public static final Trigger wristL4coralButton = codriverBackupController.povUp();
-  public static final Trigger wristL2and3coralButton = codriverBackupController.povRight();
-  public static final Trigger wristGroundButton = codriverBackupController.povLeft();
-
-  /* Elevator position control triggers */
-  /** Trigger for moving the elevator to stow position using backup A button. */
-  public static final Trigger elevatorStowButton = codriverBackupController.a();
-
-  public static final Trigger elevatorL2Button = codriverBackupController.b();
-  public static final Trigger elevatorL3Button = codriverBackupController.x();
-  public static final Trigger elevatorL4Button = codriverBackupController.y();
-
   /**
    * Gets the manual elevator control input by selecting the larger magnitude input between the two
    * co-driver controllers. Applies deadband after selection.
@@ -174,9 +154,7 @@ public class OI {
    */
   public static double getElevatorAxis() {
     double primary = codriverController.getRightY();
-    double backup = codriverBackupController.getRightY();
-    return MathUtil.applyDeadband(
-        Math.abs(primary) >= Math.abs(backup) ? primary : backup, DEADBAND);
+    return MathUtil.applyDeadband(primary, DEADBAND);
   }
 
   /**
@@ -187,9 +165,7 @@ public class OI {
    */
   public static double getWristAxis() {
     double primary = codriverController.getLeftY();
-    double backup = codriverBackupController.getLeftY();
-    return MathUtil.applyDeadband(
-        Math.abs(primary) >= Math.abs(backup) ? primary : backup, DEADBAND);
+    return MathUtil.applyDeadband(primary, DEADBAND);
   }
 
   /**

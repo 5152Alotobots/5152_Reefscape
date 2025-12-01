@@ -12,7 +12,10 @@
 */
 package frc.alotobots.util;
 
+import static edu.wpi.first.units.Units.Degrees;
+
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Transform2d;
 import lombok.experimental.UtilityClass;
 
@@ -84,77 +87,77 @@ public final class NotificationPresets {
     }
   }
 
-  /** Contains notification methods related to the Oculus tracking system. */
-  public final class Oculus {
+  /** Contains notification methods related to the QuestNav tracking system. */
+  public final class QuestNav {
     /** Tracks whether a battery low notification has already been sent */
-    private static boolean oculusBatteryLowNotificationSent = false;
+    private static boolean questNavBatteryLowNotificationSent = false;
 
     /** Tracks whether a battery critical notification has already been sent */
-    private static boolean oculusBatteryCriticalNotificationSent = false;
+    private static boolean questNavBatteryCriticalNotificationSent = false;
 
     /** Tracks whether a disconnection notification has already been sent */
-    private static boolean oculusDisconnectedNotificationSent = false;
+    private static boolean questNavDisconnectedNotificationSent = false;
 
     /** Tracks whether a tracking lost notification has already been sent */
-    private static boolean oculusTrackingLostNotificationSent = false;
+    private static boolean questNavTrackingLostNotificationSent = false;
 
-    /** Sends a notification when the Oculus pose reset fails. */
-    public static void sendOculusPoseResetFailedNotification() {
+    /** Sends a notification when the QuestNav pose reset fails. */
+    public static void sendQuestNavPoseResetFailedNotification() {
       Elastic.sendAlert(
           new Elastic.ElasticNotification(
               Elastic.ElasticNotification.NotificationLevel.ERROR,
-              "Oculus Pose Reset Failed",
+              "QuestNav Pose Reset Failed",
               "Not using Quest",
               3000));
     }
 
     /**
-     * Sends a notification when the Oculus pose is reset.
+     * Sends a notification when the QuestNav pose is reset.
      *
      * @param newPose The new pose after reset
      */
-    public static void sendOculusPoseResetNotification(Pose2d newPose) {
+    public static void sendQuestNavPoseResetNotification(Pose3d newPose) {
       Elastic.sendAlert(
           new Elastic.ElasticNotification(
               Elastic.ElasticNotification.NotificationLevel.INFO,
-              "Oculus Pose Reset",
+              "QuestNav Pose Reset",
               "New Position: "
                   + newPose.getTranslation().toString()
-                  + newPose.getRotation().getDegrees()
+                  + newPose.getRotation().getMeasureZ().in(Degrees)
                   + "deg",
               3000));
     }
 
-    /** Sends a notification when the Oculus heading reset fails. */
-    public static void sendOculusHeadingResetFailedNotification() {
+    /** Sends a notification when the QuestNav heading reset fails. */
+    public static void sendQuestNavHeadingResetFailedNotification() {
       Elastic.sendAlert(
           new Elastic.ElasticNotification(
               Elastic.ElasticNotification.NotificationLevel.ERROR,
-              "Oculus Heading Reset Failed",
+              "QuestNav Heading Reset Failed",
               "Not using Quest",
               3000));
     }
 
-    /** Sends a notification when the Oculus heading is reset. */
-    public static void sendOculusHeadingResetNotification() {
+    /** Sends a notification when the QuestNav heading is reset. */
+    public static void sendQuestNavHeadingResetNotification() {
       Elastic.sendAlert(
           new Elastic.ElasticNotification(
               Elastic.ElasticNotification.NotificationLevel.INFO,
-              "Oculus Heading Reset",
+              "QuestNav Heading Reset",
               "Reset complete",
               3000));
     }
 
     /**
-     * Sends a notification when the Oculus transform is updated.
+     * Sends a notification when the QuestNav transform is updated.
      *
-     * @param newTransform The new transform applied to the Oculus
+     * @param newTransform The new transform applied to the QuestNav
      */
-    public static void sendOculusTransformUpdateNotification(Transform2d newTransform) {
+    public static void sendQuestNavTransformUpdateNotification(Transform2d newTransform) {
       Elastic.sendAlert(
           new Elastic.ElasticNotification(
               Elastic.ElasticNotification.NotificationLevel.INFO,
-              "Oculus Transform Update",
+              "QuestNav Transform Update",
               "New Position: "
                   + newTransform.getTranslation().toString()
                   + newTransform.getRotation().getDegrees()
@@ -163,104 +166,104 @@ public final class NotificationPresets {
     }
 
     /**
-     * Sends a notification when the Oculus reconnects. Only sends if a disconnection was previously
-     * reported.
+     * Sends a notification when the QuestNav reconnects. Only sends if a disconnection was
+     * previously reported.
      */
-    public static void sendOculusReconnectedNotification() {
-      // Don't send the notification if the Oculus has never been disconnected
-      if (!oculusDisconnectedNotificationSent) return;
+    public static void sendQuestNavReconnectedNotification() {
+      // Don't send the notification if the QuestNav has never been disconnected
+      if (!questNavDisconnectedNotificationSent) return;
 
       Elastic.sendAlert(
           new Elastic.ElasticNotification(
               Elastic.ElasticNotification.NotificationLevel.INFO,
-              "Oculus Reconnected",
-              "The Oculus has been reconnected.",
+              "QuestNav Reconnected",
+              "The QuestNav has been reconnected.",
               3000));
-      oculusDisconnectedNotificationSent = false;
+      questNavDisconnectedNotificationSent = false;
     }
 
     /**
-     * Sends a notification when the Oculus disconnects. Only sends the notification once until the
-     * device reconnects.
+     * Sends a notification when the QuestNav disconnects. Only sends the notification once until
+     * the device reconnects.
      */
-    public static void sendOculusDisconnectedNotification() {
+    public static void sendQuestNavDisconnectedNotification() {
       // Only send the notification once
-      if (oculusDisconnectedNotificationSent) return;
+      if (questNavDisconnectedNotificationSent) return;
 
       Elastic.sendAlert(
           new Elastic.ElasticNotification(
               Elastic.ElasticNotification.NotificationLevel.ERROR,
-              "Oculus Disconnected",
-              "The Oculus has been disconnected.",
+              "QuestNav Disconnected",
+              "The QuestNav has been disconnected.",
               3000));
-      oculusDisconnectedNotificationSent = true;
+      questNavDisconnectedNotificationSent = true;
     }
 
     /**
-     * Sends a notification when the Oculus battery is low. Only sends the notification once per
+     * Sends a notification when the QuestNav battery is low. Only sends the notification once per
      * battery discharge cycle.
      */
-    public static void sendOculusBatteryLowNotification() {
+    public static void sendQuestNavBatteryLowNotification() {
       // Only send the notification once
-      if (oculusBatteryLowNotificationSent) return;
+      if (questNavBatteryLowNotificationSent) return;
       Elastic.sendAlert(
           new Elastic.ElasticNotification(
               Elastic.ElasticNotification.NotificationLevel.WARNING,
-              "Oculus Battery Low",
-              "The Oculus battery is low.",
+              "QuestNav Battery Low",
+              "The QuestNav battery is low.",
               3000));
-      oculusBatteryLowNotificationSent = true;
+      questNavBatteryLowNotificationSent = true;
     }
 
     /**
-     * Sends a notification when the Oculus battery is critically low. Only sends the notification
+     * Sends a notification when the QuestNav battery is critically low. Only sends the notification
      * once per battery discharge cycle.
      */
-    public static void sendOculusBatteryCriticalNotification() {
+    public static void sendQuestNavBatteryCriticalNotification() {
       // Only send the notification once
-      if (oculusBatteryCriticalNotificationSent) return;
+      if (questNavBatteryCriticalNotificationSent) return;
       Elastic.sendAlert(
           new Elastic.ElasticNotification(
               Elastic.ElasticNotification.NotificationLevel.ERROR,
-              "Oculus Battery Critical",
-              "The Oculus battery is critical.",
+              "QuestNav Battery Critical",
+              "The QuestNav battery is critical.",
               3000));
-      oculusBatteryCriticalNotificationSent = true;
+      questNavBatteryCriticalNotificationSent = true;
     }
 
     /**
-     * Sends a notification when the Oculus tracking is lost. Only sends the notification once until
-     * tracking is regained.
+     * Sends a notification when the QuestNav tracking is lost. Only sends the notification once
+     * until tracking is regained.
      *
      * @param totalTrackingLostEvents The times the quest has lost tracking total since app boot.
      */
-    public static void sendOculusTrackingLostNotification(int totalTrackingLostEvents) {
+    public static void sendQuestNavTrackingLostNotification(int totalTrackingLostEvents) {
       // Only send the notification once
-      if (oculusTrackingLostNotificationSent) return;
+      if (questNavTrackingLostNotificationSent) return;
       Elastic.sendAlert(
           new Elastic.ElasticNotification(
               Elastic.ElasticNotification.NotificationLevel.WARNING,
-              "Oculus Tracking Lost",
+              "QuestNav Tracking Lost",
               String.format(
-                  "Oculus Tracking Lost. (%d time(s) this boot)", totalTrackingLostEvents),
+                  "QuestNav Tracking Lost. (%d time(s) this boot)", totalTrackingLostEvents),
               3000));
-      oculusTrackingLostNotificationSent = true;
+      questNavTrackingLostNotificationSent = true;
     }
 
     /**
-     * Sends a notification when the Oculus tracking is regained. Only sends the notification once
+     * Sends a notification when the QuestNav tracking is regained. Only sends the notification once
      * until tracking is lost again.
      */
-    public static void sendOculusTrackingRegainedNotification() {
+    public static void sendQuestNavTrackingRegainedNotification() {
       // Don't send the notification if the tracking has never been lost
-      if (!oculusTrackingLostNotificationSent) return;
+      if (!questNavTrackingLostNotificationSent) return;
       Elastic.sendAlert(
           new Elastic.ElasticNotification(
               Elastic.ElasticNotification.NotificationLevel.WARNING,
-              "Oculus Tracking Regained",
-              "Oculus Tracking Regained. Switching back to Oculus tracking.",
+              "QuestNav Tracking Regained",
+              "QuestNav Tracking Regained. Switching back to QuestNav tracking.",
               3000));
-      oculusTrackingLostNotificationSent = false;
+      questNavTrackingLostNotificationSent = false;
     }
   }
 
